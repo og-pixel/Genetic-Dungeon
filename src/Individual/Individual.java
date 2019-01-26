@@ -1,3 +1,5 @@
+package Individual;
+
 import java.io.Serializable;
 
 public class Individual implements Serializable {

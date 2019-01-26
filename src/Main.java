@@ -1,5 +1,7 @@
+import Dungeon.*;
+import Individual.*;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Main {
 
@@ -8,15 +10,15 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Dungeon dungeon = new Dungeon(200, 100);
-        dungeon.test();
+//        Dungeon dungeon = new Dungeon(200, 100);
+//        dungeon.test();
 
-//        population = new ArrayList<>();
-//        for(int i = 0; i < 1000; i++){
-//            population.add(new Individual(100));
-//        }
-//
-//        Fitness.runPopulation(population);
+        population = new ArrayList<>();
+        for(int i = 0; i < 1000; i++){
+            population.add(new Individual(100));
+        }
+
+        Fitness.runPopulation(population);
 
     }
 }

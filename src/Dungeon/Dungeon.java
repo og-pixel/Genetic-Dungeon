@@ -1,16 +1,17 @@
+package Dungeon;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Dungeon {
 
-    ArrayList<ArrayList<String>> mapMatrix;
-    Random random;
+    private ArrayList<ArrayList<String>> mapMatrix;
+    private static Random random = new Random();
 
     private int dungeonWidth;
     private int dungeonHeight;
 
     public Dungeon(int width, int height){
-        random = new Random();
         mapMatrix = new ArrayList<>();
         for(int yAxis = 0; yAxis < height; yAxis++){
             mapMatrix.add(new ArrayList<>());
@@ -27,8 +28,8 @@ public class Dungeon {
         dungeonWidth = mapMatrix.get(0).size();
 
 
-        System.out.println("Dungeon width is: " + dungeonWidth);
-        System.out.println("Dungeon height is: " + dungeonHeight);
+        System.out.println("Dungeon.Dungeon width is: " + dungeonWidth);
+        System.out.println("Dungeon.Dungeon height is: " + dungeonHeight);
     }
 
 
@@ -39,5 +40,15 @@ public class Dungeon {
             }
             System.out.println();
         }
+    }
+
+
+
+    public int getDungeonWidth() {
+        return dungeonWidth;
+    }
+
+    public int getDungeonHeight() {
+        return dungeonHeight;
     }
 }

@@ -1,3 +1,7 @@
+package Algorithms;
+
+import Dungeon.Dungeon;
+
 import java.util.ArrayList;
 
 public class Algorithms {
@@ -9,9 +13,15 @@ public class Algorithms {
         numberOfRooms = 0;
 
         //TODO change the limit to the whole dungeon size
-        for(int i = 0; i < 1000; i++){
-
+        // I might have mixed up width with height
+        for(int i = 0; i < dungeon.getDungeonHeight(); i++){
+            for(int z = 0; z < dungeon.getDungeonWidth(); z++){
+                flood();
+            }
         }
+    }
+
+    public static void flood(){
 
     }
 
