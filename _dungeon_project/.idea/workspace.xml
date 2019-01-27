@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Dungeon Project:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="97a578d4-42fe-4dbf-af52-83f7cdf8f517" name="Default" comment="Test again">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Dungeon_Project$Main.ic" NAME="Main Coverage Results" MODIFIED="1534472106264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Dungeon Project" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Menu/Menu.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-638">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Menu/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Tile/Tile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Unit/BasicUnit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+              <folding>
+                <element signature="e#5351#5352#0" expanded="true" />
+                <element signature="e#5385#5386#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>load</find>
+      <find>rocks</find>
+      <find>system</find>
+      <find>dotimage</find>
+      <find>dotim</find>
+      <find>draw</find>
+      <find>little</find>
+      <find>player</find>
+      <find>turncyc</find>
+      <find>assetdraw</find>
+      <find>entrance</find>
+      <find>new bur</find>
+      <find>hero</find>
+      <find>move</find>
+      <find>.png</find>
+      <find>png</find>
+      <find>assetdrawing</find>
+      <find>applyPassive</find>
+      <find>setNoOfMoves</find>
+      <find>callte</find>
+      <find>lefthand</find>
+      <find>hand</find>
+      <find>nextint</find>
+      <find>get(int</find>
+      <find>size(</find>
+      <find>get(</find>
+      <find>constr</find>
+      <find>public ArrayList</find>
+      <find>public ArrayList(</find>
+      <find>per level</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Milosz Jakubanis" />
+      </list>
+    </option>
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/TurnCycle.java" />
+        <option value="$PROJECT_DIR$/src/Spell/Debuff.java" />
+        <option value="$PROJECT_DIR$/src/Spell/Buff.java" />
+        <option value="$PROJECT_DIR$/src/Spell/Passive.java" />
+        <option value="$PROJECT_DIR$/src/Spell/Buffs/BlessingOfKings.java" />
+        <option value="$PROJECT_DIR$/src/Magic/BasicSpell.java" />
+        <option value="$PROJECT_DIR$/src/TalentTree.java" />
+        <option value="$PROJECT_DIR$/src/Character/Hero.java" />
+        <option value="$PROJECT_DIR$/src/Character/BaseCharacter.java" />
+        <option value="$PROJECT_DIR$/src/Character/Goblin.java" />
+        <option value="$PROJECT_DIR$/src/Character/Warrior.java" />
+        <option value="$PROJECT_DIR$/src/Magic/AbstractSpell.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Passive.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Debuff.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Buff.java" />
+        <option value="$PROJECT_DIR$/src/Character/Character.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Debuffs/Burning.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Spells/LesserHeal.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Buffs/BlessingOfKings.java" />
+        <option value="$PROJECT_DIR$/src/Magic/Spells/Fireball.java" />
+        <option value="$PROJECT_DIR$/src/Menu/TurnCycle.java" />
+        <option value="$PROJECT_DIR$/src/Unit/Character.java" />
+        <option value="$PROJECT_DIR$/src/Items/Weapon/Sword.java" />
+        <option value="$PROJECT_DIR$/src/Items/Armor/BanditHood.java" />
+        <option value="$PROJECT_DIR$/src/Items/Equipment.java" />
+        <option value="$PROJECT_DIR$/src/Items/Armor/ArmorType.java" />
+        <option value="$PROJECT_DIR$/src/Menu/ObserverInterface.java" />
+        <option value="$PROJECT_DIR$/src/Menu/AbstractObserver.java" />
+        <option value="$PROJECT_DIR$/src/Items/Item.java" />
+        <option value="$PROJECT_DIR$/src/Items/Rarity_Test/Rarity.java" />
+        <option value="$PROJECT_DIR$/src/Menu/HeroSelect.java" />
+        <option value="$PROJECT_DIR$/src/Items/Rarity_Test/Slot.java" />
+        <option value="$PROJECT_DIR$/src/Items/Rarity_Test/WeaponType.java" />
+        <option value="$PROJECT_DIR$/src/Items/Rarity_Test/Material.java" />
+        <option value="$PROJECT_DIR$/src/Items/Rarity_Test/ArmorType.java" />
+        <option value="$PROJECT_DIR$/src/Errors/SumErrorException.java" />
+        <option value="$PROJECT_DIR$/src/Unit/Hero.java" />
+        <option value="$PROJECT_DIR$/src/RandomExtend.java" />
+        <option value="$PROJECT_DIR$/src/ArrayListRandom.java" />
+        <option value="$PROJECT_DIR$/src/Menu/ArrayListRandom.java" />
+        <option value="$PROJECT_DIR$/src/Items/AbstractItem.java" />
+        <option value="$PROJECT_DIR$/src/Items/Weapon/Weapon.java" />
+        <option value="$PROJECT_DIR$/src/Items/Armor/Armor.java" />
+        <option value="$PROJECT_DIR$/src/Menu/Menu-DESKTOP-86MSBPV.java" />
+        <option value="$PROJECT_DIR$/src/Tile/Tile.java" />
+        <option value="$PROJECT_DIR$/src/Unit/BasicUnit.java" />
+        <option value="$PROJECT_DIR$/src/Menu/AssetDrawing.java" />
+        <option value="$PROJECT_DIR$/src/Items/ItemFactory.java" />
+        <option value="$PROJECT_DIR$/src/Menu/Dungeon.java" />
+        <option value="$PROJECT_DIR$/src/Menu/Main.java" />
+        <option value="$PROJECT_DIR$/src/Menu/Menu.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1220" />
+    <option name="height" value="1890" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Dungeon Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dungeon Project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dungeon Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dungeon Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dungeon Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dungeon Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Menu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Dungeon Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Dungeon Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Tile" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.STATE" value="right" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE" value="left" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539285807479" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15234375" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Milosz Jakubanis\OneDrive - University of Huddersfield\Java Workspace\Dungeon Project\src\Menu" />
+      <recent name="E:\OneDrive - University of Huddersfield\Java Workspace\Dungeon Project\src\Sound" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Magic" />
+      <recent name="Magic.Spells" />
+      <recent name="Menu" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Items.Armor" />
+      <recent name="Errors" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Milosz Jakubanis\OneDrive - University of Huddersfield\Java Workspace\Dungeon Project\src\img" />
+      <recent name="E:\OneDrive - University of Huddersfield\Java Workspace\Dungeon Project\src\img" />
+      <recent name="E:\OneDrive - University of Huddersfield\Java Workspace\Dungeon Project\src\Sound" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/Java/jdk-10.0.2" />
+      <option name="MAIN_CLASS_NAME" value="Menu.Main" />
+      <module name="Dungeon Project" />
+      <option name="VM_PARAMETERS" value="-Xss256m -Xmx1G" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Dungeon Project.jar" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/Dungeon_Project_jar/Dungeon Project.jar" />
+      <option name="VM_PARAMETERS" value="-Xss128m" />
+      <option name="ALTERNATIVE_JRE_PATH" value="C:\Program Files\Java\jdk1.8.0_161\jre" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JAR Application.Dungeon Project.jar" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="97a578d4-42fe-4dbf-af52-83f7cdf8f517" name="Default" comment="" />
+      <created>1528751410538</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1528751410538</updated>
+      <workItem from="1528751413552" duration="148000" />
+      <workItem from="1528995218796" duration="2083000" />
+      <workItem from="1529768049453" duration="6972000" />
+      <workItem from="1529781640894" duration="13178000" />
+      <workItem from="1529806255761" duration="2411000" />
+      <workItem from="1529808695756" duration="2410000" />
+      <workItem from="1529811189119" duration="4844000" />
+      <workItem from="1529851801256" duration="27104000" />
+      <workItem from="1529882347338" duration="256000" />
+      <workItem from="1529884639342" duration="11378000" />
+      <workItem from="1530017174300" duration="1022000" />
+      <workItem from="1530108659128" duration="691000" />
+      <workItem from="1530228023725" duration="736000" />
+      <workItem from="1530248578259" duration="1946000" />
+      <workItem from="1530250953591" duration="312000" />
+      <workItem from="1530274771732" duration="367000" />
+      <workItem from="1530275584120" duration="3210000" />
+      <workItem from="1530376582964" duration="423000" />
+      <workItem from="1530658392882" duration="19566000" />
+      <workItem from="1530699994406" duration="6064000" />
+      <workItem from="1530765987050" duration="2129000" />
+      <workItem from="1530884197304" duration="4124000" />
+      <workItem from="1530890946732" duration="1699000" />
+      <workItem from="1530900613194" duration="3610000" />
+      <workItem from="1530911931662" duration="64000" />
+      <workItem from="1531080376142" duration="577000" />
+      <workItem from="1531597879242" duration="135000" />
+      <workItem from="1531763475842" duration="3288000" />
+      <workItem from="1531830923656" duration="6775000" />
+      <workItem from="1531870383529" duration="7910000" />
+      <workItem from="1532084120268" duration="760000" />
+      <workItem from="1532529103788" duration="465000" />
+      <workItem from="1532529590912" duration="9520000" />
+      <workItem from="1532546685751" duration="5076000" />
+      <workItem from="1532602081971" duration="2504000" />
+      <workItem from="1532624259123" duration="3934000" />
+      <workItem from="1532884098147" duration="1794000" />
+      <workItem from="1533120106147" duration="839000" />
+      <workItem from="1533121991340" duration="5206000" />
+      <workItem from="1533130143859" duration="12869000" />
+      <workItem from="1533247138907" duration="800000" />
+      <workItem from="1533293417697" duration="387000" />
+      <workItem from="1533727090147" duration="27834000" />
+      <workItem from="1533756956319" duration="4341000" />
+      <workItem from="1533765689354" duration="12530000" />
+      <workItem from="1533828611169" duration="2828000" />
+      <workItem from="1533834217364" duration="521000" />
+      <workItem from="1533834904908" duration="2858000" />
+      <workItem from="1533839296194" duration="1991000" />
+      <workItem from="1533855869801" duration="1454000" />
+      <workItem from="1533925751119" duration="70000" />
+      <workItem from="1533925878470" duration="3934000" />
+      <workItem from="1533932035244" duration="1958000" />
+      <workItem from="1533949839886" duration="176000" />
+      <workItem from="1533950045685" duration="8248000" />
+      <workItem from="1533958341190" duration="333000" />
+      <workItem from="1533958701651" duration="458000" />
+      <workItem from="1533959953394" duration="19000" />
+      <workItem from="1533959982668" duration="21000" />
+      <workItem from="1533960020653" duration="25000" />
+      <workItem from="1533960103127" duration="30000" />
+      <workItem from="1533960170096" duration="182000" />
+      <workItem from="1533960383588" duration="718000" />
+      <workItem from="1533962106078" duration="1898000" />
+      <workItem from="1533964326460" duration="3758000" />
+      <workItem from="1533997980836" duration="1881000" />
+      <workItem from="1533999952995" duration="1670000" />
+      <workItem from="1534012995284" duration="3514000" />
+      <workItem from="1534025363075" duration="102000" />
+      <workItem from="1534079323410" duration="805000" />
+      <workItem from="1534101973483" duration="279000" />
+      <workItem from="1534166790725" duration="466000" />
+      <workItem from="1534328627967" duration="245000" />
+      <workItem from="1534329588328" duration="416000" />
+      <workItem from="1534330198811" duration="1122000" />
+      <workItem from="1534383164445" duration="684000" />
+      <workItem from="1534383947968" duration="2233000" />
+      <workItem from="1534387334902" duration="194000" />
+      <workItem from="1534436251149" duration="10478000" />
+      <workItem from="1534447749176" duration="8291000" />
+      <workItem from="1534461108778" duration="1225000" />
+      <workItem from="1534466238539" duration="5816000" />
+      <workItem from="1534473701630" duration="43000" />
+      <workItem from="1534505912908" duration="976000" />
+      <workItem from="1534678386388" duration="2485000" />
+      <workItem from="1534682404157" duration="984000" />
+      <workItem from="1534766433179" duration="951000" />
+      <workItem from="1534867680723" duration="1675000" />
+      <workItem from="1534925654109" duration="304000" />
+      <workItem from="1535012314533" duration="1527000" />
+      <workItem from="1535025820581" duration="38825000" />
+      <workItem from="1535200487967" duration="18875000" />
+      <workItem from="1535287418963" duration="5824000" />
+      <workItem from="1535376750102" duration="634000" />
+      <workItem from="1535934045549" duration="550000" />
+      <workItem from="1536772198887" duration="17490000" />
+      <workItem from="1537357884122" duration="1098000" />
+      <workItem from="1537452376321" duration="997000" />
+      <workItem from="1537486469939" duration="1115000" />
+      <workItem from="1537489236359" duration="10000" />
+      <workItem from="1537489536328" duration="4416000" />
+      <workItem from="1537528576406" duration="1126000" />
+      <workItem from="1537533399052" duration="1849000" />
+      <workItem from="1537541398355" duration="137000" />
+      <workItem from="1538056092880" duration="1073000" />
+      <workItem from="1538403438349" duration="2124000" />
+      <workItem from="1538425150849" duration="2810000" />
+      <workItem from="1539106922717" duration="84000" />
+      <workItem from="1539283911430" duration="36000" />
+      <workItem from="1539284478127" duration="336000" />
+      <workItem from="1539285218234" duration="727000" />
+      <workItem from="1539286025004" duration="276000" />
+      <workItem from="1539289227881" duration="1101000" />
+      <workItem from="1539290933877" duration="1857000" />
+      <workItem from="1539296468715" duration="63000" />
+      <workItem from="1548330648071" duration="191000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="408652000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="31" width="2560" height="1049" extended-state="6" />
+    <layout>
+      <window_info id="Structure" order="0" sideWeight="0.5054466" side_tool="true" visible="true" weight="0.10405084" />
+      <window_info id="Image Layers" order="1" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" sideWeight="0.50187266" side_tool="true" weight="0.10134228" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.4945534" visible="true" weight="0.10405084" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32709113" />
+      <window_info anchor="bottom" id="Debug" order="2" weight="0.36454433" />
+      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49960256" weight="0.3275488" />
+      <window_info anchor="bottom" id="Database Changes" order="6" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49880764" weight="0.3275488" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5011924" side_tool="true" weight="0.3275488" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.329718" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32286555" />
+      <window_info anchor="bottom" id="Extract Method" order="11" weight="0.329718" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" x="0" y="0" width="594" height="856" id="Documentation" order="0" side_tool="true" weight="0.17449665" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Ant Build" order="6" sideWeight="0.4993758" weight="0.24966443" />
+      <window_info anchor="right" id="Database" order="7" weight="0.3295302" />
+      <window_info anchor="right" id="Maven Projects" order="8" sideWeight="0.49812734" weight="0.3295302" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Coverage" order="10" side_tool="true" weight="0.32949126" />
+      <window_info anchor="right" x="92" y="92" width="2376" height="856" id="Byte Code Viewer" order="11" type="FLOATING" />
+      <window_info anchor="right" x="531" y="64" width="1001" height="1009" id="Run" order="12" sideWeight="0.50062424" side_tool="true" weight="0.30166933" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="SHOW_DETAILS" value="true" />
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Test again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test again" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Unit/BasicUnit.java</url>
+          <line>89</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>4</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="customField">
+      <expression>
+        <expression-string>size == 2</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>2</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.fxml/javafx/fxml/FXML.java" />
+    <entry file="file://$PROJECT_DIR$/src/Menu/HeroSelect.fxml" />
+    <entry file="file://$PROJECT_DIR$/src/Menu/Menu.fxml" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/Objects.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/lang/Runnable.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/lang/Thread.java" />
+    <entry file="file://$PROJECT_DIR$/src/Unit/Goblin.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Debuff.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Buff.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Passive.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Spells/LesserHeal.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Debuffs/Burning.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/Armor/BanditHood.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/Weapon/Sword.java" />
+    <entry file="file://$PROJECT_DIR$/src/Menu/ObserverInterface.java" />
+    <entry file="file://$PROJECT_DIR$/src/Menu/AbstractObserver.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/Equipment.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/Armor/ArmorType.java" />
+    <entry file="file://$PROJECT_DIR$/src/Magic/Buffs/BlessingOfKings.java" />
+    <entry file="file://$PROJECT_DIR$/src/Unit/Warrior.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/com/sun/javafx/application/LauncherImpl.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/javafx/application/Application.java" />
+    <entry file="file://$PROJECT_DIR$/src/Menu/HeroSelect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="54" column="62" selection-start-line="54" selection-start-column="62" selection-end-line="54" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Rarity_Test/Rarity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Rarity_Test/Slot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Errors/TileTakenException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Errors/VariableBoundsIncorrect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Item.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Errors/SumErrorException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/TalentTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/ArrayListRandom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/ArrayList.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/util/Random.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/javafx.graphics/javafx/scene/canvas/GraphicsContext.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/AbstractItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1188">
+          <caret line="57" column="49" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Rarity_Test/WeaponType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Rarity_Test/ArmorType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/Menu-DESKTOP-86MSBPV.java" />
+    <entry file="file://$PROJECT_DIR$/src/Items/Armor/Armor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/Weapon/Weapon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Magic/Spells/Fireball.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Magic/AbstractSpell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Unit/Hero.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/AssetDrawing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="59" column="4" lean-forward="true" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/TurnCycle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="13" column="88" selection-start-line="13" selection-start-column="88" selection-end-line="13" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Items/ItemFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="28" column="6" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/Dungeon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="691" column="105" selection-start-line="691" selection-start-column="105" selection-end-line="691" selection-end-column="105" />
+          <folding>
+            <element signature="e#254#255#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-638">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tile/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Unit/BasicUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+          <folding>
+            <element signature="e#5351#5352#0" expanded="true" />
+            <element signature="e#5385#5386#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>Dungeon Project:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Detection</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Dungeon Project</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>javafx-swt</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
