@@ -24,7 +24,7 @@
                <children>
                   <HBox layoutX="-1.0" prefHeight="78.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#initialize" prefWidth="150.0" text="Create Dungeon">
+                        <Button mnemonicParsing="false" onAction="#initialize" prefWidth="150.0" text="Create Dungeon_GA">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Button>

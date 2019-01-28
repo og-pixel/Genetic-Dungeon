@@ -55,7 +55,7 @@ public class HeroSelect extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("HeroSelect.fxml"));
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Dungeon!");
+        primaryStage.setTitle("Dungeon_GA!");
         primaryStage.setScene(scene);
         primaryStage.show();
 

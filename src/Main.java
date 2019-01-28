@@ -1,4 +1,3 @@
-import Dungeon.*;
 import Individual.*;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        Dungeon dungeon = new Dungeon(200, 100);
+//        Dungeon_GA dungeon = new Dungeon_GA(200, 100);
 //        dungeon.test();
 
         population = new ArrayList<>();

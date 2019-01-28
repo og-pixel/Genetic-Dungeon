@@ -1,6 +1,6 @@
 package Algorithms;
 
-import Dungeon.Dungeon;
+import Dungeon_GA.Dungeon;
 
 import java.util.ArrayList;
 

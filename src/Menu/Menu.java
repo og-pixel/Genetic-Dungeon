@@ -1,5 +1,6 @@
 package Menu;
 
+import Dungeon.Dungeon;
 import Element.Rocks;
 import Errors.SumErrorException;
 import Tile.*;
@@ -59,7 +60,7 @@ public class Menu extends Application{
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(850);
 
-        primaryStage.setTitle("Dungeon!");
+        primaryStage.setTitle("Dungeon_GA!");
         primaryStage.setScene(scene);
 
 
@@ -71,7 +72,7 @@ public class Menu extends Application{
 
     @FXML
     void initialize() {
-        //        dungeon = new Dungeon(350,150);
+        //        dungeon = new Dungeon_GA(350,150);
         dungeon = new Dungeon(350,200, 500,6,65,15);
         dungeon.createPlayerDebug();
         GraphicsContext gc = myCanvas.getGraphicsContext2D();
