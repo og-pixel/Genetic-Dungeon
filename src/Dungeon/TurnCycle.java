@@ -7,7 +7,6 @@ public class TurnCycle implements Runnable{
 
     TurnCycle(DungeonGenerator dungeonGenerator){
         this.dungeonGenerator = dungeonGenerator;
-        this.dungeonGenerator.attachObserver(this);
     }
 
     public void run(){

@@ -6,6 +6,7 @@ import javafx.application.Application;
 public class Main {
 
 
+
     public static void main(String[] args) throws InterruptedException {
 
 //        Dungeon dungeon = new Dungeon(200, 100);

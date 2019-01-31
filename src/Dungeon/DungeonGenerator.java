@@ -1,74 +1,68 @@
 package Dungeon;
 
-import Dungeon.Dungeon_Element.Rocks;
-import Errors.VariableBoundsIncorrect;
-import Rendering.AssetDrawing;
 import Dungeon.Tile.*;
-import Unit.*;
+
 import java.util.*;
 
 public class DungeonGenerator {
 
-    private TurnCycle turnCycle;
-
-    public void notifyTurnCycle(){
-        turnCycle.update();
-    }
-
-    public void attachObserver(TurnCycle turnCycle){
-        this.turnCycle = turnCycle;
-    }
-    public void setState(int state){
-        notifyTurnCycle();
-    }
-
-
-
-
-
     /* Statistic variables, used to keep information of how many rooms dungeons has etc. */
-    private int noOfRooms;                      //Number of Rooms created
+    private int noOfRooms;
 
-    /* Dungeon_GA is created as a matrix made out of (abstract) Dungeon.Tile objects */
-    public ArrayList<ArrayList<Tile>> dungeonMatrix;
+    /* Constants */
+    private final int FOCUS_STRAIGHT_CORRIDORS = 65;
+    private final int MINIMUM_CORRIDOR_LENGTH = 10;
 
     /* Random generator */
-    private Random randomNumber = new Random();
+    private static Random randomNumber;
 
     /*
      * Stack used for backtracking, whenever there is a possibility to go multiple directions, rest of them will be saved
      * onto the stack
      */
-    public Stack<Integer> directionStack = new Stack<>();
-    private Stack<Integer> xPosStack = new Stack<>();
-    private Stack<Integer> yPosStack = new Stack<>();
+    private Stack<Integer> directionStack;
+    private Stack<Integer> xPosStack;
+    private Stack<Integer> yPosStack;
 
+    //TODO this is the only part I don't like, I just store the information about dungeon just so I can access is right
+    // away, but considering most of the project is to be abandoned and redone, I can change my mind later
+    private Dungeon dungeonToModify;
+    private ArrayList<ArrayList<Tile>> dungeonMatrix;
+    private int dungeonHeight;
+    private int dungeonWidth;
+    private int limitCorner;
     /*
      * Hash Map used to store how big corridor regions are
      * Each key corresponds to a region, and a value is how many tiles this region has
      */
-    private HashMap<Integer,Integer> regionMap = new HashMap<>();
+    private HashMap<Integer,Integer> regionMap;
 
-    /**
-     * Main Constructor, takes what size of a dungeonMatrix we want
-     * and creates a matrix of empty tiles
-     *
-     * @param dungeonWidth  dungeonWidth of the dungeonMatrix.
-     * @param dungeonHeight dungeonHeight of the dungeonMatrix.
-     */
-    DungeonGenerator(int dungeonWidth, int dungeonHeight) {
-        this.dungeonWidth = dungeonWidth;
-        this.dungeonHeight = dungeonHeight;
-        dungeonMatrix = new ArrayList<>();
-        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-            dungeonMatrix.add(new ArrayList<>());
-            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-                dungeonMatrix.get(yAxis).add(new EmptyTile(xAxis, yAxis));
-            }
-        }
+    public DungeonGenerator(Dungeon dungeon){
+        randomNumber = new Random();
+
+        directionStack = new Stack<>();
+        xPosStack = new Stack<>();
+        yPosStack = new Stack<>();
+
+        regionMap = new HashMap<>();
+
+        dungeonToModify = dungeon;
+        dungeonMatrix = dungeon.getDungeonMatrix();
+        dungeonHeight = dungeon.getDungeonHeight();
+        dungeonWidth = dungeon.getDungeonWidth();
     }
 
+    public Dungeon generateDungeon(){
 
+        generateRooms(200, 5);
+        createMaze();
+        removeSmallRegions();
+        removeTeeth();
+        generateDoors(1);
+        fillEmptyTiles();
+
+        return null;
+    }
 
     /**
      * Method where program goes through the entire matrix
@@ -172,7 +166,7 @@ public class DungeonGenerator {
             make dungeons look more straight (I am testing 55% to 70% odds) */
 
         // It will still chose this direction if there is no other option
-            if (randomNumber.nextInt(100) <= DICE_ROLL_ODDS || (determinedDirection == availableDirection)) {
+            if (randomNumber.nextInt(100) <= FOCUS_STRAIGHT_CORRIDORS || (determinedDirection == availableDirection)) {
                 availableDirection = availableDirection - determinedDirection;
                 checkAlternativeRoutes(currentXPos, currentYPos, availableDirection);
                 //TODO Not random
@@ -476,8 +470,8 @@ public class DungeonGenerator {
             int randomRangeHeight = randomNumber.nextInt(maxRoomSize - 1) + 2;
             int randomRangeWidth = randomNumber.nextInt(maxRoomSize - 1) + 2;
 
-            int randomXPos = randomNumber.nextInt(this.dungeonWidth);
-            int randomYPos = randomNumber.nextInt(this.dungeonHeight);
+            int randomXPos = randomNumber.nextInt(dungeonWidth);
+            int randomYPos = randomNumber.nextInt(dungeonHeight);
 
             if(!tileTaken(randomRangeHeight, randomRangeWidth, randomXPos, randomYPos)){
                 for (int y = 0; y < randomRangeHeight; y++) {
@@ -571,18 +565,6 @@ public class DungeonGenerator {
     }
 
     /**
-     * Method used by the end of the dungeonGenerator creation to make sure dungeonGenerator is possible to finish
-     * It goes to every single room form the start and tries to enter a finish place.
-     * OR it will go to every room from once place that will be considered a start, and it will calculate furthest
-     * possible place to put and end there, start and finish can be in a room too!
-     *
-     * //TODO If I expand this game I should upgrade it to consider locked doors or blockades that I will create
-     */
-    void traverseDungeon(){
-
-    }
-
-    /**
      * Method used by the end of the generation to fill empty tiles with
      * wall elements.
      */
@@ -593,13 +575,6 @@ public class DungeonGenerator {
             }
         }
     }
-
-
-    public Tile getTileType(int xPos, int yPos){
-        return dungeonMatrix.get(yPos).get(xPos);
-    }
-
-
 
     public void removeSmallRegions(){
         ArrayList<Integer> regionsToRemove = new ArrayList<>();
@@ -629,25 +604,4 @@ public class DungeonGenerator {
             }
         }
     }
-
-//    public void createPlayerDebug(){
-//
-//        for(int y = 0; y < dungeonHeight; y++){
-//            for(int x = 0; x < dungeonWidth; x++){
-//                if(dungeonMatrix.get(y).get(x) instanceof Room){
-//                    dungeonMatrix.get(y).get(x).setBasicUnit(new Hero(10,100,10, AssetDrawing.gnollAvatar));
-//                    heroLocationX = x;
-//                    heroLocationY = y;
-//                    BasicUnit player = dungeonMatrix.get(y).get(x).getBasicUnit();
-////                    player.applyPassive(new BlessingOfKings(player));
-////                    player.applyPassive(new Burning(player));
-//                    Goblin goblin = new Goblin(10,10,1000);
-//                    goblin.castSpell(0, player);
-//                    System.out.println(player.passives);
-//                    return;
-//                }
-//            }
-//        }
-//
-//    }
 }

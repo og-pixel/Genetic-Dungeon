@@ -1,13 +1,11 @@
 package Views;
 
-import Dungeon.DungeonGenerator;
+import Dungeon.*;
 import Dungeon.Dungeon_Element.Rocks;
-import Errors.SumErrorException;
 import Dungeon.Tile.*;
-
 import Rendering.AssetDrawing;
-import Unit.*;
-
+import Unit.Goblin;
+import Unit.Hero;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -18,9 +16,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,7 +36,7 @@ public class Menu extends Application{
     @FXML
     private ImageView imageView2;
 
-    private DungeonGenerator dungeonGenerator;
+    private Dungeon dungeon;
     private int mapWidth, mapHeight = 0;
 
 
@@ -70,32 +65,32 @@ public class Menu extends Application{
 
     @FXML
     void initialize() {
-        //        dungeonGenerator = new Dungeon_GA(350,150);
-        dungeonGenerator = new DungeonGenerator(350,200, 500,6,65,15);
+        dungeon = new Dungeon(200,200, 200, 5, 65, 10);
+        new DungeonGenerator(dungeon).generateDungeon();
         GraphicsContext gc = myCanvas.getGraphicsContext2D();
         draw(gc);
     }
 
     private void draw(GraphicsContext gc) {
-        gc.clearRect(0,0, dungeonGenerator.dungeonWidth * TILE_SIZE, dungeonGenerator.dungeonHeight * TILE_SIZE);
+        gc.clearRect(0,0, dungeon.getDungeonWidth() * TILE_SIZE, dungeon.getDungeonHeight() * TILE_SIZE);
 
         int y = -1;
-            for(int i = mapHeight; i < mapHeight + dungeonGenerator.dungeonHeight; i++){ //todo dungeonGenerator.dungeonHeight
+            for(int i = mapHeight; i < mapHeight + dungeon.getDungeonHeight(); i++){ //todo dungeonGenerator.dungeonHeight
                 y++;
                 int x = 0;
-                    for(int j = mapWidth; j < mapWidth + dungeonGenerator.dungeonWidth; j++){ // //todo dungeonGenerator.dungeonWidth
+                    for(int j = mapWidth; j < mapWidth + dungeon.getDungeonWidth(); j++){ // //todo dungeonGenerator.dungeonWidth
 
-                        if(dungeonGenerator.dungeonMatrix.get(i).get(j) instanceof Room){
+                        if(dungeon.getDungeonMatrix().get(i).get(j) instanceof Room){
                             AssetDrawing.drawPicture(gc, x, y, AssetDrawing.roomImage);
                         }
-                        else if(dungeonGenerator.dungeonMatrix.get(i).get(j) instanceof Wall){
+                        else if(dungeon.getDungeonMatrix().get(i).get(j) instanceof Wall){
                             AssetDrawing.drawPicture(gc, x, y, AssetDrawing.wallImage);
                         }
-                        else if(dungeonGenerator.dungeonMatrix.get(i).get(j) instanceof Entrance){
+                        else if(dungeon.getDungeonMatrix().get(i).get(j) instanceof Entrance){
                             AssetDrawing.drawPicture(gc, x, y, AssetDrawing.corridorImage);
                             AssetDrawing.drawPictureSmaller(gc, x, y, AssetDrawing.doorImage, 0.2);
                         }
-                        else if(dungeonGenerator.dungeonMatrix.get(i).get(j) instanceof Corridor){
+                        else if(dungeon.getDungeonMatrix().get(i).get(j) instanceof Corridor){
                             AssetDrawing.drawPicture(gc, x, y, AssetDrawing.corridorImage);
                         }
                         else {
@@ -106,13 +101,13 @@ public class Menu extends Application{
 
 
                         //TODO i make extra IF!
-                        if(dungeonGenerator.dungeonMatrix.get(i).get(j).getBasicUnit() instanceof Hero){//todo its is just for testing
-                            AssetDrawing.drawPictureSmaller(gc, x, y, dungeonGenerator.dungeonMatrix.get(i).get(j).getBasicUnit().getBaseCharacterImage(), 0.2);
+                        if(dungeon.getDungeonMatrix().get(i).get(j).getBasicUnit() instanceof Hero){//todo its is just for testing
+                            AssetDrawing.drawPictureSmaller(gc, x, y, dungeon.getDungeonMatrix().get(i).get(j).getBasicUnit().getBaseCharacterImage(), 0.2);
                         }
-                        if(dungeonGenerator.dungeonMatrix.get(i).get(j).getBasicUnit() instanceof Goblin){//todo its is just for testing
+                        if(dungeon.getDungeonMatrix().get(i).get(j).getBasicUnit() instanceof Goblin){//todo its is just for testing
                             AssetDrawing.drawPictureSmaller(gc, x, y, AssetDrawing.gnollAvatar, 0.2);
                         }
-                        if(dungeonGenerator.dungeonMatrix.get(i).get(j).getBaseElement() instanceof Rocks){//todo its is just for testing
+                        if(dungeon.getDungeonMatrix().get(i).get(j).getBaseElement() instanceof Rocks){//todo its is just for testing
                             AssetDrawing.drawPictureSmaller(gc, x, y, AssetDrawing.rubbleImage, 0.2);
                         }
                         x++;
@@ -131,7 +126,7 @@ public class Menu extends Application{
         File file = fileChooser.showSaveDialog(null);
         if(file != null){
             try {
-                WritableImage writableImage = new WritableImage(dungeonGenerator.dungeonWidth * TILE_SIZE, dungeonGenerator.dungeonHeight * TILE_SIZE - 1);
+                WritableImage writableImage = new WritableImage(dungeon.getDungeonWidth() * TILE_SIZE, dungeon.getDungeonHeight() * TILE_SIZE - 1);
                 myCanvas.snapshot(null, writableImage);
                 RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
                 ImageIO.write(renderedImage, "PNG", file);
