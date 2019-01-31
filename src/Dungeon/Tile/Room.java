@@ -1,4 +1,4 @@
-package Tile;
+package Dungeon.Tile;
 
 
 public class Room extends Tile {

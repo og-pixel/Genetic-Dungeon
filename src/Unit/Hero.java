@@ -11,8 +11,8 @@ public class Hero extends BasicUnit {
         spells.add(new Fireball());
     }
 
-    public Hero(int strenght, int agility, int intelligence, double strenghtGain, double agilityGain, double intelligenceGain) throws SumErrorException {
-        super(strenght, agility, intelligence, strenghtGain, agilityGain, intelligenceGain);
+    public Hero(int strength, int agility, int intelligence, double strenghtGain, double agilityGain, double intelligenceGain) throws SumErrorException {
+        super(strength, agility, intelligence, strenghtGain, agilityGain, intelligenceGain);
         spells.add(new Fireball());
     }
 }

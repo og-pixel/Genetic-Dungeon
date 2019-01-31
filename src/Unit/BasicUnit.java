@@ -4,7 +4,7 @@ import Errors.SumErrorException;
 import Items.Armor.Armor;
 import Items.ItemFactory;
 import Items.Weapon.Weapon;
-import Menu.AssetDrawing;
+import Rendering.AssetDrawing;
 import Magic.AbstractSpell;
 import Magic.Passive;
 import javafx.scene.image.Image;

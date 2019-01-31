@@ -1,4 +1,4 @@
-package Tile;
+package Dungeon.Tile;
 
 public class Wall extends Tile {
     public Wall(int xPos, int yPos){

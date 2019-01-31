@@ -1,5 +1,5 @@
-package Tile;
-import Element.*;
+package Dungeon.Tile;
+import Dungeon.Dungeon_Element.*;
 import Unit.BasicUnit;
 
 abstract public class Tile {

@@ -1,4 +1,4 @@
-package Individual;
+package Dungeon_GA.Individual;
 
 import java.io.Serializable;
 

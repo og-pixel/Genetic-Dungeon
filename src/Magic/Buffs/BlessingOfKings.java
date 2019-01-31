@@ -2,7 +2,7 @@ package Magic.Buffs;
 
 import Unit.BasicUnit;
 import Magic.Passive;
-import Menu.AssetDrawing;
+import Rendering.AssetDrawing;
 
 public class BlessingOfKings extends Passive {
 

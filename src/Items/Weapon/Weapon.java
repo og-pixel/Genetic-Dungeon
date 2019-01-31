@@ -14,10 +14,10 @@ public class Weapon extends AbstractItem {
 
 
     public Weapon(String itemName, Slot itemSlot, Rarity itemRarity, Image itemImage,
-                      int strenghtIncrease, int agilityIncrease, int intelligenceIncrease,
+                      int strengthIncrease, int agilityIncrease, int intelligenceIncrease,
                       WeaponType weaponType, int weaponDamage, int weaponRange) {
 
-        super(itemName, itemSlot, itemRarity, itemImage, strenghtIncrease, agilityIncrease, intelligenceIncrease);
+        super(itemName, itemSlot, itemRarity, itemImage, strengthIncrease, agilityIncrease, intelligenceIncrease);
         this.weaponType = weaponType;
         this.weaponDamage = weaponDamage;
         this.weaponRange = weaponRange;

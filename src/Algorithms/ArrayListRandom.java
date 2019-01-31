@@ -1,4 +1,4 @@
-package Menu;
+package Algorithms;
 
 import java.util.ArrayList;
 import java.util.Random;

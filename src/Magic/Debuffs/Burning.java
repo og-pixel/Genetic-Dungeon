@@ -2,7 +2,7 @@ package Magic.Debuffs;
 
 import Magic.Passive;
 import Unit.BasicUnit;
-import Menu.AssetDrawing;
+import Rendering.AssetDrawing;
 
 public class Burning extends Passive {
 

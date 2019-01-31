@@ -1,4 +1,4 @@
-package Individual;
+package Dungeon_GA.Individual;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class Fitness {
     static int work = 0;
     static int iteration = 0;
     static int mutations = 0;
-    private static final String modelAnswer = "helloturdormynameismiloszhelloturdormynameismilosz";
+    private static final String modelAnswer = "mynameismiloszjakubanisandiamastudentatuniversityofhuddersfield";
 
 
     /**

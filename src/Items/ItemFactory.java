@@ -7,8 +7,9 @@ import Items.Rarity_Test.Rarity;
 import Items.Rarity_Test.Slot;
 import Items.Rarity_Test.WeaponType;
 import Items.Weapon.Weapon;
-import Menu.ArrayListRandom;
-import Menu.AssetDrawing;
+import Algorithms.ArrayListRandom;
+import Rendering.AssetDrawing;
+
 import java.util.Random;
 
 public class ItemFactory {
@@ -121,7 +122,6 @@ public class ItemFactory {
 
         //IF STATMENT HERE CHecking if we make one hand or two hand
         ArmorType armorType = armorList.getRandom();
-
         //todo slot needs to be pseudo random
         return new Armor(weaponNames.getRandom() + " " + armorType.getArmorName(),
                 ONE_HAND, rarityList.getRandom(), AssetDrawing.defaultImage,

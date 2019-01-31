@@ -4,6 +4,10 @@ import Dungeon_GA.Dungeon;
 
 import java.util.ArrayList;
 
+/**
+ * Static class implementing a bunch of algorithms
+ * used to evaluate dungeon and give them a score
+ */
 public class Algorithms {
 
     private static int numberOfRooms;

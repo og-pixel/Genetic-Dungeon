@@ -1,6 +1,7 @@
-package Menu;
+package Rendering;
 
 import Errors.VariableBoundsIncorrect;
+import Views.Menu;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

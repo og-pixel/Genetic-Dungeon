@@ -13,14 +13,14 @@ public abstract class AbstractItem implements Item {
     protected Image itemImage;
 
     protected String itemName;
-    protected int strenghtIncrease, agilityIncrease, intelligenceIncrease;
+    protected int strengthIncrease, agilityIncrease, intelligenceIncrease;
 
-    public AbstractItem(String itemName, Slot itemSlot, Rarity itemRarity, Image itemImage, int strenghtIncrease, int agilityIncrease, int intelligenceIncrease) {
+    public AbstractItem(String itemName, Slot itemSlot, Rarity itemRarity, Image itemImage, int strengthIncrease, int agilityIncrease, int intelligenceIncrease) {
         this.itemName = itemName;
         this.itemSlot = itemSlot;
         this.itemRarity = itemRarity;
         this.itemImage = itemImage;
-        this.strenghtIncrease = strenghtIncrease;
+        this.strengthIncrease = strengthIncrease;
         this.agilityIncrease = agilityIncrease;
         this.intelligenceIncrease = intelligenceIncrease;
     }
@@ -55,7 +55,7 @@ public abstract class AbstractItem implements Item {
         return  "\nItem Name: " + itemName +
                 "\nSlot: " + itemSlot.getSlotName() +
                 "\nRarity: " + itemRarity.getRarityName() +
-                "\nStrength: " + strenghtIncrease +
+                "\nStrength: " + strengthIncrease +
                 "\nAgility: " + agilityIncrease +
                 "\nIntelligence: " + intelligenceIncrease;
     }
