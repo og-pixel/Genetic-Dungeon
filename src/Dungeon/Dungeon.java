@@ -5,13 +5,15 @@ import Errors.VariableBoundsIncorrect;
 import java.util.ArrayList;
 
 public class Dungeon {
-
-
     /* Variables */
     private int dungeonWidth, dungeonHeight;
 
     /* Dungeon is created as a matrix made out of (abstract) Tile objects */
     private ArrayList<ArrayList<Tile>> dungeonMatrix;
+
+    /*
+    * Genetic Algorithm component
+    * */
 
 
 

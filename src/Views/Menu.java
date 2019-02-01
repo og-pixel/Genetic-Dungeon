@@ -31,16 +31,8 @@ public class Menu extends Application{
 
     @FXML
     private Canvas myCanvas;
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private ImageView imageView2;
 
     private Dungeon dungeon;
-    private int mapWidth, mapHeight = 0;
-
-
-
 
     //TODO its just testing music
 //    Media hit = new Media(new File("src/Sound/jugg.mp3").toURI().toString());
@@ -75,10 +67,10 @@ public class Menu extends Application{
         gc.clearRect(0,0, dungeon.getDungeonWidth() * TILE_SIZE, dungeon.getDungeonHeight() * TILE_SIZE);
 
         int y = -1;
-            for(int i = mapHeight; i < mapHeight + dungeon.getDungeonHeight(); i++){ //todo dungeonGenerator.dungeonHeight
+            for(int i = 0; i < dungeon.getDungeonHeight(); i++){ //todo dungeonGenerator.dungeonHeight
                 y++;
                 int x = 0;
-                    for(int j = mapWidth; j < mapWidth + dungeon.getDungeonWidth(); j++){ // //todo dungeonGenerator.dungeonWidth
+                    for(int j = 0; j < dungeon.getDungeonWidth(); j++){ // //todo dungeonGenerator.dungeonWidth
 
                         if(dungeon.getDungeonMatrix().get(i).get(j) instanceof Room){
                             AssetDrawing.drawPicture(gc, x, y, AssetDrawing.roomImage);
@@ -135,22 +127,5 @@ public class Menu extends Application{
             }
         }
     }
-
-//    public void callMove(KeyEvent keyEvent) {
-//        String chara = keyEvent.getText().toLowerCase();
-//        switch (chara){
-//            case "w": callUp();
-//                break;
-//            case "s": callDown();
-//                break;
-//            case "a": callLeft();
-//                break;
-//            case "d": callRight();
-//                break;
-//            case "x": callTest();
-//                break;
-//
-//        }
-//    }
 }
 

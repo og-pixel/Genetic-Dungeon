@@ -24,18 +24,18 @@ public class DungeonGenerator {
     private Stack<Integer> xPosStack;
     private Stack<Integer> yPosStack;
 
-    //TODO this is the only part I don't like, I just store the information about dungeon just so I can access is right
-    // away, but considering most of the project is to be abandoned and redone, I can change my mind later
-    private Dungeon dungeonToModify;
-    private ArrayList<ArrayList<Tile>> dungeonMatrix;
-    private int dungeonHeight;
-    private int dungeonWidth;
-    private int limitCorner;
     /*
      * Hash Map used to store how big corridor regions are
      * Each key corresponds to a region, and a value is how many tiles this region has
      */
     private HashMap<Integer,Integer> regionMap;
+
+    //TODO this is the only part I don't like, I just store the information about dungeon just so I can access is right
+    // away, but considering most of the project is to be abandoned and redone, I can change my mind later
+    private ArrayList<ArrayList<Tile>> dungeonMatrix;
+    private int dungeonHeight;
+    private int dungeonWidth;
+    private int limitCorner;
 
     public DungeonGenerator(Dungeon dungeon){
         randomNumber = new Random();
@@ -46,14 +46,12 @@ public class DungeonGenerator {
 
         regionMap = new HashMap<>();
 
-        dungeonToModify = dungeon;
         dungeonMatrix = dungeon.getDungeonMatrix();
         dungeonHeight = dungeon.getDungeonHeight();
         dungeonWidth = dungeon.getDungeonWidth();
     }
 
     public Dungeon generateDungeon(){
-
         generateRooms(200, 5);
         createMaze();
         removeSmallRegions();
