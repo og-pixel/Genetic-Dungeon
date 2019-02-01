@@ -2,6 +2,7 @@ package Algorithms;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
+import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.util.ArrayList;
 
@@ -13,17 +14,20 @@ public class Algorithms {
 
     public static ArrayList<ArrayList<Boolean>> visitMap;
 
-    public static void floodFill(Dungeon dungeon){
-        ArrayList<Integer> list = new ArrayList<>();
+    public Algorithms(Dungeon dungeon){
         visitMap = new ArrayList<>();
-        //TODO change the limit to the whole dungeon size
-        // I might have mixed up width with height
+
         for(int i = 0; i < dungeon.getDungeonWidth(); i++){
             visitMap.add(new ArrayList<>());
             for(int z = 0; z < dungeon.getDungeonHeight(); z++){
                 visitMap.get(i).add(false);
             }
         }
+    }
+
+
+    public static void floodFill(Dungeon dungeon){
+
 
         for(int i = 0; i < dungeon.getDungeonWidth(); i++){
             for(int z = 0; z < dungeon.getDungeonHeight(); z++){
@@ -33,7 +37,9 @@ public class Algorithms {
     }
 
     private static void flood(Dungeon dungeon, int x, int y){
-        visitMap.get(x).set(y, true);
+        if(dungeon.getDungeonMatrix().get(x).get(y).getTile() instanceof Corridor){
+            visitMap.get(x).set(y, true);
+        }
         try{
             if(dungeon.getDungeonMatrix().get(x).get(y - 1).getTile() instanceof Corridor){
                if(!visitMap.get(x).get(y - 1)){
@@ -63,4 +69,7 @@ public class Algorithms {
     public static void aStarTraverse(Dungeon dungeon){
 
     }
+
+
+
 }

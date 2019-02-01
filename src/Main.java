@@ -34,11 +34,13 @@ public class Main {
                 }
             }
         }
+
+        new Algorithms(population.get(0));
         Algorithms.floodFill(population.get(0));
         for(int a = 0; a < population.get(0).getDungeonWidth(); a++){
             System.out.println();
             for(int b = 0; b < population.get(0).getDungeonHeight(); b++){
-                if(Algorithms.visitMap.get(a).get(b)) System.out.print("V");
+                if(Algorithms.visitMap.get(a).get(b)) System.out.print(" ");
                 else System.out.print("X");
             }
         }
