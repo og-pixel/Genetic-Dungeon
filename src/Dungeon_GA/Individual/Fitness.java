@@ -10,6 +10,7 @@ public class Fitness {
     static int work = 0;
     static int iteration = 0;
     static int mutations = 0;
+    static int POP_SIZE = 100;
     private static final String modelAnswer = "mynameismiloszjakubanisandiamastudentatuniversityofhuddersfield";
 
 
@@ -32,9 +33,9 @@ public class Fitness {
     }
 
 
-    private static void crossoverPopulation(ArrayList<Individual> population){
+    private static ArrayList<Individual> crossoverPopulation(ArrayList<Individual> population){
         int bestPercentage = (int) (population.size() * 0.1); //10% of population will be chosen to mate
-        double mutationChance = 0.10; //10% chance for each gene to be affected
+        double mutationChance = 0.01; //10% chance for each gene to be affected
         int crossoverRange = population.get(0).getChromosome().getGeneLength(); //todo Just range where we can cross genes
         //todo crossover range might need to -1 maybe even -2
 
@@ -57,7 +58,8 @@ public class Fitness {
         //todo I think I should cross all parents, 5 individuals give 10 combinations
         // 10 would give 45
         ArrayList<Individual> nextGeneration = new ArrayList<>();
-        while(nextGeneration.size() < 1000){
+
+        while(nextGeneration.size() < POP_SIZE){
             //todo same parent can occur, i think its bad
             Individual parent1 = bestOfThePopulation.get(random.nextInt(bestOfThePopulation.size()));
             Individual parent2 = bestOfThePopulation.get(random.nextInt(bestOfThePopulation.size()));
@@ -71,7 +73,7 @@ public class Fitness {
             for(int i = crossoverPoint; i < child1.getChromosome().getGeneLength(); i++){
                 if(random.nextFloat() < mutationChance){
                     mutations++;
-                    child1.getChromosome().setGeneAtPosition(i, (char) (random.nextInt(123 - 97) + 97));
+                    child1.getChromosome().setGeneAtPosition(i, (char) (random.nextInt(122 - 97) + 97));
                 }else {
                     child1.getChromosome().setGeneAtPosition(i, parent2.getChromosome().getGene(i));
                 }
@@ -80,7 +82,7 @@ public class Fitness {
             for(int i = crossoverPoint; i < child2.getChromosome().getGeneLength(); i++){
                 if(random.nextFloat() < mutationChance){
                     mutations++;
-                    child2.getChromosome().setGeneAtPosition(i, (char) (random.nextInt(123 - 97) + 97));
+                    child2.getChromosome().setGeneAtPosition(i, (char) (random.nextInt(122 - 97) + 97));
                 }else {
                     child2.getChromosome().setGeneAtPosition(i, parent1.getChromosome().getGene(i));
                 }
@@ -91,33 +93,42 @@ public class Fitness {
         }
         work++;
         iteration++;
-        runPopulation(nextGeneration);
+        return nextGeneration;
     }
 
-
+    public static int limit_iterator = 0;
 
     //todo weird name
     public static void runPopulation(ArrayList<Individual> population){
+        for (Individual individual : population) {
+                individual.setScore(Fitness.evaluateGene(individual));
+            }
+        while(population.get(population.size() - 1).getScore() <= modelAnswer.length()) {
+            for (Individual individual : population) {
+                individual.setScore(Fitness.evaluateGene(individual));
+            }
 
-
-        for(Individual individual : population) {
-            individual.setScore(Fitness.evaluateGene(individual));
-        }
-
-        //Sort list so last individuals on the list are the "best" ones
-        // (with best scores)
-        Collections.sort(population, Comparator.comparing(Individual::getScore));
+            //Sort list so last individuals on the list are the "best" ones
+            // (with best scores)
+            Collections.sort(population, Comparator.comparing(Individual::getScore));
 
 //        System.out.println("Best of this population have score: " + population.get(population.size() - 1).getScore());
-        if(work >= 100) {
-            System.out.println("Example of best individual: " + population.get(population.size() - 1).getChromosome().getChromosomeArray());
-            work = 0;
-        }
-        if(population.get(population.size() - 1).getScore() >= modelAnswer.length()){
-            System.out.println("Best individual: " + population.get(population.size() - 1).getChromosome().getChromosomeArray());
-            System.out.println("Found best individuals after: " + iteration + " iterations");
-        }else {
-            crossoverPopulation(population);
+            if (work >= 100) {
+                System.out.println("Example of best individual: " + population.get(population.size() - 1).getChromosome().getChromosomeArray());
+                work = 0;
+            }
+            if (population.get(population.size() - 1).getScore() >= modelAnswer.length()) {
+                System.out.println("Best individual: " + population.get(population.size() - 1).getChromosome().getChromosomeArray());
+                System.out.println("Found best individuals after: " + iteration + " iterations");
+                System.exit(0);
+            } else if(limit_iterator > 5000){
+                System.err.println("Limit after " + limit_iterator);
+                System.err.println("Best individual: " + population.get(population.size() - 1).getChromosome().getChromosomeArray());
+                System.exit(1);
+            }else {
+                limit_iterator++;
+                population = crossoverPopulation(population);
+            }
         }
     }
 

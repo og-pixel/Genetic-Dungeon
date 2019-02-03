@@ -12,53 +12,47 @@ import java.util.ArrayList;
  */
 public class Algorithms {
 
-    public static ArrayList<ArrayList<Boolean>> visitMap;
+//    public static ArrayList<ArrayList<Boolean>> visitMap;
 
     public Algorithms(Dungeon dungeon){
-        visitMap = new ArrayList<>();
 
-        for(int i = 0; i < dungeon.getDungeonWidth(); i++){
-            visitMap.add(new ArrayList<>());
-            for(int z = 0; z < dungeon.getDungeonHeight(); z++){
-                visitMap.get(i).add(false);
-            }
-        }
+
     }
 
 
-    public static void floodFill(Dungeon dungeon){
+    public static ArrayList<ArrayList<Boolean>> floodFill(Dungeon dungeon, int x, int y){
+        int dungeonWidth = dungeon.getDungeonWidth();
+        int dungeonHeight = dungeon.getDungeonHeight();
 
+        ArrayList<ArrayList<Boolean>> visitMap = Algorithms.createMatrix(dungeonWidth, dungeonHeight, false);
+        flood(dungeon, visitMap, x, y);
 
-        for(int i = 0; i < dungeon.getDungeonWidth(); i++){
-            for(int z = 0; z < dungeon.getDungeonHeight(); z++){
-                flood(dungeon, i, z);
-            }
-        }
+        return visitMap;
     }
 
-    private static void flood(Dungeon dungeon, int x, int y){
+    private static void flood(Dungeon dungeon, ArrayList<ArrayList<Boolean>> visitMap, int x, int y){
         if(dungeon.getDungeonMatrix().get(x).get(y).getTile() instanceof Corridor){
             visitMap.get(x).set(y, true);
         }
         try{
             if(dungeon.getDungeonMatrix().get(x).get(y - 1).getTile() instanceof Corridor){
                if(!visitMap.get(x).get(y - 1)){
-                   flood(dungeon, x, y - 1);
+                   flood(dungeon, visitMap, x, y - 1);
                }
             }
             if(dungeon.getDungeonMatrix().get(x).get(y + 1).getTile() instanceof Corridor){
                if(!visitMap.get(x).get(y + 1)){
-                   flood(dungeon, x, y + 1);
+                   flood(dungeon, visitMap, x, y + 1);
                }
             }
             if(dungeon.getDungeonMatrix().get(x - 1).get(y).getTile() instanceof Corridor){
                if(!visitMap.get(x - 1).get(y)){
-                   flood(dungeon, x - 1, y);
+                   flood(dungeon, visitMap, x - 1, y);
                }
             }
             if(dungeon.getDungeonMatrix().get(x + 1).get(y).getTile() instanceof Corridor){
                if(!visitMap.get(x + 1).get(y)){
-                   flood(dungeon, x + 1, y);
+                   flood(dungeon, visitMap, x + 1, y);
                }
             }
         }catch (Exception e){
@@ -70,6 +64,23 @@ public class Algorithms {
 
     }
 
-
-
+    /**
+     * todo it will fill it with one object
+     * @param width
+     * @param height
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public static <T> ArrayList<ArrayList<T>> createMatrix(int width, int height, T type){
+        ArrayList<ArrayList<T>> genericMatrix = null;
+        for(int yAxis = 0; yAxis < height; yAxis++){
+            genericMatrix = new ArrayList<>();
+            for(int xAxis = 0; xAxis < width; xAxis++){
+                genericMatrix.get(yAxis).add(type);
+            }
+        }
+        if(genericMatrix == null)throw new RuntimeException("Matrix cannot be null");
+        return genericMatrix;
+    }
 }

@@ -57,7 +57,7 @@ public class Menu extends Application{
 
     @FXML
     void initialize() {
-        dungeon = new Dungeon(200,200, 200, 5, 65, 10);
+        dungeon = new Dungeon(200,200);
         new DungeonGenerator(dungeon).generateDungeon();
         GraphicsContext gc = myCanvas.getGraphicsContext2D();
         draw(gc);
