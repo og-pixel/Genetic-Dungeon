@@ -15,8 +15,10 @@ public class Main {
 
         ArrayList<Dungeon> mapList = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            mapList.add(new Dungeon(20, 20));
+            mapList.add(new Dungeon(30, 15, true));
+            mapList.get(mapList.size() - 1).printDungeon();
         }
+
 
 
         for(int i = 0; i < fitnessList.size(); i++) {

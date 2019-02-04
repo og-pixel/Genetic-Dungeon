@@ -24,40 +24,43 @@ public class Algorithms {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
+//        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof )
+
         ArrayList<ArrayList<Boolean>> visitMap = Algorithms.createMatrix(dungeonWidth, dungeonHeight, false);
-        flood(dungeon, visitMap, x, y);
+        flood(dungeon, visitMap, y, x);
 
         return visitMap;
     }
 
-    private static void flood(Dungeon dungeon, ArrayList<ArrayList<Boolean>> visitMap, int x, int y){
-        if(dungeon.getDungeonMatrix().get(x).get(y).getTile() instanceof Corridor){
-            visitMap.get(x).set(y, true);
-        }
-        try{
-            if(dungeon.getDungeonMatrix().get(x).get(y - 1).getTile() instanceof Corridor){
-               if(!visitMap.get(x).get(y - 1)){
-                   flood(dungeon, visitMap, x, y - 1);
-               }
-            }
-            if(dungeon.getDungeonMatrix().get(x).get(y + 1).getTile() instanceof Corridor){
-               if(!visitMap.get(x).get(y + 1)){
-                   flood(dungeon, visitMap, x, y + 1);
-               }
-            }
-            if(dungeon.getDungeonMatrix().get(x - 1).get(y).getTile() instanceof Corridor){
-               if(!visitMap.get(x - 1).get(y)){
-                   flood(dungeon, visitMap, x - 1, y);
-               }
-            }
-            if(dungeon.getDungeonMatrix().get(x + 1).get(y).getTile() instanceof Corridor){
-               if(!visitMap.get(x + 1).get(y)){
-                   flood(dungeon, visitMap, x + 1, y);
-               }
-            }
-        }catch (Exception e){
+    private static void flood(Dungeon dungeon, ArrayList<ArrayList<Boolean>> visitMap, int y, int x){
+        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
+            visitMap.get(y).set(x, true);
+            try {
+                if (dungeon.getDungeonMatrix().get(y).get(x - 1).getTile() instanceof Corridor) {
+                    if (!visitMap.get(y).get(x - 1)) {
+                        flood(dungeon, visitMap, y, x - 1);
+                    }
+                }
+                if (dungeon.getDungeonMatrix().get(y).get(x + 1).getTile() instanceof Corridor) {
+                    if (!visitMap.get(y).get(x + 1)) {
+                        flood(dungeon, visitMap, y, x + 1);
+                    }
+                }
+                if (dungeon.getDungeonMatrix().get(y - 1).get(x).getTile() instanceof Corridor) {
+                    if (!visitMap.get(y - 1).get(x)) {
+                        flood(dungeon, visitMap, y - 1, x);
+                    }
+                }
+                if (dungeon.getDungeonMatrix().get(y + 1).get(x).getTile() instanceof Corridor) {
+                    if (!visitMap.get(y + 1).get(x)) {
+                        flood(dungeon, visitMap, y + 1, x);
+                    }
+                }
+            } catch (Exception e) {
 
+            }
         }
+
     }
 
     public static void aStarTraverse(Dungeon dungeon){
@@ -73,13 +76,14 @@ public class Algorithms {
      * @return
      */
     public static <T> ArrayList<ArrayList<T>> createMatrix(int width, int height, T type){
-        ArrayList<ArrayList<T>> genericMatrix = null;
+        ArrayList<ArrayList<T>> genericMatrix = new ArrayList<>();
         for(int yAxis = 0; yAxis < height; yAxis++){
-            genericMatrix = new ArrayList<>();
+            genericMatrix.add(new ArrayList<>());
             for(int xAxis = 0; xAxis < width; xAxis++){
                 genericMatrix.get(yAxis).add(type);
             }
         }
+
         if(genericMatrix == null)throw new RuntimeException("Matrix cannot be null");
         return genericMatrix;
     }
