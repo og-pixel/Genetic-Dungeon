@@ -2,8 +2,10 @@ package Algorithms;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
+import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 //todo this class name should not be a verb but I feel like its better than "RoomSize"
@@ -14,54 +16,76 @@ public class FindAllRooms implements Fitness{
      * Score is counted based on todo "Up to 100?"
      * @param dungeon dungeon map
      */
+    //todo I think it no longer iterates over rooms that were discovered
     @Override
     public void evaluateDungeon(Dungeon dungeon) {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
         int roomSize = 0;
-        int roomCount = 0;
+        int numberOfRooms = 0;
         int wallCount = 0;
+        int counter = 0;
 
-        HashMap<Integer, ArrayList<ArrayList<Boolean>>> xz = new HashMap<>();
-        ArrayList<ArrayList<ArrayList<Boolean>>> xzc = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList>> listOfRooms = new ArrayList<>();
+        listOfRooms.add(new ArrayList<>());
 
-        ArrayList<ArrayList<Boolean>> visitMap;
-        ArrayList<ArrayList<Boolean>> wholeVisitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
+        ArrayList<ArrayList<Boolean>> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
 
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++) {
 
 
-//                if (!wholeVisitMap.get(y).get(x)) {
-                    if (dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
+            if (dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
+                try {
+                    //todo loop throught THE LIST OF VISIT MAP
+                    for(int p = 0; p < listOfRooms.size(); p++){
+
+                    }
+                    if (!visitMap.get(y).get(x)) {
                         visitMap = Algorithms.floodFill(dungeon, x, y);
 
-//                        //todo this is a very stupid workaround atm
-//                        for(int yPos = 0; yPos < dungeonHeight; yPos++){
-//                            for(int xPos = 0; xPos < dungeonWidth; xPos++){
-//                                //todo it only triggets if they are different (it means change)
-//                                if(wholeVisitMap.get(yPos).get(xPos) != visitMap.get(yPos).get(xPos)){
-//                                    wholeVisitMap.get(yPos).set(xPos, true);
-//                                }
-//                            }
-//                        }
 
-//                        wholeVisitMap = visitMap;
+                        if(visitMap != null){
 
-
-
-
-                        roomSize = roomSize + countVisited(visitMap);
-                        wallCount = (dungeonWidth * dungeonHeight) - roomSize;
-                        //Currently score is given by calculating ratio of wall to corridor (so 50
-                        dungeon.setScore(roomCount * 10 + roomSize - wallCount); //todo this way i set score so far
+                            numberOfRooms++;
+                            printMap(visitMap);
+                            roomSize = roomSize + countVisited(visitMap);
+                        }
                     }
+                }catch (Exception e){
+                    System.err.println("erros");
+                    visitMap = Algorithms.floodFill(dungeon, x, y);
                 }
             }
         }
-//    }
+    }
+                            wallCount = (dungeonWidth * dungeonHeight) - roomSize;
+                            //Currently score is given by calculating ratio of wall to corridor (so 50
+//                            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
+                            System.out.println("Room Count: " + numberOfRooms);
+                            System.out.println("Walls: " + wallCount);
+                            System.out.println("Rooms Take: " + roomSize);
+//                            System.out.println("Total Score: " + (numberOfRooms * 20) + wallCount);
+                            System.out.println("*******************************************");
+        System.out.println("Score: " + dungeon.getScore());
+}
 
+    private void function(){
+
+
+    }
+
+
+    /**
+     * Check if a room was "discovered" already
+     * @return
+     */
+    private boolean checkIfAlreadyFlooded(int x, int y){
+
+
+        return false;
+    }
 
     private int countVisited(ArrayList<ArrayList<Boolean>> visitMap){
         int counter = 0;
@@ -76,8 +100,8 @@ public class FindAllRooms implements Fitness{
         for (ArrayList<Boolean> booleans : visitMap) {
             System.out.println();
             for (Boolean aBoolean : booleans) {
-                if (aBoolean) System.out.print(" ");
-                else System.out.print("░");
+                if (aBoolean) System.out.print("░");
+                else System.out.print("x");
             }
         }
         System.out.println();

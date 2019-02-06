@@ -7,6 +7,13 @@ import java.util.ArrayList;
  * todo more features?
  */
 public class Matrix {
+
+//    ArrayList<ArrayList<Boolean>> matrix;
+//
+//    public Matrix(int width, int height){
+//        matrix = createMatrix(width, height, true);
+//    }
+
     /**
      * todo it will fill it with one object
      * @param width
@@ -27,4 +34,20 @@ public class Matrix {
         if(genericMatrix == null)throw new RuntimeException("Matrix cannot be null");
         return genericMatrix;
     }
+
+    /**
+     * inserts contents of one matrix to another
+     * todo i might not need it
+     */
+    public static <T> void insertMatrix(ArrayList<ArrayList<T>> matrixA,
+                                    ArrayList<ArrayList<T>> matrixB ){
+        for (ArrayList<T> ts : matrixA) {
+            for (int z = 0; z < ts.size(); z++) {
+//                if(){
+//
+//                }
+            }
+        }
+    }
+
 }

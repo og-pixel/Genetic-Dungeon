@@ -49,7 +49,7 @@ public class Dungeon {
         for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
             dungeonMatrix.add(new ArrayList<>());
             for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-                if(random.nextFloat() < 0.50)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
+                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
                 else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
             }
         }
