@@ -1,5 +1,5 @@
 import Algorithms.Fitness;
-import Algorithms.Idea;
+import Algorithms.FindAllRooms;
 import Dungeon.Dungeon;
 
 import java.util.ArrayList;
@@ -8,18 +8,20 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        new Interpreter(args);
         //todo interpreter later
+
         ArrayList<Fitness> fitnessList = new ArrayList<>();
-        fitnessList.add(new Idea());
+        fitnessList.add(new FindAllRooms());
 
 
 
         ArrayList<Dungeon> mapList = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            mapList.add(new Dungeon(30, 15, true));
+        for(int i = 0; i < 1; i++){
+            mapList.add(new Dungeon(50, 25, true));
             mapList.get(mapList.size() - 1).printDungeon();
         }
 
 
+        float timeNow = System.nanoTime();
 
         for(int i = 0; i < fitnessList.size(); i++) {
             for(int x = 0; x < mapList.size(); x++){
@@ -27,5 +29,6 @@ public class Main {
             }
         }
 
+        System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
     }
 }
