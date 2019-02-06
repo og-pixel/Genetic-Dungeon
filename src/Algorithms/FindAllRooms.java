@@ -27,47 +27,66 @@ public class FindAllRooms implements Fitness{
         int wallCount = 0;
         int counter = 0;
 
-        ArrayList<ArrayList<ArrayList>> listOfRooms = new ArrayList<>();
-        listOfRooms.add(new ArrayList<>());
+        ArrayList<ArrayList<ArrayList<Boolean>>> listOfRooms = new ArrayList<>();
+//        listOfRooms.add(new ArrayList<>());
 
         ArrayList<ArrayList<Boolean>> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
 
+
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++) {
-
-
             if (dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
-                try {
-                    //todo loop throught THE LIST OF VISIT MAP
-                    for(int p = 0; p < listOfRooms.size(); p++){
 
+                if(listOfRooms.isEmpty()) {
+                    listOfRooms.add(visitMap);
+                    for (int a = 0; a < listOfRooms.size(); a++) {
+
+                        boolean tile = false;
+                        boolean secondTile = false;
+
+                        tile = visitMap.get(y).get(x);
+                        secondTile = listOfRooms.get(a).get(y).get(x);
+
+
+                        if (tile && secondTile) {
+//                            numberOfRooms--;
+                            listOfRooms.remove(listOfRooms.size() - 1);
+                            break;
+                        }
                     }
+                }
+
+                try {
                     if (!visitMap.get(y).get(x)) {
                         visitMap = Algorithms.floodFill(dungeon, x, y);
-
-
-                        if(visitMap != null){
-
+                        if (visitMap != null) { //todo I think its always not null now so i can remove it
                             numberOfRooms++;
                             printMap(visitMap);
                             roomSize = roomSize + countVisited(visitMap);
+                            listOfRooms.add(visitMap);//todo here
                         }
                     }
-                }catch (Exception e){
-                    System.err.println("erros");
+                } catch (Exception e) {
+                    System.err.println("erros"); //todo i might not need that too
                     visitMap = Algorithms.floodFill(dungeon, x, y);
                 }
+
+
+
+
             }
         }
     }
-                            wallCount = (dungeonWidth * dungeonHeight) - roomSize;
-                            //Currently score is given by calculating ratio of wall to corridor (so 50
+
+
+        wallCount = (dungeonWidth * dungeonHeight) - roomSize;
+        //Currently score is given by calculating ratio of wall to corridor (so 50
 //                            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
-                            System.out.println("Room Count: " + numberOfRooms);
-                            System.out.println("Walls: " + wallCount);
-                            System.out.println("Rooms Take: " + roomSize);
+        System.out.println("Room Count: " + numberOfRooms);
+        System.out.println("Walls: " + wallCount);
+        System.out.println("Rooms Take: " + roomSize);
 //                            System.out.println("Total Score: " + (numberOfRooms * 20) + wallCount);
-                            System.out.println("*******************************************");
+        System.out.println("*******************************************");
         System.out.println("Score: " + dungeon.getScore());
 }
 
