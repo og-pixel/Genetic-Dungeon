@@ -43,7 +43,7 @@ public class Main {
 
         ArrayList<Dungeon> mapList = new ArrayList<>();
         for(int i = 0; i < 1; i++){
-            mapList.add(new Dungeon(5, 10, true));
+            mapList.add(new Dungeon(15, 10, true));
 //            mapList.get(mapList.size() - 1).printDungeon();
         }
 
