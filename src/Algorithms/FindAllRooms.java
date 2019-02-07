@@ -37,24 +37,24 @@ public class FindAllRooms implements Fitness{
             for(int x = 0; x < dungeonWidth; x++) {
             if (dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
 
-                if(listOfRooms.isEmpty()) {
-                    listOfRooms.add(visitMap);
-                    for (int a = 0; a < listOfRooms.size(); a++) {
-
-                        boolean tile = false;
-                        boolean secondTile = false;
-
-                        tile = visitMap.get(y).get(x);
-                        secondTile = listOfRooms.get(a).get(y).get(x);
-
-
-                        if (tile && secondTile) {
-//                            numberOfRooms--;
-                            listOfRooms.remove(listOfRooms.size() - 1);
-                            break;
-                        }
-                    }
-                }
+//                if(listOfRooms.isEmpty()) {
+//                    listOfRooms.add(visitMap);
+//                    for (int a = 0; a < listOfRooms.size(); a++) {
+//
+//                        boolean tile = false;
+//                        boolean secondTile = false;
+//
+//                        tile = visitMap.get(y).get(x);
+//                        secondTile = listOfRooms.get(a).get(y).get(x);
+//
+//
+//                        if (tile && secondTile) {
+////                            numberOfRooms--;
+//                            listOfRooms.remove(listOfRooms.size() - 1);
+//                            break;
+//                        }
+//                    }
+//                }
 
                 try {
                     if (!visitMap.get(y).get(x)) {

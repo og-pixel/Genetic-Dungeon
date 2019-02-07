@@ -1,5 +1,6 @@
 import Algorithms.Fitness;
 import Algorithms.FindAllRooms;
+import Algorithms.Matrix;
 import Dungeon.Dungeon;
 
 import java.util.ArrayList;
@@ -8,6 +9,61 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 //        new Interpreter(args);
         //todo interpreter later
+
+        Matrix matrix = new Matrix(10,10, false);
+
+
+//        matrix.addRow();
+
+        System.out.println(matrix);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        System.exit(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         ArrayList<Fitness> fitnessList = new ArrayList<>();
         fitnessList.add(new FindAllRooms());

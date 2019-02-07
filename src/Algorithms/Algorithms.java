@@ -13,11 +13,11 @@ import java.util.HashMap;
 public class Algorithms {
 
 //    public static ArrayList<ArrayList<Boolean>> visitMap;
-
-    public Algorithms(Dungeon dungeon){
-
-
-    }
+//
+//    public Algorithms(Dungeon dungeon){
+//
+//
+//    }
 
 
     public static ArrayList<ArrayList<Boolean>> floodFill(Dungeon dungeon, int x, int y){

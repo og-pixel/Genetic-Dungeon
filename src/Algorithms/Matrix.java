@@ -1,19 +1,74 @@
 package Algorithms;
 
+import com.sun.javafx.scene.traversal.Algorithm;
+
 import java.util.ArrayList;
 
 /**
  * Currently a simple class for basic matrix manipulations, such as creating matrices and
  * todo more features?
  */
-public class Matrix {
+public class Matrix<E> {
 
-//    ArrayList<ArrayList<Boolean>> matrix;
+    private ArrayList<ArrayList<Object>> matrix; //for now, its object
+    private int width, height; //todo make it count on contrsuctor and adding/removing rows
+
+    /**
+     * Default constructor makes booleans
+     * @param width
+     * @param height
+     */
+    public Matrix(int width, int height){
+        matrix = createMatrix(width, height, false);
+        this.width = width;
+        this.height = height;
+    }
+
+    public <T> Matrix (int width, int height, T type){
+        matrix = createMatrix(width, height, type);
+        this.width = width;
+        this.height = height;
+    }
+
+
 //
-//    public Matrix(int width, int height){
-//        matrix = createMatrix(width, height, true);
+//    public Matrix getMatrix(){
+//        return matrix;
 //    }
+    public Object getElement(int x, int y){
+        return matrix.get(y).get(x);
+    }
 
+
+    /**
+     * Adds a new row to the matrix (on the bottom)
+     * @return
+     */
+    public boolean addRow(){
+        matrix.add(new ArrayList<>());
+        height++;
+        return true;
+    }
+
+
+
+    public boolean putElementAt(E e, int x, int y){
+        try{
+           matrix.get(y).set(x, e);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false; //todo one or the other
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+    //TODO this might go into matrix factory (ehhh)
     /**
      * todo it will fill it with one object
      * @param width
@@ -30,10 +85,18 @@ public class Matrix {
                 genericMatrix.get(yAxis).add(type);
             }
         }
-
-        if(genericMatrix == null)throw new RuntimeException("Matrix cannot be null");
         return genericMatrix;
     }
+
+
+    public static <T> ArrayList<ArrayList<T>> createEmptyMatrix(int height){
+        ArrayList<ArrayList<T>> emptyMatrix = new ArrayList<>();
+        for(int yAxis = 0; yAxis < height; yAxis++){
+            emptyMatrix.add(new ArrayList<>());
+        }
+        return emptyMatrix;
+    }
+
 
     /**
      * inserts contents of one matrix to another
@@ -48,6 +111,23 @@ public class Matrix {
 //                }
             }
         }
+    }
+
+    /**
+     * TODO I made it into a string builder (as IDE suggested), a little weird tho
+     * @return
+     */
+    public String toString(){
+        StringBuilder string = new StringBuilder();
+
+        for(int y = 0; y < height; y++){
+            string.append(" { ");
+            for (int x = 0; x < width; x++){
+                string.append(matrix.get(y).get(x).toString()).append(", ");
+            }
+            string.append("}\n");
+        }
+        return string.toString();
     }
 
 }
