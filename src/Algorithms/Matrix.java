@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Currently a simple class for basic matrix manipulations, such as creating matrices and
  * todo more features?
+ * todo matrix is quite universal and accepts all types (it wont crash if matrix has numbers and strings)
  */
 public class Matrix<E> {
 
@@ -44,12 +45,26 @@ public class Matrix<E> {
      * Adds a new row to the matrix (on the bottom)
      * @return
      */
-    public boolean addRow(){
+    public boolean addRow(E type){
         matrix.add(new ArrayList<>());
+        for(int i = 0; i < width; i++) { //todo i had to -1
+            matrix.get(height).add(type);
+        }
         height++;
         return true;
     }
 
+    /**
+     * Adds a new row to the matrix (on the bottom)
+     * @return
+     */
+    public boolean addColumn(E type){
+        for(int i = 0; i < height; i++) { //todo i had to -1
+            matrix.get(i).add(type);
+        }
+        width++;
+        return true;
+    }
 
 
     public boolean putElementAt(E e, int x, int y){

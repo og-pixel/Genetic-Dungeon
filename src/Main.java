@@ -4,33 +4,25 @@ import Algorithms.Matrix;
 import Dungeon.Dungeon;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 //        new Interpreter(args);
         //todo interpreter later
 
-        Matrix matrix = new Matrix(10,10, false);
 
+        Matrix intMatrix = new Matrix(10,10, 5);
 
-//        matrix.addRow();
+        Random random = new Random();
 
-        System.out.println(matrix);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        for(int i = 0; i < 1000; i++) {
+            if (random.nextFloat() > 0.3) {
+                intMatrix.addColumn(5);
+            }else intMatrix.addRow(5);
+        }
+        System.out.println(intMatrix);
 
 
 
@@ -38,27 +30,6 @@ public class Main {
 
 
         System.exit(1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
