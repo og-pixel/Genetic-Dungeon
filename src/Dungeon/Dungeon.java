@@ -1,5 +1,6 @@
 package Dungeon;
 
+import Algorithms.Matrix;
 import Dungeon.Tile.*;
 import Errors.VariableBoundsIncorrect;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Dungeon {
     private int score; //TODO it might be just a chromosome thing later
 
     /* Dungeon is created as a matrix made out of (abstract) Tile objects */
-    private ArrayList<ArrayList<Tile>> dungeonMatrix;
+    private Matrix<Tile> dungeonMatrix;
 
     /*
     * Genetic Algorithm component
@@ -30,13 +31,13 @@ public class Dungeon {
         this.dungeonWidth = dungeonWidth;
         this.dungeonHeight = dungeonHeight;
 
-        dungeonMatrix = new ArrayList<>();
-        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-            dungeonMatrix.add(new ArrayList<>());
-            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-                dungeonMatrix.get(yAxis).add(new EmptyTile(xAxis, yAxis));
-            }
-        }
+        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, new Corridor(0, 0));//todo tile numbers and all of them might be the same object
+//        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
+//            dungeonMatrix.add(new ArrayList<>());
+//            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
+//                dungeonMatrix.get(yAxis).add(new EmptyTile(xAxis, yAxis));
+//            }
+//        }
         score = 0;
     }
 
@@ -45,14 +46,14 @@ public class Dungeon {
         this.dungeonHeight = dungeonHeight;
         Random random = new Random();
 
-        dungeonMatrix = new ArrayList<>();
-        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-            dungeonMatrix.add(new ArrayList<>());
-            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
-                else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
-            }
-        }
+        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, bool);//todo used second constructor
+//        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
+//            dungeonMatrix.add(new ArrayList<>());
+//            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
+//                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
+//                else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
+//            }
+//        }
         score = 0;
     }
 
@@ -72,7 +73,7 @@ public class Dungeon {
         this.score = score;
     }
 
-    public ArrayList<ArrayList<Tile>> getDungeonMatrix() {
+    public Matrix<Tile> getDungeonMatrix() {
         return dungeonMatrix;
     }
 
@@ -80,7 +81,7 @@ public class Dungeon {
         for(int y = 0; y < dungeonHeight; y++){
             System.out.println();
             for(int x = 0; x < dungeonWidth; x++){
-                System.out.print(dungeonMatrix.get(y).get(x));
+                System.out.print(dungeonMatrix.getElement(x, y));
             }
         }
         System.out.println();

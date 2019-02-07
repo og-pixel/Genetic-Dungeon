@@ -19,9 +19,9 @@ public class Algorithms {
 //
 //    }
 
-
-    public static ArrayList<ArrayList<Boolean>> floodFill(Dungeon dungeon, int x, int y){
-        if (dungeon.getDungeonMatrix().get(y).get(x) == null) {
+    //todo for now it returns a a matrix of booleans
+    public static Matrix<Boolean> floodFill(Dungeon dungeon, int x, int y){
+        if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
             return null;
         }
 
@@ -33,36 +33,38 @@ public class Algorithms {
 
 //        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof )
 
-        ArrayList<ArrayList<Boolean>> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
+//        Matrix<Boolean> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
+        Matrix<Boolean> visitMap = new Matrix(dungeonWidth, dungeonHeight, false);
         flood(dungeon, visitMap, x, y);
 
 
         return visitMap;
     }
 
-    private static void flood(Dungeon dungeon, ArrayList<ArrayList<Boolean>> visitMap, int x, int y){
+    private static <T> void flood(Dungeon dungeon, Matrix<T> visitMap, int x, int y){
 
-        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
+        if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
             visitMap.get(y).set(x, true);
+            visitMap.putElementAt(Boolean.TRUE , x, y);
 //            System.out.println("DEBUG x: " + x + "  y: " + y);
 
 
-            if (x > 0 && dungeon.getDungeonMatrix().get(y).get(x - 1).getTile() instanceof Corridor) {
+            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) instanceof Corridor) {
                 if (!visitMap.get(y).get(x - 1)) {
                     flood(dungeon, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().get(y).get(x + 1).getTile() instanceof Corridor) {
+            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) instanceof Corridor) {
                 if (!visitMap.get(y).get(x + 1)) {
                     flood(dungeon, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && dungeon.getDungeonMatrix().get(y - 1).get(x).getTile() instanceof Corridor) {
+            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) instanceof Corridor) {
                 if (!visitMap.get(y - 1).get(x)) {
                     flood(dungeon, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().get(y + 1).get(x).getTile() instanceof Corridor) {
+            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) instanceof Corridor) {
                 if (!visitMap.get(y + 1).get(x)) {
                     flood(dungeon, visitMap, x, y + 1);
                 }

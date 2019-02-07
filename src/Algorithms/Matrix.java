@@ -1,5 +1,6 @@
 package Algorithms;
 
+import Dungeon.Tile.Tile;
 import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.util.ArrayList;
@@ -20,17 +21,35 @@ public class Matrix<E> {
      * @param height
      */
     public Matrix(int width, int height){
-        matrix = createMatrix(width, height, false);
+//        matrix = createMatrix(width, height, false);
+        for(int y = 0; y < height; y++){
+            matrix = new ArrayList<>();
+            for(int x = 0; x < width; x++){
+                matrix.get(y).add(new Object());//todo i made it object
+            }
+        }
         this.width = width;
         this.height = height;
     }
 
     public <T> Matrix (int width, int height, T type){
-        matrix = createMatrix(width, height, type);
+//        matrix = createMatrix(width, height, type);
+        for(int y = 0; y < height; y++){
+            matrix = new ArrayList<>();
+            for(int x = 0; x < width; x++){
+                matrix.get(y).add(type);//todo i made it object
+            }
+        }
         this.width = width;
         this.height = height;
     }
 
+    //todo creating a little cheat
+    public Matrix (int width, int height, Tile tiletype){
+//        matrix = createMatrix(width, height, tiletype);//todo might be the same thing with one objec
+        this.width = width;
+        this.height = height;
+    }
 
 //
 //    public Matrix getMatrix(){
@@ -86,22 +105,17 @@ public class Matrix<E> {
     //TODO this might go into matrix factory (ehhh)
     /**
      * todo it will fill it with one object
-     * @param width
-     * @param height
-     * @param type
-     * @param <T>
-     * @return
      */
-    public static <T> ArrayList<ArrayList<T>> createMatrix(int width, int height, T type){
-        ArrayList<ArrayList<T>> genericMatrix = new ArrayList<>();
-        for(int yAxis = 0; yAxis < height; yAxis++){
-            genericMatrix.add(new ArrayList<>());
-            for(int xAxis = 0; xAxis < width; xAxis++){
-                genericMatrix.get(yAxis).add(type);
-            }
-        }
-        return genericMatrix;
-    }
+//    public static <T> Matrix<T> createMatrix(int width, int height, T type){
+//        Matrix<T> genericMatrix = new Matrix<T>(width, height, type);//todo it was empty and I dont know what to put back
+////        for(int yAxis = 0; yAxis < height; yAxis++){
+////            genericMatrix.add(new ArrayList<>());
+////            for(int xAxis = 0; xAxis < width; xAxis++){
+////                genericMatrix.get(yAxis).add(type);
+////            }
+////        }
+//        return genericMatrix;
+//    }
 
 
     public static <T> ArrayList<ArrayList<T>> createEmptyMatrix(int height){

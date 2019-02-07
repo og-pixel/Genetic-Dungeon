@@ -35,7 +35,7 @@ public class FindAllRooms implements Fitness{
 
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++) {
-            if (dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof Corridor) {
+            if (dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
 
 //                if(listOfRooms.isEmpty()) {
 //                    listOfRooms.add(visitMap);
