@@ -27,37 +27,17 @@ public class FindAllRooms implements Fitness{
         int wallCount = 0;
         int counter = 0;
 
-        ArrayList<ArrayList<ArrayList<Boolean>>> listOfRooms = new ArrayList<>();
-//        listOfRooms.add(new ArrayList<>());
+//        ArrayList<ArrayList<ArrayList<Boolean>>> listOfRooms = new ArrayList<>();
+        ArrayList<Matrix<Boolean>> listOfRooms = new ArrayList<>();
 
-        ArrayList<ArrayList<Boolean>> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
+        Matrix<Boolean> visitMap = new Matrix<>(dungeonWidth, dungeonHeight, false);
 
 
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++) {
             if (dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-
-//                if(listOfRooms.isEmpty()) {
-//                    listOfRooms.add(visitMap);
-//                    for (int a = 0; a < listOfRooms.size(); a++) {
-//
-//                        boolean tile = false;
-//                        boolean secondTile = false;
-//
-//                        tile = visitMap.get(y).get(x);
-//                        secondTile = listOfRooms.get(a).get(y).get(x);
-//
-//
-//                        if (tile && secondTile) {
-////                            numberOfRooms--;
-//                            listOfRooms.remove(listOfRooms.size() - 1);
-//                            break;
-//                        }
-//                    }
-//                }
-
                 try {
-                    if (!visitMap.get(y).get(x)) {
+                    if (!visitMap.getElement(x,y)) {
                         visitMap = Algorithms.floodFill(dungeon, x, y);
                         if (visitMap != null) { //todo I think its always not null now so i can remove it
                             numberOfRooms++;
@@ -70,10 +50,6 @@ public class FindAllRooms implements Fitness{
                     System.err.println("erros"); //todo i might not need that too
                     visitMap = Algorithms.floodFill(dungeon, x, y);
                 }
-
-
-
-
             }
         }
     }
@@ -90,51 +66,25 @@ public class FindAllRooms implements Fitness{
         System.out.println("Score: " + dungeon.getScore());
 }
 
-    private void function(){
-
-
-    }
-
-
-    /**
-     * Check if a room was "discovered" already
-     * @return
-     */
-    private boolean checkIfAlreadyFlooded(int x, int y){
-
-
-        return false;
-    }
-
-    private int countVisited(ArrayList<ArrayList<Boolean>> visitMap){
+    private int countVisited(Matrix<Boolean> visitMap){
         int counter = 0;
-        for (ArrayList<Boolean> booleans : visitMap) {
-            for (Boolean aBoolean : booleans) {
-                if (aBoolean) counter++;
+        for(int y = 0; y < visitMap.getHeight(); y++){
+            for(int x = 0; x < visitMap.getWidth(); x++){
+                if(visitMap.getElement(x,y)) counter++;
             }
         }
         return counter;
     }
-    public void printMap(ArrayList<ArrayList<Boolean>> visitMap){
-        for (ArrayList<Boolean> booleans : visitMap) {
+
+    public void printMap(Matrix<Boolean> visitMap){
+        for (int y = 0; y < visitMap.getHeight(); y++) {
             System.out.println();
-            for (Boolean aBoolean : booleans) {
-                if (aBoolean) System.out.print("░");
+            for (int x = 0; x < visitMap.getWidth(); x++) {
+                if (visitMap.getElement(x,y)) System.out.print("░");
                 else System.out.print("x");
             }
         }
         System.out.println();
         System.out.println("****************************");
     }
-//    public void printMap(ArrayList<ArrayList<Boolean>> visitMap){
-//        for(int y = 0; y < visitMap.size(); y++){
-//            System.out.println();
-//            for(int x = 0; x < visitMap.get(y).size(); x++){
-//                if(visitMap.get(y).get(x)) System.out.print(" ");
-//                    else System.out.print("░");
-//            }
-//        }
-//        System.out.println();
-//        System.out.println("****************************");
-//    }
 }

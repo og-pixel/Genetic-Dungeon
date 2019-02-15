@@ -13,7 +13,7 @@ public class Main {
         //todo interpreter later
 
 
-        Matrix intMatrix = new Matrix(10,10, 5);
+        Matrix<Integer> intMatrix = new Matrix<Integer>(10,10);
 
         Random random = new Random();
 
@@ -24,18 +24,7 @@ public class Main {
         }
         System.out.println(intMatrix);
 
-
-
-
-
-
         System.exit(1);
-
-
-
-
-
-
         ArrayList<Fitness> fitnessList = new ArrayList<>();
         fitnessList.add(new FindAllRooms());
 
@@ -43,7 +32,7 @@ public class Main {
 
         ArrayList<Dungeon> mapList = new ArrayList<>();
         for(int i = 0; i < 1; i++){
-            mapList.add(new Dungeon(15, 10, true));
+            mapList.add(new Dungeon(15, 10));//todo i changed it
 //            mapList.get(mapList.size() - 1).printDungeon();
         }
 

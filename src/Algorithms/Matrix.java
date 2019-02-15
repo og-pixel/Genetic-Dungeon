@@ -1,8 +1,5 @@
 package Algorithms;
 
-import Dungeon.Tile.Tile;
-import com.sun.javafx.scene.traversal.Algorithm;
-
 import java.util.ArrayList;
 
 /**
@@ -12,53 +9,36 @@ import java.util.ArrayList;
  */
 public class Matrix<E> {
 
-    private ArrayList<ArrayList<Object>> matrix; //for now, its object
-    private int width, height; //todo make it count on contrsuctor and adding/removing rows
+    private ArrayList<ArrayList<E>> matrix;
+    private int width, height;
+
+    public Matrix (int width, int height, E element){
+        for(int y = 0; y < height; y++){
+            matrix = new ArrayList<>();
+            for(int x = 0; x < width; x++){
+                matrix.get(y).add(element);
+            }
+        }
+        this.width = width;
+        this.height = height;
+    }
 
     /**
-     * Default constructor makes booleans
+     * TODO constructor without creating stuff inside
      * @param width
      * @param height
      */
-    public Matrix(int width, int height){
-//        matrix = createMatrix(width, height, false);
+    public Matrix (int width, int height){
         for(int y = 0; y < height; y++){
             matrix = new ArrayList<>();
-            for(int x = 0; x < width; x++){
-                matrix.get(y).add(new Object());//todo i made it object
-            }
         }
         this.width = width;
         this.height = height;
     }
 
-    public <T> Matrix (int width, int height, T type){
-//        matrix = createMatrix(width, height, type);
-        for(int y = 0; y < height; y++){
-            matrix = new ArrayList<>();
-            for(int x = 0; x < width; x++){
-                matrix.get(y).add(type);//todo i made it object
-            }
-        }
-        this.width = width;
-        this.height = height;
-    }
-
-    //todo creating a little cheat
-    public Matrix (int width, int height, Tile tiletype){
-//        matrix = createMatrix(width, height, tiletype);//todo might be the same thing with one objec
-        this.width = width;
-        this.height = height;
-    }
-
-//
-//    public Matrix getMatrix(){
-//        return matrix;
-//    }
-    public Object getElement(int x, int y){
+    public E getElement(int x, int y){
         return matrix.get(y).get(x);
     }
-
 
     /**
      * Adds a new row to the matrix (on the bottom)
@@ -77,9 +57,9 @@ public class Matrix<E> {
      * Adds a new row to the matrix (on the bottom)
      * @return
      */
-    public boolean addColumn(E type){
+    public boolean addColumn(E element){
         for(int i = 0; i < height; i++) { //todo i had to -1
-            matrix.get(i).add(type);
+            matrix.get(i).add(element);
         }
         width++;
         return true;
@@ -96,36 +76,17 @@ public class Matrix<E> {
         return true;
     }
 
-
-
-
-
-
-
-    //TODO this might go into matrix factory (ehhh)
-    /**
-     * todo it will fill it with one object
-     */
-//    public static <T> Matrix<T> createMatrix(int width, int height, T type){
-//        Matrix<T> genericMatrix = new Matrix<T>(width, height, type);//todo it was empty and I dont know what to put back
-////        for(int yAxis = 0; yAxis < height; yAxis++){
-////            genericMatrix.add(new ArrayList<>());
-////            for(int xAxis = 0; xAxis < width; xAxis++){
-////                genericMatrix.get(yAxis).add(type);
-////            }
-////        }
-//        return genericMatrix;
-//    }
-
-
-    public static <T> ArrayList<ArrayList<T>> createEmptyMatrix(int height){
-        ArrayList<ArrayList<T>> emptyMatrix = new ArrayList<>();
-        for(int yAxis = 0; yAxis < height; yAxis++){
-            emptyMatrix.add(new ArrayList<>());
-        }
-        return emptyMatrix;
+    public ArrayList<E> getRow(int row){
+        return matrix.get(row);
     }
 
+    public ArrayList<E> getColumn(int column){
+        ArrayList<E> columnArray = new ArrayList<>();
+        for(int i = 0; i < height; i++){
+            columnArray.add(matrix.get(column).get(i));
+        }
+        return columnArray;
+    }
 
     /**
      * inserts contents of one matrix to another
@@ -140,6 +101,13 @@ public class Matrix<E> {
 //                }
             }
         }
+    }
+
+    public int getWidth(){
+        return width;
+    }
+    public int getHeight(){
+        return height;
     }
 
     /**

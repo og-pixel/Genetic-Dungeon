@@ -31,7 +31,7 @@ public class Dungeon {
         this.dungeonWidth = dungeonWidth;
         this.dungeonHeight = dungeonHeight;
 
-        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, new Corridor(0, 0));//todo tile numbers and all of them might be the same object
+        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
 //        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
 //            dungeonMatrix.add(new ArrayList<>());
 //            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
@@ -41,21 +41,21 @@ public class Dungeon {
         score = 0;
     }
 
-    public Dungeon(int dungeonWidth, int dungeonHeight, boolean bool) {
-        this.dungeonWidth = dungeonWidth;
-        this.dungeonHeight = dungeonHeight;
-        Random random = new Random();
-
-        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, bool);//todo used second constructor
-//        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-//            dungeonMatrix.add(new ArrayList<>());
-//            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-//                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
-//                else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
-//            }
-//        }
-        score = 0;
-    }
+//    public Dungeon(int dungeonWidth, int dungeonHeight, boolean bool) {
+//        this.dungeonWidth = dungeonWidth;
+//        this.dungeonHeight = dungeonHeight;
+//        Random random = new Random();
+//
+//        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, bool);//todo used second constructor
+////        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
+////            dungeonMatrix.add(new ArrayList<>());
+////            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
+////                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
+////                else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
+////            }
+////        }
+//        score = 0;
+//    }
 
     public int getDungeonWidth() {
         return dungeonWidth;

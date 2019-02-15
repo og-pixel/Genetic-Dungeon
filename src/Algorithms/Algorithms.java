@@ -3,8 +3,6 @@ package Algorithms;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Static class implementing a bunch of algorithms
@@ -34,7 +32,7 @@ public class Algorithms {
 //        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof )
 
 //        Matrix<Boolean> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
-        Matrix<Boolean> visitMap = new Matrix(dungeonWidth, dungeonHeight, false);
+        Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
         flood(dungeon, visitMap, x, y);
 
 
@@ -45,6 +43,7 @@ public class Algorithms {
 
         if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
             visitMap.get(y).set(x, true);
+            visitMap.putElementAt(true, x, y);
             visitMap.putElementAt(Boolean.TRUE , x, y);
 //            System.out.println("DEBUG x: " + x + "  y: " + y);
 

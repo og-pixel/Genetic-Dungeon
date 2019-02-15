@@ -1,5 +1,6 @@
 package Dungeon;
 
+import Algorithms.Matrix;
 import Dungeon.Tile.*;
 
 import java.util.*;
@@ -32,7 +33,7 @@ public class DungeonGenerator {
 
     //TODO this is the only part I don't like, I just store the information about dungeon just so I can access is right
     // away, but considering most of the project is to be abandoned and redone, I can change my mind later
-    private ArrayList<ArrayList<Tile>> dungeonMatrix;
+    private Matrix<Tile> dungeonMatrix;
     private int dungeonHeight;
     private int dungeonWidth;
     private int limitCorner;
