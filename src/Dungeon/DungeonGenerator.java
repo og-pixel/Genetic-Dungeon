@@ -74,19 +74,19 @@ public class DungeonGenerator {
     public float createMaze() {
         float currentTime = System.nanoTime();
         int region = 0;
-        for(int i = 1; i < dungeonHeight - 1; i++){
-            for(int j = 1; j < dungeonWidth - 1; j++){
-                if(dungeonMatrix.get(i).get(j) instanceof EmptyTile
-                        && dungeonMatrix.get(i).get(j - 1) instanceof EmptyTile
-                        && dungeonMatrix.get(i - 1).get(j) instanceof EmptyTile
-                        && dungeonMatrix.get(i).get(j + 1) instanceof EmptyTile
-                        && dungeonMatrix.get(i + 1).get(j) instanceof EmptyTile
-                        && dungeonMatrix.get(i + 1).get(j + 1) instanceof EmptyTile
-                        && dungeonMatrix.get(i + 1).get(j - 1) instanceof EmptyTile
-                        && dungeonMatrix.get(i - 1).get(j - 1) instanceof EmptyTile
-                        && dungeonMatrix.get(i - 1).get(j + 1) instanceof EmptyTile){
+        for(int y = 1; y < dungeonHeight - 1; y++){
+            for(int x = 1; x < dungeonWidth - 1; x++){
+                if(dungeonMatrix.getElement(x, y) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x - 1, y) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x , y - 1) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x + 1, y) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x ,y + 1) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x + 1, y + 1) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x - 1, y + 1) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x - 1, y - 1) instanceof EmptyTile
+                        && dungeonMatrix.getElement(x + 1, y - 1) instanceof EmptyTile){
                     region++;
-                    digTunnel(j,i, 0b0010, region);
+                    digTunnel(x,y, 0b0010, region);
                 }
             }
         }
@@ -105,9 +105,10 @@ public class DungeonGenerator {
     private void digTunnel(int currentXPos, int currentYPos, int determinedDirection, int region) {
 
         //Create corridor in currentXPos and currentYPos and set a region
-        dungeonMatrix.get(currentYPos).set(currentXPos, new Corridor(currentXPos, currentYPos));
-        ((Corridor) dungeonMatrix.get(currentYPos).get(currentXPos)).setRegion(region);
-
+//        dungeonMatrix.get(currentYPos).set(currentXPos, new Corridor(currentXPos, currentYPos));
+        dungeonMatrix.putElementAt(new Corridor(currentXPos, currentYPos), currentXPos, currentYPos);
+        ((Corridor) dungeonMatrix.getElement(currentXPos, currentYPos)).setRegion(region);
+//        ((Corridor) dungeonMatrix.get(currentYPos).get(currentXPos)).setRegion(region);
 
         //Increment the region, NullPointerException if its the first one
         try { regionMap.put(region, regionMap.get(region) + 1); }
@@ -272,34 +273,34 @@ public class DungeonGenerator {
             for(int xPos = 0; xPos < dungeonWidth - 1; xPos++){
                 emptyCorner = 0;
 
-                if(dungeonMatrix.get(yPos).get(xPos) instanceof Corridor){
+                if(dungeonMatrix.getElement(xPos, yPos) instanceof Corridor){
 
-                    if(dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile)emptyCorner++;
+                    if(dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile)emptyCorner++;
                     else{
                         tempX = xPos;
                         tempY = yPos - 1;
                     }
 
-                    if(dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile)emptyCorner++;
+                    if(dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile)emptyCorner++;
                     else{
                         tempX = xPos - 1;
                         tempY = yPos;
                     }
 
-                    if(dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile)emptyCorner++;
+                    if(dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile)emptyCorner++;
                     else{
                         tempX = xPos;
                         tempY = yPos + 1;
                     }
 
-                    if(dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile)emptyCorner++;
+                    if(dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile)emptyCorner++;
                     else{
                         tempX = xPos + 1;
                         tempY = yPos;
                     }
 
                     if(emptyCorner >= 3) {
-                        dungeonMatrix.get(yPos).set(xPos, new EmptyTile(xPos, yPos));
+                        dungeonMatrix.putElementAt(new EmptyTile(xPos, yPos), xPos, yPos);
                         removeCornerRecursive(tempX, tempY);
                     }
                 }

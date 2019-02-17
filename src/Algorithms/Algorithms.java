@@ -39,40 +39,32 @@ public class Algorithms {
         return visitMap;
     }
 
-    private static <T> void flood(Dungeon dungeon, Matrix<T> visitMap, int x, int y){
+    private static void flood(Dungeon dungeon, Matrix<Boolean> visitMap, int x, int y){
 
         if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-            visitMap.get(y).set(x, true);
             visitMap.putElementAt(true, x, y);
-            visitMap.putElementAt(Boolean.TRUE , x, y);
-//            System.out.println("DEBUG x: " + x + "  y: " + y);
-
 
             if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) instanceof Corridor) {
-                if (!visitMap.get(y).get(x - 1)) {
+                if (!visitMap.getElement(x - 1, y)) {
                     flood(dungeon, visitMap, x - 1, y);
                 }
             }
             if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) instanceof Corridor) {
-                if (!visitMap.get(y).get(x + 1)) {
+                if (!visitMap.getElement(x + 1, y)) {
                     flood(dungeon, visitMap, x + 1, y);
                 }
             }
             if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) instanceof Corridor) {
-                if (!visitMap.get(y - 1).get(x)) {
+                if (!visitMap.getElement(x, y - 1)) {
                     flood(dungeon, visitMap, x, y - 1);
                 }
             }
             if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) instanceof Corridor) {
-                if (!visitMap.get(y + 1).get(x)) {
+                if (!visitMap.getElement(x, y + 1)) {
                     flood(dungeon, visitMap, x, y + 1);
                 }
             }
         }
-
-//        heightCount.
-
-
     }
 
     public static void aStarTraverse(Dungeon dungeon){
