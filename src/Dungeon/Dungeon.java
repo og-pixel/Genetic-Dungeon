@@ -2,9 +2,6 @@ package Dungeon;
 
 import Algorithms.Matrix;
 import Dungeon.Tile.*;
-import Errors.VariableBoundsIncorrect;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Dungeon {
     /* Variables */
@@ -19,6 +16,15 @@ public class Dungeon {
     * */
 
 
+    //TODO maybe I will create small Class to hold information
+//    private int startNodeX;
+//    private int startNodeY;
+//
+//    private int endNodeX;
+//    private int endNodeY;
+    private Position startPosition;
+    private Position endPosition;
+
 
     /**
      * Constructor
@@ -26,36 +32,41 @@ public class Dungeon {
      * @param dungeonHeight
      */
     public Dungeon(int dungeonWidth, int dungeonHeight) {
-//        if (diceRoll < 1 || diceRoll > 100) throw new VariableBoundsIncorrect(1,100);
-
         this.dungeonWidth = dungeonWidth;
         this.dungeonHeight = dungeonHeight;
 
         dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
-//        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-//            dungeonMatrix.add(new ArrayList<>());
-//            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-//                dungeonMatrix.get(yAxis).add(new EmptyTile(xAxis, yAxis));
-//            }
-//        }
+
+        createStartPosition();
+        createEndPosition();
+
         score = 0;
     }
 
-//    public Dungeon(int dungeonWidth, int dungeonHeight, boolean bool) {
-//        this.dungeonWidth = dungeonWidth;
-//        this.dungeonHeight = dungeonHeight;
-//        Random random = new Random();
-//
-//        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight, bool);//todo used second constructor
-////        for (int yAxis = 0; yAxis < dungeonHeight; yAxis++) {
-////            dungeonMatrix.add(new ArrayList<>());
-////            for (int xAxis = 0; xAxis < dungeonWidth; xAxis++) {
-////                if(random.nextFloat() < 0.55)dungeonMatrix.get(yAxis).add(new Wall(xAxis, yAxis));
-////                else dungeonMatrix.get(yAxis).add(new Corridor(xAxis, yAxis));
-////            }
-////        }
-//        score = 0;
-//    }
+
+    public boolean createStartPosition(){
+        for(int y  = 0; y < dungeonHeight; y++){
+            for(int x  = 0; x < dungeonWidth; x++){
+                if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
+                    startPosition = new Position(x,y);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean createEndPosition(){
+        for(int y = dungeonHeight; y == 0 ; y--){
+            for(int x  = dungeonWidth; x == 0 ; x--){
+                if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
+                    endPosition = new Position(x,y);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public int getDungeonWidth() {
         return dungeonWidth;

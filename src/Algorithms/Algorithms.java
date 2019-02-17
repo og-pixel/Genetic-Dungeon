@@ -10,13 +10,6 @@ import Dungeon.Tile.Corridor;
  */
 public class Algorithms {
 
-//    public static ArrayList<ArrayList<Boolean>> visitMap;
-//
-//    public Algorithms(Dungeon dungeon){
-//
-//
-//    }
-
     //todo for now it returns a a matrix of booleans
     public static Matrix<Boolean> floodFill(Dungeon dungeon, int x, int y){
         if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
@@ -26,17 +19,10 @@ public class Algorithms {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
-
-
-
-//        if(dungeon.getDungeonMatrix().get(y).get(x).getTile() instanceof )
-
-//        Matrix<Boolean> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
         Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
         visitMap.fillMatrix(false);
 
         flood(dungeon, visitMap, x, y);
-
 
         return visitMap;
     }
@@ -44,7 +30,7 @@ public class Algorithms {
     private static void flood(Dungeon dungeon, Matrix<Boolean> visitMap, int x, int y){
 
         if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-            visitMap.putElementAt(x, y, true);
+            visitMap.put(x, y, true);
 
             if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) instanceof Corridor) {
                 if (!visitMap.getElement(x - 1, y)) {

@@ -106,7 +106,7 @@ public class DungeonGenerator {
 
         //Create corridor in currentXPos and currentYPos and set a region
 //        dungeonMatrix.get(currentYPos).set(currentXPos, new Corridor(currentXPos, currentYPos));
-        dungeonMatrix.putElementAt(currentXPos, currentYPos, new Corridor(currentXPos, currentYPos));
+        dungeonMatrix.put(currentXPos, currentYPos, new Corridor(currentXPos, currentYPos));
         ((Corridor) dungeonMatrix.getElement(currentXPos, currentYPos)).setRegion(region);
 //        ((Corridor) dungeonMatrix.get(currentYPos).get(currentXPos)).setRegion(region);
 
@@ -300,7 +300,7 @@ public class DungeonGenerator {
                     }
 
                     if(emptyCorner >= 3) {
-                        dungeonMatrix.putElementAt(xPos, yPos, new EmptyTile(xPos, yPos));
+                        dungeonMatrix.put(xPos, yPos, new EmptyTile(xPos, yPos));
                         removeCornerRecursive(tempX, tempY);
                     }
                 }
@@ -340,7 +340,7 @@ public class DungeonGenerator {
             }
 
             if (emptyCorner >= 3 && this.limitCorner >= 0) {
-                dungeonMatrix.putElementAt(xPos, yPos,  new EmptyTile(xPos, yPos));
+                dungeonMatrix.put(xPos, yPos,  new EmptyTile(xPos, yPos));
                 this.limitCorner--;
                 removeCornerRecursive(tempX, tempY);
             }
@@ -412,7 +412,7 @@ public class DungeonGenerator {
 
 
 
-                dungeonMatrix.putElementAt(previousX, previousY, new EmptyTile(xPos, yPos));
+                dungeonMatrix.put(previousX, previousY, new EmptyTile(xPos, yPos));
             }
         }
     }
@@ -431,7 +431,7 @@ public class DungeonGenerator {
                     if (dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile) emptyCorner++;
 
                     if (emptyCorner >= 4) {
-                        dungeonMatrix.putElementAt(xPos, yPos,  new EmptyTile(xPos, yPos));
+                        dungeonMatrix.put(xPos, yPos,  new EmptyTile(xPos, yPos));
                         //todo if my region removal works, i need to add this rule here
                     }
                 }
@@ -476,7 +476,7 @@ public class DungeonGenerator {
             if(!tileTaken(randomRangeHeight, randomRangeWidth, randomXPos, randomYPos)){
                 for (int y = 0; y < randomRangeHeight; y++) {
                     for (int x = 0; x < randomRangeWidth; x++) {
-                        dungeonMatrix.putElementAt(x + randomXPos, y + randomYPos, new Room(x, y));
+                        dungeonMatrix.put(x + randomXPos, y + randomYPos, new Room(x, y));
                     }
                 }
                 this.noOfRooms++; //TODO it counts how many rooms are here, purely for stats
@@ -531,22 +531,22 @@ public class DungeonGenerator {
                             //todo its not random
                             try {
                                 if (dungeonMatrix.getElement(x, y - 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x, y - 2)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.putElementAt(x, y - 1,  new Entrance(x, y - 1));
+                                    dungeonMatrix.put(x, y - 1,  new Entrance(x, y - 1));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
                                 if (dungeonMatrix.getElement(x + 2, y) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x + 2, y)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.putElementAt(xPos + 1, yPos,  new Entrance(x + 1, y));
+                                    dungeonMatrix.put(xPos + 1, yPos,  new Entrance(x + 1, y));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
                                 if (dungeonMatrix.getElement(x, y + 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x, y + 2)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.putElementAt(x, y + 1,  new Entrance(x, y + 1));
+                                    dungeonMatrix.put(x, y + 1,  new Entrance(x, y + 1));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
                                 if (dungeonMatrix.getElement(x - 2, y) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x - 2, y)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.putElementAt(x - 2, y,  new Entrance(x - 1, y));
+                                    dungeonMatrix.put(x - 2, y,  new Entrance(x - 1, y));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
@@ -571,7 +571,7 @@ public class DungeonGenerator {
     public void fillEmptyTiles() {
         for (int yPos = 0; yPos < this.dungeonHeight; yPos++) {
             for (int xPos = 0; xPos < this.dungeonWidth; xPos++) {
-                if (dungeonMatrix.getElement(xPos, yPos) instanceof EmptyTile) dungeonMatrix.putElementAt(xPos, yPos,  new Wall(xPos, yPos));
+                if (dungeonMatrix.getElement(xPos, yPos) instanceof EmptyTile) dungeonMatrix.put(xPos, yPos,  new Wall(xPos, yPos));
             }
         }
     }
@@ -591,7 +591,7 @@ public class DungeonGenerator {
 
                         if(dungeonMatrix.getElement(x, y) instanceof Corridor) {
                             if (((Corridor) dungeonMatrix.getElement(x, y)).getRegion() == regionsToRemove.get(i)) {
-                                dungeonMatrix.putElementAt(x, y, new EmptyTile(x, y));
+                                dungeonMatrix.put(x, y, new EmptyTile(x, y));
                                 regionMap.put(regionsToRemove.get(i), regionMap.get(regionsToRemove.get(i)) - 1);
                                 if (regionMap.get(regionsToRemove.get(i)) <= 0) {
                                     regionMap.remove(regionsToRemove.get(i));

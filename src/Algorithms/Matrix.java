@@ -13,18 +13,6 @@ public class Matrix<E> {
     private ArrayList<ArrayList<E>> matrix;
     private int width, height;
 
-    public Matrix (int width, int height, E element){
-        for(int y = 0; y < height; y++){
-            matrix = new ArrayList<>();
-            for(int x = 0; x < width; x++){
-                matrix.get(y).add(null);
-            }
-        }
-        System.out.println("Debug:" + this);
-        this.width = width;
-        this.height = height;
-    }
-
     /**
      * TODO constructor without creating stuff inside (nulls)
      * @param width
@@ -51,10 +39,10 @@ public class Matrix<E> {
      * Adds a new row to the matrix (on the bottom)
      * @return
      */
-    public boolean addRow(E type){
+    public boolean addRow(E element){
         matrix.add(new ArrayList<>());
-        for(int i = 0; i < width; i++) { //todo i had to -1
-            matrix.get(height).add(type);
+        for(int i = 0; i < width; i++) {
+            matrix.get(height).add(element);
         }
         height++;
         return true;
@@ -65,7 +53,7 @@ public class Matrix<E> {
      * @return
      */
     public boolean addColumn(E element){
-        for(int i = 0; i < height; i++) { //todo i had to -1
+        for(int i = 0; i < height; i++) {
             matrix.get(i).add(element);
         }
         width++;
@@ -73,7 +61,7 @@ public class Matrix<E> {
     }
 
 
-    public boolean putElementAt(int x, int y, E e){
+    public boolean put(int x, int y, E e){
         try{
            matrix.get(y).set(x, e);
         }catch (Exception ex){
@@ -95,21 +83,6 @@ public class Matrix<E> {
         return columnArray;
     }
 
-    /**
-     * inserts contents of one matrix to another
-     * todo i might not need it
-     */
-    public static <T> void insertMatrix(ArrayList<ArrayList<T>> matrixA,
-                                    ArrayList<ArrayList<T>> matrixB ){
-        for (ArrayList<T> ts : matrixA) {
-            for (int z = 0; z < ts.size(); z++) {
-//                if(){
-//
-//                }
-            }
-        }
-    }
-
     public int getWidth(){
         return width;
     }
@@ -129,7 +102,7 @@ public class Matrix<E> {
         }
     }
 
-    public void cellurarAutomata(E element, E element2, double odds){
+    public void cellularAutomate(E element, E element2, double odds){
         Random random = new Random();
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
@@ -140,7 +113,6 @@ public class Matrix<E> {
     }
 
     /**
-     * TODO I made it into a string builder (as IDE suggested), a little weird tho
      * @return
      */
     public String toString(){

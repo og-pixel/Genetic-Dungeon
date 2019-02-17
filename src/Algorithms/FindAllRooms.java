@@ -25,8 +25,8 @@ public class FindAllRooms implements Fitness{
         int counter = 0;
 
         ArrayList<Matrix<Boolean>> listOfRooms = new ArrayList<>();
-
         Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
+
         visitMap.fillMatrix(false);
 
         for(int y = 0; y < dungeonHeight; y++){
@@ -78,6 +78,7 @@ public class FindAllRooms implements Fitness{
         return counter;
     }
 
+    //TODO Delete
     public void printMap(Matrix<Boolean> visitMap){
         for (int y = 0; y < visitMap.getHeight(); y++) {
             System.out.println();
@@ -87,6 +88,5 @@ public class FindAllRooms implements Fitness{
             }
         }
         System.out.println();
-        System.out.println("****************************");
     }
 }
