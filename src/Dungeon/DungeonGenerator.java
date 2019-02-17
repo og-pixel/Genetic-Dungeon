@@ -106,7 +106,7 @@ public class DungeonGenerator {
 
         //Create corridor in currentXPos and currentYPos and set a region
 //        dungeonMatrix.get(currentYPos).set(currentXPos, new Corridor(currentXPos, currentYPos));
-        dungeonMatrix.putElementAt(new Corridor(currentXPos, currentYPos), currentXPos, currentYPos);
+        dungeonMatrix.putElementAt(currentXPos, currentYPos, new Corridor(currentXPos, currentYPos));
         ((Corridor) dungeonMatrix.getElement(currentXPos, currentYPos)).setRegion(region);
 //        ((Corridor) dungeonMatrix.get(currentYPos).get(currentXPos)).setRegion(region);
 
@@ -119,42 +119,42 @@ public class DungeonGenerator {
         int availableDirection = 0;
 
         /* Check if we can go UP */
-        if (dungeonMatrix.get(currentYPos - 1).get(currentXPos) instanceof EmptyTile && currentYPos > 1) {
-            if (dungeonMatrix.get(currentYPos - 1).get(currentXPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 1).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 2).get(currentXPos) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 2).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 2).get(currentXPos + 1) instanceof EmptyTile) {
+        if (dungeonMatrix.getElement(currentXPos, currentYPos - 1) instanceof EmptyTile && currentYPos > 1) {
+            if (dungeonMatrix.getElement(currentXPos + 1, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos, currentYPos - 2) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos - 2) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 1, currentYPos - 2) instanceof EmptyTile) {
                 availableDirection = availableDirection + 0b1000;
             }
         }
         /* Check if we can go RIGHT */
-        if (dungeonMatrix.get(currentYPos).get(currentXPos + 1) instanceof EmptyTile && currentXPos < dungeonWidth - 2) {
-            if (dungeonMatrix.get(currentYPos).get(currentXPos + 2) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 1).get(currentXPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 1).get(currentXPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 1).get(currentXPos + 2) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 1).get(currentXPos + 2) instanceof EmptyTile) {
+        if (dungeonMatrix.getElement(currentXPos + 1, currentYPos) instanceof EmptyTile && currentXPos < dungeonWidth - 2) {
+            if (dungeonMatrix.getElement(currentXPos + 2, currentYPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 1, currentYPos + 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 1, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 2, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 2, currentYPos + 1) instanceof EmptyTile) {
                 availableDirection = availableDirection + 0b0100;
             }
         }
         /* Check if we can go DOWN */
-        if (dungeonMatrix.get(currentYPos + 1).get(currentXPos) instanceof EmptyTile && currentYPos < dungeonHeight - 2) {
-            if (dungeonMatrix.get(currentYPos + 1).get(currentXPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 2).get(currentXPos) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 1).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 2).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 2).get(currentXPos + 1) instanceof EmptyTile) {
+        if (dungeonMatrix.getElement(currentXPos, currentYPos + 1) instanceof EmptyTile && currentYPos < dungeonHeight - 2) {
+            if (dungeonMatrix.getElement(currentXPos + 1, currentYPos + 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos, currentYPos + 2) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos + 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos + 2) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos + 1, currentYPos + 2) instanceof EmptyTile) {
                 availableDirection = availableDirection + 0b0010;
             }
         }
         /* Check if we can go LEFT */
-        if (dungeonMatrix.get(currentYPos).get(currentXPos - 1) instanceof EmptyTile && currentXPos > 1) {
-            if (dungeonMatrix.get(currentYPos).get(currentXPos - 2) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 1).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 1).get(currentXPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos - 1).get(currentXPos - 2) instanceof EmptyTile
-                    && dungeonMatrix.get(currentYPos + 1).get(currentXPos - 2) instanceof EmptyTile) {
+        if (dungeonMatrix.getElement(currentXPos - 1, currentYPos) instanceof EmptyTile && currentXPos > 1) {
+            if (dungeonMatrix.getElement(currentXPos - 2, currentYPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos + 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 1, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 2, currentYPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(currentXPos - 2, currentYPos + 1) instanceof EmptyTile) {
                 availableDirection = availableDirection + 0b0001;
             }
         }
@@ -219,22 +219,22 @@ public class DungeonGenerator {
         int yPos = yPosStack.pop();
         int availableDirection = directionStack.pop();
 
-        if(dungeonMatrix.get(yPos).get(xPos) instanceof EmptyTile){
-            if((availableDirection & 0b1000) == 0b1000  && dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile){
+        if(dungeonMatrix.getElement(xPos, yPos) instanceof EmptyTile){
+            if((availableDirection & 0b1000) == 0b1000  && dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile){
                 digTunnel(xPos, yPos, 0b1000, region);}
-            else if((availableDirection & 0b0100) == 0b0100 && dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile){
+            else if((availableDirection & 0b0100) == 0b0100 && dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile){
                 digTunnel(xPos, yPos, 0b0100, region);}
-            else if((availableDirection & 0b0010) == 0b0010 && dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile){
+            else if((availableDirection & 0b0010) == 0b0010 && dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile){
                 digTunnel(xPos, yPos, 0b0010, region);}
-            else if((availableDirection & 0b0001) == 0b0001 && dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile
-                    && dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile){
+            else if((availableDirection & 0b0001) == 0b0001 && dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile
+                    && dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile){
                 digTunnel(xPos, yPos, 0b0001, region);}
         }
     }
@@ -300,7 +300,7 @@ public class DungeonGenerator {
                     }
 
                     if(emptyCorner >= 3) {
-                        dungeonMatrix.putElementAt(new EmptyTile(xPos, yPos), xPos, yPos);
+                        dungeonMatrix.putElementAt(xPos, yPos, new EmptyTile(xPos, yPos));
                         removeCornerRecursive(tempX, tempY);
                     }
                 }
@@ -315,32 +315,32 @@ public class DungeonGenerator {
         int emptyCorner = 0;
 
         if(xPos > 0 || yPos > 0){
-            if (dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile) emptyCorner++;
             else {
                 tempX = xPos;
                 tempY = yPos - 1;
             }
 
-            if (dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile) emptyCorner++;
             else {
                 tempX = xPos - 1;
                 tempY = yPos;
             }
 
-            if (dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile) emptyCorner++;
             else {
                 tempX = xPos;
                 tempY = yPos + 1;
             }
 
-            if (dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile) emptyCorner++;
             else {
                 tempX = xPos + 1;
                 tempY = yPos;
             }
 
             if (emptyCorner >= 3 && this.limitCorner >= 0) {
-                dungeonMatrix.get(yPos).set(xPos, new EmptyTile(xPos, yPos));
+                dungeonMatrix.putElementAt(xPos, yPos,  new EmptyTile(xPos, yPos));
                 this.limitCorner--;
                 removeCornerRecursive(tempX, tempY);
             }
@@ -357,27 +357,27 @@ public class DungeonGenerator {
         for (int yPos = 0; yPos < dungeonHeight - 1; yPos++) {
             for (int xPos = 0; xPos < dungeonWidth - 1; xPos++) {
                 emptyCorner = 0;
-                if (dungeonMatrix.get(yPos).get(xPos) instanceof Corridor) {
+                if (dungeonMatrix.getElement(xPos, yPos) instanceof Corridor) {
 
-                    if (dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile) emptyCorner++;
                     else {
                         tempX = xPos;
                         tempY = yPos - 1;
                     }
 
-                    if (dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile) emptyCorner++;
                     else {
                         tempX = xPos - 1;
                         tempY = yPos;
                     }
 
-                    if (dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile) emptyCorner++;
                     else {
                         tempX = xPos;
                         tempY = yPos + 1;
                     }
 
-                    if (dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile) emptyCorner++;
                     else {
                         tempX = xPos + 1;
                         tempY = yPos;
@@ -394,25 +394,25 @@ public class DungeonGenerator {
 
     private void removeTeeth2(int previousX, int previousY, int xPos, int yPos) {
         int emptyCorner = 0;
-        if (dungeonMatrix.get(yPos).get(xPos) instanceof Corridor) {
+        if (dungeonMatrix.getElement(xPos, yPos) instanceof Corridor) {
 
-            if (dungeonMatrix.get(yPos - 1).get(xPos) instanceof Corridor) emptyCorner++;
-            if (dungeonMatrix.get(yPos).get(xPos - 1) instanceof Corridor) emptyCorner++;
-            if (dungeonMatrix.get(yPos + 1).get(xPos) instanceof Corridor) emptyCorner++;
-            if (dungeonMatrix.get(yPos).get(xPos + 1) instanceof Corridor) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos, yPos - 1) instanceof Corridor) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos - 1, yPos) instanceof Corridor) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos, yPos + 1) instanceof Corridor) emptyCorner++;
+            if (dungeonMatrix.getElement(xPos + 1, yPos) instanceof Corridor) emptyCorner++;
 
             if (emptyCorner >= 3) {
                 //todo these two lines might be wrong
 
-                regionMap.put(((Corridor)dungeonMatrix.get(previousY).get(previousX)).getRegion(),//todo do a better formating
-                        regionMap.get(((Corridor)dungeonMatrix.get(previousY).get(previousX)).getRegion()) - 1);
+                regionMap.put(((Corridor)dungeonMatrix.getElement(previousX, previousY)).getRegion(),//todo do a better formating
+                        regionMap.get(((Corridor)dungeonMatrix.getElement(previousX, previousY)).getRegion()) - 1);
 
-                if(regionMap.get(((Corridor)dungeonMatrix.get(previousY).get(previousX)).getRegion()) <= 0)
-                    regionMap.remove(((Corridor)dungeonMatrix.get(previousY).get(previousX)).getRegion());
+                if(regionMap.get(((Corridor)dungeonMatrix.getElement(previousX, previousY)).getRegion()) <= 0)
+                    regionMap.remove(((Corridor)dungeonMatrix.getElement(previousX, previousY)).getRegion());
 
 
 
-                dungeonMatrix.get(previousY).set(previousX, new EmptyTile(xPos, yPos));
+                dungeonMatrix.putElementAt(previousX, previousY, new EmptyTile(xPos, yPos));
             }
         }
     }
@@ -423,15 +423,15 @@ public class DungeonGenerator {
         for (int yPos = 0; yPos < dungeonHeight - 1; yPos++) {
             for (int xPos = 0; xPos < dungeonWidth - 1; xPos++) {
                 int emptyCorner = 0;
-                if (dungeonMatrix.get(yPos).get(xPos) instanceof Corridor) {
+                if (dungeonMatrix.getElement(xPos, yPos) instanceof Corridor) {
 
-                    if (dungeonMatrix.get(yPos - 1).get(xPos) instanceof EmptyTile) emptyCorner++;
-                    if (dungeonMatrix.get(yPos).get(xPos - 1) instanceof EmptyTile) emptyCorner++;
-                    if (dungeonMatrix.get(yPos + 1).get(xPos) instanceof EmptyTile) emptyCorner++;
-                    if (dungeonMatrix.get(yPos).get(xPos + 1) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos, yPos - 1) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos - 1, yPos) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos, yPos + 1) instanceof EmptyTile) emptyCorner++;
+                    if (dungeonMatrix.getElement(xPos + 1, yPos) instanceof EmptyTile) emptyCorner++;
 
                     if (emptyCorner >= 4) {
-                        dungeonMatrix.get(yPos).set(xPos, new EmptyTile(xPos, yPos));
+                        dungeonMatrix.putElementAt(xPos, yPos,  new EmptyTile(xPos, yPos));
                         //todo if my region removal works, i need to add this rule here
                     }
                 }
@@ -447,7 +447,7 @@ public class DungeonGenerator {
 
         for(int i = 0; i < height + 2; i++){
             for(int j = 0; j < width + 2; j++){
-                if (!(dungeonMatrix.get(i + yPos - 1).get(j + xPos - 1) instanceof EmptyTile)) return true; //True if tile IS NOT an Empty Dungeon.Tile
+                if (!(dungeonMatrix.getElement(j + xPos - 1, i + yPos - 1) instanceof EmptyTile)) return true; //True if tile IS NOT an Empty Dungeon.Tile
             }
         }
         return false;
@@ -476,7 +476,7 @@ public class DungeonGenerator {
             if(!tileTaken(randomRangeHeight, randomRangeWidth, randomXPos, randomYPos)){
                 for (int y = 0; y < randomRangeHeight; y++) {
                     for (int x = 0; x < randomRangeWidth; x++) {
-                        dungeonMatrix.get(y + randomYPos).set(x + randomXPos, new Room(x, y));
+                        dungeonMatrix.putElementAt(x + randomXPos, y + randomYPos, new Room(x, y));
                     }
                 }
                 this.noOfRooms++; //TODO it counts how many rooms are here, purely for stats
@@ -493,34 +493,34 @@ public class DungeonGenerator {
             for(int xPos = 1; xPos < this.dungeonWidth - 2; xPos++){
                 //Find left top corner of the room, so we don't accidentally check the same room
                 //multiple times
-                if(dungeonMatrix.get(yPos).get(xPos) instanceof Room
-                        && !(dungeonMatrix.get(yPos - 1).get(xPos) instanceof Room)
-                        && !(dungeonMatrix.get(yPos).get(xPos - 1) instanceof Room)) {
+                if(dungeonMatrix.getElement(xPos, yPos) instanceof Room
+                        && !(dungeonMatrix.getElement(xPos, yPos - 1) instanceof Room)
+                        && !(dungeonMatrix.getElement(xPos - 1, yPos) instanceof Room)) {
 
                     int roomXEnd = xPos;
                     int roomYEnd = yPos;
 
-                    while(dungeonMatrix.get(yPos).get(roomXEnd) instanceof Room){ roomXEnd++; }
-                    while(dungeonMatrix.get(roomYEnd).get(xPos) instanceof Room){ roomYEnd++; }
+                    while(dungeonMatrix.getElement(roomXEnd, yPos) instanceof Room){ roomXEnd++; }
+                    while(dungeonMatrix.getElement(xPos, roomYEnd) instanceof Room){ roomYEnd++; }
 
                     //TODO I have changed Set to Sorted set to make it more logical, go back if its wrong
                     SortedSet<Integer> regionsAroundRoom = new TreeSet<>();     //Used temporally to determinate if there are
                                                                                 //more regions around room, we want to connect all of them at least once
                     //Those two loops check around the room if there are corridors
                     for(int i = xPos; i < roomXEnd; i++){
-                        if (yPos - 2 >= 0 && dungeonMatrix.get(yPos - 2).get(i) instanceof Corridor ) {
-                            regionsAroundRoom.add(((Corridor)dungeonMatrix.get(yPos - 2).get(i)).getRegion());
+                        if (yPos - 2 >= 0 && dungeonMatrix.getElement(i, yPos - 2) instanceof Corridor ) {
+                            regionsAroundRoom.add(((Corridor)dungeonMatrix.getElement(i, yPos - 2)).getRegion());
                         }
-                        if ((roomYEnd + 1 < dungeonHeight) && dungeonMatrix.get(roomYEnd + 1).get(i) instanceof Corridor){
-                            regionsAroundRoom.add(((Corridor)dungeonMatrix.get(roomYEnd + 1).get(i)).getRegion());
+                        if ((roomYEnd + 1 < dungeonHeight) && dungeonMatrix.getElement(i, roomYEnd + 1) instanceof Corridor){
+                            regionsAroundRoom.add(((Corridor)dungeonMatrix.getElement(i, roomYEnd + 1)).getRegion());
                         }
                     }
                     for(int i = yPos; i < roomYEnd; i++){
-                        if (xPos - 2 >= 0 && dungeonMatrix.get(i).get(xPos - 2) instanceof Corridor) {
-                            regionsAroundRoom.add(((Corridor)dungeonMatrix.get(i).get(xPos - 2)).getRegion());
+                        if (xPos - 2 >= 0 && dungeonMatrix.getElement(xPos - 2, i) instanceof Corridor) {
+                            regionsAroundRoom.add(((Corridor)dungeonMatrix.getElement(xPos - 2, i)).getRegion());
                         }
-                        if (roomXEnd + 1 < dungeonWidth && dungeonMatrix.get(i).get(roomXEnd + 1) instanceof Corridor){
-                            regionsAroundRoom.add(((Corridor)dungeonMatrix.get(i).get(roomXEnd + 1)).getRegion());
+                        if (roomXEnd + 1 < dungeonWidth && dungeonMatrix.getElement(roomXEnd + 1, i) instanceof Corridor){
+                            regionsAroundRoom.add(((Corridor)dungeonMatrix.getElement(roomXEnd + 1, i)).getRegion());
                         }
                     }
 
@@ -530,23 +530,23 @@ public class DungeonGenerator {
                         for(int x = xPos; x < roomXEnd; x++){
                             //todo its not random
                             try {
-                                if (dungeonMatrix.get(y - 2).get(x) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.get(y - 2).get(x)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.get(y - 1).set(x, new Entrance(x, y - 1));
+                                if (dungeonMatrix.getElement(x, y - 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x, y - 2)).getRegion() == regionsAroundRoom.first()) {
+                                    dungeonMatrix.putElementAt(x, y - 1,  new Entrance(x, y - 1));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
-                                if (dungeonMatrix.get(y).get(x + 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.get(y).get(x + 2)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.get(y).set(x + 1, new Entrance(x + 1, y));
+                                if (dungeonMatrix.getElement(x + 2, y) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x + 2, y)).getRegion() == regionsAroundRoom.first()) {
+                                    dungeonMatrix.putElementAt(xPos + 1, yPos,  new Entrance(x + 1, y));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
-                                if (dungeonMatrix.get(y + 2).get(x) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.get(y + 2).get(x)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.get(y + 1).set(x, new Entrance(x, y + 1));
+                                if (dungeonMatrix.getElement(x, y + 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x, y + 2)).getRegion() == regionsAroundRoom.first()) {
+                                    dungeonMatrix.putElementAt(x, y + 1,  new Entrance(x, y + 1));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
-                                if (dungeonMatrix.get(y).get(x - 2) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.get(y).get(x - 2)).getRegion() == regionsAroundRoom.first()) {
-                                    dungeonMatrix.get(y).set(x - 1, new Entrance(x - 1, y));
+                                if (dungeonMatrix.getElement(x - 2, y) instanceof Corridor && maxDoorsPerRoom > 0 && ((Corridor)dungeonMatrix.getElement(x - 2, y)).getRegion() == regionsAroundRoom.first()) {
+                                    dungeonMatrix.putElementAt(x - 2, y,  new Entrance(x - 1, y));
                                     regionsAroundRoom.remove(regionsAroundRoom.first());
                                     maxDoorsPerRoom--;
                                 }
@@ -571,7 +571,7 @@ public class DungeonGenerator {
     public void fillEmptyTiles() {
         for (int yPos = 0; yPos < this.dungeonHeight; yPos++) {
             for (int xPos = 0; xPos < this.dungeonWidth; xPos++) {
-                if (dungeonMatrix.get(yPos).get(xPos) instanceof EmptyTile) dungeonMatrix.get(yPos).set(xPos, new Wall(xPos, yPos));
+                if (dungeonMatrix.getElement(xPos, yPos) instanceof EmptyTile) dungeonMatrix.putElementAt(xPos, yPos,  new Wall(xPos, yPos));
             }
         }
     }
@@ -586,12 +586,12 @@ public class DungeonGenerator {
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++){
 
-                if(dungeonMatrix.get(y).get(x) instanceof Corridor){
+                if(dungeonMatrix.getElement(x, y) instanceof Corridor){
                     for(int i = 0; i < regionsToRemove.size(); i++){
 
-                        if(dungeonMatrix.get(y).get(x) instanceof Corridor) {
-                            if (((Corridor) dungeonMatrix.get(y).get(x)).getRegion() == regionsToRemove.get(i)) {
-                                dungeonMatrix.get(y).set(x, new EmptyTile(x, y));
+                        if(dungeonMatrix.getElement(x, y) instanceof Corridor) {
+                            if (((Corridor) dungeonMatrix.getElement(x, y)).getRegion() == regionsToRemove.get(i)) {
+                                dungeonMatrix.putElementAt(x, y, new EmptyTile(x, y));
                                 regionMap.put(regionsToRemove.get(i), regionMap.get(regionsToRemove.get(i)) - 1);
                                 if (regionMap.get(regionsToRemove.get(i)) <= 0) {
                                     regionMap.remove(regionsToRemove.get(i));

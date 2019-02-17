@@ -33,6 +33,8 @@ public class Algorithms {
 
 //        Matrix<Boolean> visitMap = Matrix.createMatrix(dungeonWidth, dungeonHeight, false);
         Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
+        visitMap.fillMatrix(false);
+
         flood(dungeon, visitMap, x, y);
 
 
@@ -42,7 +44,7 @@ public class Algorithms {
     private static void flood(Dungeon dungeon, Matrix<Boolean> visitMap, int x, int y){
 
         if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-            visitMap.putElementAt(true, x, y);
+            visitMap.putElementAt(x, y, true);
 
             if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) instanceof Corridor) {
                 if (!visitMap.getElement(x - 1, y)) {

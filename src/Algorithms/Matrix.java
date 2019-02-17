@@ -1,6 +1,7 @@
 package Algorithms;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Currently a simple class for basic matrix manipulations, such as creating matrices and
@@ -16,21 +17,27 @@ public class Matrix<E> {
         for(int y = 0; y < height; y++){
             matrix = new ArrayList<>();
             for(int x = 0; x < width; x++){
-                matrix.get(y).add(element);
+                matrix.get(y).add(null);
             }
         }
+        System.out.println("Debug:" + this);
         this.width = width;
         this.height = height;
     }
 
     /**
-     * TODO constructor without creating stuff inside
+     * TODO constructor without creating stuff inside (nulls)
      * @param width
      * @param height
      */
-    public Matrix (int width, int height){
+    public Matrix(int width, int height){
+        matrix = new ArrayList<>();
+
         for(int y = 0; y < height; y++){
-            matrix = new ArrayList<>();
+            matrix.add(new ArrayList<>());
+            for(int x = 0; x < width; x++){
+                matrix.get(y).add(null);
+            }
         }
         this.width = width;
         this.height = height;
@@ -66,7 +73,7 @@ public class Matrix<E> {
     }
 
 
-    public boolean putElementAt(E e, int x, int y){
+    public boolean putElementAt(int x, int y, E e){
         try{
            matrix.get(y).set(x, e);
         }catch (Exception ex){
@@ -108,6 +115,28 @@ public class Matrix<E> {
     }
     public int getHeight(){
         return height;
+    }
+
+    /**
+     * TODO It fill is with one the same element
+     * @param element
+     */
+    public void fillMatrix(E element){
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                matrix.get(y).set(x, element);
+            }
+        }
+    }
+
+    public void cellurarAutomata(E element, E element2, double odds){
+        Random random = new Random();
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                if(random.nextDouble() > odds) matrix.get(y).set(x, element);
+                else matrix.get(y).set(x, element2);
+            }
+        }
     }
 
     /**

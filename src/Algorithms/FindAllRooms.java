@@ -27,32 +27,61 @@ public class FindAllRooms implements Fitness{
         int wallCount = 0;
         int counter = 0;
 
-//        ArrayList<ArrayList<ArrayList<Boolean>>> listOfRooms = new ArrayList<>();
         ArrayList<Matrix<Boolean>> listOfRooms = new ArrayList<>();
 
-        Matrix<Boolean> visitMap = new Matrix<>(dungeonWidth, dungeonHeight, false);
-
+        Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
+        visitMap.fillMatrix(false);
 
         for(int y = 0; y < dungeonHeight; y++){
             for(int x = 0; x < dungeonWidth; x++) {
-            if (dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-                try {
-                    if (!visitMap.getElement(x,y)) {
-                        visitMap = Algorithms.floodFill(dungeon, x, y);
-                        if (visitMap != null) { //todo I think its always not null now so i can remove it
-                            numberOfRooms++;
-                            printMap(visitMap);
-                            roomSize = roomSize + countVisited(visitMap);
-                            listOfRooms.add(visitMap);//todo here
-                        }
-                    }
-                } catch (Exception e) {
-                    System.err.println("erros"); //todo i might not need that too
-                    visitMap = Algorithms.floodFill(dungeon, x, y);
-                }
+//                if (dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
+//                    for(int p = 0; p < listOfRooms.size(); p++){
+//                        if(listOfRooms.get(p).getElement(x, y) && visitMap.getElement(x, y)){
+//                            break;
+//                        }
+//                    }
+//
+//                    try {
+//                        if (!visitMap.getElement(x,y)) {
+//                            visitMap = Algorithms.floodFill(dungeon, x, y);
+//                            if (visitMap != null) { //todo I think its always not null now so i can remove it
+//                                numberOfRooms++;
+//                                printMap(visitMap);
+//                                roomSize = roomSize + countVisited(visitMap);
+//                                listOfRooms.add(visitMap);//todo here
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        System.err.println("erros"); //todo i might not need that too
+//                        visitMap = Algorithms.floodFill(dungeon, x, y);
+//                    }
+//                }
+
+               boolean alreadyVisited = false;
+               if(!listOfRooms.isEmpty()) {
+                   for(int p = 0; p < listOfRooms.size(); p++) {
+                       if (listOfRooms.get(p).getElement(x, y)) {
+                           alreadyVisited = true;
+                           break;
+                       }
+                   }
+               }
+
+               if(!(dungeon.getDungeonMatrix().getElement(x,y).getTile() instanceof Corridor)){
+                  alreadyVisited = true;
+               }
+
+
+               if(!alreadyVisited){
+                   visitMap = Algorithms.floodFill(dungeon, x, y);
+                   listOfRooms.add(visitMap);
+
+                   numberOfRooms++;
+//                   printMap(visitMap);
+                   roomSize = roomSize + countVisited(visitMap);
+               }
             }
         }
-    }
 
 
         wallCount = (dungeonWidth * dungeonHeight) - roomSize;
@@ -64,7 +93,7 @@ public class FindAllRooms implements Fitness{
 //                            System.out.println("Total Score: " + (numberOfRooms * 20) + wallCount);
         System.out.println("*******************************************");
         System.out.println("Score: " + dungeon.getScore());
-}
+    }
 
     private int countVisited(Matrix<Boolean> visitMap){
         int counter = 0;
