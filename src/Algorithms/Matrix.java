@@ -22,7 +22,6 @@ public class Matrix<E> {
      */
     public Matrix(int width, int height){
         matrix = new ArrayList<>();
-
         for(int y = 0; y < height; y++){
             matrix.add(new ArrayList<>());
             for(int x = 0; x < width; x++){
@@ -61,7 +60,6 @@ public class Matrix<E> {
         width++;
         return true;
     }
-
 
     public boolean put(int x, int y, E e){
         try{
@@ -121,9 +119,6 @@ public class Matrix<E> {
         }
     }
 
-    /**
-     * @return
-     */
     public String toString(){
         StringBuilder string = new StringBuilder();
 
@@ -136,5 +131,4 @@ public class Matrix<E> {
         }
         return string.toString();
     }
-
 }
