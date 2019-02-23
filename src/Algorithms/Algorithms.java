@@ -1,7 +1,11 @@
 package Algorithms;
 
-import Dungeon.Dungeon;
+import Dungeon.*;
 import Dungeon.Tile.Corridor;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 /**
@@ -55,8 +59,31 @@ public class Algorithms {
         }
     }
 
+    //TODO create A*
     public static void aStarTraverse(Dungeon dungeon){
+        int startPositionX = dungeon.getStartPosition().getxPos();
+        int startPositionY = dungeon.getStartPosition().getyPos();
 
+        int endPositionX = dungeon.getEndPosition().getxPos();
+        int endPositionY = dungeon.getEndPosition().getyPos();
+
+        int startCount = getManhattanDistance(startPositionX,startPositionY,endPositionX,endPositionY);
+        System.out.println(startCount);
+    }
+    //todo maybe return double or something else
+    public static int getManhattanDistance(int fromX, int fromY, int toX, int toY){
+        return Math.abs(fromX-toX) + Math.abs(fromY-toY);
     }
 
+
+    public static void writeToFile(String content, Dungeon dungeon) throws IOException {
+        File file = new File(dungeon.toString() + ".txt");
+        file.createNewFile();
+
+        FileWriter fileWrite = new FileWriter(file);
+        fileWrite.write(content);
+
+        fileWrite.flush();
+        fileWrite.close();
+    }
 }

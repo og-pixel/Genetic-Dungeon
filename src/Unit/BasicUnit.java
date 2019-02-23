@@ -1,6 +1,6 @@
 package Unit;
 
-import Errors.SumErrorException;
+import Exceptions.SumErrorException;
 import Items.Armor.Armor;
 import Items.ItemFactory;
 import Items.Weapon.Weapon;

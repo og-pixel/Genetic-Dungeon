@@ -1,4 +1,4 @@
-package Errors;
+package Exceptions;
 
 public class TileTakenException extends Exception{
     public TileTakenException(String message) {

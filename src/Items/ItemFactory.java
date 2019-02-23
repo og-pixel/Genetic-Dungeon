@@ -1,6 +1,6 @@
 package Items;
 
-import Errors.SumErrorException;
+import Exceptions.SumErrorException;
 import Items.Armor.Armor;
 import Items.Rarity_Test.ArmorType;
 import Items.Rarity_Test.Rarity;

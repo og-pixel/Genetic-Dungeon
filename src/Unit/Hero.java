@@ -1,6 +1,6 @@
 package Unit;
 
-import Errors.SumErrorException;
+import Exceptions.SumErrorException;
 import Magic.Spells.Fireball;
 import javafx.scene.image.Image;
 

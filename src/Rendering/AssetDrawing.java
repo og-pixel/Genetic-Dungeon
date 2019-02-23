@@ -1,6 +1,6 @@
 package Rendering;
 
-import Errors.VariableBoundsIncorrect;
+import Exceptions.VariableBoundsException;
 import Views.Menu;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -52,7 +52,7 @@ public class AssetDrawing {
 
     public static void drawPictureSmaller(GraphicsContext gc, int x, int y, Image genericImage, double offPercentage) {
         if (offPercentage > 0.99 || offPercentage < 0.01)
-            throw new VariableBoundsIncorrect("Values only between 0.01 and 0.99");
+            throw new VariableBoundsException("Values only between 0.01 and 0.99");
         gc.drawImage(genericImage, x * TILE_SIZE + (TILE_SIZE * offPercentage / 2),
                                     y * TILE_SIZE + (TILE_SIZE * offPercentage / 2),
                                         TILE_SIZE - (TILE_SIZE * offPercentage),

@@ -2,7 +2,9 @@ package Algorithms;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
+import com.sun.javafx.scene.traversal.Algorithm;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 //todo this class name should not be a verb but I feel like its better than "RoomSize"
@@ -13,7 +15,6 @@ public class FindAllRooms implements Fitness{
      * Score is counted based on todo "Up to 100?"
      * @param dungeon dungeon map
      */
-    //todo I think it no longer iterates over rooms that were discovered
     @Override
     public void evaluateDungeon(Dungeon dungeon) {
         int dungeonWidth = dungeon.getDungeonWidth();
@@ -22,7 +23,6 @@ public class FindAllRooms implements Fitness{
         int roomSize = 0;
         int numberOfRooms = 0;
         int wallCount = 0;
-        int counter = 0;
 
         ArrayList<Matrix<Boolean>> listOfRooms = new ArrayList<>();
         Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
@@ -58,14 +58,33 @@ public class FindAllRooms implements Fitness{
         }
 
         wallCount = (dungeonWidth * dungeonHeight) - roomSize;
-        //Currently score is given by calculating ratio of wall to corridor (so 50
-//                            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
-        System.out.println("Room Count: " + numberOfRooms);
-        System.out.println("Walls: " + wallCount);
-        System.out.println("Rooms Take: " + roomSize);
-//                            System.out.println("Total Score: " + (numberOfRooms * 20) + wallCount);
-        System.out.println("*******************************************");
-        System.out.println("Score: " + dungeon.getScore());
+        dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
+        double roomAverage = (double) roomSize/numberOfRooms;
+
+        int sX = dungeon.getStartPosition().getxPos();
+        int sY = dungeon.getStartPosition().getyPos();
+        int eX = dungeon.getEndPosition().getxPos();
+        int eY = dungeon.getEndPosition().getyPos();
+
+
+        int manhattanDis = Algorithms.getManhattanDistance(sX,sY,eX,eY);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Room Count: " + numberOfRooms);
+        stringBuilder.append("\nWalls: " + wallCount);
+        stringBuilder.append("\nRooms Take: " + roomSize);
+        stringBuilder.append("\nRoom size average: " + roomAverage);
+        stringBuilder.append("\nDistance between start and end: " + manhattanDis);
+        stringBuilder.append("\n" + dungeon.printDungeon());
+
+        String xd = stringBuilder.toString();
+
+        try {
+            Algorithms.writeToFile(xd, dungeon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private int countVisited(Matrix<Boolean> visitMap){

@@ -4,11 +4,18 @@ import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Wall;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Interpreter {
 
     private final String CREATE = "-c";
+    private final String HELP = "-h";
+
+    private final String README = "Examples:\n-c 10 15 10 Create 10 maps of size 15 by 10\n" +
+            "-c 1 100 100 Create 1 map of size 100 by 100";
 
     public Interpreter(String... args){
         interpretArguments(args);
@@ -17,6 +24,11 @@ public class Interpreter {
     private ArrayList<Fitness> fitnessList = null;
 
     private void interpretArguments(String... args){
+        if(args.length <= 0){
+            displayHelp();
+            System.exit(1);
+        }
+
         if(args[0].equals(CREATE)){
             int numberOfMaps = Integer.parseInt(args[1]);
             int width = Integer.parseInt(args[2]);
@@ -26,7 +38,9 @@ public class Interpreter {
             ArrayList<Dungeon> mapList = new ArrayList<>();
             for(int i = 0; i < numberOfMaps; i++){
                 mapList.add(new Dungeon(width, height));
-                mapList.get(i).getDungeonMatrix().cellularAutomate(new Corridor(0,0), new Wall(0,0), 0.6);//todo position is wrong
+                mapList.get(i).getDungeonMatrix().cellularAutomate(new Corridor(0,0), new Wall(0,0), 0.5);//todo position is wrong
+                mapList.get(i).createStartPosition();
+                mapList.get(i).createEndPosition();
             }
 
             float timeNow = System.nanoTime();
@@ -39,6 +53,9 @@ public class Interpreter {
         }
     }
 
+    private void displayHelp(){
+        System.out.println(README);
+    }
 
 
 

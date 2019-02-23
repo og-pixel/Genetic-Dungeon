@@ -1,0 +1,4 @@
+Room Count: 223
+Walls: 1203
+Rooms Take: 797
+Room size average: 3.5739910313901344

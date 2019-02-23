@@ -1,5 +1,7 @@
 package Algorithms;
 
+import Exceptions.VariableBoundsException;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -102,7 +104,14 @@ public class Matrix<E> {
         }
     }
 
+    /**
+     * Fill a matrix with two elements,
+     * @param element
+     * @param element2
+     * @param odds
+     */
     public void cellularAutomate(E element, E element2, double odds){
+        if(odds < 0.1 || odds > 1) throw new VariableBoundsException(0.1, 1.0);
         Random random = new Random();
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){

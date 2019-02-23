@@ -1,4 +1,4 @@
-package Errors;
+package Exceptions;
 
 public class SumErrorException extends Exception{
     public SumErrorException(int sumExpected){
