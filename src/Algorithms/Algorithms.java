@@ -7,8 +7,8 @@ import Dungeon.Tile.Tile;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 
 /**
@@ -62,60 +62,79 @@ public class Algorithms {
         }
     }
 
+
+
+    public static ArrayList<Point> pathList = null;
+    public static Matrix<Point> visitMap = null;
     //TODO create A*
     public static void aStarTraverse(Dungeon dungeon){
         Matrix dungeonMatrix = dungeon.getDungeonMatrix();
 
-        int startPositionX = dungeon.getStartPosition().getxPos();
-        int startPositionY = dungeon.getStartPosition().getyPos();
+        int startPositionX = dungeon.getStartPoint().getXPos();
+        int startPositionY = dungeon.getStartPoint().getYPos();
 
-        int endPositionX = dungeon.getEndPosition().getxPos();
-        int endPositionY = dungeon.getEndPosition().getyPos();
+        int endPositionX = dungeon.getEndPoint().getXPos();
+        int endPositionY = dungeon.getEndPoint().getYPos();
 
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
-        int manhattanDistance = getManhattanDistance(startPositionX,startPositionY,endPositionX,endPositionY);
+        Point currentPosition = new Point(startPositionX, startPositionY);
+        currentPosition.setManhattanDistance(getManhattanDistance(startPositionX,startPositionY,endPositionX,endPositionY));
 
-        Matrix<Boolean> visitMatrix = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
-        visitMatrix.fillMatrix(false);
+        int x = startPositionX;
+        int y = startPositionY;
 
-        visitMatrix.put(startPositionX, startPositionY, true);
+        visitMap = new Matrix<Point>(dungeonWidth, dungeonHeight);
+        visitMap.fillMatrix(null);//todo silly
+        visitMap.put(x, y, currentPosition);
 
+        pathList = new ArrayList<Point>();
+        pathList.add(new Point(startPositionX, startPositionY));
 
-        while(manhattanDistance != 0) {
+        while(currentPosition.getManhattanDistance() != 0) {
             Tile upTile = null;
             Tile rightTile = null;
             Tile downTile = null;
             Tile leftTile = null;
 
-
-
             if (dungeonMatrix.getUp(startPositionX, startPositionY) instanceof Corridor) {
-
+                Point point = new Point(x, y - 1);
+                visitMap.put(x, y - 1, point);
+                visitMap.getElement(x, y - 1).setManhattanDistance(getManhattanDistance(x, y - 1, endPositionX, endPositionY));
+                pathList.add(point);
             }
 
             if (dungeonMatrix.getRight(startPositionX, startPositionY) instanceof Corridor) {
-
+                Point point = new Point(x + 1, y);
+                visitMap.put(x + 1, y, point);
+                visitMap.getElement(x + 1, y).setManhattanDistance(getManhattanDistance(x + 1, y, endPositionX, endPositionY));
+                pathList.add(point);
             }
 
             if (dungeonMatrix.getDown(startPositionX, startPositionY) instanceof Corridor) {
-
+                Point point = new Point(x, y + 1);
+                visitMap.put(x, y + 1, point);
+                visitMap.getElement(x, y + 1).setManhattanDistance(getManhattanDistance(x, y + 1, endPositionX, endPositionY));
+                pathList.add(point);
             }
 
             if (dungeonMatrix.getLeft(startPositionX, startPositionY) instanceof Corridor) {
-
+                Point point = new Point(x - 1, y);
+                visitMap.put(x - 1, y, point);
+                visitMap.getElement(x - 1, y).setManhattanDistance(getManhattanDistance(x - 1, y, endPositionX, endPositionY));
+                pathList.add(point);
             }
 
 
-            manhattanDistance = getManhattanDistance(1,1,1,1);
+
         }
     }
 
 
-    public static void explore(Matrix<Boolean> visitMatrix, Matrix<Tile> dungeon, Position position){
-        int x = position.getxPos();
-        int y = position.getyPos();
+    public static void explore(Matrix<Boolean> visitMatrix, Matrix<Tile> dungeon, Point point){
+        int x = point.getXPos();
+        int y = point.getYPos();
 
         visitMatrix.put(x, y, true);
 

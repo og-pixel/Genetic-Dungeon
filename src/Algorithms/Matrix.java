@@ -120,11 +120,11 @@ public class Matrix<E> {
     }
 
     public E getUp(int x, int y){
-        if((y + 1) >= height){
+        if((y - 1) < 0){
             return null;
         }
 
-        return getElement(x, y + 1);
+        return getElement(x, y - 1);
     }
 
     public E getRight(int x, int y){
@@ -136,11 +136,11 @@ public class Matrix<E> {
     }
 
     public E getDown(int x, int y){
-        if((y - 1) < 0 ){
+        if((y + 1) > height){
             return null;
         }
 
-        return getElement(x, y - 1);
+        return getElement(x, y + 1);
     }
 
     public E getLeft(int x, int y){

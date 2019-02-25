@@ -2,7 +2,6 @@ package Algorithms;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
-import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,10 +60,10 @@ public class FindAllRooms implements Fitness{
         dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
         double roomAverage = (double) roomSize/numberOfRooms;
 
-        int sX = dungeon.getStartPosition().getxPos();
-        int sY = dungeon.getStartPosition().getyPos();
-        int eX = dungeon.getEndPosition().getxPos();
-        int eY = dungeon.getEndPosition().getyPos();
+        int sX = dungeon.getStartPoint().getXPos();
+        int sY = dungeon.getStartPoint().getYPos();
+        int eX = dungeon.getEndPoint().getXPos();
+        int eY = dungeon.getEndPoint().getYPos();
 
 
         int manhattanDis = Algorithms.getManhattanDistance(sX,sY,eX,eY);

@@ -12,8 +12,8 @@ public class Dungeon {
     private Matrix<Tile> dungeonMatrix;
 
     //TODO maybe I will create small Class to hold information
-    private Position startPosition;
-    private Position endPosition;
+    private Point startPoint;
+    private Point endPoint;
 
 
     /**
@@ -35,7 +35,7 @@ public class Dungeon {
         for(int y  = 0; y < dungeonHeight; y++){
             for(int x  = 0; x < dungeonWidth; x++){
                 if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
-                    startPosition = new Position(x,y);
+                    startPoint = new Point(x,y);
                     dungeonMatrix.put(x,y,new Start(x,y));
                     return true;
                 }
@@ -48,7 +48,7 @@ public class Dungeon {
         for(int y = dungeonHeight - 1; y > 0; y--){
             for(int x = dungeonWidth - 1; x > 0; x--){
                 if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
-                    endPosition = new Position(x,y);
+                    endPoint = new Point(x,y);
                     dungeonMatrix.put(x,y,new End(x,y));
                     return true;
                 }
@@ -89,11 +89,11 @@ public class Dungeon {
         return stringBuilder.toString();
     }
 
-    public Position getStartPosition() {
-        return startPosition;
+    public Point getStartPoint() {
+        return startPoint;
     }
 
-    public Position getEndPosition() {
-        return endPosition;
+    public Point getEndPoint() {
+        return endPoint;
     }
 }
