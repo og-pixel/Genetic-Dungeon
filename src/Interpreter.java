@@ -1,5 +1,6 @@
 import Algorithms.FindAllRooms;
 import Algorithms.Fitness;
+import Algorithms.Mutator;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Wall;
@@ -43,9 +44,13 @@ public class Interpreter {
                 mapList.get(i).createEndPosition();
             }
 
+            Mutator mutator = new Mutator(0.1);
+
             float timeNow = System.nanoTime();
             for(int i = 0; i < fitnessList.size(); i++) {
                 for(int x = 0; x < mapList.size(); x++){
+                    fitnessList.get(i).evaluateDungeon(mapList.get(x));
+                    mutator.mutateDungeon(mapList.get(x));
                     fitnessList.get(i).evaluateDungeon(mapList.get(x));
                 }
             }
