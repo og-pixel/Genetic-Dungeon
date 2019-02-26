@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 
 /**
@@ -68,12 +69,16 @@ public class Algorithms {
 
     public static ArrayList<Point> pathList = null;
     public static Matrix<Point> visitMap = null;
+    public static HashMap<Point,Boolean> hashVisit = null;
+
     //TODO create A*
     public static void aStarTraverse(Dungeon dungeon){
         Matrix dungeonMatrix = dungeon.getDungeonMatrix();
+        hashVisit = new HashMap<Point, Boolean>();
+        hashVisit.put(new Point(1,1), true);
 
-        int startPositionX = dungeon.getStartPoint().getXPos();
-        int startPositionY = dungeon.getStartPoint().getYPos();
+        int x = dungeon.getStartPoint().getXPos();
+        int y = dungeon.getStartPoint().getYPos();
 
         int endPositionX = dungeon.getEndPoint().getXPos();
         int endPositionY = dungeon.getEndPoint().getYPos();
@@ -81,11 +86,9 @@ public class Algorithms {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
-        Point currentPosition = new Point(startPositionX, startPositionY);
-        currentPosition.setManhattanDistance(getManhattanDistance(startPositionX,startPositionY,endPositionX,endPositionY));
+        Point currentPosition = new Point(x, y);
+        currentPosition.setManhattanDistance(getManhattanDistance(x, y,endPositionX,endPositionY));
 
-        int x = startPositionX;
-        int y = startPositionY;
 
         visitMap = new Matrix<Point>(dungeonWidth, dungeonHeight);
         visitMap.fillMatrix(null);//todo silly
@@ -94,34 +97,34 @@ public class Algorithms {
         pathList = new ArrayList<Point>();
         pathList.add(currentPosition);
 
-        while(currentPosition.getManhattanDistance() != 0) {
-            Tile upTile = null;
-            Tile rightTile = null;
-            Tile downTile = null;
-            Tile leftTile = null;
 
-            if (dungeonMatrix.getUp(startPositionX, startPositionY) instanceof Corridor) {
+        int pp = 0;
+        while(currentPosition.getManhattanDistance() != 0) {
+            x = currentPosition.getXPos();
+            y = currentPosition.getYPos();
+
+            if (dungeonMatrix.getUp(x, y) instanceof Corridor) {
                 Point point = new Point(x, y - 1);
                 visitMap.put(x, y - 1, point); //todo this needs an if statment to check for already exisiting
                 visitMap.getElement(x, y - 1).setManhattanDistance(getManhattanDistance(x, y - 1, endPositionX, endPositionY));
                 pathList.add(point);
             }
 
-            if (dungeonMatrix.getRight(startPositionX, startPositionY) instanceof Corridor) {
+            if (dungeonMatrix.getRight(x, y) instanceof Corridor) {
                 Point point = new Point(x + 1, y);
                 visitMap.put(x + 1, y, point);
                 visitMap.getElement(x + 1, y).setManhattanDistance(getManhattanDistance(x + 1, y, endPositionX, endPositionY));
                 pathList.add(point);
             }
 
-            if (dungeonMatrix.getDown(startPositionX, startPositionY) instanceof Corridor) {
+            if (dungeonMatrix.getDown(x, y) instanceof Corridor) {
                 Point point = new Point(x, y + 1);
                 visitMap.put(x, y + 1, point);
                 visitMap.getElement(x, y + 1).setManhattanDistance(getManhattanDistance(x, y + 1, endPositionX, endPositionY));
                 pathList.add(point);
             }
 
-            if (dungeonMatrix.getLeft(startPositionX, startPositionY) instanceof Corridor) {
+            if (dungeonMatrix.getLeft(x, y) instanceof Corridor) {
                 Point point = new Point(x - 1, y);
                 visitMap.put(x - 1, y, point);
                 visitMap.getElement(x - 1, y).setManhattanDistance(getManhattanDistance(x - 1, y, endPositionX, endPositionY));
@@ -132,7 +135,12 @@ public class Algorithms {
             if(pathList.get(0).getManhattanDistance() < currentPosition.getManhattanDistance()){
                 currentPosition = pathList.get(0);
             }
-
+            if(pp >= 100){
+                System.out.println(pathList);
+                System.out.println(visitMap);
+                break;
+            }
+            else pp++;
         }
     }
 

@@ -160,7 +160,8 @@ public class Matrix<E> {
         for(int y = 0; y < height; y++){
             string.append(" { ");
             for (int x = 0; x < width; x++){
-                string.append(matrix.get(y).get(x).toString()).append(", ");
+                if(matrix.get(y).get(x) == null) string.append("Null,");
+                else string.append(matrix.get(y).get(x).toString()).append(", ");
             }
             string.append("}\n");
         }
