@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -90,7 +92,7 @@ public class Algorithms {
         visitMap.put(x, y, currentPosition);
 
         pathList = new ArrayList<Point>();
-        pathList.add(new Point(startPositionX, startPositionY));
+        pathList.add(currentPosition);
 
         while(currentPosition.getManhattanDistance() != 0) {
             Tile upTile = null;
@@ -100,7 +102,7 @@ public class Algorithms {
 
             if (dungeonMatrix.getUp(startPositionX, startPositionY) instanceof Corridor) {
                 Point point = new Point(x, y - 1);
-                visitMap.put(x, y - 1, point);
+                visitMap.put(x, y - 1, point); //todo this needs an if statment to check for already exisiting
                 visitMap.getElement(x, y - 1).setManhattanDistance(getManhattanDistance(x, y - 1, endPositionX, endPositionY));
                 pathList.add(point);
             }
@@ -125,8 +127,11 @@ public class Algorithms {
                 visitMap.getElement(x - 1, y).setManhattanDistance(getManhattanDistance(x - 1, y, endPositionX, endPositionY));
                 pathList.add(point);
             }
+            Collections.sort(pathList, Comparator.comparing(Point::getManhattanDistance));
 
-
+            if(pathList.get(0).getManhattanDistance() < currentPosition.getManhattanDistance()){
+                currentPosition = pathList.get(0);
+            }
 
         }
     }

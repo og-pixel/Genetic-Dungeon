@@ -2,6 +2,7 @@ package Algorithms;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
+import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,6 +85,8 @@ public class FindAllRooms implements Fitness{
             e.printStackTrace();
         }
 
+
+        Algorithms.aStarTraverse(dungeon);
     }
 
     private int countVisited(Matrix<Boolean> visitMap){

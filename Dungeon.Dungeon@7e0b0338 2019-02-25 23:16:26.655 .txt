@@ -1,0 +1,46 @@
+Room Count: 161
+Walls: 997
+Rooms Take: 1003
+Room size average: 6.229813664596273
+Distance between start and end: 85
+
+Sxxx░xx░x░xx░xxx░xx░x░x░░░░x░░░x░░░░░xx░xxxxx░x░░░
+░x░xxxxx░xx░x░x░xx░░xxxxxx░░░░x░xxx░xx░░xxx░x░░░x░
+░░x░░xxxx░░░░░x░x░░░x░x░x░░░xxx░░░░x░x░xx░xx░xxx░░
+x░░░x░x░xx░░░░░x░xx░░xx░░░░xx░░░x░░x░░░░x░░xx░░░x░
+░xxxx░xx░x░░░░░xx░░xx░xxx░xx░░░░x░░░░x░░░░x░xx░░xx
+x░░░░x░░░x░xxxxxx░xx░░░x░x░xxx░░xx░x░x░░░x░x░x░░░x
+░x░░x░░x░x░xx░░░░░xxxxxx░xx░xx░xx░░░░░x░xxxxxx░x░x
+xxxx░xxxxxx░x░░xxx░x░░░░x░x░░xxxx░x░░x░xx░░xxx░░x░
+xx░xxx░░x░░xxx░░░x░░░░░xx░░x░░x░xx░░xxxxxx░░xx░xxx
+xx░xxxx░░░x░xxxxx░x░░x░░xxxx░░xx░░xx░x░xx░░░x░░x░x
+x░░░xxx░░x░xxx░░░░xxxx░x░x░░░░░xx░x░xx░xx░x░xx░xxx
+░xx░x░░x░░x░░░xxxxxxx░x░░░x░░░xx░xxxxxx░░x░xx░xxxx
+░░xxxxxx░xxx░x░xx░░x░░░░░xx░xxx░xx░x░░x░░░x░░xxxxx
+░x░x░xx░░░░░x░░xxxx░x░░░xx░x░░xx░xx░░░xxx░░x░░░░x░
+xxx░░x░x░░x░░░░xxxx░x░xxx░░x░xxx░░░░░xxx░x░xx░░xxx
+░x░xxx░x░░░x░░x░░x░xx░x░░xx░░░x░x░░xx░x░x░x░░xxx░x
+░░xxx░░░x░x░xx░xxxxxx░░xx░x░░xxxxx░░░░░xx░░xxx░░░░
+xx░x░░░xxxxx░xx░xx░xx░░xxxx░░░░x░x░░░x░xx░xxxx░x░░
+xx░░xxx░░░░░xxx░x░xxxx░xx░░xx░x░xx░xxx░x░░░x░x░x░░
+xxx░░░xx░xx░░░░░░░xx░░xx░░░░░░x░xxxx░░░xxx░░x░xxx░
+x░░░xxxx░░xx░xx░░░x░xxx░░░xxxx░░░x░░x░░x░░░░░░x░░x
+░xx░x░xxxx░░░░░░x░░░░xx░xxx░x░░x░x░░░xx░xxxxxxx░x░
+xxxx░░░░░░xx░x░x░░x░x░░xx░xxxx░xxx░x░xx░xxxx░░░░░░
+xxx░xx░░░░xx░░x░░x░x░x░░x░░x░░x░░░░xx░░░x░xx░░░x░░
+░xx░x░░░░xx░░░░░xxx░xx░░░x░░xxx░░░xxx░xxx░░░xx░░░░
+░░░░xxxxx░x░x░░░x░x░░x░░x░x░░░░░x░x░x░░x░░░xx░x░░x
+░░░░░░░xxx░x░░░░░░░░░░x░░xx░x░░x░░░x░░xxx░░░░░░░░░
+░x░░░░xxx░░░░░░xx░x░xx░░░░xxx░x░░░xxxx░░x░░░x░░x░░
+xx░░░░x░xxxxx░░░░x░xx░xxx░xx░x░xxxx░░░░xx░░x░░xx░░
+xxxxxxxxxxx░░░░░xx░x░x░░x░x░░░xx░x░░xxxxx░xx░x░xxx
+x░░xxx░░░░x░xx░░░░xx░░░░░xxxx░x░xxx░░xxx░░xxxxxxx░
+░x░xxxx░░░░xx░░░░xxxxx░xxx░x░xx░░xxx░xx░x░x░xx░xx░
+xxx░xx░xx░░░░x░░░x░░░x░░xx░░x░xxxxx░░x░░░░xxxxx░xx
+░x░░░░x░░xxxx░x░░x░░x░xx░xx░x░x░xxxx░xxxx░░░░░░░xx
+░xx░xxxx░░xx░░░░x░░xx░░x░░x░░xxxx░░░x░░xx░░░x░░x░x
+x░░░x░░xxx░xxxx░xx░░x░x░x░x░x░░x░x░xxx░x░xx░xxxx░░
+xx░░xxxx░x░x░░x░x░xx░░░xx░xxx░xx░xxx░xxx░xxx░x░░░x
+░xx░░░░░░░░x░░░x░░░░x░x░░░x░░░░xxxx░xx░░x░░░x░░x░░
+xxx░x░x░░░xxxxxxxx░x░x░xx░░xx░xx░x░x░xx░░x░x░░░░░x
+░xxxx░░░░░░░░░░░░░xxx░xx░░xx░░x░xx░xx░xxxx░░x░Exxx
