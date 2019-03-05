@@ -136,10 +136,9 @@ public class Matrix<E> {
     }
 
     public E getDown(int x, int y){
-        if((y + 1) > height){
+        if((y + 1) >= height){
             return null;
         }
-
         return getElement(x, y + 1);
     }
 

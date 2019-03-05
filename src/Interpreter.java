@@ -39,7 +39,7 @@ public class Interpreter {
             ArrayList<Dungeon> mapList = new ArrayList<>();
             for(int i = 0; i < numberOfMaps; i++){
                 mapList.add(new Dungeon(width, height));
-                mapList.get(i).getDungeonMatrix().cellularAutomate(new Corridor(0,0), new Wall(0,0), 0.4);//todo position is wrong
+                mapList.get(i).getDungeonMatrix().cellularAutomate(new Corridor(0,0), new Wall(0,0), 0.1);//todo position is wrong
                 mapList.get(i).createStartPosition();
                 mapList.get(i).createEndPosition();
             }

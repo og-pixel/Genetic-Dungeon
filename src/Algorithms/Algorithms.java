@@ -2,6 +2,7 @@ package Algorithms;
 
 import Dungeon.*;
 import Dungeon.Tile.Corridor;
+import Dungeon.Tile.End;
 import Dungeon.Tile.Tile;
 
 import java.io.File;
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.Random;
 
 
 /**
@@ -67,18 +68,15 @@ public class Algorithms {
 
 
 
-    public static ArrayList<Point> pathList = null;
-    public static Matrix<Point> visitMap = null;
-    public static HashMap<Point,Boolean> hashVisit = null;
-
     //TODO create A*
     public static void aStarTraverse(Dungeon dungeon){
-        Matrix dungeonMatrix = dungeon.getDungeonMatrix();
-        hashVisit = new HashMap<Point, Boolean>();
-        hashVisit.put(new Point(1,1), true);
+        Matrix<Tile> dungeonMatrix = dungeon.getDungeonMatrix();
 
-        int x = dungeon.getStartPoint().getXPos();
-        int y = dungeon.getStartPoint().getYPos();
+        ArrayList<Point> traverseList = new ArrayList<>();
+
+
+        int startPositionX = dungeon.getStartPoint().getXPos();
+        int startPositionY = dungeon.getStartPoint().getYPos();
 
         int endPositionX = dungeon.getEndPoint().getXPos();
         int endPositionY = dungeon.getEndPoint().getYPos();
@@ -86,62 +84,131 @@ public class Algorithms {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
-        Point currentPosition = new Point(x, y);
-        currentPosition.setManhattanDistance(getManhattanDistance(x, y,endPositionX,endPositionY));
+        Point currentPosition = new Point(startPositionX, startPositionY);
 
+        currentPosition.setSteps(1);
+        currentPosition.setDistanceToFinish(getManhattanDistance(startPositionX, startPositionY,
+                                                                    endPositionX, endPositionY));
 
-        visitMap = new Matrix<Point>(dungeonWidth, dungeonHeight);
-        visitMap.fillMatrix(null);//todo silly
-        visitMap.put(x, y, currentPosition);
+        traverseList.add(currentPosition);
 
-        pathList = new ArrayList<Point>();
-        pathList.add(currentPosition);
+        int x = currentPosition.getXPos();
+        int y = currentPosition.getYPos();
 
+        int point = 0;
+        int steps = 0;
+        ArrayList<Point> list = new ArrayList<>();
 
-        int pp = 0;
-        while(currentPosition.getManhattanDistance() != 0) {
-            x = currentPosition.getXPos();
+        while(currentPosition.getDistanceToFinish() != 0) {
+            x = currentPosition .getXPos();
             y = currentPosition.getYPos();
+            int currentSteps = currentPosition.getSteps();
 
-            if (dungeonMatrix.getUp(x, y) instanceof Corridor) {
-                Point point = new Point(x, y - 1);
-                visitMap.put(x, y - 1, point); //todo this needs an if statment to check for already exisiting
-                visitMap.getElement(x, y - 1).setManhattanDistance(getManhattanDistance(x, y - 1, endPositionX, endPositionY));
-                pathList.add(point);
+            boolean canExpand[] = new boolean[4];
+            for (int i = 0; i < canExpand.length; i++) {
+                canExpand[i] = false;
             }
 
-            if (dungeonMatrix.getRight(x, y) instanceof Corridor) {
-                Point point = new Point(x + 1, y);
-                visitMap.put(x + 1, y, point);
-                visitMap.getElement(x + 1, y).setManhattanDistance(getManhattanDistance(x + 1, y, endPositionX, endPositionY));
-                pathList.add(point);
+            if (dungeonMatrix.getUp(x, y) instanceof Corridor ||
+                    dungeonMatrix.getUp(x, y) instanceof End) {
+                Point point1 = new Point(x, y - 1, currentSteps + 1);
+                point1.setSteps(Algorithms.getManhattanDistance(x, y - 1,
+                        startPositionX, startPositionY));
+
+                point1.setDistanceToFinish(Algorithms.getManhattanDistance(x, y - 1,
+                        endPositionX, endPositionY));
+
+                if(checkIfPointExists(point1, traverseList))canExpand[0] = true;
+                else
+                traverseList.add(point1);
             }
 
-            if (dungeonMatrix.getDown(x, y) instanceof Corridor) {
-                Point point = new Point(x, y + 1);
-                visitMap.put(x, y + 1, point);
-                visitMap.getElement(x, y + 1).setManhattanDistance(getManhattanDistance(x, y + 1, endPositionX, endPositionY));
-                pathList.add(point);
+            if (dungeonMatrix.getRight(x, y) instanceof Corridor ||
+                    dungeonMatrix.getRight(x, y) instanceof End) {
+                Point point2 = new Point(x + 1, y, currentSteps + 1);
+                point2.setSteps(Algorithms.getManhattanDistance(x + 1, y,
+                        startPositionX, startPositionY));
+
+                point2.setDistanceToFinish(Algorithms.getManhattanDistance(x + 1, y,
+                        endPositionX,endPositionY));
+
+                if(checkIfPointExists(point2, traverseList))canExpand[1] = true;
+                else
+                traverseList.add(point2);
             }
 
-            if (dungeonMatrix.getLeft(x, y) instanceof Corridor) {
-                Point point = new Point(x - 1, y);
-                visitMap.put(x - 1, y, point);
-                visitMap.getElement(x - 1, y).setManhattanDistance(getManhattanDistance(x - 1, y, endPositionX, endPositionY));
-                pathList.add(point);
-            }
-            Collections.sort(pathList, Comparator.comparing(Point::getManhattanDistance));
+            if (dungeonMatrix.getDown(x, y) instanceof Corridor ||
+                    dungeonMatrix.getDown(x, y) instanceof End) {
+                Point point3 = new Point(x, y + 1, currentSteps + 1);
+                point3.setSteps(Algorithms.getManhattanDistance(x, y + 1,
+                        startPositionX, startPositionY));
 
-            if(pathList.get(0).getManhattanDistance() < currentPosition.getManhattanDistance()){
-                currentPosition = pathList.get(0);
+                point3.setDistanceToFinish(Algorithms.getManhattanDistance(x, y + 1,
+                        endPositionX,endPositionY));
+
+
+                if(checkIfPointExists(point3, traverseList))canExpand[2] = true;
+                else
+                traverseList.add(point3);
             }
-            if(pp >= 100){
-                System.out.println(pathList);
-                System.out.println(visitMap);
+
+            if (dungeonMatrix.getLeft(x, y) instanceof Corridor ||
+                    dungeonMatrix.getLeft(x, y) instanceof End) {
+                Point point4 = new Point(x - 1, y, currentSteps + 1);
+                point4.setSteps(Algorithms.getManhattanDistance(x - 1, y,
+                        startPositionX, startPositionY));
+
+                point4.setDistanceToFinish(Algorithms.getManhattanDistance(x - 1, y,
+                        endPositionX,endPositionY));
+
+                if(checkIfPointExists(point4, traverseList))canExpand[3] = true;
+                else
+                traverseList.add(point4);
+            }
+
+            list.add(currentPosition);
+
+            if(!canExpand[0] && !canExpand[1] && !canExpand[2] && !canExpand[3]) {
+                currentPosition.setTotalCost(99999);
+            }
+            Collections.sort(traverseList, Comparator.comparing(Point::getDistanceToFinish));
+
+
+//            TODO DODODODOD
+            // because of this, it is working, but not like real A* would
+            for (int i = 1; i < traverseList.size(); i++) {
+                if(currentPosition.getTotalCost() == traverseList.get(i).getTotalCost()){
+                    currentPosition = traverseList.get(new Random().nextInt(traverseList.size()));
+                    break;
+                }
+            }
+
+//            if(currentPosition.getXPos() == endPositionX &&
+//                    currentPosition.getYPos() == endPositionY){
+//                break
+//                System.out.println();
+//            }
+
+
+            if(point > 15000){
+                System.err.println(traverseList);
+//                System.out.println(list);
                 break;
             }
-            else pp++;
+                else point++;
         }
+        System.err.println(traverseList);
+    }
+
+    //TODO check if point is already on list
+    private static boolean checkIfPointExists(Point point, ArrayList<Point> traverseList){
+        for (int i = 0; i < traverseList.size(); i++) {
+            if(point.getXPos() == traverseList.get(i).getXPos()
+                    && point.getYPos() == traverseList.get(i).getYPos()){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -156,9 +223,6 @@ public class Algorithms {
         dungeon.getRight(x,y);
         dungeon.getDown(x,y);
         dungeon.getLeft(x,y);
-
-
-
     }
 
 
