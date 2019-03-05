@@ -159,7 +159,7 @@ public class Matrix<E> {
         for(int y = 0; y < height; y++){
             string.append(" { ");
             for (int x = 0; x < width; x++){
-                if(matrix.get(y).get(x) == null) string.append("Null,");
+                if(matrix.get(y).get(x) == null) string.append("[],");
                 else string.append(matrix.get(y).get(x).toString()).append(", ");
             }
             string.append("}\n");

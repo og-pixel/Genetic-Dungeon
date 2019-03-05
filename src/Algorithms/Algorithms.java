@@ -21,6 +21,9 @@ import java.util.Random;
  */
 public class Algorithms {
 
+    //TODO I think I can rewrite flood a little bit so it can
+    // check for start and finish node (I still need A*)
+
     //todo for now it returns a a matrix of booleans
     public static Matrix<Boolean> floodFill(Dungeon dungeon, int x, int y){
         if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
@@ -171,8 +174,10 @@ public class Algorithms {
             if(!canExpand[0] && !canExpand[1] && !canExpand[2] && !canExpand[3]) {
                 currentPosition.setTotalCost(99999);
             }
-            Collections.sort(traverseList, Comparator.comparing(Point::getDistanceToFinish));
 
+
+
+            Collections.sort(traverseList, Comparator.comparing(Point::getDistanceToFinish));
 
 //            TODO DODODODOD
             // because of this, it is working, but not like real A* would
@@ -190,9 +195,23 @@ public class Algorithms {
 //            }
 
 
-            if(point > 15000){
-                System.err.println(traverseList);
-//                System.out.println(list);
+            if(point > 15000000){
+                System.err.println("Could not find ending");
+
+                Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
+                visitMap.fillMatrix(false);
+
+                for(int i = 0; i < traverseList.size(); i++) {
+                    visitMap.put(traverseList.get(i).getXPos(),
+                            traverseList.get(i).getYPos(), true);
+                }
+
+                try {
+                    writeToFile(visitMap.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 break;
             }
                 else point++;
@@ -237,6 +256,19 @@ public class Algorithms {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         File file = new File(dungeon.toString() + " " + timestamp + " .txt");
+        file.createNewFile();
+
+        FileWriter fileWrite = new FileWriter(file);
+        fileWrite.write(content);
+
+        fileWrite.flush();
+        fileWrite.close();
+    }
+
+    public static void writeToFile(String content) throws IOException {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        File file = new File(timestamp + " aStar.txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
