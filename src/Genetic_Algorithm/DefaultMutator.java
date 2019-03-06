@@ -7,6 +7,7 @@ import Dungeon.Tile.Tile;
 import Dungeon.Tile.Wall;
 import Exceptions.VariableBoundsException;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class DefaultMutator implements MutatorImp {
@@ -33,6 +34,14 @@ public class DefaultMutator implements MutatorImp {
                     else dungeonMatrix.put(x, y, new Corridor(x, y));
                 }
             }
+        }
+    }
+
+    //Same as mutate dungeon, just iterates
+    @Override
+    public void mutateDungeons(ArrayList<Dungeon> dungeonList) {
+        for (Dungeon dungeon : dungeonList) {
+            mutateDungeon(dungeon);
         }
     }
 

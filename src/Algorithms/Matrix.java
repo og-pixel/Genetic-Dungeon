@@ -15,6 +15,10 @@ public class Matrix<E> {
     private ArrayList<ArrayList<E>> matrix;
     private int width, height;
 
+
+    private int chromosome;//todo this will be stringfiled version of
+                            // dungeon to use for comparsion
+
     /**
      * TODO constructor without creating stuff inside (nulls)
      * @param width
@@ -82,6 +86,11 @@ public class Matrix<E> {
         }
         return columnArray;
     }
+
+    public void replaceRow(int row, ArrayList<E> content){
+        matrix.set(row, content);
+    }
+
 
     public int getWidth(){
         return width;
@@ -165,5 +174,13 @@ public class Matrix<E> {
             string.append("}\n");
         }
         return string.toString();
+    }
+
+    public int getChromosome() {
+        int z = 1;
+
+
+
+        return z;
     }
 }

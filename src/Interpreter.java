@@ -21,7 +21,6 @@ public class Interpreter {
             System.exit(1);
         }
 
-
         if(args[0].equals(CREATE)){
             int population = Integer.parseInt(args[1]);
             int generations = Integer.parseInt(args[2]);
@@ -48,6 +47,10 @@ public class Interpreter {
             CrossoverImp z = new CrossoverBehaviour(0.1, population);
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
 
+            ////////////////////////////
+            //Mutate all maps
+            MutatorImp defaultMutator = new DefaultMutator(0.4);
+            defaultMutator.mutateDungeons(nextGeneration);
 
 
             System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
