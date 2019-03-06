@@ -73,6 +73,7 @@ public class FindAllRoomsFitness implements FitnessImp {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Room Count: " + numberOfRooms);
         stringBuilder.append("\nWalls: " + wallCount);
+        stringBuilder.append("\nScore: " + dungeon.getScore());
         stringBuilder.append("\nRooms Take: " + roomSize);
         stringBuilder.append("\nRoom size average: " + roomAverage);
         stringBuilder.append("\nDistance between start and end: " + manhattanDis);
@@ -94,7 +95,6 @@ public class FindAllRoomsFitness implements FitnessImp {
         float ccc = (float) (roomAverage * numberOfRooms); //More rooms * thier room size
 
 
-        System.err.println("DEBUG, map score: " + ccc);
         return (int) ccc;
     }
 

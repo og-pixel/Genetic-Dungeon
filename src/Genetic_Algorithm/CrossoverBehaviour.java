@@ -49,7 +49,7 @@ public class CrossoverBehaviour implements CrossoverImp {
 
             //TODO this casting might cause trouble (losing floating point)
             //todo added +1
-            mapList.subList((int)(TOP_POP*POP_SIZE)+1, mapList.size()).clear();
+            mapList.subList((int)(TOP_POP*POP_SIZE) + 1, mapList.size()).clear();
 
 
 

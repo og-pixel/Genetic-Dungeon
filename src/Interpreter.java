@@ -49,7 +49,7 @@ public class Interpreter {
 
             ////////////////////////////
             //Mutate all maps
-            MutatorImp defaultMutator = new DefaultMutator(0.4);
+            MutatorImp defaultMutator = new DefaultMutator(0.1);
             defaultMutator.mutateDungeons(nextGeneration);
 
 
