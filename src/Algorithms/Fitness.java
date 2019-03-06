@@ -11,6 +11,6 @@ public interface Fitness {
      * @param dungeon dungeon map
      * @return score that the map achieved
      */
-    void evaluateDungeon(Dungeon dungeon);
+    int evaluateDungeon(Dungeon dungeon);
 }
 

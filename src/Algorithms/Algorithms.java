@@ -195,7 +195,7 @@ public class Algorithms {
 //            }
 
 
-            if(point > 15000000){
+            if(point > 1500000){
                 System.err.println("Could not find ending");
 
                 Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
@@ -207,7 +207,18 @@ public class Algorithms {
                 }
 
                 try {
-                    writeToFile(visitMap.toString());
+                    StringBuilder sb = new StringBuilder();
+                    for (int c = 0; c < visitMap.getHeight(); c++) {
+                        sb.append("\n");
+                        for (int z = 0; z < visitMap.getWidth(); z++) {
+                            if(visitMap.getElement(z, c))sb.append("░");
+                            else sb.append("x");
+                        }
+                    }
+
+
+
+                    writeToFile(sb.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

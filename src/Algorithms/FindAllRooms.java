@@ -16,7 +16,7 @@ public class FindAllRooms implements Fitness{
      * @param dungeon dungeon map
      */
     @Override
-    public void evaluateDungeon(Dungeon dungeon) {
+    public int evaluateDungeon(Dungeon dungeon) {
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
@@ -85,8 +85,16 @@ public class FindAllRooms implements Fitness{
             e.printStackTrace();
         }
 
+        //TODO Return between 0 and 100 (0.0 to 1.0)
 
-        Algorithms.aStarTraverse(dungeon);
+        //TODO for now I will only try to encourage creating multiple small rooms
+        int mapSize = dungeonWidth + dungeonHeight;
+        int sum = numberOfRooms * mapSize;
+        float ccc = (float) (roomAverage * numberOfRooms); //More rooms * thier room size
+
+
+
+        return 1;
     }
 
     private int countVisited(Matrix<Boolean> visitMap){
