@@ -40,59 +40,18 @@ public class Interpreter {
 
             createFitness();
             ArrayList<Dungeon> mapList = new ArrayList<>(); //List of maps
-            ArrayList<Dungeon> newPopulation = new ArrayList<>();
 
-            for(int i = 0; i < numberOfMaps; i++){
-                mapList.add(new Dungeon(width, height));
-                mapList.get(i).getDungeonMatrix().cellularAutomate(new Corridor(0,0), new Wall(0,0), 0.4);//todo position is wrong
-                mapList.get(i).createStartPosition();
-                mapList.get(i).createEndPosition();
-            }
 
-            Mutator mutator = new Mutator(0.1);
 
             float timeNow = System.nanoTime();
-            float score;
 
-            int GENERATIONS = 10;
-
-            for (int generation = 0; generation < GENERATIONS; generation++) {
-
-
-                for (int i = 0; i < fitnessList.size(); i++) {
-                    for (int x = 0; x < mapList.size(); x++) {
-                        mapList.get(x).setScore(
-                                fitnessList.get(i).evaluateDungeon(mapList.get(x)));
-                        mutator.mutateDungeon(mapList.get(x));
-                    }
-                }
-
-                Collections.sort(mapList, Comparator.comparing(Dungeon::getScore));
-
-                double TOP_POP = 0.1; //10% of pop will mate todo final etc
-                double POP_SIZE = 100;
-
-                Random random = new Random();
-                while (newPopulation.size() < POP_SIZE) {
-                    int randomPick = (int) (mapList.size() * TOP_POP);
-                    if (randomPick <= 0) randomPick = 1;
-
-                    newPopulation.add(mapList.get(random.nextInt(randomPick)));//todo simplify as it looks like shit
-                    newPopulation.get(newPopulation.size() - 1).createStartPosition();
-                    newPopulation.get(newPopulation.size() - 1).createEndPosition(); //todo i really dislike how i write the whole thing but should be enough for now
-                }
-
-                mapList = newPopulation; //new pop!
-
-
-            }
-
-
-
-
-
-
-
+            ////////////////////////////
+            PopulationImp c = new Population();
+            mapList = c.createPopulation(width, height, numberOfMaps, 0.4);
+            ////////////////////////////
+            CrossoverImp z = new CrossoverBehaviour();
+            z.crossoverPopulation(mapList, fitnessList);
+            ////////////////////////////
 
             System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
         }
