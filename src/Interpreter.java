@@ -1,17 +1,7 @@
-import Algorithms.FindAllRooms;
-import Algorithms.Fitness;
-import Algorithms.Mutator;
 import Dungeon.Dungeon;
-import Dungeon.Tile.Corridor;
-import Dungeon.Tile.Wall;
+import Genetic_Algorithm.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
 
 public class Interpreter {
 
@@ -25,55 +15,53 @@ public class Interpreter {
         interpretArguments(args);
     }
 
-    private ArrayList<Fitness> fitnessList = null;
-
     private void interpretArguments(String... args){
         if(args.length <= 0){
             displayHelp();
             System.exit(1);
         }
 
+
         if(args[0].equals(CREATE)){
-            int numberOfMaps = Integer.parseInt(args[1]);
-            int width = Integer.parseInt(args[2]);
-            int height = Integer.parseInt(args[3]);
-
-            createFitness();
-            ArrayList<Dungeon> mapList = new ArrayList<>(); //List of maps
-
-
+            int population = Integer.parseInt(args[1]);
+            int generations = Integer.parseInt(args[2]);
+            int dungeonWidth = Integer.parseInt(args[3]);
+            int dungeonHeight = Integer.parseInt(args[4]);
 
             float timeNow = System.nanoTime();
 
+            //List of maps
+            ArrayList<Dungeon> mapList = new ArrayList<>(); //List of maps
+            ArrayList<Dungeon> nextGeneration = new ArrayList<>(); //List of maps
+
+            //Create Fitness
+            ArrayList<FitnessImp> fitnessImpList = new ArrayList<>();
+            fitnessImpList.add(new FindAllRoomsFitness());
+
             ////////////////////////////
-            PopulationImp c = new Population();
-            mapList = c.createPopulation(width, height, numberOfMaps, 0.4);
+            //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
+            PopulationImp c = new CellularPopulation();
+            mapList = c.createPopulation(dungeonWidth, dungeonHeight, population, 0.4); // 60/40 maps
+
             ////////////////////////////
-            CrossoverImp z = new CrossoverBehaviour();
-            z.crossoverPopulation(mapList, fitnessList);
-            ////////////////////////////
+            //Crossover population and return a new population
+            CrossoverImp z = new CrossoverBehaviour(0.1, population);
+            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
+
+
 
             System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
         }
     }
 
+
+//    //Creates all fitness that I have, currently only one
+//    private void createFitness(){
+//        fitnessImpList = new ArrayList<>();
+//        fitnessImpList.add(new FindAllRoomsFitness());
+//    }
+
     private void displayHelp(){
         System.out.println(README);
     }
-
-
-
-    private ArrayList<Dungeon> generatePopulation(int width, int height, int amount){
-        ArrayList<Dungeon> list = new ArrayList<>();
-        for(int i = 0; i < amount; i++){
-            list.add(new Dungeon(width, height));
-        }
-        return list;
-    }
-
-    private void createFitness(){
-        fitnessList = new ArrayList<>();
-        fitnessList.add(new FindAllRooms());
-    }
-
 }

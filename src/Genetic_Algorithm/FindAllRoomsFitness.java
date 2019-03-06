@@ -1,14 +1,15 @@
-package Algorithms;
+package Genetic_Algorithm;
 
+import Algorithms.Algorithms;
+import Algorithms.Matrix;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
-import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 //todo this class name should not be a verb but I feel like its better than "RoomSize"
-public class FindAllRooms implements Fitness{
+public class FindAllRoomsFitness implements FitnessImp {
 
     /**
      * Takes a dungeon map and tries to use a fill algorithm to find all rooms and their respective sizes
@@ -94,7 +95,7 @@ public class FindAllRooms implements Fitness{
 
 
 
-        return 1;
+        return (int) ccc;
     }
 
     private int countVisited(Matrix<Boolean> visitMap){

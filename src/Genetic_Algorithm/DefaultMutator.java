@@ -1,5 +1,6 @@
-package Algorithms;
+package Genetic_Algorithm;
 
+import Algorithms.Matrix;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Tile;
@@ -8,15 +9,19 @@ import Exceptions.VariableBoundsException;
 
 import java.util.Random;
 
-public class Mutator {
+public class DefaultMutator implements MutatorImp {
 
     private double odd;
 
-    public Mutator(double odd){
+//    public DefaultMutator(Tile tileOne, Tile tileTwo){
+//        if(odd < 0.01 || odd > 1) throw new VariableBoundsException(0.01, 1);
+//        this.odd = 0.1;
+//    }
+
+    public DefaultMutator(double odd){
         if(odd < 0.01 || odd > 1) throw new VariableBoundsException(0.01, 1);
         this.odd = 0.1;
     }
-
 
     public void mutateDungeon(Dungeon dungeon){
         Matrix dungeonMatrix = dungeon.getDungeonMatrix();

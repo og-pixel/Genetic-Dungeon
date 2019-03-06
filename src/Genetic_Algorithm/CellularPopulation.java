@@ -1,10 +1,13 @@
+package Genetic_Algorithm;
+
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Wall;
 
 import java.util.ArrayList;
 
-public class Population implements PopulationImp {
+//This version creates a cellular map with start and end point
+public class CellularPopulation implements PopulationImp {
     @Override
     public ArrayList<Dungeon> createPopulation(int width, int height, int numberOfMaps, double odds) {
         ArrayList<Dungeon> mapList = new ArrayList<>();
