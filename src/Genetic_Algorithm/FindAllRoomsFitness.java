@@ -94,7 +94,7 @@ public class FindAllRoomsFitness implements FitnessImp {
         float ccc = (float) (roomAverage * numberOfRooms); //More rooms * thier room size
 
 
-
+        System.err.println("DEBUG, map score: " + ccc);
         return (int) ccc;
     }
 
