@@ -30,6 +30,17 @@ public class Dungeon {
         score = 0;
     }
 
+    //Wrap dungeon matrix to the Dungeon class,
+    // TODO its not for real application
+    public Dungeon(Matrix<Tile> dungeonMatrix){
+        this.dungeonMatrix = dungeonMatrix;
+
+        this.dungeonWidth = dungeonMatrix.getWidth();
+        this.dungeonHeight = dungeonMatrix.getHeight();
+
+        score = 0;
+    }
+
 
     public boolean createStartPosition(){
         for(int y  = 0; y < dungeonHeight; y++){
@@ -77,7 +88,7 @@ public class Dungeon {
         return dungeonMatrix;
     }
 
-    public String printDungeon(){
+    public String dungeonToString(){
         StringBuilder stringBuilder = new StringBuilder();
         for(int y = 0; y < dungeonHeight; y++){
             stringBuilder.append("\n");

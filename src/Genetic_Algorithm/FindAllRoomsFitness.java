@@ -62,30 +62,31 @@ public class FindAllRoomsFitness implements FitnessImp {
         dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
         double roomAverage = (double) roomSize/numberOfRooms;
 
-        int sX = dungeon.getStartPoint().getXPos();
-        int sY = dungeon.getStartPoint().getYPos();
-        int eX = dungeon.getEndPoint().getXPos();
-        int eY = dungeon.getEndPoint().getYPos();
+//        int sX = dungeon.getStartPoint().getXPos();
+//        int sY = dungeon.getStartPoint().getYPos();
+//        int eX = dungeon.getEndPoint().getXPos();
+//        int eY = dungeon.getEndPoint().getYPos();
+//
+//
+//        int manhattanDis = Algorithms.getManhattanDistance(sX,sY,eX,eY);
 
-
-        int manhattanDis = Algorithms.getManhattanDistance(sX,sY,eX,eY);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Room Count: " + numberOfRooms);
-        stringBuilder.append("\nWalls: " + wallCount);
-        stringBuilder.append("\nScore: " + dungeon.getScore());
-        stringBuilder.append("\nRooms Take: " + roomSize);
-        stringBuilder.append("\nRoom size average: " + roomAverage);
-        stringBuilder.append("\nDistance between start and end: " + manhattanDis);
-        stringBuilder.append("\n" + dungeon.printDungeon());
-
-        String xd = stringBuilder.toString();
-
-        try {
-            Algorithms.writeToFile(xd, dungeon);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //TODO this part is for printing and it shoulkd be a separate thing really
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("Room Count: " + numberOfRooms);
+//        stringBuilder.append("\nWalls: " + wallCount);
+//        stringBuilder.append("\nScore: " + dungeon.getScore());
+//        stringBuilder.append("\nRooms Take: " + roomSize);
+//        stringBuilder.append("\nRoom size average: " + roomAverage);
+//        stringBuilder.append("\nDistance between start and end: " + manhattanDis);
+//        stringBuilder.append("\n" + dungeon.dungeonToString());
+//
+//        String xd = stringBuilder.toString();
+//
+//        try {
+//            Algorithms.writeToFile(xd, dungeon);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         //TODO Return between 0 and 100 (0.0 to 1.0)
 

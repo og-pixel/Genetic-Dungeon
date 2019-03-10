@@ -1,4 +1,8 @@
+import Algorithms.CA.CellurarAutomataImp;
+import Algorithms.CA.Rule20CellurarAutomata;
+import Algorithms.Matrix;
 import Dungeon.Dungeon;
+import Dungeon.Tile.Tile;
 import Genetic_Algorithm.*;
 
 import java.util.ArrayList;
@@ -36,15 +40,27 @@ public class Interpreter {
             //Create Fitness
             ArrayList<FitnessImp> fitnessImpList = new ArrayList<>();
             fitnessImpList.add(new FindAllRoomsFitness());
+            fitnessImpList.add(new IsTraversableFitness(1)); //TODO I can either have an abstract between implementation and class or not bother at all, I can do both!
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
-            PopulationImp c = new CellularPopulation();
+            PopulationImp c = new NoisePopulation();
             mapList = c.createPopulation(dungeonWidth, dungeonHeight, population, 0.4); // 60/40 maps
+
+
+            ////////////////////////////
+            //TODO
+            CellurarAutomataImp ca = new Rule20CellurarAutomata();
+            for (int i = 0; i < mapList.size(); i++) {
+                Matrix<Tile> k = ca.generateMap(mapList.get(i).getDungeonMatrix());
+                Dungeon kk = new Dungeon(k);
+                mapList.set(i, kk);
+            }
+            ////////////////////////////
 
             ////////////////////////////
             //Crossover population and return a new population
-            CrossoverImp z = new CrossoverBehaviour(0.1, population);
+            ChromosomeEvaluationImp z = new ChromosomeEvaluationBehaviourTODO(0.1, population);
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
 
             ////////////////////////////

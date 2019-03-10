@@ -6,8 +6,8 @@ import Dungeon.Tile.Wall;
 
 import java.util.ArrayList;
 
-//This version creates a cellular map with start and end point
-public class CellularPopulation implements PopulationImp {
+//This version creates a noise map with start and end point
+public class NoisePopulation implements PopulationImp {
     @Override
     public ArrayList<Dungeon> createPopulation(int width, int height, int numberOfMaps, double odds) {
         ArrayList<Dungeon> mapList = new ArrayList<>();

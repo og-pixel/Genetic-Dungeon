@@ -128,6 +128,7 @@ public class Matrix<E> {
         }
     }
 
+
     public E getUp(int x, int y){
         if((y - 1) < 0){
             return null;

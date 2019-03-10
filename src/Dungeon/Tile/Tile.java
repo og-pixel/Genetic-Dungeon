@@ -26,6 +26,7 @@ abstract public class Tile {
         return yPos;
     }
 
+    //TODO isn't that unnecessary?
     public Tile getTile(){ return this; }
 
     public Element getBaseElement(){ return baseElement; }

@@ -20,8 +20,8 @@ public class DefaultMutator implements MutatorImp {
 //    }
 
     public DefaultMutator(double odd){
-        if(odd < 0.01 || odd > 1) throw new VariableBoundsException(0.01, 1);
-        this.odd = 0.1;
+        if(odd < 0 || odd > 1) throw new VariableBoundsException(0, 1);
+        this.odd = odd;
     }
 
     public void mutateDungeon(Dungeon dungeon){
