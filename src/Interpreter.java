@@ -60,7 +60,7 @@ public class Interpreter {
 
             ////////////////////////////
             //Crossover population and return a new population
-            ChromosomeEvaluationImp z = new ChromosomeEvaluationBehaviourTODO(0.1, population);
+            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.1, population);
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
 
             ////////////////////////////

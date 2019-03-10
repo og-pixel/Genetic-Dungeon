@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
-public class ChromosomeEvaluationBehaviourTODO implements ChromosomeEvaluationImp {
+public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
 
     private double TOP_POP; //todo final?
     private double POP_SIZE;
 
 
-    public ChromosomeEvaluationBehaviourTODO(double topPopulation, double populationSize){
+    public BasicChromosomeEvaluation(double topPopulation, double populationSize){
 
         if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1,1);
 
@@ -24,6 +24,7 @@ public class ChromosomeEvaluationBehaviourTODO implements ChromosomeEvaluationIm
                 "population to mate");
         TOP_POP = topPopulation * populationSize;
 
+        //If there are less maps than to make even 1, then we have to force it
         if(TOP_POP < 1)TOP_POP = 1;
     }
 
@@ -36,23 +37,16 @@ public class ChromosomeEvaluationBehaviourTODO implements ChromosomeEvaluationIm
 
         for (int generation = 0; generation < numberOfGenerations; generation++) {
 
-            for (int i = 0; i < fitnessImpList.size(); i++) {
-                for (int x = 0; x < mapList.size(); x++) {
-                    mapList.get(x).setScore(
-                            fitnessImpList.get(i).evaluateDungeon(mapList.get(x)));
+            for (FitnessImp fitnessImp : fitnessImpList) {
+                for (Dungeon dungeon : mapList) {
+                    dungeon.setScore(fitnessImp.evaluateDungeon(dungeon));
                 }
             }
-
-
             //First elements are the most fit
             mapList.sort(Comparator.comparing(Dungeon::getScore).reversed());
-            //CUT mapList to 10%
 
-            //TODO this casting might cause trouble (losing floating point)
-            //todo added +1
-            mapList.subList((int)(TOP_POP) + 1, mapList.size()).clear();
-
-
+            //TODO This part takes top 10% of pop and removes the rest
+            mapList.subList((int)(TOP_POP), mapList.size()).clear();
 
 
             Random random = new Random();
