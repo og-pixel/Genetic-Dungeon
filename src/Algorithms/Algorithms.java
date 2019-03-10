@@ -5,9 +5,7 @@ import Dungeon.Tile.Corridor;
 import Dungeon.Tile.End;
 import Dungeon.Tile.Tile;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -263,6 +261,7 @@ public class Algorithms {
     }
 
 
+    //TODO rewrite
     public static void writeToFile(String content, Dungeon dungeon) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -270,6 +269,7 @@ public class Algorithms {
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
+        content = dungeon.dungeonToString();
         fileWrite.write(content);
 
         fileWrite.flush();
@@ -288,4 +288,24 @@ public class Algorithms {
         fileWrite.flush();
         fileWrite.close();
     }
+
+
+
+
+
+    //THis method is so fucking dumb
+    public static Dungeon deepClone(Dungeon dungeon){
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(dungeon);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (Dungeon) ois.readObject();
+        }catch (Exception e) {
+            return null;
+        }
+    }
+
 }

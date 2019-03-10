@@ -2,7 +2,9 @@ package Dungeon.Tile;
 import Dungeon.Dungeon_Element.*;
 import Unit.BasicUnit;
 
-abstract public class Tile {
+import java.io.Serializable;
+
+abstract public class Tile implements Serializable {
 
     int region;
     protected int xPos, yPos;

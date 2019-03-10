@@ -1,10 +1,12 @@
-import Algorithms.CA.CellurarAutomataImp;
-import Algorithms.CA.Rule20CellurarAutomata;
-import Algorithms.Matrix;
+import Algorithms.*;
+import Algorithms.CA.*;
 import Dungeon.Dungeon;
+import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Tile;
+import Dungeon.Tile.Wall;
 import Genetic_Algorithm.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Interpreter {
@@ -60,13 +62,33 @@ public class Interpreter {
 
             ////////////////////////////
             //Crossover population and return a new population
-            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.1, population);
+            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.5, population);
+
+//            ArrayList<Dungeon> newMapList = new ArrayList<Dungeon>();
+//            newMapList.add(new Dungeon(10,10));
+//            newMapList.add(new Dungeon(10,10));
+//            newMapList.get(0).getDungeonMatrix().fillMatrix(new Corridor(0,0));
+//            newMapList.get(1).getDungeonMatrix().fillMatrix(new Wall(0,0));
+
+
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
 
             ////////////////////////////
             //Mutate all maps
             MutatorImp defaultMutator = new DefaultMutator(0.1);
             defaultMutator.mutateDungeons(nextGeneration);
+
+
+                 //TODO this part is for printing and it shoulkd be a separate thing really
+
+
+            for (int i = 0; i < mapList.size(); i++) {
+                try {
+                    Algorithms.writeToFile("", mapList.get(i));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
 
             System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");

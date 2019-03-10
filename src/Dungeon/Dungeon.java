@@ -3,7 +3,9 @@ package Dungeon;
 import Algorithms.Matrix;
 import Dungeon.Tile.*;
 
-public class Dungeon {
+import java.io.Serializable;
+
+public class Dungeon implements Serializable {
     /* Variables */
     private int dungeonWidth, dungeonHeight;
     private int score; //TODO it might be just a chromosome thing later

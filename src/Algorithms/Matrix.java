@@ -2,6 +2,7 @@ package Algorithms;
 
 import Exceptions.VariableBoundsException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import java.util.Random;
  * todo more features?
  * todo matrix is quite universal and accepts all types (it wont crash if matrix has numbers and strings)
  */
-public class Matrix<E> {
+public class Matrix<E> implements Serializable {
 
     private ArrayList<ArrayList<E>> matrix;
     private int width, height;

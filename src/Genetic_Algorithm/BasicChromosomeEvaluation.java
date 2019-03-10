@@ -1,5 +1,6 @@
 package Genetic_Algorithm;
 
+import Algorithms.Algorithms;
 import Dungeon.Dungeon;
 import Exceptions.VariableBoundsException;
 
@@ -15,7 +16,7 @@ public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
 
     public BasicChromosomeEvaluation(double topPopulation, double populationSize){
 
-        if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1,1);
+        if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1, 1);
 
         if(populationSize > 1000) System.err.println("Population size is beyond 1000, program might take a long time");
         POP_SIZE = populationSize;
@@ -25,7 +26,7 @@ public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
         TOP_POP = topPopulation * populationSize;
 
         //If there are less maps than to make even 1, then we have to force it
-        if(TOP_POP < 1)TOP_POP = 1;
+        if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
     }
 
 
@@ -54,22 +55,22 @@ public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
             while (newPopulation.size() < POP_SIZE) {
                 //TODO for now parents can be the same etc
                 int randomPick = random.nextInt((int) TOP_POP);
-//                if (randomPick <= 0) randomPick = 1;
                 Dungeon parent1 = mapList.get(randomPick);
 
                 randomPick = random.nextInt((int) TOP_POP);
-//                if (randomPick <= 0) randomPick = 1;
                 Dungeon parent2 = mapList.get(randomPick);
 
-                Dungeon child1 = parent1;
-                Dungeon child2 = parent2;
+                //TODO without DeepClone method (serialize and deserlize object)
+                // it would still hold references from parents, we need NEW objects
+                Dungeon child1 = Algorithms.deepClone(parent1);
+                Dungeon child2 = Algorithms.deepClone(parent2);
 
                 for (int i = 0; i < parent1.getDungeonHeight()/2; i++) {
-                    child1.getDungeonMatrix().replaceRow(i ,parent2.getDungeonMatrix().getRow(i));
+                    child1.getDungeonMatrix().replaceRow(i, parent2.getDungeonMatrix().getRow(i));
                 }
 
                 for (int i = parent2.getDungeonHeight()/2; i < parent2.getDungeonHeight(); i++) {
-                    child2.getDungeonMatrix().replaceRow(i ,parent1.getDungeonMatrix().getRow(i));
+                    child2.getDungeonMatrix().replaceRow(i, parent1.getDungeonMatrix().getRow(i));
                 }
 
 
