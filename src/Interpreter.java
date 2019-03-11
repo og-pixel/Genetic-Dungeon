@@ -59,23 +59,12 @@ public class Interpreter {
                 mapList.set(i, kk);
             }
 
-//            for (Dungeon dungeon : mapList) {
-//                dungeon.getDungeonMatrix().fillMatrix(new Wall(0, 0));
-//            }
-
 
             ////////////////////////////
             //Crossover population and return a new population
-//            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.5, population);
             AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.5, population);
             z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
-
-            ////////////////////////////
-            //Mutate all maps
-//            MutatorImp defaultMutator = MutationsEnum.DEFAULT; //TODO I am not using new keyword to make it work, I am not sure what reprocusion might be, Is there only one instance at the time?
-//            defaultMutator.mutateDungeons(nextGeneration);
-
 
 
 
