@@ -80,8 +80,6 @@ public class Interpreter {
 
 
                  //TODO this part is for printing and it shoulkd be a separate thing really
-
-
             for (int i = 0; i < mapList.size(); i++) {
                 try {
                     Algorithms.writeToFile("", mapList.get(i));

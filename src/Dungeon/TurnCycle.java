@@ -1,5 +1,4 @@
 package Dungeon;
-import Unit.BasicUnit;
 
 public class TurnCycle implements Runnable{
     DungeonGenerator dungeonGenerator;
@@ -16,7 +15,7 @@ public class TurnCycle implements Runnable{
 
     public void update(){
         System.out.println("TODO I CAN FINISH TURN HERE");
-//        Unit player = dungeonGenerator.dungeonMatrix.get(dungeonGenerator.heroLocationY).get(dungeonGenerator.heroLocationX).getBasicUnit();
+//        Game_Not_Used.sound.Unit player = dungeonGenerator.dungeonMatrix.get(dungeonGenerator.heroLocationY).get(dungeonGenerator.heroLocationX).getBasicUnit();
 //        if(player.getNoOfMoves() < 1){
 //            System.out.println("Hero's life left: " + player.getHealth());
 //        }
