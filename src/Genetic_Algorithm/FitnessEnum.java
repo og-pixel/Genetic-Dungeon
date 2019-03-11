@@ -8,8 +8,20 @@ import Dungeon.Tile.Corridor;
 import java.util.ArrayList;
 
 public enum FitnessEnum implements FitnessImp {
-    IS_TRAVERSABLE(1),
-    FIND_ALL_ROOMS {
+    IS_TRAVERSABLE(1) {
+
+
+        @Override
+        public int evaluateDungeon(Dungeon dungeon) {
+            //TODO duh...
+
+
+            return 0;
+        }
+
+
+    },
+    FIND_ALL_ROOMS(0.7) {
         @Override
         public int evaluateDungeon(Dungeon dungeon) {
             int dungeonWidth = dungeon.getDungeonWidth();
@@ -56,32 +68,6 @@ public enum FitnessEnum implements FitnessImp {
             dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
             double roomAverage = (double) roomSize / numberOfRooms;
 
-//        int sX = dungeon.getStartPoint().getXPos();
-//        int sY = dungeon.getStartPoint().getYPos();
-//        int eX = dungeon.getEndPoint().getXPos();
-//        int eY = dungeon.getEndPoint().getYPos();
-//
-//
-//        int manhattanDis = Algorithms.getManhattanDistance(sX,sY,eX,eY);
-
-            //TODO this part is for printing and it shoulkd be a separate thing really
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("Room Count: " + numberOfRooms);
-//        stringBuilder.append("\nWalls: " + wallCount);
-//        stringBuilder.append("\nScore: " + dungeon.getScore());
-//        stringBuilder.append("\nRooms Take: " + roomSize);
-//        stringBuilder.append("\nRoom size average: " + roomAverage);
-//        stringBuilder.append("\nDistance between start and end: " + manhattanDis);
-//        stringBuilder.append("\n" + dungeon.dungeonToString());
-//
-//        String xd = stringBuilder.toString();
-//
-//        try {
-//            Algorithms.writeToFile(xd, dungeon);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
             //TODO Return between 0 and 100 (0.0 to 1.0)
 
             //TODO for now I will only try to encourage creating multiple small rooms
@@ -102,28 +88,19 @@ public enum FitnessEnum implements FitnessImp {
             }
             return counter;
         }
-
-        //TODO Delete
-        public void printMap(Matrix<Boolean> visitMap) {
-            for (int y = 0; y < visitMap.getHeight(); y++) {
-                System.out.println();
-                for (int x = 0; x < visitMap.getWidth(); x++) {
-                    if (visitMap.getElement(x, y)) System.out.print("░");
-                    else System.out.print("x");
-                }
-            }
-            System.out.println();
-        }
     };
 
 
-    private int strength;
 
-    FitnessEnum(int strength) {
+    private final double strength;
+
+    FitnessEnum(double strength) {
         this.strength = strength;
     }
 
-    FitnessEnum() {
+    FitnessEnum(){
+        this.strength = -1;//TODO if its irrelevant, I'll just make it negative, but it might be necessary for all of them anyway
     }
+
 
 }

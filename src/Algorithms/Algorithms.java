@@ -304,6 +304,7 @@ public class Algorithms {
             ObjectInputStream ois = new ObjectInputStream(bais);
             return (Dungeon) ois.readObject();
         }catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

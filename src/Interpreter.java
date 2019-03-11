@@ -41,8 +41,8 @@ public class Interpreter {
 
             //Create Fitness
             ArrayList<FitnessImp> fitnessImpList = new ArrayList<>();
-            fitnessImpList.add(new FindAllRoomsFitness());
-            fitnessImpList.add(new IsTraversableFitness(1)); //TODO I can either have an abstract between implementation and class or not bother at all, I can do both!
+            fitnessImpList.add(FitnessEnum.FIND_ALL_ROOMS);
+            fitnessImpList.add(FitnessEnum.IS_TRAVERSABLE); //TODO I can either have an abstract between implementation and class or not bother at all, I can do both!
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
@@ -58,34 +58,25 @@ public class Interpreter {
                 Dungeon kk = new Dungeon(k);
                 mapList.set(i, kk);
             }
-            ////////////////////////////
+
+//            for (Dungeon dungeon : mapList) {
+//                dungeon.getDungeonMatrix().fillMatrix(new Wall(0, 0));
+//            }
+
 
             ////////////////////////////
             //Crossover population and return a new population
-            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.5, population);
-
-//            ArrayList<Dungeon> newMapList = new ArrayList<Dungeon>();
-//            newMapList.add(new Dungeon(10,10));
-//            newMapList.add(new Dungeon(10,10));
-//            newMapList.get(0).getDungeonMatrix().fillMatrix(new Corridor(0,0));
-//            newMapList.get(1).getDungeonMatrix().fillMatrix(new Wall(0,0));
-
-
-            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations);
+//            ChromosomeEvaluationImp z = new BasicChromosomeEvaluation(0.5, population);
+            AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.5, population);
+            z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
+            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
 
             ////////////////////////////
             //Mutate all maps
-            MutatorImp defaultMutator = MutationsEnum.DEFAULT; //TODO I am not using new keyword to make it work, I am not sure what reprocusion might be, Is there only one instance at the time?
-            defaultMutator.mutateDungeons(nextGeneration);
+//            MutatorImp defaultMutator = MutationsEnum.DEFAULT; //TODO I am not using new keyword to make it work, I am not sure what reprocusion might be, Is there only one instance at the time?
+//            defaultMutator.mutateDungeons(nextGeneration);
 
-                 //TODO this part is for printing and it shoulkd be a separate thing really
-            for (int i = 0; i < mapList.size(); i++) {
-                try {
-                    Algorithms.writeToFile("", mapList.get(i));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+
 
 
             System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");

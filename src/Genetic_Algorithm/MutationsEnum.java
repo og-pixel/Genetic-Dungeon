@@ -1,3 +1,5 @@
+package Genetic_Algorithm;
+
 import Algorithms.Matrix;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;

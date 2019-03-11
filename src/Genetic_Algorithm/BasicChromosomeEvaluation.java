@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
-public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
+public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     private double TOP_POP; //todo final?
     private double POP_SIZE;
@@ -32,7 +32,7 @@ public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
 
     @Override
     public ArrayList<Dungeon> crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
-                                                  int numberOfGenerations) {
+                                                  int numberOfGenerations, MutationsEnum mutation) {
 
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
 
@@ -83,6 +83,8 @@ public class BasicChromosomeEvaluation implements ChromosomeEvaluationImp {
             }
 //            mapList = newPopulation; //new pop!
         }
+
+        mutation.mutateDungeons(newPopulation);//TODO it might not mutate kutas
         return newPopulation;
     }
 
