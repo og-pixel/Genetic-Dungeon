@@ -1,4 +1,4 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Population;
 
 import Dungeon.Dungeon;
 

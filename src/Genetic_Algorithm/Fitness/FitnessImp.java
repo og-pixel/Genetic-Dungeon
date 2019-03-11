@@ -1,4 +1,4 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Fitness;
 
 import Dungeon.Dungeon;
 

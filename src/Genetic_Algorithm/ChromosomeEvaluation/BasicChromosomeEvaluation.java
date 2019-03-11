@@ -1,8 +1,10 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
 import Dungeon.Dungeon;
 import Exceptions.VariableBoundsException;
+import Genetic_Algorithm.Fitness.FitnessImp;
+import Genetic_Algorithm.Mutation.MutationsEnum;
 
 import java.util.ArrayList;
 import java.util.Comparator;

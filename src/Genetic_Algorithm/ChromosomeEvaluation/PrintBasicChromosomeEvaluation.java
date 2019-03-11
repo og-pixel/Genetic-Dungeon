@@ -1,7 +1,12 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
 import Dungeon.Dungeon;
+import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
+import Genetic_Algorithm.ChromosomeEvaluation.DecoratorChromosomeEvaluation;
+import Genetic_Algorithm.Fitness.FitnessImp;
+import Genetic_Algorithm.Mutation.MutationsEnum;
+
 import java.io.IOException;
 import java.util.ArrayList;
 

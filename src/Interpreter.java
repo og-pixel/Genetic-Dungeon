@@ -1,12 +1,16 @@
 import Algorithms.*;
 import Algorithms.CA.*;
 import Dungeon.Dungeon;
-import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Tile;
-import Dungeon.Tile.Wall;
-import Genetic_Algorithm.*;
+import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
+import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
+import Genetic_Algorithm.ChromosomeEvaluation.PrintBasicChromosomeEvaluation;
+import Genetic_Algorithm.Fitness.FitnessEnum;
+import Genetic_Algorithm.Fitness.FitnessImp;
+import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Population.NoisePopulation;
+import Genetic_Algorithm.Population.PopulationImp;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Interpreter {

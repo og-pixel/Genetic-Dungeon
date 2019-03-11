@@ -1,4 +1,4 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Fitness;
 
 import Algorithms.Algorithms;
 import Algorithms.Matrix;

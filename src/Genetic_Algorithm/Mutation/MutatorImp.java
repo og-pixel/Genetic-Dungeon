@@ -1,4 +1,4 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Mutation;
 
 import Dungeon.Dungeon;
 

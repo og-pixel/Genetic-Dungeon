@@ -1,4 +1,4 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Population;
 
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
@@ -6,8 +6,8 @@ import Dungeon.Tile.Wall;
 
 import java.util.ArrayList;
 
-//This version creates a noise map with start and end point
-public class NoisePopulation implements PopulationImp {
+public class FillPopulation implements PopulationImp {
+
     @Override
     public ArrayList<Dungeon> createPopulation(int width, int height, int numberOfMaps, double odds) {
         ArrayList<Dungeon> mapList = new ArrayList<>();

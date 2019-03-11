@@ -1,10 +1,9 @@
-package Genetic_Algorithm;
+package Genetic_Algorithm.Mutation;
 
 import Algorithms.Matrix;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Wall;
-import Genetic_Algorithm.MutatorImp;
 
 import java.util.ArrayList;
 import java.util.Random;
