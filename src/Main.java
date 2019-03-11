@@ -8,7 +8,7 @@ import Dungeon.Tile.Wall;
 
 public class Main {
     public static void main(String[] args){
-        new Interpreter(args);
+//        new Interpreter(args);
 
 //        Dungeon dungeon = new Dungeon(30, 10);
 //        dungeon.getDungeonMatrix().cellularAutomate(new Wall(0,0),new Corridor(0,0), 0.5);//todo as per usualy corrdinates are wrong

@@ -75,9 +75,8 @@ public class Interpreter {
 
             ////////////////////////////
             //Mutate all maps
-            MutatorImp defaultMutator = new DefaultMutator(0.1);
+            MutatorImp defaultMutator = MutationsEnum.DEFAULT; //TODO I am not using new keyword to make it work, I am not sure what reprocusion might be, Is there only one instance at the time?
             defaultMutator.mutateDungeons(nextGeneration);
-
 
                  //TODO this part is for printing and it shoulkd be a separate thing really
             for (int i = 0; i < mapList.size(); i++) {
