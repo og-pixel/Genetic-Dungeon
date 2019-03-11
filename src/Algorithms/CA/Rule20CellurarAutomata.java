@@ -51,18 +51,8 @@ public class Rule20CellurarAutomata implements CellurarAutomataImp {
                     if(count > 3 && count < 6)newMap.put(x, y, new Wall(x, y));
                     else newMap.put(x, y, new Corridor(x, y));
 
-//                }else{
-//                    newMap.put(x, y, new Corridor(x, y));
-//                }
-
-
-
-
-
             }
         }
-
-
 
         //TODO returning should be better I feel
         return newMap;

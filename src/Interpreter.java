@@ -8,7 +8,7 @@ import Genetic_Algorithm.ChromosomeEvaluation.PrintBasicChromosomeEvaluation;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
-import Genetic_Algorithm.Population.NoisePopulation;
+import Genetic_Algorithm.Population.PopulationEnum;
 import Genetic_Algorithm.Population.PopulationImp;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class Interpreter {
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
-            PopulationImp c = new NoisePopulation();
+            PopulationImp c = PopulationEnum.FILL;
             mapList = c.createPopulation(dungeonWidth, dungeonHeight, population, 0.4); // 60/40 maps
 
 

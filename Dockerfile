@@ -3,3 +3,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends openjfx && rm -
 COPY out /out 
 WORKDIR /out/production/Genetic-Dungeon
 CMD ["java", "Main", "-Xss128m"]
+

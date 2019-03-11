@@ -112,23 +112,6 @@ public class Matrix<E> implements Serializable {
         }
     }
 
-    /**
-     * Fill a matrix with two elements,
-     * @param element
-     * @param element2
-     * @param odds
-     */
-    public void cellularAutomate(E element, E element2, double odds){
-        if(odds < 0.1 || odds > 1) throw new VariableBoundsException(0.1, 1.0);
-        Random random = new Random();
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                if(random.nextDouble() > odds) matrix.get(y).set(x, element);
-                else matrix.get(y).set(x, element2);
-            }
-        }
-    }
-
 
     public E getUp(int x, int y){
         if((y - 1) < 0){
