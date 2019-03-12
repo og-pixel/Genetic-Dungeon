@@ -26,7 +26,10 @@ public class Matrix implements Serializable {
 
     public Matrix(int width, int height) {
 
-        long[][] matrix = new long[height][width];
+        this.width = width;
+        this.height = height;
+
+        this.matrix = new long[height][width];
 
 
     }
@@ -107,22 +110,23 @@ public class Matrix implements Serializable {
 
 
     public long getUp(int x, int y) {
-        if ((y - 1) < 0) throw new IndexOutOfBoundsException();
+//        if ((y - 1) < 0) throw new IndexOutOfBoundsException();
+        if ((y - 1) < 0) return -1;
         return getElement(x, y - 1);
     }
 
     public long getRight(int x, int y) {
-        if ((x + 1) >= width) throw new IndexOutOfBoundsException();
+        if ((x + 1) >= width) return -1;
         return getElement(x + 1, y);
     }
 
     public long getDown(int x, int y) {
-        if ((y + 1) >= height) throw new IndexOutOfBoundsException();
+        if ((y + 1) >= height) return -1;
         return getElement(x, y + 1);
     }
 
     public long getLeft(int x, int y) {
-        if ((x - 1) < 0) throw new IndexOutOfBoundsException();
+        if ((x - 1) < 0) return -1;
         return getElement(x - 1, y);
     }
 

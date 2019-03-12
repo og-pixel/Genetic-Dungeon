@@ -8,6 +8,8 @@ import Dungeon.Tile.Wall;
 
 public class Main {
     public static void main(String[] args){
+
+
         new Interpreter(args);
 
 //        Dungeon dungeon = new Dungeon(30, 10);

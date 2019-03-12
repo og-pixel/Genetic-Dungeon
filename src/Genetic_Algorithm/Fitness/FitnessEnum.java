@@ -2,11 +2,11 @@ package Genetic_Algorithm.Fitness;
 
 import Algorithms.Algorithms;
 import Algorithms.Matrix;
-import Dungeon.Dungeon;
+import Dungeon.*;
 import Dungeon.Tile.Corridor;
 
 import java.util.ArrayList;
-
+//TODO here visit map 1 means visited and 0 means not visited, need to display it better
 public enum FitnessEnum implements FitnessImp {
     IS_TRAVERSABLE(1) {
 
@@ -31,25 +31,25 @@ public enum FitnessEnum implements FitnessImp {
             int numberOfRooms = 0;
             int wallCount = 0;
 
-            ArrayList<Matrix<Boolean>> listOfRooms = new ArrayList<>();
-            Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
+            ArrayList<Matrix> listOfRooms = new ArrayList<>();
+            Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
 
-            visitMap.fillMatrix(false);
+            visitMap.fillMatrix(0);
 
             for (int y = 0; y < dungeonHeight; y++) {
                 for (int x = 0; x < dungeonWidth; x++) {
 
                     boolean alreadyVisited = false;
                     if (!listOfRooms.isEmpty()) {
-                        for (Matrix<Boolean> listOfRoom : listOfRooms) {
-                            if (listOfRoom.getElement(x, y)) {
+                        for (Matrix listOfRoom : listOfRooms) {
+                            if (listOfRoom.getElement(x, y) == 1) {
                                 alreadyVisited = true;
                                 break;
                             }
                         }
                     }
 
-                    if (!(dungeon.getDungeonMatrix().getElement(x, y).getTile() instanceof Corridor)) {
+                    if (!(dungeon.getDungeonMatrix().getElement(x, y) == DungeonTiles.CORRIDOR.getX())) {
                         alreadyVisited = true;
                     }
 
@@ -79,11 +79,11 @@ public enum FitnessEnum implements FitnessImp {
             return (int) ccc;
         }
 
-        private int countVisited(Matrix<Boolean> visitMap) {
+        private int countVisited(Matrix visitMap) {
             int counter = 0;
             for (int y = 0; y < visitMap.getHeight(); y++) {
                 for (int x = 0; x < visitMap.getWidth(); x++) {
-                    if (visitMap.getElement(x, y)) counter++;
+                    if (visitMap.getElement(x, y) == 1) counter++;
                 }
             }
             return counter;

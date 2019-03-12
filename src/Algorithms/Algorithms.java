@@ -23,44 +23,45 @@ public class Algorithms {
     // check for start and finish node (I still need A*)
 
     //todo for now it returns a a matrix of booleans
-    public static Matrix<Boolean> floodFill(Dungeon dungeon, int x, int y){
-        if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
-            return null;
-        }
+    public static Matrix floodFill(Dungeon dungeon, int x, int y){
+        //TODO i might not need that
+//        if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
+//            return null;
+//        }
 
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
-        Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
-        visitMap.fillMatrix(false);
+        Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
+        visitMap.fillMatrix(0);
 
         flood(dungeon, visitMap, x, y);
 
         return visitMap;
     }
 
-    private static void flood(Dungeon dungeon, Matrix<Boolean> visitMap, int x, int y){
+    private static void flood(Dungeon dungeon, Matrix visitMap, int x, int y){
 
-        if(dungeon.getDungeonMatrix().getElement(x, y) instanceof Corridor) {
-            visitMap.put(x, y, true);
+        if(dungeon.getDungeonMatrix().getElement(x, y) == DungeonTiles.CORRIDOR.getX()) {
+            visitMap.put(x, y, 1);
 
-            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) instanceof Corridor) {
-                if (!visitMap.getElement(x - 1, y)) {
+            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) == DungeonTiles.CORRIDOR.getX()) {
+                if (visitMap.getElement(x - 1, y) == 0) {
                     flood(dungeon, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) instanceof Corridor) {
-                if (!visitMap.getElement(x + 1, y)) {
+            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) == DungeonTiles.CORRIDOR.getX()) {
+                if (visitMap.getElement(x + 1, y) == 0) {
                     flood(dungeon, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) instanceof Corridor) {
-                if (!visitMap.getElement(x, y - 1)) {
+            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) == DungeonTiles.CORRIDOR.getX()) {
+                if (visitMap.getElement(x, y - 1) == 0) {
                     flood(dungeon, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) instanceof Corridor) {
-                if (!visitMap.getElement(x, y + 1)) {
+            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) == DungeonTiles.CORRIDOR.getX()) {
+                if (visitMap.getElement(x, y + 1) == 0) {
                     flood(dungeon, visitMap, x, y + 1);
                 }
             }
@@ -71,7 +72,7 @@ public class Algorithms {
 
     //TODO create A*
     public static void aStarTraverse(Dungeon dungeon){
-        Matrix<Tile> dungeonMatrix = dungeon.getDungeonMatrix();
+        Matrix dungeonMatrix = dungeon.getDungeonMatrix();
 
         ArrayList<Point> traverseList = new ArrayList<>();
 
@@ -110,8 +111,8 @@ public class Algorithms {
                 canExpand[i] = false;
             }
 
-            if (dungeonMatrix.getUp(x, y) instanceof Corridor ||
-                    dungeonMatrix.getUp(x, y) instanceof End) {
+            if (dungeonMatrix.getUp(x, y) == DungeonTiles.CORRIDOR.getX() ||
+                    dungeonMatrix.getUp(x, y) == DungeonTiles.END.getX()) {
                 Point point1 = new Point(x, y - 1, currentSteps + 1);
                 point1.setSteps(Algorithms.getManhattanDistance(x, y - 1,
                         startPositionX, startPositionY));
@@ -124,8 +125,8 @@ public class Algorithms {
                 traverseList.add(point1);
             }
 
-            if (dungeonMatrix.getRight(x, y) instanceof Corridor ||
-                    dungeonMatrix.getRight(x, y) instanceof End) {
+            if (dungeonMatrix.getRight(x, y) == DungeonTiles.CORRIDOR.getX() ||
+                    dungeonMatrix.getRight(x, y) == DungeonTiles.END.getX()) {
                 Point point2 = new Point(x + 1, y, currentSteps + 1);
                 point2.setSteps(Algorithms.getManhattanDistance(x + 1, y,
                         startPositionX, startPositionY));
@@ -138,8 +139,8 @@ public class Algorithms {
                 traverseList.add(point2);
             }
 
-            if (dungeonMatrix.getDown(x, y) instanceof Corridor ||
-                    dungeonMatrix.getDown(x, y) instanceof End) {
+            if (dungeonMatrix.getDown(x, y) == DungeonTiles.CORRIDOR.getX() ||
+                    dungeonMatrix.getDown(x, y) == DungeonTiles.END.getX()) {
                 Point point3 = new Point(x, y + 1, currentSteps + 1);
                 point3.setSteps(Algorithms.getManhattanDistance(x, y + 1,
                         startPositionX, startPositionY));
@@ -153,8 +154,8 @@ public class Algorithms {
                 traverseList.add(point3);
             }
 
-            if (dungeonMatrix.getLeft(x, y) instanceof Corridor ||
-                    dungeonMatrix.getLeft(x, y) instanceof End) {
+            if (dungeonMatrix.getLeft(x, y) == DungeonTiles.CORRIDOR.getX() ||
+                    dungeonMatrix.getLeft(x, y) == DungeonTiles.END.getX()) {
                 Point point4 = new Point(x - 1, y, currentSteps + 1);
                 point4.setSteps(Algorithms.getManhattanDistance(x - 1, y,
                         startPositionX, startPositionY));
@@ -196,12 +197,12 @@ public class Algorithms {
             if(point > 1500000){
                 System.err.println("Could not find ending");
 
-                Matrix<Boolean> visitMap = new Matrix<Boolean>(dungeonWidth, dungeonHeight);
-                visitMap.fillMatrix(false);
+                Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
+                visitMap.fillMatrix(0);
 
                 for(int i = 0; i < traverseList.size(); i++) {
                     visitMap.put(traverseList.get(i).getXPos(),
-                            traverseList.get(i).getYPos(), true);
+                            traverseList.get(i).getYPos(), 1);
                 }
 
                 try {
@@ -209,7 +210,7 @@ public class Algorithms {
                     for (int c = 0; c < visitMap.getHeight(); c++) {
                         sb.append("\n");
                         for (int z = 0; z < visitMap.getWidth(); z++) {
-                            if(visitMap.getElement(z, c))sb.append("░");
+                            if(visitMap.getElement(z, c) == 1)sb.append("░");
                             else sb.append("x");
                         }
                     }
@@ -240,11 +241,11 @@ public class Algorithms {
     }
 
 
-    public static void explore(Matrix<Boolean> visitMatrix, Matrix<Tile> dungeon, Point point){
+    public static void explore(Matrix visitMatrix, Matrix dungeon, Point point){
         int x = point.getXPos();
         int y = point.getYPos();
 
-        visitMatrix.put(x, y, true);
+        visitMatrix.put(x, y, 1);
 
 
         dungeon.getUp(x,y);
