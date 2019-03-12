@@ -6,12 +6,13 @@ import Dungeon.Tile.*;
 import java.io.Serializable;
 
 public class Dungeon implements Serializable {
+
     /* Variables */
     private int dungeonWidth, dungeonHeight;
     private int score; //TODO it might be just a chromosome thing later
 
     /* Dungeon is created as a matrix made out of (abstract) Tile objects */
-    private Matrix<Tile> dungeonMatrix;
+    private Matrix dungeonMatrix;
 
     //TODO maybe I will create small Class to hold information
     private Point startPoint;
@@ -27,14 +28,14 @@ public class Dungeon implements Serializable {
         this.dungeonWidth = dungeonWidth;
         this.dungeonHeight = dungeonHeight;
 
-        dungeonMatrix = new Matrix<Tile>(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
+        dungeonMatrix = new Matrix(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
 
         score = 0;
     }
 
     //Wrap dungeon matrix to the Dungeon class,
     // TODO its not for real application
-    public Dungeon(Matrix<Tile> dungeonMatrix){
+    public Dungeon(Matrix dungeonMatrix){
         this.dungeonMatrix = dungeonMatrix;
 
         this.dungeonWidth = dungeonMatrix.getWidth();
@@ -86,7 +87,7 @@ public class Dungeon implements Serializable {
         this.score = score;
     }
 
-    public Matrix<Tile> getDungeonMatrix() {
+    public Matrix getDungeonMatrix() {
         return dungeonMatrix;
     }
 
