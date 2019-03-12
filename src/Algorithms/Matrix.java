@@ -3,158 +3,140 @@ package Algorithms;
 import Exceptions.VariableBoundsException;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
- * Currently a simple class for basic matrix manipulations, such as creating matrices and
- * todo more features?
- * todo matrix is quite universal and accepts all types (it wont crash if matrix has numbers and strings)
+ * Point of this class is an exercise to change ArrayList<ArrayList<E>> into
+ * something more generic
+ * Matrix[][] and manipulate that instead (its speed concern)
  */
-public class Matrix<E> implements Serializable {
+public class Matrix implements Serializable {
 
-    private ArrayList<ArrayList<E>> matrix;
+    //    private ArrayList<ArrayList<E>> matrix;
+    private long[][] matrix; //todo i dont know how to do it otherwise, it has to be a number i think, i might just embbedeed an enum here to have static choices
+//    private E[] list;
+
     private int width, height;
 
 
     private int chromosome;//todo this will be stringfiled version of
-                            // dungeon to use for comparsion
+    // dungeon to use for comparsion
 
-    /**
-     * TODO constructor without creating stuff inside (nulls)
-     * @param width
-     * @param height
-     */
-    public Matrix(int width, int height){
-        matrix = new ArrayList<>();
-        for(int y = 0; y < height; y++){
-            matrix.add(new ArrayList<>());
-            for(int x = 0; x < width; x++){
-                matrix.get(y).add(null);
-            }
-        }
-        this.width = width;
-        this.height = height;
+
+    public Matrix(int width, int height) {
+
+        long[][] matrix = new long[height][width];
+
+
     }
 
-    public E getElement(int x, int y){
-        return matrix.get(y).get(x);
+
+//
+//
+//    /**
+//     * TODO constructor without creating stuff inside (nulls)
+//     * @param width
+//     * @param height
+//     */
+//    public Matrix(int width, int height){
+//        matrix = new ArrayList<>();
+//        for(int y = 0; y < height; y++){
+//            matrix.add(new ArrayList<>());
+//            for(int x = 0; x < width; x++){
+//                matrix.get(y).add(null);
+//            }
+//        }
+//        this.width = width;
+//        this.height = height;
+//    }
+
+    public long getElement(int x, int y) {
+        return matrix[y][x];
     }
 
-    /**
-     * Adds a new row to the matrix (on the bottom)
-     * @return
-     */
-    public boolean addRow(E element){
-        matrix.add(new ArrayList<>());
-        for(int i = 0; i < width; i++) {
-            matrix.get(height).add(element);
-        }
-        height++;
-        return true;
-    }
 
-    /**
-     * Adds a new row to the matrix (on the bottom)
-     * @return
-     */
-    public boolean addColumn(E element){
-        for(int i = 0; i < height; i++) {
-            matrix.get(i).add(element);
-        }
-        width++;
-        return true;
-    }
-
-    public boolean put(int x, int y, E e){
-        try{
-           matrix.get(y).set(x, e);
-        }catch (Exception ex){
+    public boolean put(int x, int y, long e) {
+        try {
+            matrix[y][x] = e;//todo i might need to delete this try
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false; //todo one or the other
         }
         return true;
     }
 
-    public ArrayList<E> getRow(int row){
-        return matrix.get(row);
+    public long[] getRow(int row) {
+        return matrix[row];
     }
 
-    public ArrayList<E> getColumn(int column){
-        ArrayList<E> columnArray = new ArrayList<>();
-        for(int i = 0; i < height; i++){
-            columnArray.add(matrix.get(column).get(i));
-        }
-        return columnArray;
+    //TODO
+//    public ArrayList<E> getColumn(int column){
+//        ArrayList<E> columnArray = new ArrayList<>();
+//        for(int i = 0; i < height; i++){
+//            columnArray.add(matrix.get(column).get(i));
+//        }
+//        return columnArray;
+//    }
+
+    public void replaceRow(int row, long[] content) {
+        matrix[row] = content;
     }
 
-    public void replaceRow(int row, ArrayList<E> content){
-        matrix.set(row, content);
-    }
 
-
-    public int getWidth(){
+    public int getWidth() {
         return width;
     }
-    public int getHeight(){
+
+    public int getHeight() {
         return height;
     }
 
     /**
      * TODO It fill is with one the same element
+     *
      * @param element
      */
-    public void fillMatrix(E element){
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                matrix.get(y).set(x, element);
+    public void fillMatrix(long element) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                matrix[y][x] = element;
             }
         }
     }
 
 
-    public E getUp(int x, int y){
-        if((y - 1) < 0){
-            return null;
-        }
-
+    public long getUp(int x, int y) {
+        if ((y - 1) < 0) throw new IndexOutOfBoundsException();
         return getElement(x, y - 1);
     }
 
-    public E getRight(int x, int y){
-        if((x + 1) >= width){
-            return null;
-        }
-
+    public long getRight(int x, int y) {
+        if ((x + 1) >= width) throw new IndexOutOfBoundsException();
         return getElement(x + 1, y);
     }
 
-    public E getDown(int x, int y){
-        if((y + 1) >= height){
-            return null;
-        }
+    public long getDown(int x, int y) {
+        if ((y + 1) >= height) throw new IndexOutOfBoundsException();
         return getElement(x, y + 1);
     }
 
-    public E getLeft(int x, int y){
-        if((x - 1) < 0){
-            return null;
-        }
-
+    public long getLeft(int x, int y) {
+        if ((x - 1) < 0) throw new IndexOutOfBoundsException();
         return getElement(x - 1, y);
     }
 
     /**
      * @return
      */
-    public String toString(){
+    public String toString() {
         StringBuilder string = new StringBuilder();
 
-        for(int y = 0; y < height; y++){
+        for (int y = 0; y < height; y++) {
             string.append(" { ");
-            for (int x = 0; x < width; x++){
-                if(matrix.get(y).get(x) == null) string.append("[],");
-                else string.append(matrix.get(y).get(x).toString()).append(", ");
+            for (int x = 0; x < width; x++) {
+                string.append(matrix[height][width]).append(", ");
+//                if(matrix.get(y).get(x) == null) string.append("[],");
             }
             string.append("}\n");
         }
@@ -163,7 +145,6 @@ public class Matrix<E> implements Serializable {
 
     public int getChromosome() {
         int z = 1;
-
 
 
         return z;
