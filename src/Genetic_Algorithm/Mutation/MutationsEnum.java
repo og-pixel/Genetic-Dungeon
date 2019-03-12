@@ -9,7 +9,7 @@ import Dungeon.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public enum MutationsEnum implements MutatorImp{
+public enum MutationsEnum implements MutatorImp, TileList{
     DEFAULT(0.1),
     CRAZY(0.5);
 
@@ -27,8 +27,8 @@ public enum MutationsEnum implements MutatorImp{
         for (int y = 0; y < dungeon.getDungeonHeight(); y++) {
             for (int x = 0; x < dungeon.getDungeonWidth(); x++) {
                 if(random.nextDouble() <= odds){
-                    if (dungeonMatrix.getElement(x,y) == DungeonTiles.CORRIDOR.getX()) dungeonMatrix.put(x, y, DungeonTiles.WALL.getX());
-                    else dungeonMatrix.put(x, y, DungeonTiles.CORRIDOR.getX());
+                    if (dungeonMatrix.getElement(x,y) == CORRIDOR) dungeonMatrix.put(x, y, WALL);
+                    else dungeonMatrix.put(x, y, CORRIDOR);
                 }
             }
         }

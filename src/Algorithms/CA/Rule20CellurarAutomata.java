@@ -1,14 +1,13 @@
 package Algorithms.CA;
 
 import Algorithms.Matrix;
-import Dungeon.Dungeon;
-import Dungeon.DungeonTiles;
+import Dungeon.*;
 import Dungeon.Tile.Corridor;
 import Dungeon.Tile.Tile;
 import Dungeon.Tile.Wall;
 
 //TODO it works but I feel like it could be done much better!
-public class Rule20CellurarAutomata implements CellurarAutomataImp {
+public class Rule20CellurarAutomata implements CellurarAutomataImp, TileList {
     @Override
     public Matrix generateMap(Matrix map) {
         int mapHeight = map.getHeight();
@@ -24,34 +23,34 @@ public class Rule20CellurarAutomata implements CellurarAutomataImp {
                 int count = 0;
 //                if(map.getElement(x, y) instanceof Wall) {
 
-                    if (map.getUp(x, y) == DungeonTiles.WALL.getX()) count++;
-                    if (map.getDown(x, y) == DungeonTiles.WALL.getX()) count++;
-                    if (map.getRight(x, y) == DungeonTiles.WALL.getX()) count++;
-                    if (map.getLeft(x, y) == DungeonTiles.WALL.getX()) count++;
+                    if (map.getUp(x, y) == WALL) count++;
+                    if (map.getDown(x, y) == WALL) count++;
+                    if (map.getRight(x, y) == WALL) count++;
+                    if (map.getLeft(x, y) == WALL) count++;
 
 
 
                     //TODO lol
                     if((x - 1) > 0 && (y - 1) > 0){
-                        if (map.getElement(x - 1, y - 1) == DungeonTiles.WALL.getX()) count++;
+                        if (map.getElement(x - 1, y - 1) == WALL) count++;
                     }
 
                     if((x + 1) < mapWidth && (y - 1) > 0){
-                        if (map.getElement(x + 1, y - 1) == DungeonTiles.WALL.getX()) count++;
+                        if (map.getElement(x + 1, y - 1) == WALL) count++;
                     }
 
                     if((x + 1) < mapWidth && (y + 1) < mapHeight){
-                        if (map.getElement(x + 1, y + 1) == DungeonTiles.WALL.getX()) count++;
+                        if (map.getElement(x + 1, y + 1) == WALL) count++;
                     }
 
                     if((x - 1) > 0 && (y + 1) < mapHeight){
-                        if (map.getElement(x - 1, y + 1) == DungeonTiles.WALL.getX()) count++;
+                        if (map.getElement(x - 1, y + 1) == WALL) count++;
                     }
 
 
 
-                    if(count > 3 && count < 6)newMap.put(x, y, DungeonTiles.WALL.getX());
-                    else newMap.put(x, y, DungeonTiles.CORRIDOR.getX());
+                    if(count > 3 && count < 6)newMap.put(x, y, WALL);
+                    else newMap.put(x, y, CORRIDOR);
 
             }
         }

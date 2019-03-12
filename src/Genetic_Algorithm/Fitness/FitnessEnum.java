@@ -7,7 +7,7 @@ import Dungeon.Tile.Corridor;
 
 import java.util.ArrayList;
 //TODO here visit map 1 means visited and 0 means not visited, need to display it better
-public enum FitnessEnum implements FitnessImp {
+public enum FitnessEnum implements FitnessImp, TileList {
     IS_TRAVERSABLE(1) {
 
 
@@ -49,7 +49,7 @@ public enum FitnessEnum implements FitnessImp {
                         }
                     }
 
-                    if (!(dungeon.getDungeonMatrix().getElement(x, y) == DungeonTiles.CORRIDOR.getX())) {
+                    if (!(dungeon.getDungeonMatrix().getElement(x, y) == CORRIDOR)) {
                         alreadyVisited = true;
                     }
 

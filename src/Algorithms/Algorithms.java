@@ -17,7 +17,7 @@ import java.util.Random;
  * Static class implementing a bunch of algorithms
  * used to evaluate dungeon and give them a score
  */
-public class Algorithms {
+public class Algorithms implements TileList{
 
     //TODO I think I can rewrite flood a little bit so it can
     // check for start and finish node (I still need A*)
@@ -42,25 +42,25 @@ public class Algorithms {
 
     private static void flood(Dungeon dungeon, Matrix visitMap, int x, int y){
 
-        if(dungeon.getDungeonMatrix().getElement(x, y) == DungeonTiles.CORRIDOR.getX()) {
+        if(dungeon.getDungeonMatrix().getElement(x, y) == CORRIDOR) {
             visitMap.put(x, y, 1);
 
-            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) == DungeonTiles.CORRIDOR.getX()) {
+            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) == CORRIDOR) {
                 if (visitMap.getElement(x - 1, y) == 0) {
                     flood(dungeon, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) == DungeonTiles.CORRIDOR.getX()) {
+            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) == CORRIDOR) {
                 if (visitMap.getElement(x + 1, y) == 0) {
                     flood(dungeon, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) == DungeonTiles.CORRIDOR.getX()) {
+            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) == CORRIDOR) {
                 if (visitMap.getElement(x, y - 1) == 0) {
                     flood(dungeon, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) == DungeonTiles.CORRIDOR.getX()) {
+            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) == CORRIDOR) {
                 if (visitMap.getElement(x, y + 1) == 0) {
                     flood(dungeon, visitMap, x, y + 1);
                 }
@@ -111,8 +111,8 @@ public class Algorithms {
                 canExpand[i] = false;
             }
 
-            if (dungeonMatrix.getUp(x, y) == DungeonTiles.CORRIDOR.getX() ||
-                    dungeonMatrix.getUp(x, y) == DungeonTiles.END.getX()) {
+            if (dungeonMatrix.getUp(x, y) == CORRIDOR ||
+                    dungeonMatrix.getUp(x, y) == END) {
                 Point point1 = new Point(x, y - 1, currentSteps + 1);
                 point1.setSteps(Algorithms.getManhattanDistance(x, y - 1,
                         startPositionX, startPositionY));
@@ -125,8 +125,8 @@ public class Algorithms {
                 traverseList.add(point1);
             }
 
-            if (dungeonMatrix.getRight(x, y) == DungeonTiles.CORRIDOR.getX() ||
-                    dungeonMatrix.getRight(x, y) == DungeonTiles.END.getX()) {
+            if (dungeonMatrix.getRight(x, y) == CORRIDOR ||
+                    dungeonMatrix.getRight(x, y) == END) {
                 Point point2 = new Point(x + 1, y, currentSteps + 1);
                 point2.setSteps(Algorithms.getManhattanDistance(x + 1, y,
                         startPositionX, startPositionY));
@@ -139,8 +139,8 @@ public class Algorithms {
                 traverseList.add(point2);
             }
 
-            if (dungeonMatrix.getDown(x, y) == DungeonTiles.CORRIDOR.getX() ||
-                    dungeonMatrix.getDown(x, y) == DungeonTiles.END.getX()) {
+            if (dungeonMatrix.getDown(x, y) == CORRIDOR ||
+                    dungeonMatrix.getDown(x, y) == END) {
                 Point point3 = new Point(x, y + 1, currentSteps + 1);
                 point3.setSteps(Algorithms.getManhattanDistance(x, y + 1,
                         startPositionX, startPositionY));
@@ -154,8 +154,8 @@ public class Algorithms {
                 traverseList.add(point3);
             }
 
-            if (dungeonMatrix.getLeft(x, y) == DungeonTiles.CORRIDOR.getX() ||
-                    dungeonMatrix.getLeft(x, y) == DungeonTiles.END.getX()) {
+            if (dungeonMatrix.getLeft(x, y) == CORRIDOR ||
+                    dungeonMatrix.getLeft(x, y) == END) {
                 Point point4 = new Point(x - 1, y, currentSteps + 1);
                 point4.setSteps(Algorithms.getManhattanDistance(x - 1, y,
                         startPositionX, startPositionY));

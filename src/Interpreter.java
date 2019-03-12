@@ -50,7 +50,7 @@ public class Interpreter {
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
-            PopulationImp c = PopulationEnum.FILL;
+            PopulationImp c = PopulationEnum.NOISE;
             mapList = c.createPopulation(dungeonWidth, dungeonHeight, population, 0.4); // 60/40 maps
 
 

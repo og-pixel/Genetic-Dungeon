@@ -8,7 +8,7 @@ import Exceptions.VariableBoundsException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public enum PopulationEnum implements PopulationImp {
+public enum PopulationEnum implements PopulationImp, TileList{
     FILL {//TODO only problem with this implementation is that odds are in function, gotta move it to enum "constructor"
         @Override
         public ArrayList<Dungeon> createPopulation(int width, int height, int numberOfMaps, double odds) {
@@ -17,7 +17,7 @@ public enum PopulationEnum implements PopulationImp {
             for (int i = 0; i < numberOfMaps; i++) {
                 mapList.add(new Dungeon(width, height));
 
-                mapList.get(i).getDungeonMatrix().fillMatrix(DungeonTiles.WALL.getX());
+                mapList.get(i).getDungeonMatrix().fillMatrix(WALL);
 
                 mapList.get(i).createStartPosition();
                 mapList.get(i).createEndPosition();
@@ -39,8 +39,8 @@ public enum PopulationEnum implements PopulationImp {
 
                     for (int y = 0; y < height; y++) {
                         for (int x = 0; x < width; x++) {
-                            if (random.nextDouble() > odds) dungeon.getDungeonMatrix().put(x, y, DungeonTiles.CORRIDOR.getX());
-                            else dungeon.getDungeonMatrix().put(x, y, DungeonTiles.WALL.getX());
+                            if (random.nextDouble() > odds) dungeon.getDungeonMatrix().put(x, y, CORRIDOR);
+                            else dungeon.getDungeonMatrix().put(x, y, WALL);
                         }
                     }
                 }

@@ -5,7 +5,7 @@ import Dungeon.Tile.*;
 
 import java.io.Serializable;
 
-public class Dungeon implements Serializable {
+public class Dungeon implements Serializable, TileList{
 
     /* Variables */
     private int dungeonWidth, dungeonHeight;
@@ -21,6 +21,7 @@ public class Dungeon implements Serializable {
 
     /**
      * Constructor
+     *
      * @param dungeonWidth
      * @param dungeonHeight
      */
@@ -35,7 +36,7 @@ public class Dungeon implements Serializable {
 
     //Wrap dungeon matrix to the Dungeon class,
     // TODO its not for real application
-    public Dungeon(Matrix dungeonMatrix){
+    public Dungeon(Matrix dungeonMatrix) {
         this.dungeonMatrix = dungeonMatrix;
 
         this.dungeonWidth = dungeonMatrix.getWidth();
@@ -45,12 +46,12 @@ public class Dungeon implements Serializable {
     }
 
 
-    public boolean createStartPosition(){
-        for(int y  = 0; y < dungeonHeight; y++){
-            for(int x  = 0; x < dungeonWidth; x++){
-                if (dungeonMatrix.getElement(x, y) == DungeonTiles.CORRIDOR.getX()){
-                    startPoint = new Point(x,y);
-                    dungeonMatrix.put(x,y, DungeonTiles.START.getX());
+    public boolean createStartPosition() {
+        for (int y = 0; y < dungeonHeight; y++) {
+            for (int x = 0; x < dungeonWidth; x++) {
+                if (dungeonMatrix.getElement(x, y) == CORRIDOR) {
+                    startPoint = new Point(x, y);
+                    dungeonMatrix.put(x, y, START);
                     return true;
                 }
             }
@@ -58,12 +59,12 @@ public class Dungeon implements Serializable {
         return false;
     }
 
-    public boolean createEndPosition(){
-        for(int y = dungeonHeight - 1; y > 0; y--){
-            for(int x = dungeonWidth - 1; x > 0; x--){
-                if (dungeonMatrix.getElement(x,y) == DungeonTiles.CORRIDOR.getX()){
-                    endPoint = new Point(x,y);
-                    dungeonMatrix.put(x,y,DungeonTiles.END.getX());
+    public boolean createEndPosition() {
+        for (int y = dungeonHeight - 1; y > 0; y--) {
+            for (int x = dungeonWidth - 1; x > 0; x--) {
+                if (dungeonMatrix.getElement(x, y) == CORRIDOR) {
+                    endPoint = new Point(x, y);
+                    dungeonMatrix.put(x, y, END);
                     return true;
                 }
             }
@@ -91,12 +92,21 @@ public class Dungeon implements Serializable {
         return dungeonMatrix;
     }
 
-    public String dungeonToString(){
+    public String dungeonToString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int y = 0; y < dungeonHeight; y++){
+
+
+        for (int y = 0; y < dungeonHeight; y++) {
             stringBuilder.append("\n");
-            for(int x = 0; x < dungeonWidth; x++){
-                stringBuilder.append(dungeonMatrix.getElement(x,y));
+            for (int x = 0; x < dungeonWidth; x++) {
+                if (dungeonMatrix.getElement(x, y) == CORRIDOR)
+                    stringBuilder.append(" ");
+                else if (dungeonMatrix.getElement(x, y) == WALL)
+                    stringBuilder.append("#");
+                else if (dungeonMatrix.getElement(x, y) == START)
+                    stringBuilder.append("+");
+                else if (dungeonMatrix.getElement(x, y) == END)
+                    stringBuilder.append("-");
             }
         }
         stringBuilder.append("\n");
