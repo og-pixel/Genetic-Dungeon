@@ -58,7 +58,7 @@ public class Interpreter {
             //TODO
             CellurarAutomataImp ca = new Rule20CellurarAutomata();
             for (int i = 0; i < mapList.size(); i++) {
-                Matrix<Tile> k = ca.generateMap(mapList.get(i).getDungeonMatrix());
+                Matrix k = ca.generateMap(mapList.get(i).getDungeonMatrix());
                 Dungeon kk = new Dungeon(k);
                 mapList.set(i, kk);
             }

@@ -3,7 +3,8 @@ package Genetic_Algorithm.Mutation;
 import Algorithms.Matrix;
 import Dungeon.Dungeon;
 import Dungeon.Tile.Corridor;
-import Dungeon.Tile.Wall;
+import Dungeon.Tile.*;
+import Dungeon.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,8 +27,8 @@ public enum MutationsEnum implements MutatorImp{
         for (int y = 0; y < dungeon.getDungeonHeight(); y++) {
             for (int x = 0; x < dungeon.getDungeonWidth(); x++) {
                 if(random.nextDouble() <= odds){
-                    if (dungeonMatrix.getElement(x,y) instanceof Corridor) dungeonMatrix.put(x, y, new Wall(x, y));
-                    else dungeonMatrix.put(x, y, new Corridor(x, y));
+                    if (dungeonMatrix.getElement(x,y) == DungeonTiles.CORRIDOR.getX()) dungeonMatrix.put(x, y, DungeonTiles.WALL.getX());
+                    else dungeonMatrix.put(x, y, DungeonTiles.CORRIDOR.getX());
                 }
             }
         }

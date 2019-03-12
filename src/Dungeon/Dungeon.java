@@ -48,9 +48,9 @@ public class Dungeon implements Serializable {
     public boolean createStartPosition(){
         for(int y  = 0; y < dungeonHeight; y++){
             for(int x  = 0; x < dungeonWidth; x++){
-                if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
+                if (dungeonMatrix.getElement(x, y) == DungeonTiles.CORRIDOR.getX()){
                     startPoint = new Point(x,y);
-                    dungeonMatrix.put(x,y,new Start(x,y));
+                    dungeonMatrix.put(x,y, DungeonTiles.START.getX());
                     return true;
                 }
             }
@@ -61,9 +61,9 @@ public class Dungeon implements Serializable {
     public boolean createEndPosition(){
         for(int y = dungeonHeight - 1; y > 0; y--){
             for(int x = dungeonWidth - 1; x > 0; x--){
-                if (dungeonMatrix.getElement(x,y).getTile() instanceof Corridor){
+                if (dungeonMatrix.getElement(x,y) == DungeonTiles.CORRIDOR.getX()){
                     endPoint = new Point(x,y);
-                    dungeonMatrix.put(x,y,new End(x,y));
+                    dungeonMatrix.put(x,y,DungeonTiles.END.getX());
                     return true;
                 }
             }
