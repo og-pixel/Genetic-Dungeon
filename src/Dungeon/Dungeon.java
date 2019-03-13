@@ -9,7 +9,7 @@ public class Dungeon implements Serializable, TileList{
 
     /* Variables */
     private int dungeonWidth, dungeonHeight;
-    private int score; //TODO it might be just a chromosome thing later
+    private double score; //TODO it might be just a chromosome thing later
 
     /* Dungeon is created as a matrix made out of (abstract) Tile objects */
     private Matrix dungeonMatrix;
@@ -17,6 +17,14 @@ public class Dungeon implements Serializable, TileList{
     //TODO maybe I will create small Class to hold information
     private Point startPoint;
     private Point endPoint;
+
+
+    /**
+     * INFORMATION ABOUT DUNGEON AFTER EVALUATION
+     */
+    private int numberOfRooms;
+    private double wallToCorridorRatio;
+
 
 
     /**
@@ -31,7 +39,7 @@ public class Dungeon implements Serializable, TileList{
 
         dungeonMatrix = new Matrix(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
 
-        score = 0;
+        score = -1;
     }
 
     //Wrap dungeon matrix to the Dungeon class,
@@ -42,7 +50,7 @@ public class Dungeon implements Serializable, TileList{
         this.dungeonWidth = dungeonMatrix.getWidth();
         this.dungeonHeight = dungeonMatrix.getHeight();
 
-        score = 0;
+        score = -1;
     }
 
 
@@ -80,11 +88,11 @@ public class Dungeon implements Serializable, TileList{
         return dungeonHeight;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -95,18 +103,18 @@ public class Dungeon implements Serializable, TileList{
     public String dungeonToString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-
+        stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
         for (int y = 0; y < dungeonHeight; y++) {
             stringBuilder.append("\n");
             for (int x = 0; x < dungeonWidth; x++) {
                 if (dungeonMatrix.getElement(x, y) == CORRIDOR)
-                    stringBuilder.append(" ");
+                    stringBuilder.append("█");
                 else if (dungeonMatrix.getElement(x, y) == WALL)
                     stringBuilder.append("#");
                 else if (dungeonMatrix.getElement(x, y) == START)
-                    stringBuilder.append("+");
+                    stringBuilder.append("s");
                 else if (dungeonMatrix.getElement(x, y) == END)
-                    stringBuilder.append("-");
+                    stringBuilder.append("e");
             }
         }
         stringBuilder.append("\n");
@@ -119,5 +127,13 @@ public class Dungeon implements Serializable, TileList{
 
     public Point getEndPoint() {
         return endPoint;
+    }
+
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    public int getNumberOfRooms() {
+        return numberOfRooms;
     }
 }

@@ -3,9 +3,11 @@ package Genetic_Algorithm.ChromosomeEvaluation;
 import Algorithms.Algorithms;
 import Dungeon.Dungeon;
 import Exceptions.VariableBoundsException;
+import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
@@ -29,6 +31,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         //If there are less maps than to make even 1, then we have to force it
         if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
+//        TOP_POP++;
     }
 
 
@@ -38,11 +41,14 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
 
+        double iteration = numberOfGenerations * 0.1;
+
+
         for (int generation = 0; generation < numberOfGenerations; generation++) {
 
             for (FitnessImp fitnessImp : fitnessImpList) {
                 for (Dungeon dungeon : mapList) {
-                    dungeon.setScore(fitnessImp.evaluateDungeon(dungeon));
+                    fitnessImp.evaluateDungeon(dungeon);
                 }
             }
             //First elements are the most fit
@@ -50,6 +56,12 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //TODO This part takes top 10% of pop and removes the rest
             mapList.subList((int)(TOP_POP), mapList.size()).clear();
+
+            if(generation % iteration == 0) {
+                System.out.println(generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");
+            }
+
+
 
 
             Random random = new Random();
@@ -62,31 +74,51 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 randomPick = random.nextInt((int) TOP_POP);
                 Dungeon parent2 = mapList.get(randomPick);
 
-                //TODO without DeepClone method (serialize and deserlize object)
-                // it would still hold references from parents, we need NEW objects
                 Dungeon child1 = Algorithms.deepClone(parent1);
                 Dungeon child2 = Algorithms.deepClone(parent2);
 
-                for (int i = 0; i < parent1.getDungeonHeight()/2; i++) {
-                    child1.getDungeonMatrix().replaceRow(i, parent2.getDungeonMatrix().getRow(i));
+
+                int crossPointX = random.nextInt(parent1.getDungeonWidth());
+                int crossPointY = random.nextInt(parent1.getDungeonHeight());
+
+
+
+                for (int y = 0; y < crossPointY - 1; y++) {
+                    child1.getDungeonMatrix().replaceRow(y, parent2.getDungeonMatrix().getRow(y));
+                }
+                for (int x = 0; x < crossPointX; x++) {
+                    child1.getDungeonMatrix().put(x, crossPointY, parent2.getDungeonMatrix().getElement(x, crossPointY));
                 }
 
-                for (int i = parent2.getDungeonHeight()/2; i < parent2.getDungeonHeight(); i++) {
-                    child2.getDungeonMatrix().replaceRow(i, parent1.getDungeonMatrix().getRow(i));
+
+
+
+                for (int x = crossPointX; x < parent1.getDungeonMatrix().getWidth(); x++) {
+                    child2.getDungeonMatrix().put(x, crossPointY, parent1.getDungeonMatrix().getElement(x, crossPointY));
                 }
 
+                for (int y = crossPointY + 1; y < parent1.getDungeonHeight(); y++) {
+                    child2.getDungeonMatrix().replaceRow(y, parent2.getDungeonMatrix().getRow(y));
+                }
+
+//                for (int i = 0; i < parent1.getDungeonHeight()/2; i++) {
+//                    child1.getDungeonMatrix().replaceRow(i, parent2.getDungeonMatrix().getRow(i));
+//                }
+//
+//                for (int i = parent2.getDungeonHeight()/2; i < parent2.getDungeonHeight(); i++) {
+//                    child2.getDungeonMatrix().replaceRow(i, parent1.getDungeonMatrix().getRow(i));
+//                }
 
                 newPopulation.add(child1);
                 newPopulation.add(child2);
-
-                //TODO I have temporary removed it, I think I dont need it and its overly confusing
-//                newPopulation.get(newPopulation.size() - 1).createStartPosition();
-//                newPopulation.get(newPopulation.size() - 1).createEndPosition(); //todo i really dislike how i write the whole thing but should be enough for now
             }
-//            mapList = newPopulation; //new pop!
+
+            mutation.mutateDungeons(newPopulation);//TODO it might not mutate sort makes no sense as i didnt evaluate it again
+
+            mapList = newPopulation;//TODO it might make it work or not
+//            newPopulation.sort(Comparator.comparing(Dungeon::getScore).reversed());
         }
 
-        mutation.mutateDungeons(newPopulation);//TODO it might not mutate kutas
         return newPopulation;
     }
 

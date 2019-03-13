@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum MutationsEnum implements MutatorImp, TileList{
-    DEFAULT(0.1),
-    CRAZY(0.5);
+    DEFAULT(0.01),
+    LOW(0.005),
+    HIGH(0.1);
+
 
     private final double odds;
 

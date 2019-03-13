@@ -266,7 +266,8 @@ public class Algorithms implements TileList{
     public static void writeToFile(String content, Dungeon dungeon) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        File file = new File(dungeon.toString() + " " + timestamp + " .txt");
+        double score = dungeon.getScore();
+        File file = new File(score + ": " + timestamp.toString() + " .txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);

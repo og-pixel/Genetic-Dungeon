@@ -32,7 +32,7 @@ public class Interpreter {
         }
 
         if(args[0].equals(CREATE)){
-            int population = Integer.parseInt(args[1]);
+            int populationSize = Integer.parseInt(args[1]);
             int generations = Integer.parseInt(args[2]);
             int dungeonWidth = Integer.parseInt(args[3]);
             int dungeonHeight = Integer.parseInt(args[4]);
@@ -40,18 +40,17 @@ public class Interpreter {
             float timeNow = System.nanoTime();
 
             //List of maps
-            ArrayList<Dungeon> mapList = new ArrayList<>(); //List of maps
+            ArrayList<Dungeon> mapList; //List of maps
             ArrayList<Dungeon> nextGeneration = new ArrayList<>(); //List of maps
 
             //Create Fitness
             ArrayList<FitnessImp> fitnessImpList = new ArrayList<>();
             fitnessImpList.add(FitnessEnum.FIND_ALL_ROOMS);
-            fitnessImpList.add(FitnessEnum.IS_TRAVERSABLE); //TODO I can either have an abstract between implementation and class or not bother at all, I can do both!
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
-            PopulationImp c = PopulationEnum.NOISE;
-            mapList = c.createPopulation(dungeonWidth, dungeonHeight, population, 0.4); // 60/40 maps
+            PopulationImp c = PopulationEnum.FILL;
+            mapList = c.createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.4); // 60/40 maps
 
 
             ////////////////////////////
@@ -65,10 +64,10 @@ public class Interpreter {
 
 
             ////////////////////////////
-            //Crossover population and return a new population
-            AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.5, population);
+            //Crossover populationSize and return a new populationSize
+            AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.1, populationSize);
             z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
-            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
+            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOW);//TODO i moved mutation but it actually has to use thi variable now
 
 
 

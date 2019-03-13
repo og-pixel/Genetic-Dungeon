@@ -49,7 +49,7 @@ public class Rule20CellurarAutomata implements CellurarAutomataImp, TileList {
 
 
 
-                    if(count > 3 && count < 6)newMap.put(x, y, WALL);
+                    if(count >= 3 /*&& count < 6 */)newMap.put(x, y, WALL);
                     else newMap.put(x, y, CORRIDOR);
 
             }

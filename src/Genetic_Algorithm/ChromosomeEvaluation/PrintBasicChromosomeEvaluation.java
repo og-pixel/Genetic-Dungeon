@@ -22,9 +22,12 @@ public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluatio
     public ArrayList<Dungeon> crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation) {
         ArrayList<Dungeon> k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation);//TODO its kinda like calling super
 
-        for (Dungeon dungeon : k) {
+        double top = k.size()*0.1;
+        if(top < 1) top = 1;
+
+        for (int i = 0; i < mapList.size(); i++) {
             try {
-                Algorithms.writeToFile("", dungeon);
+                Algorithms.writeToFile("", k.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
             }

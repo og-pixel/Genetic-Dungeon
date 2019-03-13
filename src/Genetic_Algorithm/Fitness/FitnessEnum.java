@@ -12,18 +12,18 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
 
         @Override
-        public int evaluateDungeon(Dungeon dungeon) {
+        public double evaluateDungeon(Dungeon dungeon) {
             //TODO duh...
 
 
-            return 0;
+            return -1;
         }
 
 
     },
     FIND_ALL_ROOMS(0.7) {
         @Override
-        public int evaluateDungeon(Dungeon dungeon) {
+        public double evaluateDungeon(Dungeon dungeon) {
             int dungeonWidth = dungeon.getDungeonWidth();
             int dungeonHeight = dungeon.getDungeonHeight();
 
@@ -53,7 +53,6 @@ public enum FitnessEnum implements FitnessImp, TileList {
                         alreadyVisited = true;
                     }
 
-
                     if (!alreadyVisited) {
                         visitMap = Algorithms.floodFill(dungeon, x, y);
                         listOfRooms.add(visitMap);
@@ -64,19 +63,31 @@ public enum FitnessEnum implements FitnessImp, TileList {
                 }
             }
 
-            wallCount = (dungeonWidth * dungeonHeight) - roomSize;
-            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
-            double roomAverage = (double) roomSize / numberOfRooms;
-
+//            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
             //TODO Return between 0 and 100 (0.0 to 1.0)
-
             //TODO for now I will only try to encourage creating multiple small rooms
+
+            wallCount = (dungeonWidth * dungeonHeight) - roomSize;
+            double roomAverage = (double) roomSize / numberOfRooms;
             int mapSize = dungeonWidth + dungeonHeight;
-            int sum = numberOfRooms * mapSize;
-            float ccc = (float) (roomAverage * numberOfRooms); //More rooms * thier room size
 
 
-            return (int) ccc;
+            double distance = roomSize - wallCount;
+            if(numberOfRooms < 1)numberOfRooms = 1;
+            //TODo i want it strike balance 50/50 by this calculation, so the biggerst score would be if these values were closest to each other
+            double score = (distance / numberOfRooms); //More rooms * thier room size
+
+
+            dungeon.setNumberOfRooms(numberOfRooms);
+
+            dungeon.setScore(score);
+
+
+
+            ///CLEANUP
+            //TODO here i will save dungeon stats
+//            dungeon.setNumberOfRooms(numberOfRooms);
+            return score;
         }
 
         private int countVisited(Matrix visitMap) {
