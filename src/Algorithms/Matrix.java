@@ -63,7 +63,7 @@ public class Matrix implements Serializable {
         try {
             matrix[y][x] = e;//todo i might need to delete this try
         } catch (Exception ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
             return false; //todo one or the other
         }
         return true;

@@ -84,21 +84,21 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
                 for (int y = 0; y < crossPointY - 1; y++) {
-                    child1.getDungeonMatrix().replaceRow(y, parent2.getDungeonMatrix().getRow(y));
+                    child1.getDungeonMatrix().replaceRow(y, child2.getDungeonMatrix().getRow(y));
                 }
                 for (int x = 0; x < crossPointX; x++) {
-                    child1.getDungeonMatrix().put(x, crossPointY, parent2.getDungeonMatrix().getElement(x, crossPointY));
+                    child1.getDungeonMatrix().put(x, crossPointY, child2.getDungeonMatrix().getElement(x, crossPointY));
                 }
 
 
 
 
                 for (int x = crossPointX; x < parent1.getDungeonMatrix().getWidth(); x++) {
-                    child2.getDungeonMatrix().put(x, crossPointY, parent1.getDungeonMatrix().getElement(x, crossPointY));
+                    child2.getDungeonMatrix().put(x, crossPointY, child1.getDungeonMatrix().getElement(x, crossPointY));
                 }
 
                 for (int y = crossPointY + 1; y < parent1.getDungeonHeight(); y++) {
-                    child2.getDungeonMatrix().replaceRow(y, parent2.getDungeonMatrix().getRow(y));
+                    child2.getDungeonMatrix().replaceRow(y, child1.getDungeonMatrix().getRow(y));
                 }
 
 //                for (int i = 0; i < parent1.getDungeonHeight()/2; i++) {

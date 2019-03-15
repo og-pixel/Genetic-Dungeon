@@ -85,8 +85,7 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
 
             ///CLEANUP
-            //TODO here i will save dungeon stats
-//            dungeon.setNumberOfRooms(numberOfRooms);
+            //TODO here i will save dungeon stats //            dungeon.setNumberOfRooms(numberOfRooms);
             return score;
         }
 
@@ -100,6 +99,26 @@ public enum FitnessEnum implements FitnessImp, TileList {
             return counter;
         }
     };
+
+
+    private int roomCount(Dungeon dungeon){
+
+        int dungeonWidth = dungeon.getDungeonWidth();
+        int dungeonHeight = dungeon.getDungeonHeight();
+
+//        int[][] shape = new int[6][5];{{WALL, WALL, WALL, WALL, WALL;{
+//        WALL, WALL, WALL, WALL, WALL}
+//        }
+
+
+
+
+
+
+
+
+        return -1;
+    }
 
 
 

@@ -11,7 +11,9 @@ import java.util.Random;
 
 public enum MutationsEnum implements MutatorImp, TileList{
     DEFAULT(0.01),
+    SLIGHT(0.006),
     LOW(0.005),
+    LOWER(0.002),
     HIGH(0.1);
 
 
@@ -31,6 +33,21 @@ public enum MutationsEnum implements MutatorImp, TileList{
                 if(random.nextDouble() <= odds){
                     if (dungeonMatrix.getElement(x,y) == CORRIDOR) dungeonMatrix.put(x, y, WALL);
                     else dungeonMatrix.put(x, y, CORRIDOR);
+                    dungeon.setMutationCount(dungeon.getMutationCount() + 1);//todo i know its kinda bad but it happens rarely and its for testing
+                    if (random.nextFloat() <= 0.01){
+                        try{
+                            dungeonMatrix.put(x, y - 1, CORRIDOR);
+                        }catch (Exception e){
+
+                        }
+                        try{
+                            dungeonMatrix.put(x, y, CORRIDOR);
+                        }catch (Exception e){}
+                        try{
+                            dungeonMatrix.put(x, y + 1, CORRIDOR);
+                        }catch (Exception e){}
+                        dungeon.setSpecialMutationCount(dungeon.getSpecialMutationCount() + 1);//todo i know its kinda bad but it happens rarely and its for testing
+                    }
                 }
             }
         }

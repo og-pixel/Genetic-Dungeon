@@ -49,7 +49,7 @@ public class Interpreter {
 
             ////////////////////////////
             //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
-            PopulationImp c = PopulationEnum.FILL;
+            PopulationImp c = PopulationEnum.NOISE;
             mapList = c.createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.4); // 60/40 maps
 
 
@@ -67,7 +67,7 @@ public class Interpreter {
             //Crossover populationSize and return a new populationSize
             AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.1, populationSize);
             z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
-            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOW);//TODO i moved mutation but it actually has to use thi variable now
+            nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOWER);//TODO i moved mutation but it actually has to use thi variable now
 
 
 

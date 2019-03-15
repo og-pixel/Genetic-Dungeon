@@ -1,7 +1,6 @@
 package Dungeon;
 
 import Algorithms.Matrix;
-import Dungeon.Tile.*;
 
 import java.io.Serializable;
 
@@ -24,7 +23,8 @@ public class Dungeon implements Serializable, TileList{
      */
     private int numberOfRooms;
     private double wallToCorridorRatio;
-
+    private int mutationCount;
+    private int specialMutationCount; //todo this is stupid
 
 
     /**
@@ -104,11 +104,13 @@ public class Dungeon implements Serializable, TileList{
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
+        stringBuilder.append("Mutation Count: ").append(mutationCount).append("\n");
+        stringBuilder.append("Special Mutation Count: ").append(specialMutationCount).append("\n");
         for (int y = 0; y < dungeonHeight; y++) {
             stringBuilder.append("\n");
             for (int x = 0; x < dungeonWidth; x++) {
                 if (dungeonMatrix.getElement(x, y) == CORRIDOR)
-                    stringBuilder.append("█");
+                    stringBuilder.append(" ");
                 else if (dungeonMatrix.getElement(x, y) == WALL)
                     stringBuilder.append("#");
                 else if (dungeonMatrix.getElement(x, y) == START)
@@ -135,5 +137,21 @@ public class Dungeon implements Serializable, TileList{
 
     public int getNumberOfRooms() {
         return numberOfRooms;
+    }
+
+    public int getMutationCount() {
+        return mutationCount;
+    }
+
+    public void setMutationCount(int mutationCount) {
+        this.mutationCount = mutationCount;
+    }
+
+    public int getSpecialMutationCount() {
+        return specialMutationCount;
+    }
+
+    public void setSpecialMutationCount(int specialMutationCount) {
+        this.specialMutationCount = specialMutationCount;
     }
 }
