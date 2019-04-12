@@ -40,8 +40,8 @@ public class Interpreter {
             float timeNow = System.nanoTime();
 
             //List of maps
-            ArrayList<Dungeon> mapList; //List of maps
-            ArrayList<Dungeon> nextGeneration = new ArrayList<>(); //List of maps
+            ArrayList<Dungeon> mapList;
+            ArrayList<Dungeon> nextGeneration = new ArrayList<>();
 
             //Create Fitness
             ArrayList<FitnessImp> fitnessImpList = new ArrayList<>();
@@ -65,8 +65,9 @@ public class Interpreter {
 
             ////////////////////////////
             //Crossover populationSize and return a new populationSize
-            AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.1, populationSize);
-            z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
+//todo AbstractChromosomeEvaluation z = new BasicChromosomeEvaluation(0.1, populationSize);
+            AbstractChromosomeEvaluation z = new PrintBasicChromosomeEvaluation(new BasicChromosomeEvaluation(0.1, populationSize));
+// z = new PrintBasicChromosomeEvaluation(z); //ADDING this wraps my object and adds filewriting
             nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOWER);//TODO i moved mutation but it actually has to use thi variable now
 
 

@@ -4,7 +4,7 @@ import Algorithms.Matrix;
 import Dungeon.Tile.*;
 
 import java.util.*;
-
+//TODO this class was used during summer but I doubt I need i now
 public class DungeonGenerator {
 //
 //    /* Statistic variables, used to keep information of how many rooms dungeons has etc. */
