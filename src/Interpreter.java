@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -84,7 +85,7 @@ public class Interpreter {
         addCellurarAutomataStrategy("rule20");
 
 
-        // Run over all created implementations
+        //Create random population for maps
         for (int i = 0; i < populationImpList.size(); i++) {
             mapList = populationImpList.get(i).createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.6);
         }
@@ -102,7 +103,7 @@ public class Interpreter {
         AbstractChromosomeEvaluation z = new PrintBasicChromosomeEvaluation(new BasicChromosomeEvaluation(0.1, populationSize));
         nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOWER);//TODO i moved mutation but it actually has to use thi variable now
 
-        System.out.print("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
+        LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
     }
 
     private boolean addPopulationStrategy(String option){

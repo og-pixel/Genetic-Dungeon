@@ -10,9 +10,11 @@ import Genetic_Algorithm.Mutation.MutationsEnum;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//This wrapper adds functionality to print last generation of maps
 public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluation {
 
     private AbstractChromosomeEvaluation abstractChromosomeEvaluation;
+
 
     public PrintBasicChromosomeEvaluation(AbstractChromosomeEvaluation abstractChromosomeEvaluation) {
         this.abstractChromosomeEvaluation = abstractChromosomeEvaluation;
@@ -22,10 +24,11 @@ public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluatio
     public ArrayList<Dungeon> crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation) {
         ArrayList<Dungeon> k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation);//TODO its kinda like calling super
 
+        //TODO for now it always takes top 10%
         double top = k.size()*0.1;
         if(top < 1) top = 1;
 
-        for (int i = 0; i < mapList.size(); i++) {
+        for (int i = 0; i < top; i++) {
             try {
                 Algorithms.writeToFile("", k.get(i));
             } catch (IOException e) {
