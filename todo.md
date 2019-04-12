@@ -1,0 +1,24 @@
+# List of things to keep a track on
+- [ ] Add Logger and write information that way 
+- [ ] Clean most TODO's
+- [ ] Create some sort of "menu" where  I can directly control app better (but still by arguments only)
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 

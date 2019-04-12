@@ -49,6 +49,5 @@ public enum PopulationEnum implements PopulationImp, TileList{
             }
             return mapList;
         }
-    };
-
+    }
 }
