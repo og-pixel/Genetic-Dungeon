@@ -48,4 +48,16 @@ public class EvolutionDetails {
         }
 
     }
+
+
+    public Dungeon findBest(){
+        Dungeon best = list.get(0).get(0);
+        for (int y = 0; y < list.size(); y++) {
+            for (int x = 0; x < list.get(y).size(); x++) {
+                if(best.getScore() < list.get(y).get(x).getScore())best = list.get(y).get(x);
+            }
+        }
+        return best;
+    }
+
 }

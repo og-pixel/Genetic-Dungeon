@@ -291,7 +291,7 @@ public class Algorithms implements TileList{
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         int score = (int) dungeon.getScore();
-        File file = new File("a" + score + " : " + content + " : " + timestamp.toString() + " : " +  ".txt");
+        File file = new File( content + ": " + score + ": " + timestamp.toString() + ": " +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);

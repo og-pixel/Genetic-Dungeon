@@ -9,6 +9,7 @@ import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 import Genetic_Algorithm.Population.NoiseEnum;
 import Genetic_Algorithm.Population.NoiseImp;
+import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,11 @@ public class Interpreter {
 
     private ArrayList<FitnessImp> fitnessImpList;
     private NoiseImp noiseImp;
+    private AbstractChromosomeEvaluation chromosomeEvaluationImp;
     private CellurarAutomataImp cellurarAutomataImp;
+
+    //Results after running program
+    private EvolutionDetails evolutionDetails;
 
     private int populationSize;
     private int numberOfGenerations;
@@ -85,21 +90,39 @@ public class Interpreter {
         //Add noise to empty maps
         addNoiseStrategy("fill");
         //Add Cellurar Automata rule to modify map a bit
-        addCellurarAutomataStrategy("rule20");
-
+        addCellularAutomataStrategy("rule20");
+        //Add Evaluation Strategy, for now there is only basic
+        addChromosomeEvaluationStrategy("basic");
 
         noiseMaps();
         caMaps();
+        evaluateMaps();
 
 
-        //ADDING this wraps my object and adds filewriting
-        AbstractChromosomeEvaluation chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize);
-
-        EvolutionDetails ev = chromosomeEvaluation.crossoverPopulation(mapGeneration, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
-
-        ev.printResults();
+        evolutionDetails.printResults();
         LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
+
+        try {
+            Algorithms.writeToFile("BEST", evolutionDetails.findBest());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private boolean addChromosomeEvaluationStrategy(String option){
+        String choice = option.toLowerCase().trim();
+        switch(choice){
+            case "basic":
+                chromosomeEvaluationImp = new BasicChromosomeEvaluation(0.1, populationSize);
+                return true;
+            default:
+                return false;
+        }
+
+
+    }
+
 
     private boolean addNoiseStrategy(String option){
         String choice  = option.toLowerCase().trim();
@@ -128,7 +151,7 @@ public class Interpreter {
         }
     }
 
-    private boolean addCellurarAutomataStrategy(String option){
+    private boolean addCellularAutomataStrategy(String option){
         String choice  = option.toLowerCase().trim();
 
         switch(choice) {
@@ -155,6 +178,14 @@ public class Interpreter {
         }
         return true;
     }
+
+    private boolean evaluateMaps(){
+
+        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(mapGeneration, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
+
+        return true;
+    }
+
 
     //TODO better description
     //Create a file handler
