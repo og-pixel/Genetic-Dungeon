@@ -82,8 +82,6 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
             dungeon.setScore(score);
 
-
-
             ///CLEANUP
             //TODO here i will save dungeon stats //            dungeon.setNumberOfRooms(numberOfRooms);
             return score;

@@ -262,12 +262,36 @@ public class Algorithms implements TileList{
     }
 
 
+    /**
+     * Compare two dungeon maps and get a "distance" between them,
+     * which is how many elements are actually different between each other
+     * COMPARE ONE TO TWO
+     * @param dungeon1
+     * @param dungeon2
+     * @return
+     */
+    public static int getHammingDistance(Dungeon dungeon1, Dungeon dungeon2){
+        Matrix matrix1 = dungeon1.getDungeonMatrix();
+        Matrix matrix2 = dungeon2.getDungeonMatrix();
+        int distance = 0;
+
+        for (int y = 0; y < dungeon1.getDungeonHeight(); y++) {
+            for (int x = 0; x < dungeon2.getDungeonWidth(); x++) {
+                if (matrix1.getElement(x, y) != matrix2.getElement(x, y)) distance++;
+            }
+        }
+
+        return distance;
+    }
+
+
+
     //TODO rewrite
     public static void writeToFile(String content, Dungeon dungeon) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         int score = (int) dungeon.getScore();
-        File file = new File(timestamp.toString() + " : " + score + ".txt");
+        File file = new File("a" + score + " : " + content + " : " + timestamp.toString() + " : " +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
@@ -311,4 +335,19 @@ public class Algorithms implements TileList{
         }
     }
 
+    //THis method is so fucking dumb
+    public static ArrayList<Dungeon> deepClone(ArrayList<Dungeon> dungeon){
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(dungeon);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (ArrayList<Dungeon>) ois.readObject();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

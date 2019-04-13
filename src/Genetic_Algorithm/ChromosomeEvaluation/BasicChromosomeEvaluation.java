@@ -3,11 +3,11 @@ package Genetic_Algorithm.ChromosomeEvaluation;
 import Algorithms.Algorithms;
 import Dungeon.Dungeon;
 import Exceptions.VariableBoundsException;
-import Genetic_Algorithm.Fitness.FitnessEnum;
+import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
-import com.sun.javafx.logging.PlatformLogger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,6 +22,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
     public BasicChromosomeEvaluation(double topPopulation, double populationSize){
+        //TODO added
+        LOGGER.setLevel(Level.WARNING);
 
         if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1, 1);
 
@@ -38,11 +40,20 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
     @Override
-    public ArrayList<Dungeon> crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
+    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
                                                   int numberOfGenerations, MutationsEnum mutation) {
-
+        Random random = new Random();
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
-        double iteration = numberOfGenerations * 0.01;
+        double iteration = numberOfGenerations * 0.01;//every 1%
+
+
+        //todo delete
+        setFileHandler();
+
+        //todo this is new data structure
+        EvolutionDetails evolutionDetails = new EvolutionDetails();
+
+        int percentageDone = 0;
 
         for (int generation = 0; generation < numberOfGenerations; generation++) {
 
@@ -59,17 +70,13 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             if(generation % iteration == 0) {
                 LOGGER.log(Level.INFO, generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");
-                try {
-                    Algorithms.writeToFile("Debug ", mapList.get(0));
-                } catch (IOException e) {
-                    System.out.println("eeoeeasfasfERROR");
-                }
+                evolutionDetails.addRow(Algorithms.deepClone(mapList));
+                percentageDone++;
+                System.out.println(percentageDone + "%");
             }
 
-            Random random = new Random();
 
             while (newPopulation.size() < POP_SIZE) {
-                //TODO for now parents can be the same etc
                 int randomPick = random.nextInt((int) TOP_POP);
                 Dungeon parent1 = mapList.get(randomPick);
 
@@ -119,7 +126,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             mapList = newPopulation;//TODO it might make it work or not
 //            newPopulation.sort(Comparator.comparing(Dungeon::getScore).reversed());
         }
-        return newPopulation;
+
+        return evolutionDetails;
     }
 
 
@@ -129,5 +137,31 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     @Override
     public int getCrossoverPoint(Dungeon dungeon) {
         return dungeon.getDungeonMatrix().getHeight()/2;
+    }
+
+    //TODO better description
+    //Create a file handler
+    private boolean setFileHandler(){
+        File serverDirectory = new File("Logs/");
+
+        //todo this makes a folder
+        serverDirectory.mkdir();
+
+        // This block configure the logger with handler and formatter
+
+        FileHandler fh;
+        int numberOfFiles = new File("Logs/").listFiles().length;
+        try {
+            fh = new FileHandler("Logs/" + "log_" + numberOfFiles + ".log");
+        } catch (IOException e) {
+            LOGGER.warning("Couldn't create log file!\n" + e.getMessage());
+            return false;
+        }
+        LOGGER.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
+        LOGGER.info("Created a log file ");
+
+        return true;
     }
 }

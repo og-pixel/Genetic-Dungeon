@@ -4,6 +4,7 @@ import Algorithms.Algorithms;
 import Dungeon.Dungeon;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.DecoratorChromosomeEvaluation;
+import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 
@@ -21,20 +22,9 @@ public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluatio
     }
 
     @Override
-    public ArrayList<Dungeon> crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation) {
-        ArrayList<Dungeon> k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation);//TODO its kinda like calling super
-
-        //TODO for now it always takes top 10%
-        double top = k.size()*0.1;
-        if(top < 1) top = 1;
-
-        for (int i = 0; i < top; i++) {
-            try {
-                Algorithms.writeToFile("", k.get(i));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation) {
+        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation);//TODO its kinda like calling super
+        //TODO for now there is no difference between regular and wrapper object (they do the same)
 
         return k;
     }

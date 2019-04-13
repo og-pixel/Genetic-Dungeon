@@ -3,12 +3,12 @@ import Algorithms.CA.*;
 import Dungeon.Dungeon;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
-import Genetic_Algorithm.ChromosomeEvaluation.PrintBasicChromosomeEvaluation;
+import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
-import Genetic_Algorithm.Population.PopulationEnum;
-import Genetic_Algorithm.Population.PopulationImp;
+import Genetic_Algorithm.Population.NoiseEnum;
+import Genetic_Algorithm.Population.NoiseImp;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,10 +33,11 @@ public class Interpreter {
             "-c 1 100 100 Create 1 map of size 100 by 100";
 
 
-    private ArrayList<Dungeon> mapList;
+    //A whole generation of maps
+    private ArrayList<Dungeon> mapGeneration;
 
     private ArrayList<FitnessImp> fitnessImpList;
-    private ArrayList<PopulationImp> populationImpList;
+    private NoiseImp noiseImp;
     private CellurarAutomataImp cellurarAutomataImp;
 
     private int populationSize;
@@ -45,6 +46,7 @@ public class Interpreter {
     private int dungeonHeight;
 
     public Interpreter(String... args){
+        LOGGER.setLevel(Level.WARNING);
         setFileHandler();
 
         if(args.length <= 0){
@@ -58,9 +60,8 @@ public class Interpreter {
         dungeonHeight = Integer.parseInt(args[4]);
 
         fitnessImpList = new ArrayList<>();
-        populationImpList = new ArrayList<>();
 
-        mapList = null;
+        mapGeneration = new ArrayList<>();
 
         interpretArguments();
     }
@@ -70,15 +71,11 @@ public class Interpreter {
         //Measure time
         float timeNow = System.nanoTime();
 
-        //List of maps
-        mapList = new ArrayList<>();
-
-        ArrayList<Dungeon> nextGeneration = new ArrayList<>();
 
         //Add Fitness to utilize
         addFitnessStrategy("find_all_rooms");
         //Add noise to empty maps
-        addPopulationStrategy("noise");
+        addNoiseStrategy("fill");
         //Add Cellurar Automata rule to modify map a bit
         addCellurarAutomataStrategy("rule20");
 
@@ -88,21 +85,23 @@ public class Interpreter {
 
 
         //ADDING this wraps my object and adds filewriting
-        AbstractChromosomeEvaluation z = /*new PrintBasicChromosomeEvaluation(*/new BasicChromosomeEvaluation(0.1, populationSize)/*)*/;
-        nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
+        AbstractChromosomeEvaluation chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize);
 
+        EvolutionDetails ev = chromosomeEvaluation.crossoverPopulation(mapGeneration, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
+
+        ev.printResults();
         LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
     }
 
-    private boolean addPopulationStrategy(String option){
+    private boolean addNoiseStrategy(String option){
         String choice  = option.toLowerCase().trim();
 
         switch(choice) {
             case "noise":
-                populationImpList.add(PopulationEnum.NOISE);
+                noiseImp = NoiseEnum.NOISE;
                 return true;
             case "fill":
-                populationImpList.add(PopulationEnum.FILL);
+                noiseImp = NoiseEnum.FILL;
                 return true;
             default:
                 return false;
@@ -135,18 +134,16 @@ public class Interpreter {
 
     private boolean noiseMaps(){
         //Create Noise for maps
-        for (int i = 0; i < populationImpList.size(); i++) {
-            mapList = populationImpList.get(i).createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.6);
-        }
+        mapGeneration = noiseImp.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.6);
         return true;
     }
 
     private boolean caMaps(){
         //Run Cellurar Automata
-        for (int i = 0; i < mapList.size(); i++) {
-            Matrix k = cellurarAutomataImp.generateMap(mapList.get(i).getDungeonMatrix());
+        for (int i = 0; i < mapGeneration.size(); i++) {
+            Matrix k = cellurarAutomataImp.generateMap(mapGeneration.get(i).getDungeonMatrix());
             Dungeon kk = new Dungeon(k);
-            mapList.set(i, kk);
+            mapGeneration.set(i, kk);
         }
         return true;
     }
