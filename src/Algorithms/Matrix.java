@@ -140,7 +140,6 @@ public class Matrix implements Serializable {
             string.append(" { ");
             for (int x = 0; x < width; x++) {
                 string.append(matrix[height][width]).append(", ");
-//                if(matrix.get(y).get(x) == null) string.append("[],");
             }
             string.append("}\n");
         }

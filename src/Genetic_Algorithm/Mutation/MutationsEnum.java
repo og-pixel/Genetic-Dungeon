@@ -37,9 +37,7 @@ public enum MutationsEnum implements MutatorImp, TileList{
                     if (random.nextFloat() <= 0.01){
                         try{
                             dungeonMatrix.put(x, y - 1, CORRIDOR);
-                        }catch (Exception e){
-
-                        }
+                        }catch (Exception e){}
                         try{
                             dungeonMatrix.put(x, y, CORRIDOR);
                         }catch (Exception e){}

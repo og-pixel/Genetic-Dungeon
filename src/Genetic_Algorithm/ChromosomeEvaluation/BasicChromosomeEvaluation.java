@@ -6,14 +6,17 @@ import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import com.sun.javafx.logging.PlatformLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.logging.*;
 
 public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
+    private static final Logger LOGGER = Logger.getLogger(BasicChromosomeEvaluation.class.getName());
     private double TOP_POP; //todo final?
     private double POP_SIZE;
 
@@ -31,7 +34,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         //If there are less maps than to make even 1, then we have to force it
         if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
-//        TOP_POP++;
     }
 
 
@@ -40,9 +42,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                                                   int numberOfGenerations, MutationsEnum mutation) {
 
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
-
-        double iteration = numberOfGenerations * 0.1;
-
+        double iteration = numberOfGenerations * 0.01;
 
         for (int generation = 0; generation < numberOfGenerations; generation++) {
 
@@ -58,11 +58,13 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             mapList.subList((int)(TOP_POP), mapList.size()).clear();
 
             if(generation % iteration == 0) {
-                System.out.println(generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");
+                LOGGER.log(Level.INFO, generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");
+                try {
+                    Algorithms.writeToFile("Debug ", mapList.get(0));
+                } catch (IOException e) {
+                    System.out.println("eeoeeasfasfERROR");
+                }
             }
-
-
-
 
             Random random = new Random();
 
@@ -80,7 +82,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
                 int crossPointX = random.nextInt(parent1.getDungeonWidth());
                 int crossPointY = random.nextInt(parent1.getDungeonHeight());
-
 
 
                 for (int y = 0; y < crossPointY - 1; y++) {
@@ -118,7 +119,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             mapList = newPopulation;//TODO it might make it work or not
 //            newPopulation.sort(Comparator.comparing(Dungeon::getScore).reversed());
         }
-
         return newPopulation;
     }
 
@@ -130,9 +130,4 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     public int getCrossoverPoint(Dungeon dungeon) {
         return dungeon.getDungeonMatrix().getHeight()/2;
     }
-
-    public void test(){
-
-    }
-
 }

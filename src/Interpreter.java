@@ -40,7 +40,7 @@ public class Interpreter {
     private CellurarAutomataImp cellurarAutomataImp;
 
     private int populationSize;
-    private int generations;
+    private int numberOfGenerations;
     private int dungeonWidth;
     private int dungeonHeight;
 
@@ -53,7 +53,7 @@ public class Interpreter {
         }
 
         populationSize = Integer.parseInt(args[1]);
-        generations = Integer.parseInt(args[2]);
+        numberOfGenerations = Integer.parseInt(args[2]);
         dungeonWidth = Integer.parseInt(args[3]);
         dungeonHeight = Integer.parseInt(args[4]);
 
@@ -75,33 +75,21 @@ public class Interpreter {
 
         ArrayList<Dungeon> nextGeneration = new ArrayList<>();
 
-        //Create Fitness
+        //Add Fitness to utilize
         addFitnessStrategy("find_all_rooms");
-
-        //Fill maps with cellurar automata data (random 1's and 0's with loaded odds)
+        //Add noise to empty maps
         addPopulationStrategy("noise");
-
-        //Run over Cellurar Automata to modify map a bit
+        //Add Cellurar Automata rule to modify map a bit
         addCellurarAutomataStrategy("rule20");
 
 
-        //Create random population for maps
-        for (int i = 0; i < populationImpList.size(); i++) {
-            mapList = populationImpList.get(i).createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.6);
-        }
-
-        ////////////////////////////
-        //Run over generated maps with CA
-        for (int i = 0; i < mapList.size(); i++) {
-            Matrix k = cellurarAutomataImp.generateMap(mapList.get(i).getDungeonMatrix());
-            Dungeon kk = new Dungeon(k);
-            mapList.set(i, kk);
-        }
+        noiseMaps();
+        caMaps();
 
 
         //ADDING this wraps my object and adds filewriting
-        AbstractChromosomeEvaluation z = new PrintBasicChromosomeEvaluation(new BasicChromosomeEvaluation(0.1, populationSize));
-        nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, generations, MutationsEnum.LOWER);//TODO i moved mutation but it actually has to use thi variable now
+        AbstractChromosomeEvaluation z = /*new PrintBasicChromosomeEvaluation(*/new BasicChromosomeEvaluation(0.1, populationSize)/*)*/;
+        nextGeneration = z.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
 
         LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
     }
@@ -145,11 +133,30 @@ public class Interpreter {
         }
     }
 
+    private boolean noiseMaps(){
+        //Create Noise for maps
+        for (int i = 0; i < populationImpList.size(); i++) {
+            mapList = populationImpList.get(i).createPopulation(dungeonWidth, dungeonHeight, populationSize, 0.6);
+        }
+        return true;
+    }
+
+    private boolean caMaps(){
+        //Run Cellurar Automata
+        for (int i = 0; i < mapList.size(); i++) {
+            Matrix k = cellurarAutomataImp.generateMap(mapList.get(i).getDungeonMatrix());
+            Dungeon kk = new Dungeon(k);
+            mapList.set(i, kk);
+        }
+        return true;
+    }
+
     //TODO better description
     //Create a file handler
     private boolean setFileHandler(){
         File serverDirectory = new File("Logs/");
 
+        //todo this makes a folder
         serverDirectory.mkdir();
 
         // This block configure the logger with handler and formatter
