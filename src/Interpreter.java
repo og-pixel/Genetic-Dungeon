@@ -29,8 +29,16 @@ public class Interpreter {
     private final String CREATE = "-c";
     private final String HELP = "-h";
 
-    private final String README = "Examples:\n-c 10 15 10 Create 10 maps of size 15 by 10\n" +
-            "-c 1 100 100 Create 1 map of size 100 by 100";
+    private final String HELPz = "Usage: GA-Main [options]";
+    private final String OPTION = "Options: ";
+    private final String OPTION1 = "-c\t\tCreate map evaluation";
+    private final String OPTION2 = "todo";
+    private final String OPTION3 = "todo";
+    private final String OPTION4 = "todo";
+    private final String OPTION5 = "todo";
+
+    private final String README = "Examples:\n-c 10 20 15 10 During 20 generations, create 10 maps of size 15 by 10 each\n" +
+            "-c 1 10 150 100 During 10 generations, create 1 map of size 150 by 100 each";
 
 
     //A whole generation of maps
@@ -175,6 +183,9 @@ public class Interpreter {
     }
 
     private void displayHelp(){
-        System.out.println(README);
+        System.out.println(HELPz);
+        System.out.println("\n" + OPTION);
+        System.out.println(OPTION1);
+        System.out.println("\n" + README);
     }
 }

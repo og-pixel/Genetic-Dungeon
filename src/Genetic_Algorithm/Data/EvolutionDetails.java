@@ -42,7 +42,6 @@ public class EvolutionDetails {
         for (int i = 0; i < list.size(); i++) {
             try {
                 Algorithms.writeToFile("Row: " + i, list.get(i).get(0));
-                System.out.println(i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
