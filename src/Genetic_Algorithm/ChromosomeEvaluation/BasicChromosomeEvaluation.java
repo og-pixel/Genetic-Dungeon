@@ -6,6 +6,7 @@ import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     @Override
     public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
-                                                  int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection) {
+                                                int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation) {
         Random random = new Random();
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
         double iteration = numberOfGenerations * 0.01;//every 1%
@@ -84,6 +85,12 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
             while (newPopulation.size() < POP_SIZE) {
+
+                //THIS IS premutation part
+//                premutation.premutateDungeons(mapList);
+
+
+                //THIS is mutation part
                 int randomPick = random.nextInt((int) TOP_POP);
                 Dungeon parent1 = mapList.get(randomPick);
 

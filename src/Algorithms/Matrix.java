@@ -130,6 +130,16 @@ public class Matrix implements Serializable {
         return getElement(x - 1, y);
     }
 
+    public boolean swapElements(int x1, int y1, int x2, int y2){
+        long element1 = getElement(x1, y1);
+        long element2 = getElement(x2, y2);
+
+
+        //TODO it tells me i can simplify it but i dont like it atm
+        if(put(x1, y1, element2) && put(x2, y2, element1)) return true;
+        else return false;
+    }
+
     /**
      * @return
      */
