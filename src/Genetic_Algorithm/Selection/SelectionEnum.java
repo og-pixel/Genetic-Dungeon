@@ -26,5 +26,11 @@ public enum SelectionEnum implements SelectionImp {
         public void useSelection() {
 
         }
+    },
+    Age{
+        @Override
+        public void useSelection() {
+
+        }
     }
 }

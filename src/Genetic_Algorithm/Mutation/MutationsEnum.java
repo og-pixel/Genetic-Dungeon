@@ -13,10 +13,7 @@ public enum MutationsEnum implements MutatorImp, TileList{
     DEFAULT(0.01),
     SLIGHT(0.006),
     LOW(0.005),
-    LOWER(0.002),
-    HIGH(0.1);
-
-
+    LOWER(0.002);
     private final double odds;
 
     MutationsEnum(double odds) {

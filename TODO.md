@@ -22,7 +22,7 @@
 
 - [ ] population size should be kept small as it slows down GA significantly, however a trial and error is needed to determinate the smallest possible size that still works
 - [ ] I can either replace populations by entire generations (like I do now) or slowly one parent/children at the time,
-- [ ] fitness function might be using approximation (or better, use approximation if calcuation is slow, define slow)
+- [ x ] fitness function might be using approximation (or better, use approximation if calcuation is slow, define slow)
 - [ ]  good diversity is a problem (or a lack of there of, I start with full random, but it feels less so at the end)
 - [ ] make EvolutionResult to print a specific value at specfici place (get console printing i guess)
 - [ ] crossover is a separate thing
