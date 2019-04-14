@@ -38,7 +38,7 @@ public class EvolutionDetails {
     }
 
 
-    public void printResults(){
+    public void saveResults(){
         for (int i = 0; i < list.size(); i++) {
             try {
                 Algorithms.writeToFile("Row: " + i, list.get(i).get(0));

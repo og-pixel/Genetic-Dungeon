@@ -9,7 +9,6 @@ import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 import Genetic_Algorithm.Population.NoiseEnum;
 import Genetic_Algorithm.Population.NoiseImp;
-import com.sun.javafx.scene.traversal.Algorithm;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +83,6 @@ public class Interpreter {
         //Measure time
         float timeNow = System.nanoTime();
 
-
         //Add Fitness to utilize
         addFitnessStrategy("find_all_rooms");
         //Add noise to empty maps
@@ -99,7 +97,7 @@ public class Interpreter {
         evaluateMaps();
 
 
-        evolutionDetails.printResults();
+        evolutionDetails.saveResults();
         LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
 
         try {
@@ -107,7 +105,6 @@ public class Interpreter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private boolean addChromosomeEvaluationStrategy(String option){

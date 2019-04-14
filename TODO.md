@@ -30,16 +30,16 @@
 - [ ] No Crossover (total random)
 - [ ] THERE IS MUCH MORE
 ##TODO MUTATION if mutation is high, its just random (so i guess 1%-3% is top) WITHOUT MUTATION THERE IS NO SE    ARACH
-- [ x ] Mutation by swapping values (what i do now
+- [ x ] Mutation by changing values (from one to another, it 1,0 map)
 ##TODO PREMUTATIONS
 - [ ] Swap inside the same chromosome (premutation?)
 - [ ] Scramble
 - [ ] Inversion
 ##TODO I have no selection (I just pick top 10%, also called Elitysm)
-- [ ] Age Based (I dont like it, it does not base fitness)
+- [ x ] Age Based (I dont like it, it does not base fitness)
 - [ ] Fitness based (but children replace the least fit, it more fitting)
 
 
-##TODO I usually dont need to iterate so long (number of generations) I will make my number a generations a ro    of (so it should try to terminate sooner)
+##TODO I usually dont need to iterate so long (number of generations) I will make my number a generations a roof (so it should try to terminate sooner)
 
 

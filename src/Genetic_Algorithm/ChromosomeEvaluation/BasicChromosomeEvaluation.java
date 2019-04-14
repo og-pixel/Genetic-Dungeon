@@ -27,7 +27,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1, 1);
 
-        if(populationSize > 1000) System.err.println("Population size is beyond 1000, program might take a long time");
+        if(populationSize > 1000) System.err.println("Population size is beyond 1000, program might take a long time and" +
+                "results probably won't be better");
         POP_SIZE = populationSize;
 
         if(topPopulation != 0.1) System.err.println("Default crossover behaviour recommends 0.1 (10%) of the best " +
@@ -57,6 +58,9 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         for (int generation = 0; generation < numberOfGenerations; generation++) {
 
+
+            //Evaluate all dungeon based on all fitness implementations on the list
+            //TODO so far its just one, the one that finds all rooms
             for (FitnessImp fitnessImp : fitnessImpList) {
                 for (Dungeon dungeon : mapList) {
                     fitnessImp.evaluateDungeon(dungeon);
