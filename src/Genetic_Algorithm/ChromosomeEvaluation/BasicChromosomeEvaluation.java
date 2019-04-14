@@ -6,6 +6,7 @@ import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,11 +43,10 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     @Override
     public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
-                                                  int numberOfGenerations, MutationsEnum mutation) {
+                                                  int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection) {
         Random random = new Random();
         ArrayList<Dungeon> newPopulation = new ArrayList<>();
         double iteration = numberOfGenerations * 0.01;//every 1%
-
 
         //todo delete
         setFileHandler();
@@ -66,11 +66,14 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                     fitnessImp.evaluateDungeon(dungeon);
                 }
             }
-            //First elements are the most fit
-            mapList.sort(Comparator.comparing(Dungeon::getScore).reversed());
 
-            //TODO This part takes top 10% of pop and removes the rest
-            mapList.subList((int)(TOP_POP), mapList.size()).clear();
+
+            //NEW AND IMPROVED
+            mapList = selection.useSelection(mapList);
+
+
+            //////
+
 
             if(generation % iteration == 0) {
                 LOGGER.log(Level.INFO, generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");

@@ -84,11 +84,16 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
             dungeon.setNumberOfRooms(numberOfRooms);
 
-            dungeon.setScore(score);
+            //TODO for now I had to make so score cannot be negative
+            if(score > 0)dungeon.setScore(score);
+            else dungeon.setScore(score);
+
 
             ///CLEANUP
             //TODO here i will save dungeon stats //            dungeon.setNumberOfRooms(numberOfRooms);
-            return score;
+
+            //TODO return is not used
+            return -10;
         }
 
         @Override

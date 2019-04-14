@@ -7,6 +7,7 @@ import Genetic_Algorithm.ChromosomeEvaluation.DecoratorChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluatio
     }
 
     @Override
-    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation) {
-        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation);//TODO its kinda like calling super
+    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection) {
+        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation, selection);//TODO its kinda like calling super
         //TODO for now there is no difference between regular and wrapper object (they do the same)
 
         return k;

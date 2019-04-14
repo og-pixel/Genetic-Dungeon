@@ -1,5 +1,8 @@
 package Genetic_Algorithm.Selection;
 
+import Dungeon.Dungeon;
+import java.util.ArrayList;
+
 public interface SelectionImp {
-    void useSelection();
+    ArrayList<Dungeon> useSelection(ArrayList<Dungeon> dungeon);
 }

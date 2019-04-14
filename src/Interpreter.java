@@ -9,6 +9,8 @@ import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 import Genetic_Algorithm.Population.NoiseEnum;
 import Genetic_Algorithm.Population.NoiseImp;
+import Genetic_Algorithm.Selection.SelectionEnum;
+import Genetic_Algorithm.Selection.SelectionImp;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +44,7 @@ public class Interpreter {
 
 
     //A whole generation of maps
-    private ArrayList<Dungeon> mapGeneration;
+    private ArrayList<Dungeon> generationOfMaps;
 
     private ArrayList<FitnessImp> fitnessImpList;
     private NoiseImp noiseImp;
@@ -73,7 +75,7 @@ public class Interpreter {
 
         fitnessImpList = new ArrayList<>();
 
-        mapGeneration = new ArrayList<>();
+        generationOfMaps = new ArrayList<>();
 
         interpretArguments();
     }
@@ -94,6 +96,8 @@ public class Interpreter {
 
         noiseMaps();
         caMaps();
+
+
         evaluateMaps();
 
 
@@ -109,6 +113,7 @@ public class Interpreter {
 
     private boolean addChromosomeEvaluationStrategy(String option){
         String choice = option.toLowerCase().trim();
+
         switch(choice){
             case "basic":
                 chromosomeEvaluationImp = new BasicChromosomeEvaluation(0.1, populationSize);
@@ -162,23 +167,23 @@ public class Interpreter {
 
     private boolean noiseMaps(){
         //Create Noise for maps
-        mapGeneration = noiseImp.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.6);
+        generationOfMaps = noiseImp.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.6);
         return true;
     }
 
     private boolean caMaps(){
         //Run Cellurar Automata
-        for (int i = 0; i < mapGeneration.size(); i++) {
-            Matrix k = cellurarAutomataImp.generateMap(mapGeneration.get(i).getDungeonMatrix());
+        for (int i = 0; i < generationOfMaps.size(); i++) {
+            Matrix k = cellurarAutomataImp.generateMap(generationOfMaps.get(i).getDungeonMatrix());
             Dungeon kk = new Dungeon(k);
-            mapGeneration.set(i, kk);
+            generationOfMaps.set(i, kk);
         }
         return true;
     }
 
     private boolean evaluateMaps(){
-
-        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(mapGeneration, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT);//TODO i moved mutation but it actually has to use thi variable now
+        //TODO for now there is no real choice with enums
+        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList, numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.ELITE);//TODO i moved mutation but it actually has to use thi variable now
 
         return true;
     }
