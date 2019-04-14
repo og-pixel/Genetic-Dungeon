@@ -3,7 +3,6 @@ package Genetic_Algorithm.Fitness;
 import Algorithms.Algorithms;
 import Algorithms.Matrix;
 import Dungeon.*;
-import Dungeon.Tile.Corridor;
 
 import java.util.ArrayList;
 //TODO here visit map 1 means visited and 0 means not visited, need to display it better
@@ -17,6 +16,11 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
 
             return -1;
+        }
+
+        @Override
+        public double evaluateDungeonCheap(Dungeon dungeon) {
+            return 0;
         }
 
 
@@ -85,6 +89,11 @@ public enum FitnessEnum implements FitnessImp, TileList {
             ///CLEANUP
             //TODO here i will save dungeon stats //            dungeon.setNumberOfRooms(numberOfRooms);
             return score;
+        }
+
+        @Override
+        public double evaluateDungeonCheap(Dungeon dungeon) {
+            return 0;
         }
 
         private int countVisited(Matrix visitMap) {
