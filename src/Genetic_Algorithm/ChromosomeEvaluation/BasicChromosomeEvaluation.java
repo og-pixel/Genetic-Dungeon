@@ -104,7 +104,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 Dungeon child1 = Algorithms.deepClone(parent1);
                 Dungeon child2 = Algorithms.deepClone(parent2);
 
-
                 int crossPointX = random.nextInt(parent1.getDungeonWidth());
                 int crossPointY = random.nextInt(parent1.getDungeonHeight());
 

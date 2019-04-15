@@ -20,6 +20,7 @@ public enum SelectionEnum implements SelectionImp {
             //TODO This part takes top 10% of pop and removes the rest
             list.subList((int)(list.size() * 0.1), list.size()).clear();
 
+            list = Algorithms.deepClone(list);
             return list;
         }
     },
@@ -97,11 +98,24 @@ public enum SelectionEnum implements SelectionImp {
             return null;
         }
     },
+    //TODO age doesnt work
     Age{
         @Override
         public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+            Random random = new Random(); //lol
 
-            return null;
+            ArrayList<Dungeon> rest = new ArrayList<>();
+
+            for (Dungeon dungeon : list) {
+                if (dungeon.getAge() < 3) { //lol random deadth for everyone
+                    dungeon.setAge(dungeon.getAge() + 1);
+                    rest.add(dungeon);
+                }
+            }
+            rest.sort((Comparator.comparing(Dungeon::getScore).reversed()));
+
+
+            return rest;
         }
     }
 }

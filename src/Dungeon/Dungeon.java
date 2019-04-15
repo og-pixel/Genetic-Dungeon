@@ -21,6 +21,7 @@ public class Dungeon implements Serializable, TileList{
     /**
      * INFORMATION ABOUT DUNGEON AFTER EVALUATION
      */
+    private int age;
     private int numberOfRooms;
     private double wallToCorridorRatio;
     private int mutationCount;
@@ -40,6 +41,7 @@ public class Dungeon implements Serializable, TileList{
 
         dungeonMatrix = new Matrix(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
 
+        age = 0;
         score = -1;
     }
 
@@ -51,6 +53,7 @@ public class Dungeon implements Serializable, TileList{
         this.dungeonWidth = dungeonMatrix.getWidth();
         this.dungeonHeight = dungeonMatrix.getHeight();
 
+        age = 0;
         score = -1;
     }
 
@@ -164,4 +167,14 @@ public class Dungeon implements Serializable, TileList{
     public void setCorrectionsFound(int correctionsFound) {
         this.correctionsFound = correctionsFound;
     }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
 }

@@ -112,28 +112,6 @@ public enum FitnessEnum implements FitnessImp, TileList {
         }
     };
 
-
-    private int roomCount(Dungeon dungeon){
-
-        int dungeonWidth = dungeon.getDungeonWidth();
-        int dungeonHeight = dungeon.getDungeonHeight();
-
-//        int[][] shape = new int[6][5];{{WALL, WALL, WALL, WALL, WALL;{
-//        WALL, WALL, WALL, WALL, WALL}
-//        }
-
-
-
-
-
-
-
-
-        return -1;
-    }
-
-
-
     private final double strength;
 
     FitnessEnum(double strength) {

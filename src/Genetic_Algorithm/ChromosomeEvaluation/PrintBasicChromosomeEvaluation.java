@@ -26,9 +26,11 @@ public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluatio
 
     @Override
     public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation, CorrectionEnum correction) {
+        long startTime = System.nanoTime();
         EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation, selection, premutation, correction);//TODO its kinda like calling super
         //TODO for now there is no difference between regular and wrapper object (they do the same)
 
+        System.out.println("It took:" + ((System.nanoTime() - startTime) / 1000000000) + "seconds");
         return k;
     }
 

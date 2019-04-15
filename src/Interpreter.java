@@ -3,6 +3,7 @@ import Algorithms.CA.*;
 import Dungeon.Dungeon;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
+import Genetic_Algorithm.ChromosomeEvaluation.PrintBasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
@@ -118,7 +119,8 @@ public class Interpreter {
 
         switch(choice){
             case "basic":
-                chromosomeEvaluationImp = new BasicChromosomeEvaluation(0.1, populationSize);
+                chromosomeEvaluationImp = new PrintBasicChromosomeEvaluation(
+                        new BasicChromosomeEvaluation(0.1, populationSize));
                 return true;
             default:
                 return false;
@@ -187,7 +189,7 @@ public class Interpreter {
         //TODO for now there is no real choice with enums
         //TODO i moved mutation but it actually has to use thi variable now
         evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList,
-                numberOfGenerations, MutationsEnum.LOWER, SelectionEnum.Tournament, PremutationEnum.SWAP,
+                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.Tournament, PremutationEnum.SWAP,
                 CorrectionEnum.FIND_ROOM);
 
         return true;

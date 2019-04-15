@@ -42,7 +42,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             for (int y = 0; y < matrix.getHeight() - room.getHeight(); y = y + room.getHeight()) {
                 for (int x = 0; x < matrix.getWidth() - room.getWidth(); x = x + room.getWidth()) {
                     cutMatrix = matrix.getPartOfMatrix(x, y, room.getWidth(), room.getHeight());
-                    if(Algorithms.getHammingDistance(cutMatrix, room) <= 2){
+                    if(Algorithms.getHammingDistance(cutMatrix, room) <= 3){
 //                        System.out.println("FOUND ONE");
                         dungeon.setScore(dungeon.getScore() + room.getSize());
                         dungeon.setCorrectionsFound(dungeon.getCorrectionsFound() + 1);
