@@ -273,16 +273,24 @@ public class Algorithms implements TileList{
     public static int getHammingDistance(Dungeon dungeon1, Dungeon dungeon2){
         Matrix matrix1 = dungeon1.getDungeonMatrix();
         Matrix matrix2 = dungeon2.getDungeonMatrix();
+
+        return getHammingDistance(matrix1, matrix2);
+    }
+
+    public static int getHammingDistance(Matrix matrix1, Matrix matrix2){
         int distance = 0;
 
-        for (int y = 0; y < dungeon1.getDungeonHeight(); y++) {
-            for (int x = 0; x < dungeon2.getDungeonWidth(); x++) {
+        for (int y = 0; y < matrix1.getHeight(); y++) {
+            for (int x = 0; x < matrix2.getWidth(); x++) {
                 if (matrix1.getElement(x, y) != matrix2.getElement(x, y)) distance++;
             }
         }
 
         return distance;
     }
+
+
+
 
 
 

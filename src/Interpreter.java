@@ -6,6 +6,7 @@ import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
+import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
 import Genetic_Algorithm.Mutation.MutationsEnum;
 import Genetic_Algorithm.Population.NoiseEnum;
 import Genetic_Algorithm.Population.NoiseImp;
@@ -185,7 +186,9 @@ public class Interpreter {
     private boolean evaluateMaps(){
         //TODO for now there is no real choice with enums
         //TODO i moved mutation but it actually has to use thi variable now
-        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList, numberOfGenerations, MutationsEnum.LOWER, SelectionEnum.ELITE, PremutationEnum.SWAP);
+        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList,
+                numberOfGenerations, MutationsEnum.LOWER, SelectionEnum.Tournament, PremutationEnum.SWAP,
+                CorrectionEnum.FIND_ROOM);
 
         return true;
     }

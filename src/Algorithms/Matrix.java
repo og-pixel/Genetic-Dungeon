@@ -130,6 +130,10 @@ public class Matrix implements Serializable {
         return getElement(x - 1, y);
     }
 
+    public long getSize(){
+        return width * height;
+    }
+
     public boolean swapElements(int x1, int y1, int x2, int y2){
         long element1 = getElement(x1, y1);
         long element2 = getElement(x2, y2);
@@ -138,6 +142,31 @@ public class Matrix implements Serializable {
         //TODO it tells me i can simplify it but i dont like it atm
         if(put(x1, y1, element2) && put(x2, y2, element1)) return true;
         else return false;
+    }
+
+    //Get a smaller part of matrix, for example used
+    //in Hamming distance
+
+    //Pick x and y as
+    //
+    //this element
+    // |
+    // v
+    // o x x
+    // x x x
+    // x x x
+    //
+    public Matrix getPartOfMatrix(int pickX, int pickY, int width, int height){
+        Matrix newMatrix = new Matrix(width, height);
+
+
+        for (int y = pickY, normalY = 0; y < pickY + height; y++, normalY++) {
+            for (int x = pickX, normalX = 0; x < pickX + width; x++, normalX++) {
+                newMatrix.put(normalX, normalY, matrix[y][x]);
+            }
+        }
+
+        return newMatrix;
     }
 
     /**

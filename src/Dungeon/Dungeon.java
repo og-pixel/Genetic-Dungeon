@@ -25,6 +25,7 @@ public class Dungeon implements Serializable, TileList{
     private double wallToCorridorRatio;
     private int mutationCount;
     private int specialMutationCount; //todo this is stupid
+    private int correctionsFound; //todo this is stupid
 
 
     /**
@@ -106,6 +107,7 @@ public class Dungeon implements Serializable, TileList{
         stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
         stringBuilder.append("Mutation Count: ").append(mutationCount).append("\n");
         stringBuilder.append("Special Mutation Count: ").append(specialMutationCount).append("\n");
+        stringBuilder.append("Corrections Count: ").append(correctionsFound).append("\n");
         for (int y = 0; y < dungeonHeight; y++) {
             stringBuilder.append("\n");
             for (int x = 0; x < dungeonWidth; x++) {
@@ -153,5 +155,13 @@ public class Dungeon implements Serializable, TileList{
 
     public void setSpecialMutationCount(int specialMutationCount) {
         this.specialMutationCount = specialMutationCount;
+    }
+
+    public int getCorrectionsFound() {
+        return correctionsFound;
+    }
+
+    public void setCorrectionsFound(int correctionsFound) {
+        this.correctionsFound = correctionsFound;
     }
 }
