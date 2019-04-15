@@ -12,7 +12,5 @@ import Genetic_Algorithm.Selection.SelectionEnum;
 import java.util.ArrayList;
 
 public interface ChromosomeEvaluationImp {//todo number of generations is how many times we should repeat the whole thing
-    EvolutionDetails crossoverPopulation(ArrayList<Dungeon> dungeonList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations,
-                                         MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation,
-                                         CorrectionEnum correction, OffspringEnum offspring);
+    EvolutionDetails crossoverPopulation();
 }

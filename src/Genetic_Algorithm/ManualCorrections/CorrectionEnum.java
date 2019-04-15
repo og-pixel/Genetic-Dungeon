@@ -28,6 +28,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
         @Override
         public void correct(Dungeon dungeon) {
              Matrix matrix = dungeon.getDungeonMatrix();
+             Matrix mutationMap = dungeon.getMutationMap();
 
              //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
@@ -42,10 +43,10 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             for (int y = 0; y < matrix.getHeight() - room.getHeight(); y = y + room.getHeight()) {
                 for (int x = 0; x < matrix.getWidth() - room.getWidth(); x = x + room.getWidth()) {
                     cutMatrix = matrix.getPartOfMatrix(x, y, room.getWidth(), room.getHeight());
-                    if(Algorithms.getHammingDistance(cutMatrix, room) <= 3){
-//                        System.out.println("FOUND ONE");
+                    if(Algorithms.getHammingDistance(cutMatrix, room) <= 0){
                         dungeon.setScore(dungeon.getScore() + room.getSize());
                         dungeon.setCorrectionsFound(dungeon.getCorrectionsFound() + 1);
+                        dungeon.setMutationMap(mutationMap);
                     }
                 }
             }

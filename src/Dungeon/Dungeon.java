@@ -12,6 +12,7 @@ public class Dungeon implements Serializable, TileList{
 
     /* Dungeon is created as a matrix made out of (abstract) Tile objects */
     private Matrix dungeonMatrix;
+    private Matrix mutationMap; //todo idea of this is to make spots where user cannot mutate anymore (main idea for buildings)
 
     //TODO maybe I will create small Class to hold information
     private Point startPoint;
@@ -39,7 +40,10 @@ public class Dungeon implements Serializable, TileList{
         this.dungeonWidth = dungeonWidth;
         this.dungeonHeight = dungeonHeight;
 
-        dungeonMatrix = new Matrix(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
+        this.dungeonMatrix = new Matrix(dungeonWidth, dungeonHeight);//todo tile numbers and all of them might be the same object
+        this.mutationMap = new Matrix(dungeonWidth, dungeonHeight);
+        this.mutationMap.fillMatrix(UNIVERSAL);
+
 
         age = 0;
         score = -1;
@@ -48,10 +52,12 @@ public class Dungeon implements Serializable, TileList{
     //Wrap dungeon matrix to the Dungeon class,
     // TODO its not for real application
     public Dungeon(Matrix dungeonMatrix) {
-        this.dungeonMatrix = dungeonMatrix;
-
         this.dungeonWidth = dungeonMatrix.getWidth();
         this.dungeonHeight = dungeonMatrix.getHeight();
+
+        this.dungeonMatrix = dungeonMatrix;
+        this.mutationMap = new Matrix(dungeonMatrix.getWidth(), dungeonMatrix.getHeight());
+        this.mutationMap.fillMatrix(UNIVERSAL);
 
         age = 0;
         score = -1;
@@ -176,5 +182,11 @@ public class Dungeon implements Serializable, TileList{
         this.age = age;
     }
 
+    public Matrix getMutationMap() {
+        return mutationMap;
+    }
 
+    public void setMutationMap(Matrix mutationMap) {
+        this.mutationMap = mutationMap;
+    }
 }

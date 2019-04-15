@@ -26,11 +26,9 @@ public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluati
     }
 
     @Override
-    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations,
-                                                MutationsEnum mutation, SelectionEnum selection,
-                                                PremutationEnum premutation, CorrectionEnum correction, OffspringEnum offspring) {
+    public EvolutionDetails crossoverPopulation() {
         long startTime = System.nanoTime();
-        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation, selection, premutation, correction, offspring);//TODO its kinda like calling super
+        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation();//TODO its kinda like calling super
 
         System.out.println("It took:" + ((System.nanoTime() - startTime) / 1000000000) + "seconds");
         return k;

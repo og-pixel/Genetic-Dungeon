@@ -2,8 +2,6 @@ package Genetic_Algorithm.Mutation;
 
 import Algorithms.Matrix;
 import Dungeon.Dungeon;
-import Dungeon.Tile.Corridor;
-import Dungeon.Tile.*;
 import Dungeon.*;
 
 import java.util.ArrayList;

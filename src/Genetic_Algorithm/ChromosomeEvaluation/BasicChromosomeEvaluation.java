@@ -1,4 +1,4 @@
-package Genetic_Algorithm.ChromosomeEvaluation;
+    package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
 import Dungeon.Dungeon;
@@ -21,8 +21,20 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private double TOP_POP;
     private double POP_SIZE;
 
+    private ArrayList<Dungeon> mapList;
+    private ArrayList<FitnessImp> fitnessImpList;
+    private int numberOfGenerations;
+    private MutationsEnum mutation;
+    private SelectionEnum selection;
+    private PremutationEnum premutation;
+    private CorrectionEnum correction;
+    private OffspringEnum offspring;
 
-    public BasicChromosomeEvaluation(double topPopulation, double populationSize){
+    public BasicChromosomeEvaluation(double topPopulation, double populationSize,
+                                     ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
+                                     int numberOfGenerations,
+                                     MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation,
+                                     CorrectionEnum correction, OffspringEnum offspring){
         LOGGER.setLevel(Level.WARNING);
         if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1, 1);
 
@@ -42,20 +54,19 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
 
-
-
-
-
-
-
-
+        //TODO consctreuctor now can determinate whenever yoou can use the method or not (it can have methods to complete what's missing)
+        this.mapList = mapList;
+        this.fitnessImpList = fitnessImpList;
+        this.numberOfGenerations = numberOfGenerations;
+        this.mutation = mutation;
+        this.selection = selection;
+        this.premutation = premutation;
+        this.correction = correction;
+        this.offspring = offspring;
     }
 
     @Override
-    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList,
-                                                int numberOfGenerations,
-                                                MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation,
-                                                CorrectionEnum correction, OffspringEnum offspring) {
+    public EvolutionDetails crossoverPopulation() {
 
         //Setup Phase
         ArrayList<Dungeon> newPopulation;
@@ -78,12 +89,11 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //Selection
             mapList = selection.selectFitIndividuals(mapList);
-
-
-
             if(generation % iteration == 0) {
                 //TODO while this isnt really necessary, it is nice for debugging
-                LOGGER.log(Level.INFO, generation + "th generation\nTop Speciment Score: " + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: " + mapList.get(0).getNumberOfRooms() + "\n");
+                LOGGER.log(Level.INFO, generation + "th generation\nTop Speciment Score: "
+                        + mapList.get(0).getScore() + "\nTop Speciment Number of Rooms: "
+                        + mapList.get(0).getNumberOfRooms() + "\n");
                 percentageDone++;
                 System.out.println(percentageDone + "%");
             }

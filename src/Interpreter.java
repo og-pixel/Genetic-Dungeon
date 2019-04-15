@@ -94,19 +94,13 @@ public class Interpreter {
         addNoiseStrategy("fill");
         //Add Cellurar Automata rule to modify map a bit
         addCellularAutomataStrategy("rule20");
-
-
+        noiseMaps();
+        caMaps();
 
         //Add Evaluation Strategy, for now there is only basic
         addChromosomeEvaluationStrategy("basic");
 
-        noiseMaps();
-        caMaps();
-
-
         evaluateMaps();
-
-
         evolutionDetails.saveResults();
         LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
 
@@ -123,7 +117,9 @@ public class Interpreter {
         switch(choice){
             case "basic":
                 chromosomeEvaluationImp = new MeasureTimeChromosomeEvaluation(
-                        new BasicChromosomeEvaluation(0.1, populationSize));
+                        new BasicChromosomeEvaluation(0.1, populationSize, generationOfMaps, fitnessImpList,
+                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.Tournament, PremutationEnum.SWAP,
+                CorrectionEnum.FIND_ROOM, OffspringEnum.DEFAULT));
                 return true;
             default:
                 return false;
@@ -189,9 +185,7 @@ public class Interpreter {
     }
 
     private boolean evaluateMaps(){
-        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList,
-                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.ELITE, PremutationEnum.SWAP,
-                CorrectionEnum.FIND_ROOM, OffspringEnum.DEFAULT);
+        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation();
 
         return true;
     }
