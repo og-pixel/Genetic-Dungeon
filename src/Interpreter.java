@@ -3,17 +3,17 @@ import Algorithms.CA.*;
 import Dungeon.Dungeon;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
-import Genetic_Algorithm.ChromosomeEvaluation.PrintBasicChromosomeEvaluation;
+import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Offspring.OffspringEnum;
 import Genetic_Algorithm.Population.NoiseEnum;
 import Genetic_Algorithm.Population.NoiseImp;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
-import Genetic_Algorithm.Selection.SelectionImp;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +94,9 @@ public class Interpreter {
         addNoiseStrategy("fill");
         //Add Cellurar Automata rule to modify map a bit
         addCellularAutomataStrategy("rule20");
+
+
+
         //Add Evaluation Strategy, for now there is only basic
         addChromosomeEvaluationStrategy("basic");
 
@@ -119,7 +122,7 @@ public class Interpreter {
 
         switch(choice){
             case "basic":
-                chromosomeEvaluationImp = new PrintBasicChromosomeEvaluation(
+                chromosomeEvaluationImp = new MeasureTimeChromosomeEvaluation(
                         new BasicChromosomeEvaluation(0.1, populationSize));
                 return true;
             default:
@@ -186,11 +189,9 @@ public class Interpreter {
     }
 
     private boolean evaluateMaps(){
-        //TODO for now there is no real choice with enums
-        //TODO i moved mutation but it actually has to use thi variable now
         evolutionDetails = chromosomeEvaluationImp.crossoverPopulation(generationOfMaps, fitnessImpList,
-                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.Tournament, PremutationEnum.SWAP,
-                CorrectionEnum.FIND_ROOM);
+                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.ELITE, PremutationEnum.SWAP,
+                CorrectionEnum.FIND_ROOM, OffspringEnum.DEFAULT);
 
         return true;
     }

@@ -4,5 +4,5 @@ import Dungeon.Dungeon;
 import java.util.ArrayList;
 
 public interface SelectionImp {
-    ArrayList<Dungeon> useSelection(ArrayList<Dungeon> dungeon);
+    ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> dungeon);
 }

@@ -12,7 +12,7 @@ import java.util.Random;
 public enum SelectionEnum implements SelectionImp {
     ELITE{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
 
             //////TODO THIS PART IS SELECTION
             //First elements are the most fit
@@ -26,7 +26,7 @@ public enum SelectionEnum implements SelectionImp {
     },
     ROULETTE{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
             //TODO i dont like limit variable
             double limit = list.size() * 0.1;
             Random random = new Random();
@@ -59,14 +59,14 @@ public enum SelectionEnum implements SelectionImp {
     //TODO its stochastic universal sampling
     StochasticTwo{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
 
             return null;
         }
     },
     Tournament{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
             //TODO i dont like limit variable
             double limit = list.size() * 0.1;
             Random random = new Random();
@@ -93,7 +93,7 @@ public enum SelectionEnum implements SelectionImp {
     },
     Rank{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
 
             return null;
         }
@@ -101,7 +101,7 @@ public enum SelectionEnum implements SelectionImp {
     //TODO age doesnt work
     Age{
         @Override
-        public ArrayList<Dungeon> useSelection(ArrayList<Dungeon> list) {
+        public ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> list) {
             Random random = new Random(); //lol
 
             ArrayList<Dungeon> rest = new ArrayList<>();

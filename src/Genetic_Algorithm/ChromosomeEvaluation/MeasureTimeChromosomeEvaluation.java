@@ -8,6 +8,7 @@ import Genetic_Algorithm.Data.EvolutionDetails;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
 import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Offspring.OffspringEnum;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
@@ -15,28 +16,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 //This wrapper adds functionality to print last generation of maps
-public class PrintBasicChromosomeEvaluation extends DecoratorChromosomeEvaluation {
+public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluation {
 
     private AbstractChromosomeEvaluation abstractChromosomeEvaluation;
 
 
-    public PrintBasicChromosomeEvaluation(AbstractChromosomeEvaluation abstractChromosomeEvaluation) {
+    public MeasureTimeChromosomeEvaluation(AbstractChromosomeEvaluation abstractChromosomeEvaluation) {
         this.abstractChromosomeEvaluation = abstractChromosomeEvaluation;
     }
 
     @Override
-    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations, MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation, CorrectionEnum correction) {
+    public EvolutionDetails crossoverPopulation(ArrayList<Dungeon> mapList, ArrayList<FitnessImp> fitnessImpList, int numberOfGenerations,
+                                                MutationsEnum mutation, SelectionEnum selection,
+                                                PremutationEnum premutation, CorrectionEnum correction, OffspringEnum offspring) {
         long startTime = System.nanoTime();
-        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation, selection, premutation, correction);//TODO its kinda like calling super
-        //TODO for now there is no difference between regular and wrapper object (they do the same)
+        EvolutionDetails k = abstractChromosomeEvaluation.crossoverPopulation(mapList, fitnessImpList, numberOfGenerations, mutation, selection, premutation, correction, offspring);//TODO its kinda like calling super
 
         System.out.println("It took:" + ((System.nanoTime() - startTime) / 1000000000) + "seconds");
         return k;
-    }
-
-
-    @Override
-    public int getCrossoverPoint(Dungeon dungeon) {
-        return 0;
     }
 }
