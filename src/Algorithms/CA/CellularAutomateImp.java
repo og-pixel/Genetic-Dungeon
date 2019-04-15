@@ -5,6 +5,6 @@ import Dungeon.Tile.Tile;
 
 import java.util.ArrayList;
 
-public interface CellurarAutomataImp {
+public interface CellularAutomateImp {
     Matrix generateMap(Matrix map);
 }

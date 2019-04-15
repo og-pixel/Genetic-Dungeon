@@ -1,9 +1,7 @@
 package Algorithms;
 
 import Dungeon.*;
-import Dungeon.Tile.Corridor;
-import Dungeon.Tile.End;
-import Dungeon.Tile.Tile;
+import Exceptions.MatrixWrongDimensionsException;
 
 import java.io.*;
 import java.sql.Timestamp;
@@ -19,16 +17,7 @@ import java.util.Random;
  */
 public class Algorithms implements TileList{
 
-    //TODO I think I can rewrite flood a little bit so it can
-    // check for start and finish node (I still need A*)
-
-    //todo for now it returns a a matrix of booleans
     public static Matrix floodFill(Dungeon dungeon, int x, int y){
-        //TODO i might not need that
-//        if (dungeon.getDungeonMatrix().getElement(x, y) == null) {
-//            return null;
-//        }
-
         int dungeonWidth = dungeon.getDungeonWidth();
         int dungeonHeight = dungeon.getDungeonHeight();
 
@@ -69,8 +58,7 @@ public class Algorithms implements TileList{
     }
 
 
-
-    //TODO create A*
+    //TODO not working ATM
     public static void aStarTraverse(Dungeon dungeon){
         Matrix dungeonMatrix = dungeon.getDungeonMatrix();
 
@@ -120,7 +108,7 @@ public class Algorithms implements TileList{
                 point1.setDistanceToFinish(Algorithms.getManhattanDistance(x, y - 1,
                         endPositionX, endPositionY));
 
-                if(checkIfPointExists(point1, traverseList))canExpand[0] = true;
+                if(pointExists(point1, traverseList))canExpand[0] = true;
                 else
                 traverseList.add(point1);
             }
@@ -134,7 +122,7 @@ public class Algorithms implements TileList{
                 point2.setDistanceToFinish(Algorithms.getManhattanDistance(x + 1, y,
                         endPositionX,endPositionY));
 
-                if(checkIfPointExists(point2, traverseList))canExpand[1] = true;
+                if(pointExists(point2, traverseList))canExpand[1] = true;
                 else
                 traverseList.add(point2);
             }
@@ -149,7 +137,7 @@ public class Algorithms implements TileList{
                         endPositionX,endPositionY));
 
 
-                if(checkIfPointExists(point3, traverseList))canExpand[2] = true;
+                if(pointExists(point3, traverseList))canExpand[2] = true;
                 else
                 traverseList.add(point3);
             }
@@ -163,7 +151,7 @@ public class Algorithms implements TileList{
                 point4.setDistanceToFinish(Algorithms.getManhattanDistance(x - 1, y,
                         endPositionX,endPositionY));
 
-                if(checkIfPointExists(point4, traverseList))canExpand[3] = true;
+                if(pointExists(point4, traverseList))canExpand[3] = true;
                 else
                 traverseList.add(point4);
             }
@@ -178,7 +166,7 @@ public class Algorithms implements TileList{
 
             Collections.sort(traverseList, Comparator.comparing(Point::getDistanceToFinish));
 
-//            TODO DODODODOD
+//            TODO not working ATM
             // because of this, it is working, but not like real A* would
             for (int i = 1; i < traverseList.size(); i++) {
                 if(currentPosition.getTotalCost() == traverseList.get(i).getTotalCost()){
@@ -229,11 +217,17 @@ public class Algorithms implements TileList{
         System.err.println(traverseList);
     }
 
-    //TODO check if point is already on list
-    private static boolean checkIfPointExists(Point point, ArrayList<Point> traverseList){
-        for (int i = 0; i < traverseList.size(); i++) {
-            if(point.getXPos() == traverseList.get(i).getXPos()
-                    && point.getYPos() == traverseList.get(i).getYPos()){
+    /**
+     * check if point is already on list
+     * @param point
+     * @param traverseList
+     * @return
+     */
+    private static boolean pointExists(Point point, ArrayList<Point> traverseList){
+        for (Point value : traverseList) {
+            if (point.getXPos() == value.getXPos()
+                    && point.getYPos() == value.getYPos()) {
+
                 return true;
             }
         }
@@ -255,18 +249,46 @@ public class Algorithms implements TileList{
     }
 
 
-
-    //todo maybe return double or something else
-    public static int getManhattanDistance(int fromX, int fromY, int toX, int toY){
-        return Math.abs(fromX-toX) + Math.abs(fromY-toY);
+    /**
+     * Get the closest possible distance (in manhattan-like direction)
+     * from point a to point b
+     * @param  pointAX point a on X coordinate
+     * @param pointAY point a on Y coordinate
+     * @param pointBX point b on X coordinate
+     * @param  pointBY point b on Y coordinate
+     * @return manhattanDistance between these two points on the map
+     */
+    public static int getManhattanDistance(int pointAX, int pointAY, int pointBX, int pointBY){
+        return Math.abs(pointAX - pointBX) + Math.abs(pointAY - pointBY);
     }
-
 
     /**
      * Compare two dungeon maps and get a "distance" between them,
      * which is how many elements are actually different between each other
      * COMPARE ONE TO TWO
-     * @param dungeon1
+     * @param matrix1
+     * @param matrix2
+     * @return
+     */
+    public static int getHammingDistance(Matrix matrix1, Matrix matrix2){
+        if(matrix1.getWidth() != matrix2.getWidth()
+                || matrix1.getHeight() != matrix2.getHeight()){
+            throw new MatrixWrongDimensionsException();
+        }
+
+        int distance = 0;
+        for (int y = 0; y < matrix1.getHeight(); y++) {
+            for (int x = 0; x < matrix2.getWidth(); x++) {
+                if (matrix1.getElement(x, y) != matrix2.getElement(x, y)) distance++;
+            }
+        }
+
+        return distance;
+    }
+
+    /**
+     * Wrapper method that takes dungeon maps instead
+      * @param dungeon1
      * @param dungeon2
      * @return
      */
@@ -277,29 +299,13 @@ public class Algorithms implements TileList{
         return getHammingDistance(matrix1, matrix2);
     }
 
-    public static int getHammingDistance(Matrix matrix1, Matrix matrix2){
-        int distance = 0;
-
-        for (int y = 0; y < matrix1.getHeight(); y++) {
-            for (int x = 0; x < matrix2.getWidth(); x++) {
-                if (matrix1.getElement(x, y) != matrix2.getElement(x, y)) distance++;
-            }
-        }
-
-        return distance;
-    }
 
 
-
-
-
-
-    //TODO rewrite
-    public static void writeToFile(String content, Dungeon dungeon) throws IOException {
+    private static void writeToFile(String content, Dungeon dungeon) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         int score = (int) dungeon.getScore();
-        File file = new File( content + ": " + score + ": " + timestamp.toString() + ": " +  ".txt");
+        File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
@@ -323,11 +329,24 @@ public class Algorithms implements TileList{
         fileWrite.close();
     }
 
+    public static void writeToFile(String content, Object object) throws IOException {
+        if(object instanceof Dungeon)writeToFile(content, (Dungeon) object);
+        else {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+            File file = new File(content + ":" + timestamp + ".txt");
+            file.createNewFile();
+
+            FileWriter fileWrite = new FileWriter(file);
+            fileWrite.write(String.valueOf(object));
+
+            fileWrite.flush();
+            fileWrite.close();
+        }
+    }
 
 
 
-
-    //THis method is so fucking dumb
     public static Dungeon deepClone(Dungeon dungeon){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -343,7 +362,6 @@ public class Algorithms implements TileList{
         }
     }
 
-    //THis method is so fucking dumb
     public static ArrayList<Dungeon> deepClone(ArrayList<Dungeon> dungeon){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

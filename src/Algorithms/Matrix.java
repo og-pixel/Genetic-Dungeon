@@ -1,104 +1,34 @@
 package Algorithms;
 
-import Exceptions.VariableBoundsException;
+import Dungeon.TileList;
+import Exceptions.MatrixTooSmallException;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
- * Point of this class is an exercise to change ArrayList<ArrayList<E>> into
- * something more generic
- * Matrix[][] and manipulate that instead (its speed concern)
+ * Relatively simple matrix class that is an array of numerical arrays
+ * It provides basic functions to manipulate it, such as;
+ * replacing rows and columns, cutting parts of the map etc.
  */
-public class Matrix implements Serializable {
+public class Matrix implements Serializable, TileList {
 
-    //    private ArrayList<ArrayList<E>> matrix;
-    private long[][] matrix; //todo i dont know how to do it otherwise, it has to be a number i think, i might just embbedeed an enum here to have static choices
-//    private E[] list;
-
+    private long[][] matrix;
     private int width, height;
 
-
-    private int chromosome;//todo this will be stringfiled version of
-    // dungeon to use for comparsion
-
-
+    /**
+     * Constructor
+     * @param width
+     * @param height
+     */
     public Matrix(int width, int height) {
-
         this.width = width;
         this.height = height;
-
         this.matrix = new long[height][width];
-
-
-    }
-
-
-//
-//
-//    /**
-//     * TODO constructor without creating stuff inside (nulls)
-//     * @param width
-//     * @param height
-//     */
-//    public Matrix(int width, int height){
-//        matrix = new ArrayList<>();
-//        for(int y = 0; y < height; y++){
-//            matrix.add(new ArrayList<>());
-//            for(int x = 0; x < width; x++){
-//                matrix.get(y).add(null);
-//            }
-//        }
-//        this.width = width;
-//        this.height = height;
-//    }
-
-    public long getElement(int x, int y) {
-        return matrix[y][x];
-    }
-
-
-    public boolean put(int x, int y, long e) {
-        try {
-            matrix[y][x] = e;//todo i might need to delete this try
-        } catch (Exception ex) {
-//            ex.printStackTrace();
-            return false; //todo one or the other
-        }
-        return true;
-    }
-
-    public long[] getRow(int row) {
-        return matrix[row];
-    }
-
-    //TODO
-//    public ArrayList<E> getColumn(int column){
-//        ArrayList<E> columnArray = new ArrayList<>();
-//        for(int i = 0; i < height; i++){
-//            columnArray.add(matrix.get(column).get(i));
-//        }
-//        return columnArray;
-//    }
-
-    public void replaceRow(int row, long[] content) {
-        matrix[row] = content;
-    }
-
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     /**
-     * TODO It fill is with one the same element
-     *
-     * @param element
+     * Fill the entire matrix with one element
+     * @param element element to fill matrix with
      */
     public void fillMatrix(long element) {
         for (int y = 0; y < height; y++) {
@@ -109,8 +39,101 @@ public class Matrix implements Serializable {
     }
 
 
+    /**
+     * Put an element e to the matrix at position x,y
+     * @param x coordinate x
+     * @param y coordinate y
+     * @param e element to be put
+     * @return true if successful, false otherwise
+     */
+    public boolean put(int x, int y, long e) {
+        try {
+            matrix[y][x] = e;
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get a whole row off the matrix
+     * @param row row to be returned
+     * @return row of elements long
+     */
+    public long[] getRow(int row) {
+        return matrix[row];
+    }
+
+    //TODO there was getColumn method to do
+
+    public void replaceRow(int row, long[] content) {
+        matrix[row] = content;
+    }
+
+    //TODO as well as replaceColumn method
+
+    /**
+     * Swap two elements on the matrix
+     * Program will not replace any values if only
+     * one put is successful
+      * @param x1 coordinate x for point 1
+     * @param y1 coordinate y for point 1
+     * @param x2 coordinate x for point 2
+     * @param y2 coordinate y for point 2
+     * @return true if successful, false otherwise
+     */
+    public boolean swapElements(int x1, int y1, int x2, int y2){
+        long element1 = getElement(x1, y1);
+        long element2 = getElement(x2, y2);
+        long tmp = getElement(x1, y1);
+
+        if(put(x1, y1, element2)){
+            if(put(x2, y2, element1))return true;
+            else put(x1, y1, tmp); //return to what it was
+        } return false;
+    }
+
+    /**
+     * Cut a matrix, starting from the UPPER-LEFT corner as pickX and pickY coordinates
+      * @param pickX
+     * @param pickY
+     * @param width
+     * @param height
+     * @return
+     */
+    public Matrix cutMatrix(int pickX, int pickY, int width, int height){
+        if(matrix.length < height || matrix[0].length < width)throw new MatrixTooSmallException();
+        Matrix newMatrix = new Matrix(width, height);
+
+        for (int y = pickY, normalY = 0; y < pickY + height; y++, normalY++) {
+            for (int x = pickX, normalX = 0; x < pickX + width; x++, normalX++) {
+                newMatrix.put(normalX, normalY, matrix[y][x]);
+            }
+        }
+
+        return newMatrix;
+    }
+
+    //Getters
+
+    public long getElement(int x, int y) {
+        return matrix[y][x];
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    //NOTE ABOUT GET UP RIGHT DOWN and LEFT 
+    //They return -1 if element picked was off the matrix
+    //As I can't return null and I don't want to throw 
+    //A runtime exception
+    //-1 in TileList is supposted to mean "error" or "non existent"
     public long getUp(int x, int y) {
-//        if ((y - 1) < 0) throw new IndexOutOfBoundsException();
         if ((y - 1) < 0) return -1;
         return getElement(x, y - 1);
     }
@@ -130,48 +153,11 @@ public class Matrix implements Serializable {
         return getElement(x - 1, y);
     }
 
-    public long getSize(){
+    public long getVolume(){
         return width * height;
     }
 
-    public boolean swapElements(int x1, int y1, int x2, int y2){
-        long element1 = getElement(x1, y1);
-        long element2 = getElement(x2, y2);
-
-
-        //TODO it tells me i can simplify it but i dont like it atm
-        if(put(x1, y1, element2) && put(x2, y2, element1)) return true;
-        else return false;
-    }
-
-    //Get a smaller part of matrix, for example used
-    //in Hamming distance
-
-    //Pick x and y as
-    //
-    //this element
-    // |
-    // v
-    // o x x
-    // x x x
-    // x x x
-    //
-    public Matrix getPartOfMatrix(int pickX, int pickY, int width, int height){
-        Matrix newMatrix = new Matrix(width, height);
-
-
-        for (int y = pickY, normalY = 0; y < pickY + height; y++, normalY++) {
-            for (int x = pickX, normalX = 0; x < pickX + width; x++, normalX++) {
-                newMatrix.put(normalX, normalY, matrix[y][x]);
-            }
-        }
-
-        return newMatrix;
-    }
-
-    /**
-     * @return
-     */
+    //Its a toString() method...
     public String toString() {
         StringBuilder string = new StringBuilder();
 
@@ -183,12 +169,5 @@ public class Matrix implements Serializable {
             string.append("}\n");
         }
         return string.toString();
-    }
-
-    public int getChromosome() {
-        int z = 1;
-
-
-        return z;
     }
 }

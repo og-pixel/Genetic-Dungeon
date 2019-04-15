@@ -25,7 +25,7 @@ public enum PremutationEnum implements PremutationImp{
                 y2 = random.nextInt(dungeonHeight);
             }while (x1 != x2 || y1 != y2);
 
-            dungeon.getDungeonMatrix().swapElements(x1, y1, x2, y2);
+            if(!dungeon.getDungeonMatrix().swapElements(x1, y1, x2, y2)) System.out.println("Error");;
         }
     },
     SCRAMBLE{

@@ -52,7 +52,7 @@ public class Interpreter {
     private ArrayList<FitnessImp> fitnessImpList;
     private NoiseImp noiseImp;
     private AbstractChromosomeEvaluation chromosomeEvaluationImp;
-    private CellurarAutomataImp cellurarAutomataImp;
+    private CellularAutomateImp cellularAutomateImp;
 
     //Results after running program
     private EvolutionDetails evolutionDetails;
@@ -161,7 +161,7 @@ public class Interpreter {
 
         switch(choice) {
             case "rule20":
-                cellurarAutomataImp = new Rule20CellurarAutomata();
+                cellularAutomateImp = new Rule20CellularAutomate();
                 return true;
             default:
                 return false;
@@ -177,7 +177,7 @@ public class Interpreter {
     private boolean caMaps(){
         //Run Cellurar Automata
         for (int i = 0; i < generationOfMaps.size(); i++) {
-            Matrix k = cellurarAutomataImp.generateMap(generationOfMaps.get(i).getDungeonMatrix());
+            Matrix k = cellularAutomateImp.generateMap(generationOfMaps.get(i).getDungeonMatrix());
             Dungeon kk = new Dungeon(k);
             generationOfMaps.set(i, kk);
         }
