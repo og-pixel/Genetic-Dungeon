@@ -1,8 +1,9 @@
-package Dungeon;
+package Map;
 
 import java.io.Serializable;
 
 public class Point implements Serializable {
+
     //Small Helping class to store node positions in a little more appropriate way
     private int xPos;
     private int yPos;
@@ -63,6 +64,6 @@ public class Point implements Serializable {
     }
 
     public String toString(){
-        return "[" + xPos + "," + yPos + "] ";
+        return "Point:[" + xPos + "," + yPos + "] ";
     }
 }

@@ -1,6 +1,6 @@
 package Algorithms;
 
-import Dungeon.*;
+import Map.*;
 import Exceptions.MatrixWrongDimensionsException;
 
 import java.io.*;
@@ -17,41 +17,41 @@ import java.util.Random;
  */
 public class Algorithms implements TileList{
 
-    public static Matrix floodFill(Dungeon dungeon, int x, int y){
-        int dungeonWidth = dungeon.getDungeonWidth();
-        int dungeonHeight = dungeon.getDungeonHeight();
+    public static Matrix floodFill(Map map, int x, int y){
+        int dungeonWidth = map.getMapWidth();
+        int dungeonHeight = map.getMapHeight();
 
         Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
         visitMap.fillMatrix(0);
 
-        flood(dungeon, visitMap, x, y);
+        flood(map, visitMap, x, y);
 
         return visitMap;
     }
 
-    private static void flood(Dungeon dungeon, Matrix visitMap, int x, int y){
+    private static void flood(Map map, Matrix visitMap, int x, int y){
 
-        if(dungeon.getDungeonMatrix().getElement(x, y) == CORRIDOR) {
+        if(map.getMapMatrix().getElement(x, y) == CORRIDOR) {
             visitMap.put(x, y, 1);
 
-            if (x > 0 && dungeon.getDungeonMatrix().getElement(x - 1, y) == CORRIDOR) {
+            if (x > 0 && map.getMapMatrix().getElement(x - 1, y) == CORRIDOR) {
                 if (visitMap.getElement(x - 1, y) == 0) {
-                    flood(dungeon, visitMap, x - 1, y);
+                    flood(map, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < dungeon.getDungeonWidth() && dungeon.getDungeonMatrix().getElement(x + 1, y) == CORRIDOR) {
+            if (x + 1 < map.getMapWidth() && map.getMapMatrix().getElement(x + 1, y) == CORRIDOR) {
                 if (visitMap.getElement(x + 1, y) == 0) {
-                    flood(dungeon, visitMap, x + 1, y);
+                    flood(map, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && dungeon.getDungeonMatrix().getElement(x, y - 1) == CORRIDOR) {
+            if (y > 0 && map.getMapMatrix().getElement(x, y - 1) == CORRIDOR) {
                 if (visitMap.getElement(x, y - 1) == 0) {
-                    flood(dungeon, visitMap, x, y - 1);
+                    flood(map, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < dungeon.getDungeonHeight() && dungeon.getDungeonMatrix().getElement(x, y + 1) == CORRIDOR) {
+            if (y + 1 < map.getMapHeight() && map.getMapMatrix().getElement(x, y + 1) == CORRIDOR) {
                 if (visitMap.getElement(x, y + 1) == 0) {
-                    flood(dungeon, visitMap, x, y + 1);
+                    flood(map, visitMap, x, y + 1);
                 }
             }
         }
@@ -59,20 +59,20 @@ public class Algorithms implements TileList{
 
 
     //TODO not working ATM
-    public static void aStarTraverse(Dungeon dungeon){
-        Matrix dungeonMatrix = dungeon.getDungeonMatrix();
+    public static void aStarTraverse(Map map){
+        Matrix dungeonMatrix = map.getMapMatrix();
 
         ArrayList<Point> traverseList = new ArrayList<>();
 
 
-        int startPositionX = dungeon.getStartPoint().getXPos();
-        int startPositionY = dungeon.getStartPoint().getYPos();
+        int startPositionX = map.getStartPoint().getXPos();
+        int startPositionY = map.getStartPoint().getYPos();
 
-        int endPositionX = dungeon.getEndPoint().getXPos();
-        int endPositionY = dungeon.getEndPoint().getYPos();
+        int endPositionX = map.getEndPoint().getXPos();
+        int endPositionY = map.getEndPoint().getYPos();
 
-        int dungeonWidth = dungeon.getDungeonWidth();
-        int dungeonHeight = dungeon.getDungeonHeight();
+        int dungeonWidth = map.getMapWidth();
+        int dungeonHeight = map.getMapHeight();
 
         Point currentPosition = new Point(startPositionX, startPositionY);
 
@@ -266,8 +266,8 @@ public class Algorithms implements TileList{
      * Compare two dungeon maps and get a "distance" between them,
      * which is how many elements are actually different between each other
      * COMPARE ONE TO TWO
-     * @param matrix1
-     * @param matrix2
+     * @param matrix1 todo should be room
+     * @param matrix2 todo should be cut map
      * @return
      */
     public static int getHammingDistance(Matrix matrix1, Matrix matrix2){
@@ -275,41 +275,45 @@ public class Algorithms implements TileList{
                 || matrix1.getHeight() != matrix2.getHeight()){
             throw new MatrixWrongDimensionsException();
         }
-
         int distance = 0;
+
         for (int y = 0; y < matrix1.getHeight(); y++) {
             for (int x = 0; x < matrix2.getWidth(); x++) {
-                if (matrix1.getElement(x, y) != matrix2.getElement(x, y)) distance++;
+                //To increase a distance element needs to be different
+                // AND does not contain UNIVERSAL (don't care) value
+                if (matrix1.getElement(x, y) != UNIVERSAL ||
+                        matrix1.getElement(x, y) != matrix2.getElement(x, y)){
+                    distance++;
+                }
             }
         }
-
         return distance;
     }
 
     /**
      * Wrapper method that takes dungeon maps instead
-      * @param dungeon1
-     * @param dungeon2
+      * @param map1
+     * @param map2
      * @return
      */
-    public static int getHammingDistance(Dungeon dungeon1, Dungeon dungeon2){
-        Matrix matrix1 = dungeon1.getDungeonMatrix();
-        Matrix matrix2 = dungeon2.getDungeonMatrix();
+    public static int getHammingDistance(Map map1, Map map2){
+        Matrix matrix1 = map1.getMapMatrix();
+        Matrix matrix2 = map2.getMapMatrix();
 
         return getHammingDistance(matrix1, matrix2);
     }
 
 
 
-    private static void writeToFile(String content, Dungeon dungeon) throws IOException {
+    private static void writeToFile(String content, Map map) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        int score = (int) dungeon.getScore();
+        int score = (int) map.getFitnessScore();
         File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
-        content = dungeon.dungeonToString();
+        content = map.mapToString();
         fileWrite.write(content);
 
         fileWrite.flush();
@@ -330,7 +334,7 @@ public class Algorithms implements TileList{
     }
 
     public static void writeToFile(String content, Object object) throws IOException {
-        if(object instanceof Dungeon)writeToFile(content, (Dungeon) object);
+        if(object instanceof Map)writeToFile(content, (Map) object);
         else {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -347,30 +351,30 @@ public class Algorithms implements TileList{
 
 
 
-    public static Dungeon deepClone(Dungeon dungeon){
+    public static Map deepClone(Map map){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(dungeon);
+            oos.writeObject(map);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (Dungeon) ois.readObject();
+            return (Map) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ArrayList<Dungeon> deepClone(ArrayList<Dungeon> dungeon){
+    public static ArrayList<Map> deepClone(ArrayList<Map> map){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(dungeon);
+            oos.writeObject(map);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (ArrayList<Dungeon>) ois.readObject();
+            return (ArrayList<Map>) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;

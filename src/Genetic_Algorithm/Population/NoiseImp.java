@@ -1,6 +1,6 @@
 package Genetic_Algorithm.Population;
 
-import Dungeon.Dungeon;
+import Map.Map;
 
 import java.util.ArrayList;
 
@@ -13,5 +13,5 @@ public interface NoiseImp {
      * @param odds
      * @return
      */
-    ArrayList<Dungeon> createNoise(int width, int height, int numberOfMaps, double odds);
+    ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds);
 }

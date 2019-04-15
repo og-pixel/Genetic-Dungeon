@@ -1,6 +1,6 @@
 package Genetic_Algorithm.Premutation;
 
-import Dungeon.Dungeon;
+import Map.Map;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,10 +8,10 @@ import java.util.Random;
 public enum PremutationEnum implements PremutationImp{
     SWAP{
         @Override
-        public void premutateDungeon(Dungeon dungeon){
+        public void premutateDungeon(Map map){
             Random random = new Random();
-            int dungeonHeight = dungeon.getDungeonHeight();
-            int dungeonWidth = dungeon.getDungeonWidth();
+            int dungeonHeight = map.getMapHeight();
+            int dungeonWidth = map.getMapWidth();
             int x1;
             int y1;
             int x2;
@@ -25,18 +25,18 @@ public enum PremutationEnum implements PremutationImp{
                 y2 = random.nextInt(dungeonHeight);
             }while (x1 != x2 || y1 != y2);
 
-            if(!dungeon.getDungeonMatrix().swapElements(x1, y1, x2, y2)) System.out.println("Error");;
+            if(!map.getMapMatrix().swapElements(x1, y1, x2, y2)) System.out.println("Error");;
         }
     },
     SCRAMBLE{
         @Override
-        public void premutateDungeon(Dungeon dungeon) {
+        public void premutateDungeon(Map map) {
 
         }
     },
     INVERSION{
         @Override
-        public void premutateDungeon(Dungeon dungeon) {
+        public void premutateDungeon(Map map) {
 
         }
     };
@@ -44,9 +44,9 @@ public enum PremutationEnum implements PremutationImp{
 
     //Just run the same method for the whole arry
     @Override
-    public void premutateDungeons(ArrayList<Dungeon> dungeonList) {
-        for (Dungeon dungeon : dungeonList) {
-            premutateDungeon(dungeon);
+    public void premutateDungeons(ArrayList<Map> mapList) {
+        for (Map map : mapList) {
+            premutateDungeon(map);
         }
     }
 }

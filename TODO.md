@@ -4,7 +4,7 @@
 - [ ] Create some sort of "menu" where  I can directly control app better (but still by arguments only)
 - [ ] Try to create basic manual corection where we look for rooms of certain size (square stuff or summin)
 - [ ] Try to split program into making rooms only
-- [ ] Create one map by hand (that looks like dungeon) and run this one as controlled environment
+- [ ] Create one map by hand (that looks like map) and run this one as controlled environment
 (also to check whenever I can get something ***Interesting*** out of already made maps)
 - [ ] In report mention, problems with good evaluation
 - [ ]
@@ -17,7 +17,7 @@
 - [ ] one fixed point (rolletue wheel)
 - [ ] two fixed points (Stochastic Universal Sampling)
 - [ ] Tournament k (choose random k, elements, get best)
-- [ ] Rank Selection (no fitness score, but choose more likely based on rank)
+- [ ] Rank Selection (no fitness fitnessScore, but choose more likely based on rank)
 - [ x ] Create implementation of all 4
 
 - [ ] population size should be kept small as it slows down GA significantly, however a trial and error is needed to determinate the smallest possible size that still works

@@ -1,26 +1,28 @@
 package Genetic_Algorithm.Fitness;
 
-import Dungeon.Dungeon;
+import Map.Map;
 
 /**
- * Interface defines what a fitness function needs to run it?
+ * Interface defines what a fitness function needs to run
  */
 public interface FitnessImp {
     /**
-     * @param dungeon dungeon map
+     * Evaluate map based on some arbitrary rule (for example give a full score a map that is fully traversable)
+     * @param map map to be evaluated
      * @return score that the map achieved
      */
-    double evaluateDungeon(Dungeon dungeon);
-
+    //TODO for the time being i have made it void as it never uses the return value anyway
+    // i set it manually from map
+    void evaluateMap(Map map);
 
     /**
      * Each fitness function needs to have a way to evaluate each individual
-     * However if program takes too much times, it should run an approximtion that should be
+     * However if program takes too much times, it should run an approximation that should be
      * much faster version of the same (just lest accurate)
      * TODO I am not 100% sure if I will need it tho
-     * @param dungeon
-     * @return
+     * @param map map to be evaluated
+     * @return score that the map achieved, it might be not accurate, but fast
      */
-    double evaluateDungeonCheap(Dungeon dungeon);
+    void evaluateMapCheap(Map map);
 }
 

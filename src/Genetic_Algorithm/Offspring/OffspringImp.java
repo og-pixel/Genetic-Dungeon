@@ -1,9 +1,9 @@
 package Genetic_Algorithm.Offspring;
 
-import Dungeon.Dungeon;
+import Map.Map;
 
 import java.util.ArrayList;
 
 public interface OffspringImp {
-    ArrayList<Dungeon> createNewGeneration(ArrayList<Dungeon> list, double popSize, double topPop);
+    ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop);
 }

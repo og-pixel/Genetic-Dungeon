@@ -2,34 +2,25 @@ package Genetic_Algorithm.Fitness;
 
 import Algorithms.Algorithms;
 import Algorithms.Matrix;
-import Dungeon.*;
+import Map.*;
 
 import java.util.ArrayList;
-//TODO here visit map 1 means visited and 0 means not visited, need to display it better
 public enum FitnessEnum implements FitnessImp, TileList {
     IS_TRAVERSABLE(1) {
-
-
         @Override
-        public double evaluateDungeon(Dungeon dungeon) {
-            //TODO duh...
-
-
-            return -1;
+        public void evaluateMap(Map map) {
         }
 
         @Override
-        public double evaluateDungeonCheap(Dungeon dungeon) {
-            return 0;
+        public void evaluateMapCheap(Map map) {
         }
-
-
     },
     FIND_ALL_ROOMS(0.7) {
+        //TODO I need to work on how visit map works
         @Override
-        public double evaluateDungeon(Dungeon dungeon) {
-            int dungeonWidth = dungeon.getDungeonWidth();
-            int dungeonHeight = dungeon.getDungeonHeight();
+        public void evaluateMap(Map map) {
+            int dungeonWidth = map.getMapWidth();
+            int dungeonHeight = map.getMapHeight();
 
             int roomSize = 0;
             int numberOfRooms = 0;
@@ -52,13 +43,12 @@ public enum FitnessEnum implements FitnessImp, TileList {
                             }
                         }
                     }
-
-                    if (!(dungeon.getDungeonMatrix().getElement(x, y) == CORRIDOR)) {
+                    if (!(map.getMapMatrix().getElement(x, y) == CORRIDOR)) {
                         alreadyVisited = true;
                     }
 
                     if (!alreadyVisited) {
-                        visitMap = Algorithms.floodFill(dungeon, x, y);
+                        visitMap = Algorithms.floodFill(map, x, y);
                         listOfRooms.add(visitMap);
 
                         numberOfRooms++;
@@ -67,9 +57,6 @@ public enum FitnessEnum implements FitnessImp, TileList {
                 }
             }
 
-//            dungeon.setScore((numberOfRooms * 20) + wallCount); //todo this way i set score so far
-            //TODO Return between 0 and 100 (0.0 to 1.0)
-            //TODO for now I will only try to encourage creating multiple small rooms
 
             wallCount = (dungeonWidth * dungeonHeight) - roomSize;
             double roomAverage = (double) roomSize / numberOfRooms;
@@ -78,27 +65,24 @@ public enum FitnessEnum implements FitnessImp, TileList {
 
             double distance = roomSize - wallCount;
             if(numberOfRooms < 1)numberOfRooms = 1;
-            //TODo i want it strike balance 50/50 by this calculation, so the biggerst score would be if these values were closest to each other
+
             double score = (distance / numberOfRooms); //More rooms * thier room size
 
-
-            dungeon.setNumberOfRooms(numberOfRooms);
+            //Cleanup, save information to the map
+            map.setNumberOfRooms(numberOfRooms);
 
             //TODO for now I had to make so score cannot be negative
-            if(score > 0)dungeon.setScore(score);
-            else dungeon.setScore(score);
+            //TODO Return between 0 and 100 (0.0 to 1.0)
+            //TODO for now I will only try to encourage creating multiple small rooms
+            if(score > 0) map.setFitnessScore(score);
+            else map.setFitnessScore(score);
 
-
-            ///CLEANUP
-            //TODO here i will save dungeon stats //            dungeon.setNumberOfRooms(numberOfRooms);
-
-            //TODO return is not used
-            return -10;
+            //TODO here i will save map stats //            map.setNumberOfRooms(numberOfRooms);
         }
 
         @Override
-        public double evaluateDungeonCheap(Dungeon dungeon) {
-            return 0;
+        public void evaluateMapCheap(Map map) {
+
         }
 
         private int countVisited(Matrix visitMap) {
@@ -121,6 +105,4 @@ public enum FitnessEnum implements FitnessImp, TileList {
     FitnessEnum(){
         this.strength = -1;//TODO if its irrelevant, I'll just make it negative, but it might be necessary for all of them anyway
     }
-
-
 }

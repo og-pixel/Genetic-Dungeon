@@ -2,13 +2,14 @@ package Genetic_Algorithm.ManualCorrections;
 
 import Algorithms.Algorithms;
 import Algorithms.Matrix;
-import Dungeon.*;
+import Map.*;
 
 public enum CorrectionEnum implements CorrectionImp, TileList {
+    //Silly and not working right atm
     FIND_HOLES{
         @Override
-        public void correct(Dungeon dungeon) {
-            Matrix matrix = dungeon.getDungeonMatrix();
+        public void correct(Map map) {
+            Matrix matrix = map.getMapMatrix();
 
             for (int y = 0; y < matrix.getHeight(); y++) {
                 for (int x = 0; x < matrix.getWidth(); x++) {
@@ -26,27 +27,25 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
     },
     FIND_ROOM{
         @Override
-        public void correct(Dungeon dungeon) {
-             Matrix matrix = dungeon.getDungeonMatrix();
-             Matrix mutationMap = dungeon.getMutationMap();
+        public void correct(Map map) {
+             Matrix matrix = map.getMapMatrix();
 
              //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
             Matrix room = new Matrix(5,5);
-            room.replaceRow(0, new long[]{WALL, WALL, WALL, WALL, WALL});
+            room.replaceRow(0, new long[]{UNIVERSAL, WALL, UNIVERSAL, WALL, UNIVERSAL});
             room.replaceRow(1, new long[]{WALL, CORRIDOR, CORRIDOR, CORRIDOR, WALL});
-            room.replaceRow(2, new long[]{WALL, CORRIDOR, CORRIDOR, CORRIDOR, CORRIDOR});
+            room.replaceRow(2, new long[]{UNIVERSAL, CORRIDOR, CORRIDOR, CORRIDOR, UNIVERSAL});
             room.replaceRow(3, new long[]{WALL, CORRIDOR, CORRIDOR, CORRIDOR, WALL});
-            room.replaceRow(4, new long[]{WALL, WALL, CORRIDOR, WALL, WALL});
+            room.replaceRow(4, new long[]{UNIVERSAL, WALL, UNIVERSAL, WALL, UNIVERSAL});
 
-            Matrix cutMatrix = null;
+            Matrix cutMatrix;
             for (int y = 0; y < matrix.getHeight() - room.getHeight(); y = y + room.getHeight()) {
                 for (int x = 0; x < matrix.getWidth() - room.getWidth(); x = x + room.getWidth()) {
                     cutMatrix = matrix.cutMatrix(x, y, room.getWidth(), room.getHeight());
-                    if(Algorithms.getHammingDistance(cutMatrix, room) <= 0){
-                        dungeon.setScore(dungeon.getScore() + room.getVolume());
-                        dungeon.setCorrectionsFound(dungeon.getCorrectionsFound() + 1);
-                        dungeon.setMutationMap(mutationMap);
+                    if(Algorithms.getHammingDistance(room, cutMatrix) <= 0){
+                        map.setFitnessScore(map.getFitnessScore() + room.getVolume());
+                        map.setCorrectionsFound(map.getCorrectionsFound() + 1);
                     }
                 }
             }

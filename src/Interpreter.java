@@ -1,10 +1,10 @@
 import Algorithms.*;
 import Algorithms.CA.*;
-import Dungeon.Dungeon;
+import Map.Map;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
-import Genetic_Algorithm.Data.EvolutionDetails;
+import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
@@ -15,13 +15,8 @@ import Genetic_Algorithm.Population.NoiseImp;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Basic Interpreter is used for demonstrations of the entire project
@@ -29,43 +24,72 @@ import java.util.logging.SimpleFormatter;
  */
 public class Interpreter {
 
-    private static final Logger LOGGER = Logger.getLogger(Interpreter.class.getName());
+    //TODO get rid of minus symbol later
+    private final String CREATE_I = "c";
+    private final String HELP_I = "h";
+    private final String VERBOSE_I = "v";
 
-    private final String CREATE = "-c";
-    private final String HELP = "-h";
+    private final String[] commandList = new String[]{
+            CREATE_I, HELP_I, VERBOSE_I};
 
-    private final String HELPz = "Usage: GA-Main [options]";
-    private final String OPTION = "Options: ";
-    private final String OPTION1 = "-c\t\tCreate map evaluation";
-    private final String OPTION2 = "todo";
-    private final String OPTION3 = "todo";
-    private final String OPTION4 = "todo";
-    private final String OPTION5 = "todo";
+    //Some data to display for user
+    private final String OPTION = "\nUsage: GMaps [options]" +
+            "\nOptions: " +
+            "\n-" + CREATE_I + "\t\tCreate map evaluation" +
+            "\n-" + VERBOSE_I + "\t\tVerbose output ()" +
+            "\n-" + HELP_I + "\t\tDisplay this list";
 
-    private final String README = "Examples:\n-c 10 20 15 10 During 20 generations, create 10 maps of size 15 by 10 each\n" +
-            "-c 1 10 150 100 During 10 generations, create 1 map of size 150 by 100 each";
+
+    private final String README = "\nExamples:" +
+            "\n-c 10 20 15 10\t\tDuring 20 generations, create 10 maps of size 15 by 10 each" +
+            "\n-c 1 10 150 100\t\tDuring 10 generations, create 1 map of size 150 by 100 each";
 
 
     //A whole generation of maps
-    private ArrayList<Dungeon> generationOfMaps;
+    private ArrayList<Map> generationOfMaps;
 
+    //Our Fitness implementations, we need at least one way
+    // to evaluate a map
     private ArrayList<FitnessImp> fitnessImpList;
+
+    //Noise Implementation, needed at the start
+    // if maps start random
     private NoiseImp noiseImp;
-    private AbstractChromosomeEvaluation chromosomeEvaluationImp;
+
+    //Cellular Automate is an outside factor to
+    // scramble a map to look like a "cave"
+    // used in Evolving Cellular Automate (ECA)
     private CellularAutomateImp cellularAutomateImp;
 
-    //Results after running program
-    private EvolutionDetails evolutionDetails;
+    //Chromosome evaluation takes all elements of fitness, etc TODO ELABORATE
+    // and scores todo i might describe it wrong
+    private AbstractChromosomeEvaluation chromosomeEvaluationImp;
 
+    //Results after running program
+    //It holds all data made during the process
+    // (All individuals and all generations)
+    private EvolutionResults evolutionResults;
+
+    //Used when parsing arguments parsing
     private int populationSize;
     private int numberOfGenerations;
     private int dungeonWidth;
     private int dungeonHeight;
 
-    public Interpreter(String... args){
-        LOGGER.setLevel(Level.WARNING);
-        setFileHandler();
+    //TODO I might want to add flags
+    private boolean verbose = false;
+    /**
+     * Constructor
+     * Takes all string arguments meant to describe
+     * how to generate maps and interprets them
+     */
+    Interpreter(String... args){
+        interpretArguments(args);
+    }
 
+
+    //TODO look into the order and make sure it looks nice
+    private void interpretArguments(String... args){
         if(args.length <= 0){
             displayHelp();
             System.exit(1);
@@ -77,14 +101,8 @@ public class Interpreter {
         dungeonHeight = Integer.parseInt(args[4]);
 
         fitnessImpList = new ArrayList<>();
-
         generationOfMaps = new ArrayList<>();
 
-        interpretArguments();
-    }
-
-
-    private void interpretArguments(){
         //Measure time
         float timeNow = System.nanoTime();
 
@@ -101,11 +119,11 @@ public class Interpreter {
         addChromosomeEvaluationStrategy("basic");
 
         evaluateMaps();
-        evolutionDetails.saveResults();
-        LOGGER.log(Level.INFO, "Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
+        evolutionResults.saveResults();
+        System.out.println("Finished after: " + ((System.nanoTime() - timeNow) / 1000000000) + " seconds");
 
         try {
-            Algorithms.writeToFile("BEST", evolutionDetails.findBest());
+            Algorithms.writeToFile("BEST", evolutionResults.findBest());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,15 +135,13 @@ public class Interpreter {
         switch(choice){
             case "basic":
                 chromosomeEvaluationImp = new MeasureTimeChromosomeEvaluation(
-                        new BasicChromosomeEvaluation(0.1, populationSize, generationOfMaps, fitnessImpList,
-                numberOfGenerations, MutationsEnum.DEFAULT, SelectionEnum.Tournament, PremutationEnum.SWAP,
+                        new BasicChromosomeEvaluation(0.1, populationSize, numberOfGenerations, generationOfMaps, fitnessImpList,
+                                MutationsEnum.DEFAULT, SelectionEnum.Tournament, PremutationEnum.SWAP,
                 CorrectionEnum.FIND_ROOM, OffspringEnum.DEFAULT));
                 return true;
             default:
                 return false;
         }
-
-
     }
 
 
@@ -175,52 +191,22 @@ public class Interpreter {
     }
 
     private boolean caMaps(){
-        //Run Cellurar Automata
+        //Run Cellular Automate
         for (int i = 0; i < generationOfMaps.size(); i++) {
-            Matrix k = cellularAutomateImp.generateMap(generationOfMaps.get(i).getDungeonMatrix());
-            Dungeon kk = new Dungeon(k);
+            Matrix k = cellularAutomateImp.generateMap(generationOfMaps.get(i).getMapMatrix());
+            Map kk = new Map(k);
             generationOfMaps.set(i, kk);
         }
         return true;
     }
 
     private boolean evaluateMaps(){
-        evolutionDetails = chromosomeEvaluationImp.crossoverPopulation();
-
-        return true;
-    }
-
-
-    //TODO better description
-    //Create a file handler
-    private boolean setFileHandler(){
-        File serverDirectory = new File("Logs/");
-
-        //todo this makes a folder
-        serverDirectory.mkdir();
-
-        // This block configure the logger with handler and formatter
-
-        FileHandler fh;
-        int numberOfFiles = new File("Logs/").listFiles().length;
-        try {
-            fh = new FileHandler("Logs/" + "log_" + numberOfFiles + ".log");
-        } catch (IOException e) {
-            LOGGER.warning("Couldn't create log file!\n" + e.getMessage());
-            return false;
-        }
-        LOGGER.addHandler(fh);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        LOGGER.info("Created a log file ");
-
+        evolutionResults = chromosomeEvaluationImp.crossoverPopulation();
         return true;
     }
 
     private void displayHelp(){
-        System.out.println(HELPz);
-        System.out.println("\n" + OPTION);
-        System.out.println(OPTION1);
-        System.out.println("\n" + README);
+        System.out.println(OPTION);
+        System.out.println(README);
     }
 }

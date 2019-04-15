@@ -1,6 +1,6 @@
 package Algorithms;
 
-import Dungeon.TileList;
+import Map.TileList;
 import Exceptions.MatrixTooSmallException;
 
 import java.io.Serializable;

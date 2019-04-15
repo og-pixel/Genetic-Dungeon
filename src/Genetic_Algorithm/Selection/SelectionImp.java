@@ -1,8 +1,9 @@
 package Genetic_Algorithm.Selection;
 
-import Dungeon.Dungeon;
+import Map.Map;
+
 import java.util.ArrayList;
 
 public interface SelectionImp {
-    ArrayList<Dungeon> selectFitIndividuals(ArrayList<Dungeon> dungeon);
+    ArrayList<Map> selectFitIndividuals(ArrayList<Map> map);
 }
