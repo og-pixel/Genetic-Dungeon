@@ -6,7 +6,7 @@ import Map.*;
 
 public enum CorrectionEnum implements CorrectionImp, TileList {
     //Silly and not working right atm
-    FIND_HOLES{
+    FIND_HOLES("find_holes"){
         @Override
         public void correct(Map map) {
             Matrix matrix = map.getMapMatrix();
@@ -25,7 +25,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             }
         }
     },
-    FIND_ROOM{
+    FIND_ROOM("find_room"){
         @Override
         public void correct(Map map) {
              Matrix matrix = map.getMapMatrix();
@@ -50,5 +50,12 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
                 }
             }
         }
+    };
+    CorrectionEnum(String implementationName){
+        this.implementationName = implementationName;
+    }
+    private String implementationName;
+    public String getImplementationName() {
+        return implementationName;
     }
 }

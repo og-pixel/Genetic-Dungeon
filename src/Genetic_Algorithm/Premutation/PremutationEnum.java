@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum PremutationEnum implements PremutationImp{
-    SWAP{
+    SWAP("swap"){
         @Override
         public void premutateDungeon(Map map){
             Random random = new Random();
@@ -28,13 +28,13 @@ public enum PremutationEnum implements PremutationImp{
             if(!map.getMapMatrix().swapElements(x1, y1, x2, y2)) System.out.println("Error");;
         }
     },
-    SCRAMBLE{
+    SCRAMBLE("scramble"){
         @Override
         public void premutateDungeon(Map map) {
 
         }
     },
-    INVERSION{
+    INVERSION("inversion"){
         @Override
         public void premutateDungeon(Map map) {
 
@@ -48,5 +48,12 @@ public enum PremutationEnum implements PremutationImp{
         for (Map map : mapList) {
             premutateDungeon(map);
         }
+    };
+    PremutationEnum(String implementationName){
+        this.implementationName = implementationName;
+    }
+    private String implementationName;
+    public String getImplementationName() {
+        return implementationName;
     }
 }

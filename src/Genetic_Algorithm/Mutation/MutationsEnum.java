@@ -8,14 +8,19 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum MutationsEnum implements MutatorImp, TileList{
-    DEFAULT(0.01),
-    SLIGHT(0.006),
-    LOW(0.005),
-    LOWER(0.002);
+    DEFAULT("default", 0.01),
+    LOW("low",0.007),
+    LOWER("lower",0.005),
+    LOWEST("lowest",0.003);
 
     private final double odds;
-    MutationsEnum(double odds) {
+    private String implementationName;
+    MutationsEnum(String implementationName, double odds) {
+        this.implementationName = implementationName;
         this.odds = odds;
+    }
+    public String getImplementationName() {
+        return implementationName;
     }
 
     @Override

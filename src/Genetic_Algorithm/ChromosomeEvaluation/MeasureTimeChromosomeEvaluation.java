@@ -1,6 +1,9 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Genetic_Algorithm.Data.EvolutionResults;
+import Map.Map;
+
+import java.util.ArrayList;
 
 //This wrapper adds functionality to how much time it took
 public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluation {
@@ -13,9 +16,9 @@ public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluati
     }
 
     @Override
-    public EvolutionResults crossoverPopulation() {
+    public EvolutionResults crossoverPopulation(ArrayList<Map> mapList) {
         long startTime = System.nanoTime();
-        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation();
+        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(mapList);
         System.out.println("It took:" + ((System.nanoTime() - startTime) / 1000000000) + "seconds");
         return k;
     }

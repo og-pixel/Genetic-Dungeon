@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum NoiseEnum implements NoiseImp, TileList{
-    FILL {//TODO only problem with this implementation is that odds are in function, gotta move it to enum "constructor"
+    FILL("fill"){//TODO only problem with this implementation is that odds are in function, gotta move it to enum "constructor"
         @Override
         public ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds) {
             ArrayList<Map> mapList = new ArrayList<>();
@@ -23,7 +23,7 @@ public enum NoiseEnum implements NoiseImp, TileList{
             return mapList;
         }
     },
-    NOISE {
+    NOISE("noise"){
         @Override
         public ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds) {
             if (odds < 0.1 || odds > 1) throw new VariableBoundsException(0.1, 1.0); //TOOD i am not sure if i need that
@@ -47,5 +47,12 @@ public enum NoiseEnum implements NoiseImp, TileList{
             }
             return mapList;
         }
+    };
+    NoiseEnum(String implementationName){
+        this.implementationName = implementationName;
+    }
+    private String implementationName;
+    public String getImplementationName() {
+        return implementationName;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public enum OffspringEnum implements OffspringImp {
     //TODO make sure offspring is copying right
-    DEFAULT{
+    DEFAULT("default"){
         @Override
         public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop) {
             Random random = new Random();
@@ -57,11 +57,17 @@ public enum OffspringEnum implements OffspringImp {
             return newPopulation;
         }
     },
-    DASD{
+    DASD("to_change"){
         @Override
         public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop) {
             return null;
         }
     };
-
+    OffspringEnum(String implementationName){
+       this.implementationName = implementationName;
+    }
+    private String implementationName;
+    public String getImplementationName(){
+        return implementationName;
+    }
 }

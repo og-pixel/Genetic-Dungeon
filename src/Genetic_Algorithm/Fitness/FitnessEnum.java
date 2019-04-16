@@ -2,11 +2,12 @@ package Genetic_Algorithm.Fitness;
 
 import Algorithms.Algorithms;
 import Algorithms.Matrix;
+import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
 import Map.*;
 
 import java.util.ArrayList;
 public enum FitnessEnum implements FitnessImp, TileList {
-    IS_TRAVERSABLE(1) {
+    IS_TRAVERSABLE("is_traversable", 1) {
         @Override
         public void evaluateMap(Map map) {
         }
@@ -15,7 +16,7 @@ public enum FitnessEnum implements FitnessImp, TileList {
         public void evaluateMapCheap(Map map) {
         }
     },
-    FIND_ALL_ROOMS(0.7) {
+    FIND_ALL_ROOMS("find_all_rooms",0.7) {
         //TODO I need to work on how visit map works
         @Override
         public void evaluateMap(Map map) {
@@ -95,14 +96,13 @@ public enum FitnessEnum implements FitnessImp, TileList {
             return counter;
         }
     };
-
-    private final double strength;
-
-    FitnessEnum(double strength) {
+    FitnessEnum(String implementationName, double strength) {
+        this.implementationName = implementationName;
         this.strength = strength;
     }
-
-    FitnessEnum(){
-        this.strength = -1;//TODO if its irrelevant, I'll just make it negative, but it might be necessary for all of them anyway
+    private final String implementationName;
+    private final double strength;
+    public String getImplementationName(){
+        return implementationName;
     }
 }

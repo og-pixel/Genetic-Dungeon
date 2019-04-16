@@ -8,7 +8,8 @@ import java.util.Comparator;
 import java.util.Random;
 
 public enum SelectionEnum implements SelectionImp {
-    ELITE{
+    ELITE("elite"){
+
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
 
@@ -22,7 +23,7 @@ public enum SelectionEnum implements SelectionImp {
             return list;
         }
     },
-    ROULETTE{
+    ROULETTE("roulette"){
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
             //TODO i dont like limit variable
@@ -55,14 +56,14 @@ public enum SelectionEnum implements SelectionImp {
         }
     },
     //TODO its stochastic universal sampling
-    StochasticTwo{
+    StochasticTwo("stochastic_two"){
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
 
             return null;
         }
     },
-    TOURNAMENT{
+    TOURNAMENT("tournament"){
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
             //TODO i dont like limit variable
@@ -89,11 +90,18 @@ public enum SelectionEnum implements SelectionImp {
             return selectedList;
         }
     },
-    RANK{
+    RANK("rank"){
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
 
             return null;
         }
-    },
+    };
+    SelectionEnum(String implementationName){
+        this.implementationName = implementationName;
+    }
+    private String implementationName;
+    public String getImplementationName() {
+        return implementationName;
+    }
 }

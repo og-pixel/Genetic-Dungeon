@@ -19,7 +19,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private double TOP_POP;
     private double POP_SIZE;
 
-    private ArrayList<Map> mapList;
+//    private ArrayList<Map> mapList;
     private ArrayList<FitnessImp> fitnessImpList;
     private int numberOfGenerations;
     private MutatorImp mutation;
@@ -29,7 +29,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private OffspringImp offspring;
 
     public BasicChromosomeEvaluation(double topPopulation, double populationSize, int numberOfGenerations,
-                                     ArrayList<Map> mapList,
                                      ArrayList<FitnessImp> fitnessImpList,
                                      MutatorImp mutation, SelectionImp selection, PremutationImp premutation,
                                      CorrectionImp correction, OffspringImp offspring){
@@ -48,7 +47,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
 
         //TODO consctreuctor now can determinate whenever yoou can use the method or not (it can have methods to complete what's missing)
-        this.mapList = mapList;
         this.fitnessImpList = fitnessImpList;
         this.numberOfGenerations = numberOfGenerations;
         this.mutation = mutation;
@@ -59,7 +57,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     }
 
     @Override
-    public EvolutionResults crossoverPopulation() {
+    public EvolutionResults crossoverPopulation(ArrayList<Map> mapList) {
 
         //Setup Phase
         ArrayList<Map> newPopulation;
@@ -78,7 +76,9 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             }
 
             //Correct Maps
-            for (Map map : mapList) correction.correct(map);
+
+            //TODO make better error checking in interpeter
+            if(correction != null)for (Map map : mapList) correction.correct(map);
 
             //Selection
             mapList = selection.selectFitIndividuals(mapList);

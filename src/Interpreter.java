@@ -8,7 +8,6 @@ import Genetic_Algorithm.Selection.SelectionImp;
 import Map.Map;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
-import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
@@ -21,6 +20,9 @@ import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,6 +47,7 @@ public class Interpreter {
     private final String CORRECTION_I = "-r";
     private final String NOISE_I = "-n";
     private final String SELECTION_I = "-s";
+    private final String OFFSPRING_I = "-o";
 
     private final String[] commandList = new String[]{
             CREATE_I, LOAD_I, HELP_I, VERBOSE_I, FITNESS_I, MUTATOR_I,
@@ -65,9 +68,10 @@ public class Interpreter {
             "\n" + NOISE_I + " [NAME]\t\t\tAdd [NOISE] Function" +
             "\n" + CA_I + " [NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
             "\n" + PREMUTATOR_I + " [NAME]\t\t\tAdd [PREMUTATION] Function" +
-            "\n" + CORRECTION_I + " [NAME]\t\t\tAdd [CORRECTION] function" +
+            "\n" + CORRECTION_I + " [NAME]\t\t\tAdd [CORRECTION] Function" +
+            "\n" + OFFSPRING_I + " [NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_I + "\t\t\t\t\tVerbose output" +
-            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [MUTATOR] [CHROMOSOME EVALUATION]" +
+            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
             "\n If you are creating maps, you need to add [NOISE]" +
             "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
             "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
@@ -76,6 +80,7 @@ public class Interpreter {
             "\n-c -f=find_all_rooms -s=elite -e=find_all_rooms  10 20 15 10\t\tDuring 20 generations, create 10 maps of size 15 by 10 each" +
             "\n-l /home/user/folder/ 1 10 150 100\t\tDuring 10 generations, create 1 map of size 150 by 100 each";
 
+    private String AVAILABLE_OPTIONS = "";
 
     //TODO this should have a list of all stategy pattern functions
     // that I have written (all mutators, all noise generators
@@ -86,22 +91,22 @@ public class Interpreter {
 
     //Our Fitness implementations, we need at least one way
     // to evaluate a map
-    private ArrayList<FitnessImp> fitnessImpList;
+    private ArrayList<FitnessImp> fitnessList;
 
     private SelectionImp selection;
     private MutatorImp mutator;
     //Chromosome evaluation takes all elements of fitness, etc TODO ELABORATE
     // and scores todo i might describe it wrong
-    private AbstractChromosomeEvaluation chromosomeEvaluationImp;
+    private AbstractChromosomeEvaluation chromosomeEvaluation;
     //Noise Implementation, needed at the start
     // if maps start random
-    private NoiseImp noiseImp;
+    private NoiseImp noise;
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
     private CellularAutomateImp cellularAutomateImp;
     //TODO premutations aren't really useful
-    private PremutationImp premtation;
+    private PremutationImp premutation;
     //TODO corrections aren't useful FOR NOW
     // I am trying to force looking for shapes and
     // patterns
@@ -113,7 +118,7 @@ public class Interpreter {
     // (All individuals and all generations)
     private EvolutionResults evolutionResults;
 
-    //Used when parsing arguments parsing
+    //Used when parsing arguments
     private int populationSize;
     private int numberOfGenerations;
     private int dungeonWidth;
@@ -128,7 +133,7 @@ public class Interpreter {
      * how to generate maps and interprets them
      */
     Interpreter(String... args) {
-        fitnessImpList = new ArrayList<>();
+        fitnessList = new ArrayList<>();
         generationOfMaps = new ArrayList<>();
         interpretArguments(args);
     }
@@ -140,7 +145,6 @@ public class Interpreter {
             displayHelp();
             System.exit(1);
         }
-
 
 //        for (int i = 0; i < args.length; i++) {
         switch (args[0]) {
@@ -173,7 +177,7 @@ public class Interpreter {
 
         //Preparation, either create maps from noise or load some
         if(args[0].equals(CREATE_I)) {
-            if (noiseImp == null)System.exit(1);//todo change to throw exception
+            if (noise == null)System.exit(1);//todo change to throw exception
             else{
                 noiseMaps();
             }
@@ -194,8 +198,12 @@ public class Interpreter {
 //        //Add Evaluation Strategy, for now there is only basic
 //        addChromosomeEvaluationStrategy("basic");
 
-        evaluateMaps();
-        evolutionResults.saveResults();
+        chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize, numberOfGenerations,
+                fitnessList, mutator, selection, premutation, correction, offspring);
+
+
+        evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
+        evolutionResults.saveAllResults();
 
         try {
             Algorithms.writeToFile("BEST", evolutionResults.findBest());
@@ -235,6 +243,9 @@ public class Interpreter {
             case SELECTION_I:
                 addSelectionStrategy(args[i + 1]);
                 break;
+            case OFFSPRING_I:
+                addOffspringStrategy(args[i + 1]);
+            break;
             default:
                 break;
         }
@@ -246,8 +257,8 @@ public class Interpreter {
 
         switch (choice) {
             case "basic":
-                chromosomeEvaluationImp = new BasicChromosomeEvaluation(0.1, populationSize,
-                        numberOfGenerations, generationOfMaps, fitnessImpList, mutator, selection, premtation,
+                chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize,
+                        numberOfGenerations, fitnessList, mutator, selection, premutation,
                         correction, offspring);
                 return true;
             default:
@@ -261,10 +272,10 @@ public class Interpreter {
 
         switch (choice) {
             case "noise":
-                noiseImp = NoiseEnum.NOISE;
+                noise = NoiseEnum.NOISE;
                 return true;
             case "fill":
-                noiseImp = NoiseEnum.FILL;
+                noise = NoiseEnum.FILL;
                 return true;
             default:
                 return false;
@@ -276,10 +287,10 @@ public class Interpreter {
 
         switch (choice) {
             case "find_all_rooms":
-                fitnessImpList.add(FitnessEnum.FIND_ALL_ROOMS);
+                fitnessList.add(FitnessEnum.FIND_ALL_ROOMS);
                 return true;
             case "is_traversable":
-                fitnessImpList.add(FitnessEnum.IS_TRAVERSABLE);
+                fitnessList.add(FitnessEnum.IS_TRAVERSABLE);
             default:
                 return false;
         }
@@ -303,7 +314,7 @@ public class Interpreter {
 
         switch (choice) {
             case "swap":
-                premtation = PremutationEnum.SWAP;
+                premutation = PremutationEnum.SWAP;
                 return true;
             default:
                 return false;
@@ -344,33 +355,40 @@ public class Interpreter {
     private boolean addOffspringStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
-        switch (choice) {
-            case "default"://todo
-                offspring = OffspringEnum.DEFAULT;
-                return true;
-            default:
-                return false;
+        if(choice.equals(OffspringEnum.DEFAULT.getImplementationName())){
+            offspring = OffspringEnum.DEFAULT;
+            return true;
+        }else if(choice.equals(OffspringEnum.DASD.getImplementationName())){
+            offspring = OffspringEnum.DEFAULT;
+            return true;
+        }else{
+            return false;
         }
     }
 
     private boolean addMutatorStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
-        switch (choice) {
-            case "default"://todo
-                mutator = MutationsEnum.DEFAULT;
-                return true;
-            case "low"://todo
-                mutator = MutationsEnum.LOW;
-                return true;
-            default:
-                return false;
+        if(choice.equals(MutationsEnum.DEFAULT.getImplementationName())){
+            mutator = MutationsEnum.DEFAULT;
+            return true;
+        }else if(choice.equals(MutationsEnum.LOW.getImplementationName())){
+            mutator = MutationsEnum.LOW;
+            return true;
+        }else if(choice.equals(MutationsEnum.LOWER.getImplementationName())){
+            mutator = MutationsEnum.LOWER;
+            return true;
+        }else if(choice.equals(MutationsEnum.LOWEST.getImplementationName())){
+            mutator = MutationsEnum.LOWEST;
+            return true;
+        }else{
+            return false;
         }
     }
 
     private boolean noiseMaps() {
         //Create Noise for maps
-        generationOfMaps = noiseImp.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.6);
+        generationOfMaps = noise.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
         return true;
     }
 
@@ -384,14 +402,42 @@ public class Interpreter {
         return true;
     }
 
-    private boolean evaluateMaps() {
-        evolutionResults = chromosomeEvaluationImp.crossoverPopulation();
-        return true;
-    }
-
     private void displayHelp() {
-        System.out.println(OPTION);
-        System.out.println(ALL_FEATURES);
-        System.out.println(README);
+        AVAILABLE_OPTIONS =
+                "\nAvailable [OPTIONS]:\n" +
+                        "\nFitness:" +
+        "\n\t" + FitnessEnum.FIND_ALL_ROOMS.getImplementationName() +
+        "\n\t" + FitnessEnum.IS_TRAVERSABLE.getImplementationName() +
+
+                        "\nCorrections:" +
+       "\n\t" + CorrectionEnum.FIND_ROOM.getImplementationName() +
+       "\n\t" + CorrectionEnum.FIND_HOLES.getImplementationName() +
+
+                        "\nMutations:" +
+       "\n\t" + MutationsEnum.DEFAULT.getImplementationName() +
+       "\n\t" + MutationsEnum.LOW.getImplementationName() +
+       "\n\t" + MutationsEnum.LOWER.getImplementationName() +
+       "\n\t" + MutationsEnum.LOWEST.getImplementationName() +
+
+                        "\nPopulation Noise:" +
+       "\n\t" + NoiseEnum.FILL.getImplementationName() +
+       "\n\t" + NoiseEnum.NOISE.getImplementationName() +
+
+                        "\nPremutation:" +
+       "\n\t" + PremutationEnum.SWAP.getImplementationName() +
+       "\n\t" + PremutationEnum.INVERSION.getImplementationName() +
+       "\n\t" + PremutationEnum.SCRAMBLE.getImplementationName() +
+
+                        "\nSelection Method:" +
+       "\n\t" + SelectionEnum.ELITE.getImplementationName() +
+       "\n\t" + SelectionEnum.TOURNAMENT.getImplementationName() +
+       "\n\t" + SelectionEnum.ROULETTE.getImplementationName() +
+       "\n\t" + SelectionEnum.RANK.getImplementationName() +
+       "\n\t" + SelectionEnum.StochasticTwo.getImplementationName();
+
+       System.out.println(OPTION);
+       System.out.println(ALL_FEATURES);
+       System.out.println(README);
+       System.out.println(AVAILABLE_OPTIONS);
     }
 }

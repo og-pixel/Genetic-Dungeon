@@ -37,6 +37,18 @@ public class EvolutionResults {
         }
     }
 
+    public void saveAllResults(){
+        for (int i = 0; i < generationsList.size(); i++) {
+            for (int j = 0; j < generationsList.get(i).size(); j++) {
+                try {
+                    Algorithms.writeToFile("Row: " + i + " Column: " + j, generationsList.get(i).get(j));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public Map findBest(){
         Map best = generationsList.get(0).get(0);
         for (ArrayList<Map> maps : generationsList) {
