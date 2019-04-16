@@ -17,14 +17,12 @@ public class EvolutionResults {
         generationsList = new ArrayList<>();
     }
 
-    //TODO make sure the return value is used
-    public boolean addGeneration(ArrayList<Map> row){
+    public void addGeneration(ArrayList<Map> row){
         try{
             generationsList.add(row);
         }catch (Exception e){
-            return false;
+            e.printStackTrace();
         }
-        return true;
     }
 
     public void saveResults(){

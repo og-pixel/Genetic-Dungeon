@@ -5,5 +5,5 @@ import Map.Map;
 import java.util.ArrayList;
 
 public interface OffspringImp {
-    ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop);
+    ArrayList<Map> createNewGeneration(ArrayList<Map> list, double populationSize, double selectionFraction);
 }

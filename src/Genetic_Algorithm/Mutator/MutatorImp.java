@@ -1,4 +1,4 @@
-package Genetic_Algorithm.Mutation;
+package Genetic_Algorithm.Mutator;
 
 import Map.Map;
 

@@ -4,7 +4,7 @@ import Map.Map;
 
 import java.util.ArrayList;
 
-public interface NoiseImp {
+public interface PopulationImp {
     /**
      * Creates a base noise used in random map generation
      * @param width

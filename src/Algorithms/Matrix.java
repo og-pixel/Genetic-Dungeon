@@ -64,13 +64,10 @@ public class Matrix implements Serializable, TileList {
         return matrix[row];
     }
 
-    //TODO there was getColumn method to do
-
     public void replaceRow(int row, long[] content) {
         matrix[row] = content;
     }
 
-    //TODO as well as replaceColumn method
 
     /**
      * Swap two elements on the matrix

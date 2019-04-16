@@ -8,5 +8,5 @@ import Map.Map;
  * which would in turn give higher score
  */
 public interface CorrectionImp {
-    void correct(Map map);
+    void correctMap(Map map);
 }

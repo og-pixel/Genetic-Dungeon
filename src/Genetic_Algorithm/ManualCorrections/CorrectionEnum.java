@@ -8,7 +8,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
     //Silly and not working right atm
     FIND_HOLES("find_holes"){
         @Override
-        public void correct(Map map) {
+        public void correctMap(Map map) {
             Matrix matrix = map.getMapMatrix();
 
             for (int y = 0; y < matrix.getHeight(); y++) {
@@ -27,10 +27,10 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
     },
     FIND_ROOM("find_room"){
         @Override
-        public void correct(Map map) {
+        public void correctMap(Map map) {
              Matrix matrix = map.getMapMatrix();
 
-             //TODO rooms need to be a template too
+            //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
             Matrix room = new Matrix(5,5);
             room.replaceRow(0, new long[]{UNIVERSAL, WALL, UNIVERSAL, WALL, UNIVERSAL});

@@ -3,7 +3,6 @@ package Algorithms.CA;
 import Algorithms.Matrix;
 import Map.*;
 
-//http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
 //TODO rule number might be wrong
 public class Rule20CellularAutomate implements CellularAutomateImp, TileList {
     @Override

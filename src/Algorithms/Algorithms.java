@@ -265,9 +265,8 @@ public class Algorithms implements TileList{
     /**
      * Compare two dungeon maps and get a "distance" between them,
      * which is how many elements are actually different between each other
-     * COMPARE ONE TO TWO
-     * @param matrix1 todo should be room
-     * @param matrix2 todo should be cut map
+     * @param matrix1
+     * @param matrix2
      * @return
      */
     public static int getHammingDistance(Matrix matrix1, Matrix matrix2){

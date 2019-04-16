@@ -1,7 +1,7 @@
 import Algorithms.*;
 import Algorithms.CA.*;
 import Genetic_Algorithm.ManualCorrections.CorrectionImp;
-import Genetic_Algorithm.Mutation.MutatorImp;
+import Genetic_Algorithm.Mutator.MutatorImp;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
 import Genetic_Algorithm.Selection.SelectionImp;
@@ -12,17 +12,14 @@ import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
-import Genetic_Algorithm.Mutation.MutationsEnum;
+import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.Offspring.OffspringEnum;
-import Genetic_Algorithm.Population.NoiseEnum;
-import Genetic_Algorithm.Population.NoiseImp;
+import Genetic_Algorithm.Population.PopulationEnum;
+import Genetic_Algorithm.Population.PopulationImp;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -56,11 +53,11 @@ public class Interpreter {
 
     //Some data to display for user
     private final String OPTION = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
-            "\n\nARGUMENT: " +//todo is argument a good word?
+            "\n\n[ARGUMENT]: " +
             "\n" + CREATE_I + " [OPTIONS]... \t\tCreate map evaluation" +
             "\n" + LOAD_I + " [SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
             "\n" + HELP_I + "\t\t\t\t\tDisplay this list" +
-            "\n\nOPTIONS: " +
+            "\n\n[OPTION]: " +
             "\n" + FITNESS_I + " [NAME]\t\t\tAdd [FITNESS] Function" +
             "\n" + SELECTION_I + " [NAME]\t\t\tAdd [SELECTION] Function" +
             "\n" + MUTATOR_I + " [NAME]\t\t\tAdd [MUTATOR] Function" +
@@ -77,10 +74,48 @@ public class Interpreter {
             "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
 
     private final String README = "\nExamples:" +
-            "\n-c -f=find_all_rooms -s=elite -e=find_all_rooms  10 20 15 10\t\tDuring 20 generations, create 10 maps of size 15 by 10 each" +
-            "\n-l /home/user/folder/ 1 10 150 100\t\tDuring 10 generations, create 1 map of size 150 by 100 each";
+            "\njava GMaps -c -n noise -f find_all_rooms -s tournament -o default -m default -a rule20 -p swap -r find_room 100 3000 30 25" +
+            "\n-l /home/user/folder/ 1 10 150 100";
 
-    private String AVAILABLE_OPTIONS = "";
+    private final String AVAILABLE_OPTIONS =
+                "\nAvailable [NAME]:\n" +
+                        "\nFitness:" +
+        "\n\t" + FitnessEnum.FIND_ALL_ROOMS.getImplementationName() +
+        "\n\t" + FitnessEnum.IS_TRAVERSABLE.getImplementationName() +
+
+                        "\nCorrections:" +
+       "\n\t" + CorrectionEnum.FIND_ROOM.getImplementationName() +
+       "\n\t" + CorrectionEnum.FIND_HOLES.getImplementationName() +
+
+                        "\nMutations:" +
+       "\n\t" + MutatorEnum.DEFAULT.getImplementationName() +
+       "\n\t" + MutatorEnum.LOW.getImplementationName() +
+       "\n\t" + MutatorEnum.LOWER.getImplementationName() +
+       "\n\t" + MutatorEnum.LOWEST.getImplementationName() +
+
+                        "\nPopulation Noise:" +
+       "\n\t" + PopulationEnum.FILL.getImplementationName() +
+       "\n\t" + PopulationEnum.NOISE.getImplementationName() +
+
+                        "\nPremutation:" +
+       "\n\t" + PremutationEnum.SWAP.getImplementationName() +
+       "\n\t" + PremutationEnum.INVERSION.getImplementationName() +
+       "\n\t" + PremutationEnum.SCRAMBLE.getImplementationName() +
+
+                        "\nSelection Method:" +
+       "\n\t" + SelectionEnum.ELITE.getImplementationName() +
+       "\n\t" + SelectionEnum.TOURNAMENT.getImplementationName() +
+       "\n\t" + SelectionEnum.ROULETTE.getImplementationName() +
+       "\n\t" + SelectionEnum.RANK.getImplementationName() +
+       "\n\t" + SelectionEnum.StochasticTwo.getImplementationName() +
+
+                        "\n Offspring Selection Method:" +
+       "\n\t" + OffspringEnum.DEFAULT.getImplementationName()+
+       "\n\t" + OffspringEnum.DASD.getImplementationName() +
+
+                        "\n Cellular Automate Method:" +
+       "\n\t" + "rule20";
+
 
     //TODO this should have a list of all stategy pattern functions
     // that I have written (all mutators, all noise generators
@@ -100,7 +135,7 @@ public class Interpreter {
     private AbstractChromosomeEvaluation chromosomeEvaluation;
     //Noise Implementation, needed at the start
     // if maps start random
-    private NoiseImp noise;
+    private PopulationImp noise;
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
@@ -198,7 +233,10 @@ public class Interpreter {
 //        //Add Evaluation Strategy, for now there is only basic
 //        addChromosomeEvaluationStrategy("basic");
 
-        chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize, numberOfGenerations,
+
+        //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
+        //TODO so this is the only place I p
+        chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.1,
                 fitnessList, mutator, selection, premutation, correction, offspring);
 
 
@@ -272,10 +310,10 @@ public class Interpreter {
 
         switch (choice) {
             case "noise":
-                noise = NoiseEnum.NOISE;
+                noise = PopulationEnum.NOISE;
                 return true;
             case "fill":
-                noise = NoiseEnum.FILL;
+                noise = PopulationEnum.FILL;
                 return true;
             default:
                 return false;
@@ -369,17 +407,17 @@ public class Interpreter {
     private boolean addMutatorStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
-        if(choice.equals(MutationsEnum.DEFAULT.getImplementationName())){
-            mutator = MutationsEnum.DEFAULT;
+        if(choice.equals(MutatorEnum.DEFAULT.getImplementationName())){
+            mutator = MutatorEnum.DEFAULT;
             return true;
-        }else if(choice.equals(MutationsEnum.LOW.getImplementationName())){
-            mutator = MutationsEnum.LOW;
+        }else if(choice.equals(MutatorEnum.LOW.getImplementationName())){
+            mutator = MutatorEnum.LOW;
             return true;
-        }else if(choice.equals(MutationsEnum.LOWER.getImplementationName())){
-            mutator = MutationsEnum.LOWER;
+        }else if(choice.equals(MutatorEnum.LOWER.getImplementationName())){
+            mutator = MutatorEnum.LOWER;
             return true;
-        }else if(choice.equals(MutationsEnum.LOWEST.getImplementationName())){
-            mutator = MutationsEnum.LOWEST;
+        }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
+            mutator = MutatorEnum.LOWEST;
             return true;
         }else{
             return false;
@@ -403,37 +441,6 @@ public class Interpreter {
     }
 
     private void displayHelp() {
-        AVAILABLE_OPTIONS =
-                "\nAvailable [OPTIONS]:\n" +
-                        "\nFitness:" +
-        "\n\t" + FitnessEnum.FIND_ALL_ROOMS.getImplementationName() +
-        "\n\t" + FitnessEnum.IS_TRAVERSABLE.getImplementationName() +
-
-                        "\nCorrections:" +
-       "\n\t" + CorrectionEnum.FIND_ROOM.getImplementationName() +
-       "\n\t" + CorrectionEnum.FIND_HOLES.getImplementationName() +
-
-                        "\nMutations:" +
-       "\n\t" + MutationsEnum.DEFAULT.getImplementationName() +
-       "\n\t" + MutationsEnum.LOW.getImplementationName() +
-       "\n\t" + MutationsEnum.LOWER.getImplementationName() +
-       "\n\t" + MutationsEnum.LOWEST.getImplementationName() +
-
-                        "\nPopulation Noise:" +
-       "\n\t" + NoiseEnum.FILL.getImplementationName() +
-       "\n\t" + NoiseEnum.NOISE.getImplementationName() +
-
-                        "\nPremutation:" +
-       "\n\t" + PremutationEnum.SWAP.getImplementationName() +
-       "\n\t" + PremutationEnum.INVERSION.getImplementationName() +
-       "\n\t" + PremutationEnum.SCRAMBLE.getImplementationName() +
-
-                        "\nSelection Method:" +
-       "\n\t" + SelectionEnum.ELITE.getImplementationName() +
-       "\n\t" + SelectionEnum.TOURNAMENT.getImplementationName() +
-       "\n\t" + SelectionEnum.ROULETTE.getImplementationName() +
-       "\n\t" + SelectionEnum.RANK.getImplementationName() +
-       "\n\t" + SelectionEnum.StochasticTwo.getImplementationName();
 
        System.out.println(OPTION);
        System.out.println(ALL_FEATURES);

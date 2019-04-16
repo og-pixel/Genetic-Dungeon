@@ -77,8 +77,6 @@ public enum FitnessEnum implements FitnessImp, TileList {
             //TODO for now I will only try to encourage creating multiple small rooms
             if(score > 0) map.setFitnessScore(score);
             else map.setFitnessScore(score);
-
-            //TODO here i will save map stats //            map.setNumberOfRooms(numberOfRooms);
         }
 
         @Override

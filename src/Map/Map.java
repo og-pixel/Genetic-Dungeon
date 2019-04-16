@@ -147,7 +147,7 @@ public class Map implements Serializable, TileList{
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
-        stringBuilder.append("Mutation Count: ").append(mutationCount).append("\n");
+        stringBuilder.append("Mutator Count: ").append(mutationCount).append("\n");
         stringBuilder.append("Corrections Count: ").append(correctionsFound).append("\n");
         for (int y = 0; y < mapHeight; y++) {
             stringBuilder.append("\n");

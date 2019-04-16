@@ -11,15 +11,12 @@ public interface FitnessImp {
      * @param map map to be evaluated
      * @return score that the map achieved
      */
-    //TODO for the time being i have made it void as it never uses the return value anyway
-    // i set it manually from map
     void evaluateMap(Map map);
 
     /**
      * Each fitness function needs to have a way to evaluate each individual
      * However if program takes too much times, it should run an approximation that should be
      * much faster version of the same (just lest accurate)
-     * TODO I am not 100% sure if I will need it tho
      * @param map map to be evaluated
      * @return score that the map achieved, it might be not accurate, but fast
      */

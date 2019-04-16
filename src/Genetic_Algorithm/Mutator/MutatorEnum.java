@@ -1,4 +1,4 @@
-package Genetic_Algorithm.Mutation;
+package Genetic_Algorithm.Mutator;
 
 import Algorithms.Matrix;
 import Map.Map;
@@ -7,7 +7,7 @@ import Map.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public enum MutationsEnum implements MutatorImp, TileList{
+public enum MutatorEnum implements MutatorImp, TileList{
     DEFAULT("default", 0.01),
     LOW("low",0.007),
     LOWER("lower",0.005),
@@ -15,7 +15,7 @@ public enum MutationsEnum implements MutatorImp, TileList{
 
     private final double odds;
     private String implementationName;
-    MutationsEnum(String implementationName, double odds) {
+    MutatorEnum(String implementationName, double odds) {
         this.implementationName = implementationName;
         this.odds = odds;
     }

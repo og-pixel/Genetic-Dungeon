@@ -10,23 +10,16 @@ public enum OffspringEnum implements OffspringImp {
     //TODO make sure offspring is copying right
     DEFAULT("default"){
         @Override
-        public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop) {
+        public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double populationSize, double selectionFraction) {
             Random random = new Random();
             ArrayList<Map> newPopulation = new ArrayList<>();
 
-            //TODO for now pop size is as big as the list that enters
-            double POP_SIZE = popSize;
-            double TOP_POP = topPop;
-
-            while (newPopulation.size() < POP_SIZE) {
-                //THIS IS premutation part
-//                premutation.premutateDungeons(mapList);
-
+            while (newPopulation.size() < populationSize) {
                 //THIS is mutation part
-                int randomPick = random.nextInt((int) TOP_POP);
+                int randomPick = random.nextInt((int) list.size());
                 Map parent1 = list.get(randomPick);
 
-                randomPick = random.nextInt((int) TOP_POP);
+                randomPick = random.nextInt((int) list.size());
                 Map parent2 = list.get(randomPick);
 
                 Map child1 = Algorithms.deepClone(parent1);
@@ -59,7 +52,7 @@ public enum OffspringEnum implements OffspringImp {
     },
     DASD("to_change"){
         @Override
-        public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double popSize, double topPop) {
+        public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double populationSize, double selectionFraction) {
             return null;
         }
     };

@@ -1,6 +1,7 @@
     package Genetic_Algorithm.Selection;
 
 import Algorithms.Algorithms;
+import Exceptions.VariableBoundsException;
 import Map.Map;
 
 import java.util.ArrayList;
@@ -8,16 +9,16 @@ import java.util.Comparator;
 import java.util.Random;
 
 public enum SelectionEnum implements SelectionImp {
+    //TODO I was thinking a little a bout it and selection fraction cannot be  in the constructor as Id want
+    // to be more flexible if needed, since its enum
     ELITE("elite"){
-
         @Override
-        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
+        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list, double selectionFraction) {
+            if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
-            //////TODO THIS PART IS SELECTION
             //First elements are the most fit
             list.sort(Comparator.comparing(Map::getFitnessScore).reversed());
-            //TODO This part takes top 10% of pop and removes the rest
-            list.subList((int)(list.size() * 0.1), list.size()).clear();
+            list.subList((int)(list.size() * selectionFraction), list.size()).clear();
 
             list = Algorithms.deepClone(list);
             return list;
@@ -25,9 +26,10 @@ public enum SelectionEnum implements SelectionImp {
     },
     ROULETTE("roulette"){
         @Override
-        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
+        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list, double selectionFraction) {
+            if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
             //TODO i dont like limit variable
-            double limit = list.size() * 0.1;
+            double limit = list.size() * selectionFraction;
             Random random = new Random();
 
             int rouletteSum = 0;
@@ -58,16 +60,18 @@ public enum SelectionEnum implements SelectionImp {
     //TODO its stochastic universal sampling
     StochasticTwo("stochastic_two"){
         @Override
-        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
+        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list, double selectionFraction) {
+            if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
             return null;
         }
     },
     TOURNAMENT("tournament"){
         @Override
-        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
+        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list, double selectionFraction) {
+            if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
             //TODO i dont like limit variable
-            double limit = list.size() * 0.1;
+            double limit = list.size() * selectionFraction;
             Random random = new Random();
 
             list.sort(Comparator.comparing(Map::getFitnessScore).reversed());
@@ -92,7 +96,8 @@ public enum SelectionEnum implements SelectionImp {
     },
     RANK("rank"){
         @Override
-        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
+        public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list, double selectionFraction) {
+            if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
             return null;
         }
@@ -100,6 +105,8 @@ public enum SelectionEnum implements SelectionImp {
     SelectionEnum(String implementationName){
         this.implementationName = implementationName;
     }
+
+//    private double selectionFraction; //As how much of the generation is meant to survive
     private String implementationName;
     public String getImplementationName() {
         return implementationName;

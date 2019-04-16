@@ -6,7 +6,7 @@ import Exceptions.VariableBoundsException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public enum NoiseEnum implements NoiseImp, TileList{
+public enum PopulationEnum implements PopulationImp, TileList{
     FILL("fill"){//TODO only problem with this implementation is that odds are in function, gotta move it to enum "constructor"
         @Override
         public ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds) {
@@ -48,7 +48,7 @@ public enum NoiseEnum implements NoiseImp, TileList{
             return mapList;
         }
     };
-    NoiseEnum(String implementationName){
+    PopulationEnum(String implementationName){
         this.implementationName = implementationName;
     }
     private String implementationName;
