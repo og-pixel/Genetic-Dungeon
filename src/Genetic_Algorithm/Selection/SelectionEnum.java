@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
-//TODO https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_parent_selection.htm
 public enum SelectionEnum implements SelectionImp {
     ELITE{
         @Override
@@ -63,7 +62,7 @@ public enum SelectionEnum implements SelectionImp {
             return null;
         }
     },
-    Tournament{
+    TOURNAMENT{
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
             //TODO i dont like limit variable
@@ -90,7 +89,7 @@ public enum SelectionEnum implements SelectionImp {
             return selectedList;
         }
     },
-    Rank{
+    RANK{
         @Override
         public ArrayList<Map> selectFitIndividuals(ArrayList<Map> list) {
 

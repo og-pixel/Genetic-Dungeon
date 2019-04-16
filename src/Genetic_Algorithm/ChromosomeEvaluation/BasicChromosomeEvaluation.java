@@ -5,11 +5,11 @@ import Map.Map;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessImp;
-import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
-import Genetic_Algorithm.Mutation.MutationsEnum;
-import Genetic_Algorithm.Offspring.OffspringEnum;
-import Genetic_Algorithm.Premutation.PremutationEnum;
-import Genetic_Algorithm.Selection.SelectionEnum;
+import Genetic_Algorithm.ManualCorrections.CorrectionImp;
+import Genetic_Algorithm.Mutation.MutatorImp;
+import Genetic_Algorithm.Offspring.OffspringImp;
+import Genetic_Algorithm.Premutation.PremutationImp;
+import Genetic_Algorithm.Selection.SelectionImp;
 
 import java.util.ArrayList;
 
@@ -22,17 +22,17 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private ArrayList<Map> mapList;
     private ArrayList<FitnessImp> fitnessImpList;
     private int numberOfGenerations;
-    private MutationsEnum mutation;
-    private SelectionEnum selection;
-    private PremutationEnum premutation;
-    private CorrectionEnum correction;
-    private OffspringEnum offspring;
+    private MutatorImp mutation;
+    private SelectionImp selection;
+    private PremutationImp premutation;
+    private CorrectionImp correction;
+    private OffspringImp offspring;
 
     public BasicChromosomeEvaluation(double topPopulation, double populationSize, int numberOfGenerations,
                                      ArrayList<Map> mapList,
                                      ArrayList<FitnessImp> fitnessImpList,
-                                     MutationsEnum mutation, SelectionEnum selection, PremutationEnum premutation,
-                                     CorrectionEnum correction, OffspringEnum offspring){
+                                     MutatorImp mutation, SelectionImp selection, PremutationImp premutation,
+                                     CorrectionImp correction, OffspringImp offspring){
         if(topPopulation < 0.1 || topPopulation > 1)throw new VariableBoundsException(0.1, 1);
 
 

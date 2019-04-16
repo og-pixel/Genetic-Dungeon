@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface NoiseImp {
     /**
-     * Its Role is to to create a noise
+     * Creates a base noise used in random map generation
      * @param width
      * @param height
      * @param numberOfMaps
