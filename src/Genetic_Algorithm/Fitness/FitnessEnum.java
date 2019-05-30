@@ -16,7 +16,7 @@ public enum FitnessEnum implements FitnessImp, TileList {
         public void evaluateMapCheap(Map map) {
         }
     },
-    FIND_ALL_ROOMS("find_all_rooms",0.7) {
+    FIND_ALL_ROOMS("find_all_rooms", 0.7) {
         //TODO I need to work on how visit map works
         @Override
         public void evaluateMap(Map map) {
@@ -94,6 +94,7 @@ public enum FitnessEnum implements FitnessImp, TileList {
             return counter;
         }
     };
+
     FitnessEnum(String implementationName, double strength) {
         this.implementationName = implementationName;
         this.strength = strength;

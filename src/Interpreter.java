@@ -273,7 +273,7 @@ public class Interpreter {
 
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
-        chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.1,
+        chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
                 fitnessList, mutator, selection, premutation, correction, offspring);
 
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);

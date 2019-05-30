@@ -15,7 +15,7 @@ public interface FitnessImp {
 
     /**
      * Each fitness function needs to have a way to evaluate each individual
-     * However if program takes too much times, it should run an approximation that should be
+     * However if program takes too much time, it should run an approximation that should be
      * much faster version of the same (just lest accurate)
      * @param map map to be evaluated
      * @return score that the map achieved, it might be not accurate, but fast
