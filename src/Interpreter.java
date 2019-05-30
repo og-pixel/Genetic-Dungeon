@@ -1,5 +1,6 @@
 import Algorithms.*;
 import Algorithms.CA.*;
+import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.ManualCorrections.CorrectionImp;
 import Genetic_Algorithm.Mutator.MutatorImp;
 import Genetic_Algorithm.Offspring.OffspringImp;
@@ -30,25 +31,52 @@ import java.util.Scanner;
 public class Interpreter {
 
     //TODO I will use scanner to read all functions
+    // maybe not
     private Scanner scanner;
 
     private final String CREATE_I = "-c";
+    private final String CREATE_I_V = "--create";
+
     private final String LOAD_I = "-l";
+    private final String LOAD_I_V = "--load";
+
     private final String HELP_I = "-h";
+    private final String HELP_I_V = "--help";
+
     private final String VERBOSE_I = "-v";
+    private final String VERBOSE_I_V = "--verbose";
+
     private final String FITNESS_I = "-f";
+    private final String FITNESS_I_V = "--fitness";
+
     private final String MUTATOR_I = "-m";
+    private final String MUTATOR_I_V = "--mutator";
+
     private final String CA_I = "-a";
-    private final String PREMUTATOR_I = "-p";
+    private final String CA_I_V = "--cellurar";
+
+    private final String PREMUTATION_I = "-p";
+    private final String PREMUTATION_I_V = "--premutation";
+
     private final String CHROMOSOME_EVALUATION_I = "-e";
+    private final String CHROMOSOME_EVALUATION_I_V = "--evaluation";
+
     private final String CORRECTION_I = "-r";
+    private final String CORRECTION_I_V = "--correction";
+
     private final String NOISE_I = "-n";
+    private final String NOISE_I_V = "--noise";
+
     private final String SELECTION_I = "-s";
+    private final String SELECTION_I_V = "--selection";
+
     private final String OFFSPRING_I = "-o";
+    private final String OFFSPRING_I_V = "--offspring";
+
 
     private final String[] commandList = new String[]{
             CREATE_I, LOAD_I, HELP_I, VERBOSE_I, FITNESS_I, MUTATOR_I,
-            CA_I, PREMUTATOR_I, CHROMOSOME_EVALUATION_I, CORRECTION_I,
+            CA_I, PREMUTATION_I, CHROMOSOME_EVALUATION_I, CORRECTION_I,
             NOISE_I, SELECTION_I};
 
     //Some data to display for user
@@ -64,7 +92,7 @@ public class Interpreter {
             "\n" + CHROMOSOME_EVALUATION_I + " [NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
             "\n" + NOISE_I + " [NAME]\t\t\tAdd [NOISE] Function" +
             "\n" + CA_I + " [NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-            "\n" + PREMUTATOR_I + " [NAME]\t\t\tAdd [PREMUTATION] Function" +
+            "\n" + PREMUTATION_I + " [NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_I + " [NAME]\t\t\tAdd [CORRECTION] Function" +
             "\n" + OFFSPRING_I + " [NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_I + "\t\t\t\t\tVerbose output" +
@@ -159,7 +187,11 @@ public class Interpreter {
     private int dungeonWidth;
     private int dungeonHeight;
 
+
     //TODO I might want to add flags
+    /**
+     * Flags
+     * */
     private boolean verbose = false;
 
     /**
@@ -178,12 +210,15 @@ public class Interpreter {
     private void interpretArguments(String... args) {
         if (args.length <= 0) {
             displayHelp();
-            System.exit(1);
+            System.exit(0);
         }
 
 //        for (int i = 0; i < args.length; i++) {
+        //TODO this switch statement misses some break to
+        // have something of a "case this OR this"
         switch (args[0]) {
             case CREATE_I:
+            case CREATE_I_V:
                 //todo this minus for is for last 4 arguments always beign
                 // numbers
                 for (int i = 1; i < args.length - 4; i++) {
@@ -191,9 +226,11 @@ public class Interpreter {
                 }
                 break;
             case LOAD_I:
-                System.out.println("Finish this path");
+            case LOAD_I_V:
+                System.out.println("Finish developing loading maps");
                 break;
             case HELP_I:
+            case HELP_I_V:
                 displayHelp();
                 System.exit(0);
                 break;
@@ -239,6 +276,7 @@ public class Interpreter {
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.1,
                 fitnessList, mutator, selection, premutation, correction, offspring);
 
+        chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
         evolutionResults.saveAllResults();
@@ -266,7 +304,7 @@ public class Interpreter {
             case CA_I:
                 addCellularAutomataStrategy(args[i + 1]);
                 break;
-            case PREMUTATOR_I:
+            case PREMUTATION_I:
                 addPremutationStrategy(args[i + 1]);
                 break;
             case CHROMOSOME_EVALUATION_I:
