@@ -12,6 +12,7 @@ import Genetic_Algorithm.Premutation.PremutationImp;
 import Genetic_Algorithm.Selection.SelectionImp;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
@@ -61,6 +62,10 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         this.premutation = premutation;
         this.correction = correction;
         this.offspring = offspring;
+
+
+        //todo this sets logger to be turned off, used in decorator, maybe overkill? but then i can attach however i fancy
+        logger.setLevel(Level.SEVERE);
     }
 
     @Override
@@ -91,11 +96,11 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             mapList = selection.selectFitIndividuals(mapList, selectionFraction);
             if(generation % iteration == 0) {
                 //TODO while this isnt really necessary, it is nice for debugging
-                System.out.println(generation + "th generation\nTop Map Score: "
+                logger.log(Level.INFO, generation + "th generation\nTop Map Score: "
                         + mapList.get(0).getFitnessScore() + "\nTop Map Number of Rooms: "
-                        + mapList.get(0).getNumberOfRooms() + "\n");
+                        + mapList.get(0).getNumberOfRooms() + "\n"
+                        + percentageDone + "%");
                 percentageDone++;
-                System.out.println(percentageDone + "%");
             }
 
             evolutionResults.addGeneration(Algorithms.deepClone(mapList));

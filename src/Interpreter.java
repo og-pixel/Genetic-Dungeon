@@ -1,5 +1,6 @@
 import Algorithms.*;
 import Algorithms.CA.*;
+import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.ManualCorrections.CorrectionImp;
 import Genetic_Algorithm.Mutator.MutatorImp;
@@ -34,72 +35,28 @@ public class Interpreter {
     // maybe not
     private Scanner scanner;
 
-    private final String CREATE_I = "-c";
-    private final String CREATE_I_V = "--create";
+    private final ArrayList<String> CREATE_L = new ArrayList();
+    private final ArrayList<String> LOAD_L = new ArrayList();
+    private final ArrayList<String> HELP_L = new ArrayList();
+    private final ArrayList<String> VERBOSE_L = new ArrayList();
+    private final ArrayList<String> FITNESS_L = new ArrayList();
+    private final ArrayList<String> MUTATOR_L = new ArrayList();
+    private final ArrayList<String> CA_L = new ArrayList();
+    private final ArrayList<String> PREMUTATION_L = new ArrayList();
+    private final ArrayList<String> CHROMOSOME_EVALUATION_L = new ArrayList();
+    private final ArrayList<String> CORRECTION_L = new ArrayList();
+    private final ArrayList<String> NOISE_L = new ArrayList();
+    private final ArrayList<String> SELECTION_L = new ArrayList();
+    private final ArrayList<String> OFFSPRING_L = new ArrayList();
 
-    private final String LOAD_I = "-l";
-    private final String LOAD_I_V = "--load";
-
-    private final String HELP_I = "-h";
-    private final String HELP_I_V = "--help";
-
-    private final String VERBOSE_I = "-v";
-    private final String VERBOSE_I_V = "--verbose";
-
-    private final String FITNESS_I = "-f";
-    private final String FITNESS_I_V = "--fitness";
-
-    private final String MUTATOR_I = "-m";
-    private final String MUTATOR_I_V = "--mutator";
-
-    private final String CA_I = "-a";
-    private final String CA_I_V = "--cellurar";
-
-    private final String PREMUTATION_I = "-p";
-    private final String PREMUTATION_I_V = "--premutation";
-
-    private final String CHROMOSOME_EVALUATION_I = "-e";
-    private final String CHROMOSOME_EVALUATION_I_V = "--evaluation";
-
-    private final String CORRECTION_I = "-r";
-    private final String CORRECTION_I_V = "--correction";
-
-    private final String NOISE_I = "-n";
-    private final String NOISE_I_V = "--noise";
-
-    private final String SELECTION_I = "-s";
-    private final String SELECTION_I_V = "--selection";
-
-    private final String OFFSPRING_I = "-o";
-    private final String OFFSPRING_I_V = "--offspring";
-
-
-    private final String[] commandList = new String[]{
-            CREATE_I, LOAD_I, HELP_I, VERBOSE_I, FITNESS_I, MUTATOR_I,
-            CA_I, PREMUTATION_I, CHROMOSOME_EVALUATION_I, CORRECTION_I,
-            NOISE_I, SELECTION_I};
+//    private final String[][] commandList = new String[]{
+//            CREATE_L, LOAD_L, HELP_L, VERBOSE_L, FITNESS_L, MUTATOR_L,
+//            CA_L, PREMUTATION_L, CHROMOSOME_EVALUATION_L, CORRECTION_L,
+//            NOISE_L, SELECTION_L};
 
     //Some data to display for user
-    private final String OPTION = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
-            "\n\n[ARGUMENT]: " +
-            "\n" + CREATE_I + " [OPTIONS]... \t\tCreate map evaluation" +
-            "\n" + LOAD_I + " [SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
-            "\n" + HELP_I + "\t\t\t\t\tDisplay this list" +
-            "\n\n[OPTION]: " +
-            "\n" + FITNESS_I + " [NAME]\t\t\tAdd [FITNESS] Function" +
-            "\n" + SELECTION_I + " [NAME]\t\t\tAdd [SELECTION] Function" +
-            "\n" + MUTATOR_I + " [NAME]\t\t\tAdd [MUTATOR] Function" +
-            "\n" + CHROMOSOME_EVALUATION_I + " [NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
-            "\n" + NOISE_I + " [NAME]\t\t\tAdd [NOISE] Function" +
-            "\n" + CA_I + " [NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-            "\n" + PREMUTATION_I + " [NAME]\t\t\tAdd [PREMUTATION] Function" +
-            "\n" + CORRECTION_I + " [NAME]\t\t\tAdd [CORRECTION] Function" +
-            "\n" + OFFSPRING_I + " [NAME]\t\t\tAdd [OFFSPRING] Function" +
-            "\n" + VERBOSE_I + "\t\t\t\t\tVerbose output" +
-            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
-            "\n If you are creating maps, you need to add [NOISE]" +
-            "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
-            "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
+    private String OPTION;
+
 
     private final String README = "\nExamples:" +
             "\njava GMaps -c -n noise -f find_all_rooms -s tournament -o default -m default -a rule20 -p swap -r find_room 100 3000 30 25" +
@@ -202,7 +159,55 @@ public class Interpreter {
     Interpreter(String... args) {
         fitnessList = new ArrayList<>();
         generationOfMaps = new ArrayList<>();
+    	CREATE_L.add("-c");
+	    CREATE_L.add("--create");
+        HELP_L.add("-h");
+	    HELP_L.add("--help");
+	    LOAD_L.add("-l");
+	    LOAD_L.add("--load");
+        VERBOSE_L.add("-v");
+        VERBOSE_L.add("--verbose");
+        FITNESS_L.add("-f");
+        FITNESS_L.add("--fitness");
+        MUTATOR_L.add("-m");
+        MUTATOR_L.add("--mutator");
+        CA_L.add("-a");
+        CA_L.add("--cellular");
+        PREMUTATION_L.add("-p");
+        PREMUTATION_L.add("--premutation");
+        CHROMOSOME_EVALUATION_L.add("-e");
+        CHROMOSOME_EVALUATION_L.add("--evaluation");
+        CORRECTION_L.add("-r");
+        CORRECTION_L.add("--correction");
+        NOISE_L.add("-n");
+        NOISE_L.add("--noise");
+        SELECTION_L.add("-s");
+        SELECTION_L.add("--selection");
+        OFFSPRING_L.add("-o");
+        OFFSPRING_L.add("--offspring");
+
+        OPTION = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
+            "\n\n[ARGUMENT]: " +
+            "\n" + CREATE_L + "\t[OPTIONS]... \t\tCreate map evaluation" +
+            "\n" + LOAD_L + "\t[SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
+            "\n" + HELP_L + "\t \t\t\t\tDisplay this list" +
+            "\n\n[OPTION]: " +
+            "\n" + FITNESS_L + "\t[NAME]\t\t\tAdd [FITNESS] Function" +
+            "\n" + SELECTION_L + "\t[NAME]\t\t\tAdd [SELECTION] Function" +
+            "\n" + MUTATOR_L + "\t[NAME]\t\t\tAdd [MUTATOR] Function" +
+            "\n" + CHROMOSOME_EVALUATION_L + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
+            "\n" + NOISE_L + "\t[NAME]\t\t\tAdd [NOISE] Function" +
+            "\n" + CA_L + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
+            "\n" + PREMUTATION_L + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
+            "\n" + CORRECTION_L + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
+            "\n" + OFFSPRING_L + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
+            "\n" + VERBOSE_L + "\t\t\t\t\t\tVerbose output" +
+            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
+            "\n If you are creating maps, you need to add [NOISE]" +
+            "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
+            "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
         interpretArguments(args);
+
     }
 
 
@@ -216,25 +221,40 @@ public class Interpreter {
 //        for (int i = 0; i < args.length; i++) {
         //TODO this switch statement misses some break to
         // have something of a "case this OR this"
-        switch (args[0]) {
-            case CREATE_I:
-            case CREATE_I_V:
-                //todo this minus for is for last 4 arguments always beign
-                // numbers
-                for (int i = 1; i < args.length - 4; i++) {
-                    findOptions(i, args);
-                }
-                break;
-            case LOAD_I:
-            case LOAD_I_V:
-                System.out.println("Finish developing loading maps");
-                break;
-            case HELP_I:
-            case HELP_I_V:
-                displayHelp();
-                System.exit(0);
-                break;
+        //todo for now it seems finished
+       // switch (args[0]) {
+       //     case CREATE_L.contains():
+       //     case CREATE_I:
+       //         //todo this minus for is for last 4 arguments always beign
+       //         // numbers
+       //         for (int i = 1; i < args.length - 4; i++) {
+       //             findOptions(i, args);
+       //         }
+       //         break;
+       //     case LOAD_I:
+       //         System.out.println("Finish developing loading maps");
+       //         break;
+       //     case HELP_I:
+       //         displayHelp();
+       //         System.exit(0);
+       //         break;
+       // }
+
+        if(CREATE_L.contains(args[0])){
+            //todo this minus for is for last 4 arguments always beign
+            // numbers
+            for (int i = 1; i < args.length - 4; i++) {
+                findOptions(i, args);
+            }
         }
+        else if(LOAD_L.contains(args[0])) {
+            System.out.println("Finish developing loading maps");
+        }
+        else if(HELP_L.contains(args[0])){
+            displayHelp();
+            System.exit(0);
+        }
+
 
         //TODO need better checking
         try {
@@ -248,12 +268,15 @@ public class Interpreter {
         }
 
         //Preparation, either create maps from noise or load some
-        if(args[0].equals(CREATE_I)) {
-            if (noise == null)System.exit(1);//todo change to throw exception
+        if(CREATE_L.contains(args[0])) {
+            if (noise == null){
+                throw new RuntimeException("todo error");
+                //System.exit(1);//todo change to throw exception
+            }
             else{
                 noiseMaps();
             }
-        }else if(args[0].equals(LOAD_I))System.exit(1);//todo finish this path
+        }else if(args[0].equals(LOAD_L.get(0)))System.exit(1);//todo finish this path
 
         if(cellularAutomateImp != null)caMaps();
 
@@ -276,6 +299,7 @@ public class Interpreter {
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
                 fitnessList, mutator, selection, premutation, correction, offspring);
 
+        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
@@ -289,41 +313,38 @@ public class Interpreter {
     }
 
     private void findOptions(int i, String... args) {
-        switch (args[i]) {
-            case FITNESS_I:
-                addFitnessStrategy(args[i + 1]);
-                break;
-            case VERBOSE_I:
-                System.out.println("Finish this path");
-                System.exit(1);
-                //TODO set flag or run logger
-                break;
-            case MUTATOR_I:
-                addMutatorStrategy(args[i + 1]);
-                break;
-            case CA_I:
-                addCellularAutomataStrategy(args[i + 1]);
-                break;
-            case PREMUTATION_I:
-                addPremutationStrategy(args[i + 1]);
-                break;
-            case CHROMOSOME_EVALUATION_I:
-                addChromosomeEvaluationStrategy(args[i + 1]);
-                break;
-            case CORRECTION_I:
-                addCorrectionStrategy(args[i + 1]);
-                break;
-            case NOISE_I:
-                addNoiseStrategy(args[i + 1]);
-                break;
-            case SELECTION_I:
-                addSelectionStrategy(args[i + 1]);
-                break;
-            case OFFSPRING_I:
-                addOffspringStrategy(args[i + 1]);
-            break;
-            default:
-                break;
+
+        if(FITNESS_L.contains(args[i])){
+            addFitnessStrategy(args[i + 1]);
+        }
+        else if(VERBOSE_L.contains(args[i])){
+            System.out.println("Finish this path");
+            verbose = true;
+            System.exit(1);
+        }
+        else if(MUTATOR_L.contains(args[i])){
+            addMutatorStrategy(args[i + 1]);
+        }
+        else if(CA_L.contains(args[i])){
+            addCellularAutomataStrategy(args[i + 1]);
+        }
+        else if(PREMUTATION_L.contains(args[i])){
+            addPremutationStrategy(args[i + 1]);
+        }
+        else if(CHROMOSOME_EVALUATION_L.contains(args[i])){
+            addChromosomeEvaluationStrategy(args[i + 1]);
+        }
+        else if(CORRECTION_L.contains(args[i])){
+            addCorrectionStrategy(args[i + 1]);
+        }
+        else if(NOISE_L.contains(args[i])){
+            addNoiseStrategy(args[i + 1]);
+        }
+        else if(SELECTION_L.contains(args[i])){
+            addSelectionStrategy(args[i + 1]);
+        }
+        else if(OFFSPRING_L.contains(args[i])){
+            addOffspringStrategy(args[i + 1]);
         }
     }
 
@@ -333,8 +354,8 @@ public class Interpreter {
 
         switch (choice) {
             case "basic":
-                chromosomeEvaluation = new BasicChromosomeEvaluation(0.1, populationSize,
-                        numberOfGenerations, fitnessList, mutator, selection, premutation,
+                chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
+                        numberOfGenerations, 0.3, fitnessList, mutator, selection, premutation,
                         correction, offspring);
                 return true;
             default:
