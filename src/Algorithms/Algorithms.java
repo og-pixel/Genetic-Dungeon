@@ -304,20 +304,7 @@ public class Algorithms implements TileList{
 
 
 
-    private static void writeToFile(String content, Map map) throws IOException {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        int score = (int) map.getFitnessScore();
-        File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
-        file.createNewFile();
-
-        FileWriter fileWrite = new FileWriter(file);
-        content = map.mapToString();
-        fileWrite.write(content);
-
-        fileWrite.flush();
-        fileWrite.close();
-    }
 
     public static void writeToFile(String content) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -348,7 +335,20 @@ public class Algorithms implements TileList{
         }
     }
 
+    private static void writeToFile(String content, Map map) throws IOException {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        int score = (int) map.getFitnessScore();
+        File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
+        file.createNewFile();
+
+        FileWriter fileWrite = new FileWriter(file);
+        content = map.mapToString();
+        fileWrite.write(content);
+
+        fileWrite.flush();
+        fileWrite.close();
+    }
 
     public static Map deepClone(Map map){
         try{

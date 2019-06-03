@@ -16,13 +16,14 @@ import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
 import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.Offspring.OffspringEnum;
-import Genetic_Algorithm.Population.PopulationEnum;
-import Genetic_Algorithm.Population.PopulationImp;
+import Genetic_Algorithm.Population.NoiseEnum;
+import Genetic_Algorithm.Population.NoiseImp;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -35,19 +36,22 @@ public class Interpreter {
     // maybe not
     private Scanner scanner;
 
+    //All arguments that the program takes, usually divided into short one letter flag and
+    // verbose alternative
     private final ArrayList<String> CREATE_L = new ArrayList(Arrays.asList("-c", "--create"));
-    private final ArrayList<String> LOAD_L = new ArrayList();
-    private final ArrayList<String> HELP_L = new ArrayList();
-    private final ArrayList<String> VERBOSE_L = new ArrayList();
-    private final ArrayList<String> FITNESS_L = new ArrayList();
-    private final ArrayList<String> MUTATOR_L = new ArrayList();
-    private final ArrayList<String> CA_L = new ArrayList();
-    private final ArrayList<String> PREMUTATION_L = new ArrayList();
-    private final ArrayList<String> CHROMOSOME_EVALUATION_L = new ArrayList();
-    private final ArrayList<String> CORRECTION_L = new ArrayList();
-    private final ArrayList<String> NOISE_L = new ArrayList();
-    private final ArrayList<String> SELECTION_L = new ArrayList();
-    private final ArrayList<String> OFFSPRING_L = new ArrayList();
+    private final ArrayList<String> LOAD_L = new ArrayList(Arrays.asList("-l", "--load"));
+    private final ArrayList<String> HELP_L = new ArrayList(Arrays.asList("-h", "--help"));
+    private final ArrayList<String> VERBOSE_L = new ArrayList(Arrays.asList("-v", "--verbose"));
+    private final ArrayList<String> FITNESS_L = new ArrayList(Arrays.asList("-f", "--fitness"));
+    private final ArrayList<String> MUTATOR_L = new ArrayList(Arrays.asList("-m", "--mutator"));
+    private final ArrayList<String> CA_L = new ArrayList(Arrays.asList("-a", "--cellular"));
+    private final ArrayList<String> PREMUTATION_L = new ArrayList(Arrays.asList("-p", "--premutation"));
+    private final ArrayList<String> CHROMOSOME_EVALUATION_L = new ArrayList(Arrays.asList("-e", "--evaluation"));
+    private final ArrayList<String> CORRECTION_L = new ArrayList(Arrays.asList("-r", "--correction"));
+    private final ArrayList<String> NOISE_L = new ArrayList(Arrays.asList("-n", "--noise"));
+    private final ArrayList<String> SELECTION_L = new ArrayList(Arrays.asList("-s", "--selection"));
+    private final ArrayList<String> OFFSPRING_L = new ArrayList(Arrays.asList("-g", "--offspring"));
+    private final ArrayList<String> SAVE_LOCATION_L = new ArrayList(Arrays.asList("-o", "--output"));
 
     //Some data to display for user
     private String OPTION;
@@ -55,7 +59,7 @@ public class Interpreter {
     private final String README = "\nExamples:" +
             "\njava GMaps --create --noise noise --fitness find_all_rooms --selection tournament --offspring default --mutator" +
             " default --cellular rule20 --premutation swap -r find_room 100 3000 30 25" +
-            "\n-l /home/user/folder/ 1 10 150 100";
+            "\njava GMaps --load /home/user/folder/ 1 10 150 100";
 
     private final String AVAILABLE_OPTIONS =
                 "\nAvailable [NAME]:\n" +
@@ -74,8 +78,8 @@ public class Interpreter {
        "\n\t" + MutatorEnum.LOWEST.getImplementationName() +
 
                         "\nPopulation Noise:" +
-       "\n\t" + PopulationEnum.FILL.getImplementationName() +
-       "\n\t" + PopulationEnum.NOISE.getImplementationName() +
+       "\n\t" + NoiseEnum.FILL.getImplementationName() +
+       "\n\t" + NoiseEnum.NOISE.getImplementationName() +
 
                         "\nPremutation:" +
        "\n\t" + PremutationEnum.SWAP.getImplementationName() +
@@ -99,6 +103,8 @@ public class Interpreter {
 
     //TODO this should have a list of all stategy pattern functions
     // that I have written (all mutators, all noise generators
+    // I think I can achieve it by reflection?
+    // Low priority, maybe delete
     private final String ALL_FEATURES = "";
 
     //A whole generation of maps
@@ -110,18 +116,27 @@ public class Interpreter {
 
     private SelectionImp selection;
     private MutatorImp mutator;
+
+    //TODO, better variable name
+    private String saveFileDestination = null;
+
+
     //Chromosome evaluation takes all elements of fitness, etc TODO ELABORATE
     // and scores todo i might describe it wrong
     private AbstractChromosomeEvaluation chromosomeEvaluation;
+
     //Noise Implementation, needed at the start
     // if maps start random
-    private PopulationImp noise;
+    private NoiseImp noise;
+
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
     private CellularAutomateImp cellularAutomateImp;
+
     //TODO premutations aren't really useful
     private PremutationImp premutation;
+
     //TODO corrections aren't useful FOR NOW
     // I am trying to force looking for shapes and
     // patterns
@@ -154,32 +169,7 @@ public class Interpreter {
     Interpreter(String... args) {
         fitnessList = new ArrayList<>();
         generationOfMaps = new ArrayList<>();
-    	// CREATE_L.add("-c");
-	    // CREATE_L.add("--create");
-        HELP_L.add("-h");
-	    HELP_L.add("--help");
-	    LOAD_L.add("-l");
-	    LOAD_L.add("--load");
-        VERBOSE_L.add("-v");
-        VERBOSE_L.add("--verbose");
-        FITNESS_L.add("-f");
-        FITNESS_L.add("--fitness");
-        MUTATOR_L.add("-m");
-        MUTATOR_L.add("--mutator");
-        CA_L.add("-a");
-        CA_L.add("--cellular");
-        PREMUTATION_L.add("-p");
-        PREMUTATION_L.add("--premutation");
-        CHROMOSOME_EVALUATION_L.add("-e");
-        CHROMOSOME_EVALUATION_L.add("--evaluation");
-        CORRECTION_L.add("-r");
-        CORRECTION_L.add("--correction");
-        NOISE_L.add("-n");
-        NOISE_L.add("--noise");
-        SELECTION_L.add("-s");
-        SELECTION_L.add("--selection");
-        OFFSPRING_L.add("-o");
-        OFFSPRING_L.add("--offspring");
+
 
         OPTION = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
             "\n\n[ARGUMENT]: " +
@@ -212,6 +202,8 @@ public class Interpreter {
             displayHelp();
             System.exit(0);
         }
+
+
         if(CREATE_L.contains(args[0])){
             //todo this minus for is for last 4 arguments always beign
             // numbers
@@ -261,7 +253,10 @@ public class Interpreter {
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
-        evolutionResults.saveAllResults();
+
+        //todo its a little silly
+        if(saveFileDestination != null)evolutionResults.saveAllResults(saveFileDestination);
+        else evolutionResults.saveAllResults();
 
         try {
             Algorithms.writeToFile("BEST", evolutionResults.findBest());
@@ -304,6 +299,9 @@ public class Interpreter {
         else if(OFFSPRING_L.contains(args[i])){
             addOffspringStrategy(args[i + 1]);
         }
+        else if(SAVE_LOCATION_L.contains(args[i])){
+            saveFileDestination = args[i + 1];
+        }
     }
 
     private boolean addChromosomeEvaluationStrategy(String option) {
@@ -325,10 +323,10 @@ public class Interpreter {
 
         switch (choice) {
             case "noise":
-                noise = PopulationEnum.NOISE;
+                noise = NoiseEnum.NOISE;
                 return true;
             case "fill":
-                noise = PopulationEnum.FILL;
+                noise = NoiseEnum.FILL;
                 return true;
             default:
                 return false;
