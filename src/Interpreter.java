@@ -35,7 +35,7 @@ public class Interpreter {
     // maybe not
     private Scanner scanner;
 
-    private final ArrayList<String> CREATE_L = new ArrayList();
+    private final ArrayList<String> CREATE_L = new ArrayList(Arrays.asList("-c", "--create"));
     private final ArrayList<String> LOAD_L = new ArrayList();
     private final ArrayList<String> HELP_L = new ArrayList();
     private final ArrayList<String> VERBOSE_L = new ArrayList();
@@ -49,17 +49,12 @@ public class Interpreter {
     private final ArrayList<String> SELECTION_L = new ArrayList();
     private final ArrayList<String> OFFSPRING_L = new ArrayList();
 
-//    private final String[][] commandList = new String[]{
-//            CREATE_L, LOAD_L, HELP_L, VERBOSE_L, FITNESS_L, MUTATOR_L,
-//            CA_L, PREMUTATION_L, CHROMOSOME_EVALUATION_L, CORRECTION_L,
-//            NOISE_L, SELECTION_L};
-
     //Some data to display for user
     private String OPTION;
 
-
     private final String README = "\nExamples:" +
-            "\njava GMaps -c -n noise -f find_all_rooms -s tournament -o default -m default -a rule20 -p swap -r find_room 100 3000 30 25" +
+            "\njava GMaps --create --noise noise --fitness find_all_rooms --selection tournament --offspring default --mutator" +
+            " default --cellular rule20 --premutation swap -r find_room 100 3000 30 25" +
             "\n-l /home/user/folder/ 1 10 150 100";
 
     private final String AVAILABLE_OPTIONS =
@@ -159,8 +154,8 @@ public class Interpreter {
     Interpreter(String... args) {
         fitnessList = new ArrayList<>();
         generationOfMaps = new ArrayList<>();
-    	CREATE_L.add("-c");
-	    CREATE_L.add("--create");
+    	// CREATE_L.add("-c");
+	    // CREATE_L.add("--create");
         HELP_L.add("-h");
 	    HELP_L.add("--help");
 	    LOAD_L.add("-l");
@@ -217,29 +212,6 @@ public class Interpreter {
             displayHelp();
             System.exit(0);
         }
-
-//        for (int i = 0; i < args.length; i++) {
-        //TODO this switch statement misses some break to
-        // have something of a "case this OR this"
-        //todo for now it seems finished
-       // switch (args[0]) {
-       //     case CREATE_L.contains():
-       //     case CREATE_I:
-       //         //todo this minus for is for last 4 arguments always beign
-       //         // numbers
-       //         for (int i = 1; i < args.length - 4; i++) {
-       //             findOptions(i, args);
-       //         }
-       //         break;
-       //     case LOAD_I:
-       //         System.out.println("Finish developing loading maps");
-       //         break;
-       //     case HELP_I:
-       //         displayHelp();
-       //         System.exit(0);
-       //         break;
-       // }
-
         if(CREATE_L.contains(args[0])){
             //todo this minus for is for last 4 arguments always beign
             // numbers
@@ -279,20 +251,6 @@ public class Interpreter {
         }else if(args[0].equals(LOAD_L.get(0)))System.exit(1);//todo finish this path
 
         if(cellularAutomateImp != null)caMaps();
-
-
-//        //Add Fitness to utilize
-//        addFitnessStrategy("find_all_rooms");
-//        //Add noise to empty maps
-//        addNoiseStrategy("fill");
-//        //Add Cellurar Automata rule to modify map a bit
-//        addCellularAutomataStrategy("rule20");
-//        noiseMaps();
-//        caMaps();
-//
-//        //Add Evaluation Strategy, for now there is only basic
-//        addChromosomeEvaluationStrategy("basic");
-
 
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
@@ -348,7 +306,6 @@ public class Interpreter {
         }
     }
 
-
     private boolean addChromosomeEvaluationStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
@@ -362,7 +319,6 @@ public class Interpreter {
                 return false;
         }
     }
-
 
     private boolean addNoiseStrategy(String option) {
         String choice = option.toLowerCase().trim();
