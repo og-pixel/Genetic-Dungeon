@@ -1,4 +1,4 @@
-package Genetic_Algorithm.Population;
+package Genetic_Algorithm.NoiseStrategy;
 
 import Map.Map;
 

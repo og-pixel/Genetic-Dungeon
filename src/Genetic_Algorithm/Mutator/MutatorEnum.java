@@ -1,6 +1,6 @@
 package Genetic_Algorithm.Mutator;
 
-import Algorithms.Matrix;
+import DataStructure.Matrix;
 import Map.Map;
 import Map.*;
 
@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum MutatorEnum implements MutatorImp, TileList{
-    DEFAULT("default", 0.01),
-    LOW("low",0.007),
-    LOWER("lower",0.005),
-    LOWEST("lowest",0.003);
+    DEFAULT("default", 0.01), //1%
+    HIGH("high", 0.02),       //2%
+    HIGHEST("highest", 0.03), //3%
+    LOW("low", 0.007),         //0.7%
+    LOWER("lower", 0.005),     //0.5%
+    LOWEST("lowest", 0.003);   //0.3%
+
 
     private final double odds;
     private String implementationName;
+
     MutatorEnum(String implementationName, double odds) {
         this.implementationName = implementationName;
         this.odds = odds;
@@ -32,6 +36,7 @@ public enum MutatorEnum implements MutatorImp, TileList{
                 if(random.nextDouble() <= odds){
                     if (dungeonMatrix.getElement(x,y) == CORRIDOR) dungeonMatrix.put(x, y, WALL);
                     else dungeonMatrix.put(x, y, CORRIDOR);
+
                     map.setMutationCount(map.getMutationCount() + 1);
                 }
             }
@@ -40,8 +45,6 @@ public enum MutatorEnum implements MutatorImp, TileList{
 
     @Override
     public void mutateDungeons(ArrayList<Map> mapList) {
-        for (Map map : mapList) {
-            mutateDungeon(map);
-        }
+        for (Map map : mapList) mutateDungeon(map);
     }
 }

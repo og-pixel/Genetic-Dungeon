@@ -1,6 +1,6 @@
 package Map;
 
-import Algorithms.Matrix;
+import DataStructure.Matrix;
 
 import java.io.Serializable;
 

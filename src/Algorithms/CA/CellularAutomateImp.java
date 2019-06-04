@@ -1,6 +1,6 @@
 package Algorithms.CA;
 
-import Algorithms.Matrix;
+import DataStructure.Matrix;
 
 public interface CellularAutomateImp {
     Matrix generateMap(Matrix map);

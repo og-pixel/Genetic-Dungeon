@@ -11,15 +11,16 @@ public enum OffspringEnum implements OffspringImp {
     DEFAULT("default"){
         @Override
         public ArrayList<Map> createNewGeneration(ArrayList<Map> list, double populationSize, double selectionFraction) {
+
             Random random = new Random();
             ArrayList<Map> newPopulation = new ArrayList<>();
 
             while (newPopulation.size() < populationSize) {
                 //THIS is mutation part
-                int randomPick = random.nextInt((int) list.size());
+                int randomPick = random.nextInt(list.size());
                 Map parent1 = list.get(randomPick);
 
-                randomPick = random.nextInt((int) list.size());
+                randomPick = random.nextInt(list.size());
                 Map parent2 = list.get(randomPick);
 
                 Map child1 = Algorithms.deepClone(parent1);
@@ -32,6 +33,7 @@ public enum OffspringEnum implements OffspringImp {
                 for (int y = 0; y < crossPointY - 1; y++) {
                     child1.getMapMatrix().replaceRow(y, child2.getMapMatrix().getRow(y));
                 }
+
                 for (int x = 0; x < crossPointX; x++) {
                     child1.getMapMatrix().put(x, crossPointY, child2.getMapMatrix().getElement(x, crossPointY));
                 }

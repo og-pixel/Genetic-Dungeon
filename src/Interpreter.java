@@ -1,8 +1,9 @@
 import Algorithms.*;
 import Algorithms.CA.*;
+import DataStructure.Matrix;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
-import Genetic_Algorithm.ManualCorrections.CorrectionImp;
+import Genetic_Algorithm.Corrections.CorrectionImp;
 import Genetic_Algorithm.Mutator.MutatorImp;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
@@ -13,18 +14,17 @@ import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
-import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
+import Genetic_Algorithm.Corrections.CorrectionEnum;
 import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.Offspring.OffspringEnum;
-import Genetic_Algorithm.Population.NoiseEnum;
-import Genetic_Algorithm.Population.NoiseImp;
+import Genetic_Algorithm.NoiseStrategy.NoiseEnum;
+import Genetic_Algorithm.NoiseStrategy.NoiseImp;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * Basic Interpreter is used for demonstrations of the entire project
@@ -32,29 +32,45 @@ import java.util.Scanner;
  */
 public class Interpreter {
 
-    //TODO I will use scanner to read all functions
-    // maybe not
-    private Scanner scanner;
-
     //All arguments that the program takes, usually divided into short one letter flag and
     // verbose alternative
-    private final ArrayList<String> CREATE_L = new ArrayList(Arrays.asList("-c", "--create"));
-    private final ArrayList<String> LOAD_L = new ArrayList(Arrays.asList("-l", "--load"));
-    private final ArrayList<String> HELP_L = new ArrayList(Arrays.asList("-h", "--help"));
-    private final ArrayList<String> VERBOSE_L = new ArrayList(Arrays.asList("-v", "--verbose"));
-    private final ArrayList<String> FITNESS_L = new ArrayList(Arrays.asList("-f", "--fitness"));
-    private final ArrayList<String> MUTATOR_L = new ArrayList(Arrays.asList("-m", "--mutator"));
-    private final ArrayList<String> CA_L = new ArrayList(Arrays.asList("-a", "--cellular"));
-    private final ArrayList<String> PREMUTATION_L = new ArrayList(Arrays.asList("-p", "--premutation"));
-    private final ArrayList<String> CHROMOSOME_EVALUATION_L = new ArrayList(Arrays.asList("-e", "--evaluation"));
-    private final ArrayList<String> CORRECTION_L = new ArrayList(Arrays.asList("-r", "--correction"));
-    private final ArrayList<String> NOISE_L = new ArrayList(Arrays.asList("-n", "--noise"));
-    private final ArrayList<String> SELECTION_L = new ArrayList(Arrays.asList("-s", "--selection"));
-    private final ArrayList<String> OFFSPRING_L = new ArrayList(Arrays.asList("-g", "--offspring"));
-    private final ArrayList<String> SAVE_LOCATION_L = new ArrayList(Arrays.asList("-o", "--output"));
+    private final ArrayList<String> CREATE_ARGUMENT = new ArrayList(Arrays.asList("-c", "--create"));
+    private final ArrayList<String> LOAD_ARGUMENT = new ArrayList(Arrays.asList("-l", "--load"));
+    private final ArrayList<String> HELP_ARGUMENT = new ArrayList(Arrays.asList("-h", "--help"));
+    private final ArrayList<String> VERBOSE_ARGUMENT = new ArrayList(Arrays.asList("-v", "--verbose"));
+    private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
+    private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
+    private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
+    private final ArrayList<String> PREMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--premutation"));
+    private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
+    private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
+    private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
+    private final ArrayList<String> SELECTION_ARGUMENT = new ArrayList(Arrays.asList("-s", "--selection"));
+    private final ArrayList<String> OFFSPRING_ARGUMENT = new ArrayList(Arrays.asList("-g", "--offspring"));
+    private final ArrayList<String> SAVE_LOCATION_ARGUMENT = new ArrayList(Arrays.asList("-o", "--output"));
 
     //Some data to display for user
-    private String OPTION;
+    private String HELP_PAGE = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
+            "\n\n[ARGUMENT]: " +
+            "\n" + CREATE_ARGUMENT + "\t[OPTIONS]... \t\tCreate map evaluation" +
+            "\n" + LOAD_ARGUMENT + "\t[SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
+            "\n" + HELP_ARGUMENT + "\t \t\t\t\tDisplay this list" +
+            "\n\n[HELP_PAGE]: " +
+            "\n" + FITNESS_ARGUMENT + "\t[NAME]\t\t\tAdd [FITNESS] Function" +
+            "\n" + SELECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [SELECTION] Function" +
+            "\n" + MUTATOR_ARGUMENT + "\t[NAME]\t\t\tAdd [MUTATOR] Function" +
+            "\n" + CHROMOSOME_EVALUATION_ARGUMENT + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
+            "\n" + NOISE_ARGUMENT + "\t[NAME]\t\t\tAdd [NOISE] Function" +
+            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
+            "\n" + PREMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
+            "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
+            "\n" + OFFSPRING_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
+            "\n" + VERBOSE_ARGUMENT + "\t\t\t\t\t\tVerbose output" +
+            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
+            "\n If you are creating maps, you need to add [NOISE]" +
+            "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
+            "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
+
 
     private final String README = "\nExamples:" +
             "\njava GMaps --create --noise noise --fitness find_all_rooms --selection tournament --offspring default --mutator" +
@@ -77,7 +93,7 @@ public class Interpreter {
        "\n\t" + MutatorEnum.LOWER.getImplementationName() +
        "\n\t" + MutatorEnum.LOWEST.getImplementationName() +
 
-                        "\nPopulation Noise:" +
+                        "\nNoiseStrategy Noise:" +
        "\n\t" + NoiseEnum.FILL.getImplementationName() +
        "\n\t" + NoiseEnum.NOISE.getImplementationName() +
 
@@ -101,12 +117,6 @@ public class Interpreter {
        "\n\t" + "rule20";
 
 
-    //TODO this should have a list of all stategy pattern functions
-    // that I have written (all mutators, all noise generators
-    // I think I can achieve it by reflection?
-    // Low priority, maybe delete
-    private final String ALL_FEATURES = "";
-
     //A whole generation of maps
     private ArrayList<Map> generationOfMaps;
 
@@ -117,8 +127,8 @@ public class Interpreter {
     private SelectionImp selection;
     private MutatorImp mutator;
 
-    //TODO, better variable name
-    private String saveFileDestination = null;
+    //if specified, saves maps to the output directory
+    private String outputDirectory = null;
 
 
     //Chromosome evaluation takes all elements of fitness, etc TODO ELABORATE
@@ -155,11 +165,16 @@ public class Interpreter {
     private int dungeonHeight;
 
 
-    //TODO I might want to add flags
     /**
      * Flags
      * */
+
+    //Verbose should print logs to the terminal (normal should be files only)
     private boolean verbose = false;
+
+    //If maps aren't too different from each other
+    // it means maps aren't really evolving, and we can end sooner
+    private boolean endExecutionSooner = false;
 
     /**
      * Constructor
@@ -171,26 +186,7 @@ public class Interpreter {
         generationOfMaps = new ArrayList<>();
 
 
-        OPTION = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
-            "\n\n[ARGUMENT]: " +
-            "\n" + CREATE_L + "\t[OPTIONS]... \t\tCreate map evaluation" +
-            "\n" + LOAD_L + "\t[SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
-            "\n" + HELP_L + "\t \t\t\t\tDisplay this list" +
-            "\n\n[OPTION]: " +
-            "\n" + FITNESS_L + "\t[NAME]\t\t\tAdd [FITNESS] Function" +
-            "\n" + SELECTION_L + "\t[NAME]\t\t\tAdd [SELECTION] Function" +
-            "\n" + MUTATOR_L + "\t[NAME]\t\t\tAdd [MUTATOR] Function" +
-            "\n" + CHROMOSOME_EVALUATION_L + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
-            "\n" + NOISE_L + "\t[NAME]\t\t\tAdd [NOISE] Function" +
-            "\n" + CA_L + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-            "\n" + PREMUTATION_L + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
-            "\n" + CORRECTION_L + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
-            "\n" + OFFSPRING_L + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
-            "\n" + VERBOSE_L + "\t\t\t\t\t\tVerbose output" +
-            "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
-            "\n If you are creating maps, you need to add [NOISE]" +
-            "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
-            "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
+
         interpretArguments(args);
 
     }
@@ -204,17 +200,17 @@ public class Interpreter {
         }
 
 
-        if(CREATE_L.contains(args[0])){
+        if(CREATE_ARGUMENT.contains(args[0])){
             //todo this minus for is for last 4 arguments always beign
             // numbers
             for (int i = 1; i < args.length - 4; i++) {
                 findOptions(i, args);
             }
         }
-        else if(LOAD_L.contains(args[0])) {
+        else if(LOAD_ARGUMENT.contains(args[0])) {
             System.out.println("Finish developing loading maps");
         }
-        else if(HELP_L.contains(args[0])){
+        else if(HELP_ARGUMENT.contains(args[0])){
             displayHelp();
             System.exit(0);
         }
@@ -232,7 +228,7 @@ public class Interpreter {
         }
 
         //Preparation, either create maps from noise or load some
-        if(CREATE_L.contains(args[0])) {
+        if(CREATE_ARGUMENT.contains(args[0])) {
             if (noise == null){
                 throw new RuntimeException("todo error");
                 //System.exit(1);//todo change to throw exception
@@ -240,7 +236,7 @@ public class Interpreter {
             else{
                 noiseMaps();
             }
-        }else if(args[0].equals(LOAD_L.get(0)))System.exit(1);//todo finish this path
+        }else if(args[0].equals(LOAD_ARGUMENT.get(0)))System.exit(1);//todo finish this path
 
         if(cellularAutomateImp != null)caMaps();
 
@@ -255,7 +251,7 @@ public class Interpreter {
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
 
         //todo its a little silly
-        if(saveFileDestination != null)evolutionResults.saveAllResults(saveFileDestination);
+        if(outputDirectory != null)evolutionResults.saveAllResults(outputDirectory);
         else evolutionResults.saveAllResults();
 
         try {
@@ -267,40 +263,40 @@ public class Interpreter {
 
     private void findOptions(int i, String... args) {
 
-        if(FITNESS_L.contains(args[i])){
+        if(FITNESS_ARGUMENT.contains(args[i])){
             addFitnessStrategy(args[i + 1]);
         }
-        else if(VERBOSE_L.contains(args[i])){
+        else if(VERBOSE_ARGUMENT.contains(args[i])){
             System.out.println("Finish this path");
             verbose = true;
             System.exit(1);
         }
-        else if(MUTATOR_L.contains(args[i])){
+        else if(MUTATOR_ARGUMENT.contains(args[i])){
             addMutatorStrategy(args[i + 1]);
         }
-        else if(CA_L.contains(args[i])){
+        else if(CA_ARGUMENT.contains(args[i])){
             addCellularAutomataStrategy(args[i + 1]);
         }
-        else if(PREMUTATION_L.contains(args[i])){
+        else if(PREMUTATION_ARGUMENT.contains(args[i])){
             addPremutationStrategy(args[i + 1]);
         }
-        else if(CHROMOSOME_EVALUATION_L.contains(args[i])){
+        else if(CHROMOSOME_EVALUATION_ARGUMENT.contains(args[i])){
             addChromosomeEvaluationStrategy(args[i + 1]);
         }
-        else if(CORRECTION_L.contains(args[i])){
+        else if(CORRECTION_ARGUMENT.contains(args[i])){
             addCorrectionStrategy(args[i + 1]);
         }
-        else if(NOISE_L.contains(args[i])){
+        else if(NOISE_ARGUMENT.contains(args[i])){
             addNoiseStrategy(args[i + 1]);
         }
-        else if(SELECTION_L.contains(args[i])){
+        else if(SELECTION_ARGUMENT.contains(args[i])){
             addSelectionStrategy(args[i + 1]);
         }
-        else if(OFFSPRING_L.contains(args[i])){
+        else if(OFFSPRING_ARGUMENT.contains(args[i])){
             addOffspringStrategy(args[i + 1]);
         }
-        else if(SAVE_LOCATION_L.contains(args[i])){
-            saveFileDestination = args[i + 1];
+        else if(SAVE_LOCATION_ARGUMENT.contains(args[i])){
+            outputDirectory = args[i + 1];
         }
     }
 
@@ -432,7 +428,16 @@ public class Interpreter {
         }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
             mutator = MutatorEnum.LOWEST;
             return true;
-        }else{
+        }
+        else if(choice.equals(MutatorEnum.HIGH.getImplementationName())){
+            mutator = MutatorEnum.HIGH;
+            return true;
+        }
+        else if(choice.equals(MutatorEnum.HIGHEST.getImplementationName())){
+            mutator = MutatorEnum.HIGHEST;
+            return true;
+        }
+        else{
             return false;
         }
     }
@@ -454,9 +459,7 @@ public class Interpreter {
     }
 
     private void displayHelp() {
-
-       System.out.println(OPTION);
-       System.out.println(ALL_FEATURES);
+       System.out.println(HELP_PAGE);
        System.out.println(README);
        System.out.println(AVAILABLE_OPTIONS);
     }

@@ -1,5 +1,6 @@
 package Algorithms;
 
+import DataStructure.Matrix;
 import Map.*;
 import Exceptions.MatrixWrongDimensionsException;
 

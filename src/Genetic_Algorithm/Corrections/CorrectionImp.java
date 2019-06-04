@@ -1,4 +1,4 @@
-package Genetic_Algorithm.ManualCorrections;
+package Genetic_Algorithm.Corrections;
 
 import Map.Map;
 

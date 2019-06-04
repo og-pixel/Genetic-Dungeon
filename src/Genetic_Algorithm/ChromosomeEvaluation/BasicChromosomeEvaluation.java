@@ -5,7 +5,7 @@ import Map.Map;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessImp;
-import Genetic_Algorithm.ManualCorrections.CorrectionImp;
+import Genetic_Algorithm.Corrections.CorrectionImp;
 import Genetic_Algorithm.Mutator.MutatorImp;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
@@ -43,7 +43,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
 
-        if(populationSize > 1000) System.err.println("Population size is beyond 1000, program might take a long time and" +
+        if(populationSize > 1000) System.err.println("NoiseStrategy size is beyond 1000, program might take a long time and" +
                 "results probably won't be better");
 //        if(topPopulation != 0.1) System.err.println("Default crossover behaviour recommends 0.1 (10%) of the best " +
 //                "population to mate");
@@ -66,6 +66,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         //todo this sets logger to be turned off, used in decorator, maybe overkill? but then i can attach however i fancy
         logger.setLevel(Level.SEVERE);
+
+
     }
 
     @Override
@@ -73,15 +75,16 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         //Setup Phase
         ArrayList<Map> newPopulation;
-         //todo this is new data structure
+        //All results are saved here
         EvolutionResults evolutionResults = new EvolutionResults();
 
         double iteration = numberOfGenerations * 0.01; //every 1%
         int percentageDone = 0;
-        //TODO delete
+
 
         //Run Project
         for (int generation = 0; generation < numberOfGenerations; generation++) {
+
 
             //Evaluate all dungeon based on all fitness implementations on the list
             for (FitnessImp fitnessImp : fitnessImpList) {
@@ -90,20 +93,30 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //Correct Maps
             //TODO make better error checking in interpeter
-            if(correction != null)for (Map map : mapList) correction.correctMap(map);
-
-            //Selection
-            mapList = selection.selectFitIndividuals(mapList, selectionFraction);
-            if(generation % iteration == 0) {
-                //TODO while this isnt really necessary, it is nice for debugging
-                logger.log(Level.INFO, generation + "th generation\nTop Map Score: "
-                        + mapList.get(0).getFitnessScore() + "\nTop Map Number of Rooms: "
-                        + mapList.get(0).getNumberOfRooms() + "\n"
-                        + percentageDone + "%");
-                percentageDone++;
+            if(correction == null) {
+                System.out.println("todo, not found correction strategy");
+            }
+            else{
+                for (Map map : mapList) correction.correctMap(map);
             }
 
+            //Selection
+            //todo i should not do so I write code like
+            // map = selection.doSomething(map);
+            // it should me
+            // selection.doSomething(map)
+            // and make sure it does update accordingly
+            mapList = selection.selectFitIndividuals(mapList, selectionFraction);
+
+
+
+            //Save previous Generation
             evolutionResults.addGeneration(Algorithms.deepClone(mapList));
+
+
+
+
+
 
             //TODO WORK HERE, its offspring generator
             newPopulation = offspring.createNewGeneration(mapList, populationSize, selectionFraction);
@@ -113,8 +126,24 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             mapList = newPopulation;//TODO it might make it work or not
 //            newPopulation.sort(Comparator.comparing(Map::getFitnessScore).reversed());
+
+
+
+            if(generation % iteration == 0) {
+                //TODO while this isnt really necessary, it is nice for debugging
+                logger.log(Level.INFO, generation + "th generation\nTop Map Score: "
+                        + mapList.get(0).getFitnessScore() + "\nTop Map Number of Rooms: "
+                        + mapList.get(0).getNumberOfRooms() + "\n"
+                        + percentageDone + "%");
+                percentageDone++;
+            }
         }
 
         return evolutionResults;
+    }
+
+    private void createOffspring(){
+
+
     }
 }

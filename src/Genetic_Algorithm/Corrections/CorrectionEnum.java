@@ -1,7 +1,7 @@
-package Genetic_Algorithm.ManualCorrections;
+package Genetic_Algorithm.Corrections;
 
 import Algorithms.Algorithms;
-import Algorithms.Matrix;
+import DataStructure.Matrix;
 import Map.*;
 
 public enum CorrectionEnum implements CorrectionImp, TileList {
@@ -28,7 +28,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
     FIND_ROOM("find_room"){
         @Override
         public void correctMap(Map map) {
-             Matrix matrix = map.getMapMatrix();
+            Matrix matrix = map.getMapMatrix();
 
             //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)

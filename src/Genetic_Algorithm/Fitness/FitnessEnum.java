@@ -1,8 +1,7 @@
 package Genetic_Algorithm.Fitness;
 
 import Algorithms.Algorithms;
-import Algorithms.Matrix;
-import Genetic_Algorithm.ManualCorrections.CorrectionEnum;
+import DataStructure.Matrix;
 import Map.*;
 
 import java.util.ArrayList;

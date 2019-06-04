@@ -1,6 +1,6 @@
 package Algorithms.CA;
 
-import Algorithms.Matrix;
+import DataStructure.Matrix;
 import Map.*;
 
 //TODO rule number might be wrong

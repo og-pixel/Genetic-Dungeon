@@ -6,16 +6,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum PremutationEnum implements PremutationImp{
+    //todo maybe add something like "do swap x times"
     SWAP("swap"){
         @Override
         public void premutateDungeon(Map map){
             Random random = new Random();
             int dungeonHeight = map.getMapHeight();
             int dungeonWidth = map.getMapWidth();
-            int x1;
-            int y1;
-            int x2;
-            int y2;
+            int x1 ,y1;
+            int x2, y2;
             //While it is a loop, it is meant to be run once 99% ot the time
             do {
                 x1 = random.nextInt(dungeonWidth);

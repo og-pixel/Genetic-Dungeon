@@ -1,4 +1,4 @@
-package Algorithms;
+package DataStructure;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -48,25 +48,16 @@ public class EvolutionResults {
         }
     }
 
-    //todo better name for string, it should be file directory to save
-    public void saveAllResults(String string){
-        System.out.println(string);
-
-        try {
-            Algorithms.writeToFile(string + "dungeon.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void saveAllResults(String outputDirectory){
+        for (int i = 0; i < generationsList.size(); i++) {
+            for (int j = 0; j < generationsList.get(i).size(); j++) {
+                try {
+                    Algorithms.writeToFile(outputDirectory +"Row: " + i + " Column: " + j, generationsList.get(i).get(j));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
-//        for (int i = 0; i < generationsList.size(); i++) {
-//            for (int j = 0; j < generationsList.get(i).size(); j++) {
-//                try {
-//                    Algorithms.writeToFile(string +"Row: " + i + " Column: " + j, generationsList.get(i).get(j));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
     }
 
     public Map findBest(){

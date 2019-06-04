@@ -1,4 +1,4 @@
-package Algorithms;
+package DataStructure;
 
 import Map.TileList;
 import Exceptions.MatrixTooSmallException;
@@ -92,7 +92,15 @@ public class Matrix implements Serializable, TileList {
 
     /**
      * Cut a matrix, starting from the UPPER-LEFT corner as pickX and pickY coordinates
-      * @param pickX
+     *
+     * This is X,Y point
+     * ^####
+     * #####
+     * #####
+     * #####
+     * And has 4 width and 5 height
+     *
+     * @param pickX
      * @param pickY
      * @param width
      * @param height
