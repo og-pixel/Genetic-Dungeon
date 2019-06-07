@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GMaps",
+            "request": "launch",
+            "mainClass": "GMaps",
+            "projectName": "genetic-dungeon_7ba40bff",
+            "args": "--create --noise noise --fitness find_all_rooms --selection tournament --offspring default --mutator default --cellular rule20 --premutation swap -r find_room 100 3000 30 25",
+        }
+    ]
+}
