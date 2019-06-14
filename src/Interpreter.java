@@ -131,25 +131,18 @@ public class Interpreter {
     private String outputDirectory = null;
 
 
-    //Chromosome evaluation takes all elements of fitness, etc TODO ELABORATE
-    // and scores todo i might describe it wrong
+    //Chromosome collects all strategy elements
+    // and evaluates our whole project
     private AbstractChromosomeEvaluation chromosomeEvaluation;
 
     //Noise Implementation, needed at the start
     // if maps start random
     private NoiseImp noise;
-
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
     private CellularAutomateImp cellularAutomateImp;
-
-    //TODO premutations aren't really useful
     private PremutationImp premutation;
-
-    //TODO corrections aren't useful FOR NOW
-    // I am trying to force looking for shapes and
-    // patterns
     private CorrectionImp correction;
     private OffspringImp offspring;
 
@@ -184,11 +177,7 @@ public class Interpreter {
     Interpreter(String... args) {
         fitnessList = new ArrayList<>();
         generationOfMaps = new ArrayList<>();
-
-
-
         interpretArguments(args);
-
     }
 
 
@@ -223,7 +212,11 @@ public class Interpreter {
             dungeonWidth = Integer.parseInt(args[args.length - 2]);
             dungeonHeight = Integer.parseInt(args[args.length- 1]);
         } catch (NumberFormatException e) {
-            System.err.println("Error parsing Number");
+            System.err.println("Error parsing dungeon variables, you need to supply" +
+                    "\nPopulation Size" +
+                    "\nNumber of Generations" +
+                    "\nWidth of Maps" +
+                    "\nHeight of Maps");
             System.exit(1);
         }
 
@@ -231,7 +224,6 @@ public class Interpreter {
         if(CREATE_ARGUMENT.contains(args[0])) {
             if (noise == null){
                 throw new RuntimeException("todo error");
-                //System.exit(1);//todo change to throw exception
             }
             else{
                 noiseMaps();
@@ -245,7 +237,7 @@ public class Interpreter {
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
                 fitnessList, mutator, selection, premutation, correction, offspring);
 
-        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
+//        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
@@ -262,7 +254,8 @@ public class Interpreter {
     }
 
     private void findOptions(int i, String... args) {
-
+        //todo for better argument finding, I could jump x amount of times in array based on
+        // how many arguments my function took (and it would return this number I guess)
         if(FITNESS_ARGUMENT.contains(args[i])){
             addFitnessStrategy(args[i + 1]);
         }

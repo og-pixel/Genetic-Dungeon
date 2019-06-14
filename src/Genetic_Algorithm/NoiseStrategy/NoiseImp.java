@@ -10,7 +10,6 @@ public interface NoiseImp {
      * @param width
      * @param height
      * @param numberOfMaps
-     * @param odds
      * @return
      */
     ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds);
