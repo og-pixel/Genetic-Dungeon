@@ -19,9 +19,9 @@ public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluati
     public EvolutionResults crossoverPopulation(ArrayList<Map> mapList) {
         long startTime = System.nanoTime();
         EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(mapList);
-//        getLogger().setLevel(Level.INFO);
+        getLogger().setLevel(Level.INFO);
         getLogger().log(Level.INFO, "It took: " + ((System.nanoTime() - startTime) / 1000000000) + " seconds");
-//        getLogger().setLevel(Level.SEVERE);
+        getLogger().setLevel(Level.SEVERE);
         return k;
     }
 }

@@ -3,7 +3,6 @@ package Algorithms.CA;
 import DataStructure.Matrix;
 import Map.*;
 
-//TODO rule number might be wrong
 public class Rule20CellularAutomate implements CellularAutomateImp, TileList {
     @Override
     public Matrix generateMap(Matrix map) {

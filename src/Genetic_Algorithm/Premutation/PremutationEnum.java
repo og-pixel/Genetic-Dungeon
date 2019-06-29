@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public enum PremutationEnum implements PremutationImp{
-    //todo maybe add something like "do swap x times"
     SWAP("swap"){
         @Override
         public void premutateDungeon(Map map){
@@ -40,17 +39,18 @@ public enum PremutationEnum implements PremutationImp{
         }
     };
 
-
     //Just run the same method for the whole arry
     @Override
     public void premutateDungeons(ArrayList<Map> mapList) {
         for (Map map : mapList) {
             premutateDungeon(map);
         }
-    };
+    }
+
     PremutationEnum(String implementationName){
         this.implementationName = implementationName;
     }
+
     private String implementationName;
     public String getImplementationName() {
         return implementationName;

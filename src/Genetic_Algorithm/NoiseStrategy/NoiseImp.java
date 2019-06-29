@@ -13,4 +13,5 @@ public interface NoiseImp {
      * @return
      */
     ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds);
+//    String IMPLEMENTATION = "unknown strategy";
 }

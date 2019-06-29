@@ -5,6 +5,9 @@ import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Corrections.CorrectionImp;
 import Genetic_Algorithm.Mutator.MutatorImp;
+import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
+import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
+import Genetic_Algorithm.Offspring.DefaultOffspringStrategy;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
 import Genetic_Algorithm.Selection.SelectionImp;
@@ -17,8 +20,7 @@ import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Corrections.CorrectionEnum;
 import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.Offspring.OffspringEnum;
-import Genetic_Algorithm.NoiseStrategy.NoiseEnum;
-import Genetic_Algorithm.NoiseStrategy.NoiseImp;
+import Genetic_Algorithm.NoiseStrategy.*;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
 
@@ -94,8 +96,8 @@ public class Interpreter {
        "\n\t" + MutatorEnum.LOWEST.getImplementationName() +
 
                         "\nNoiseStrategy Noise:" +
-       "\n\t" + NoiseEnum.FILL.getImplementationName() +
-       "\n\t" + NoiseEnum.NOISE.getImplementationName() +
+       "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
+       "\n\t" + NoiseNoiseStrategy.IMPLEMENTATION +
 
                         "\nPremutation:" +
        "\n\t" + PremutationEnum.SWAP.getImplementationName() +
@@ -110,8 +112,8 @@ public class Interpreter {
        "\n\t" + SelectionEnum.StochasticTwo.getImplementationName() +
 
                         "\n Offspring Selection Method:" +
-       "\n\t" + OffspringEnum.DEFAULT.getImplementationName()+
-       "\n\t" + OffspringEnum.DASD.getImplementationName() +
+       "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION +
+//       "\n\t" + OffspringEnum.DASD.getImplementationName() +
 
                         "\n Cellular Automate Method:" +
        "\n\t" + "rule20";
@@ -312,10 +314,12 @@ public class Interpreter {
 
         switch (choice) {
             case "noise":
-                noise = NoiseEnum.NOISE;
+                //noise = NoiseEnum.NOISE;
+                noise = new NoiseNoiseStrategy();
                 return true;
             case "fill":
-                noise = NoiseEnum.FILL;
+                noise = new FillNoiseStrategy();
+//                noise =  NoiseEnum.FILL;
                 return true;
             default:
                 return false;
@@ -395,11 +399,11 @@ public class Interpreter {
     private boolean addOffspringStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
-        if(choice.equals(OffspringEnum.DEFAULT.getImplementationName())){
-            offspring = OffspringEnum.DEFAULT;
+        if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
+            offspring = new DefaultOffspringStrategy();
             return true;
-        }else if(choice.equals(OffspringEnum.DASD.getImplementationName())){
-            offspring = OffspringEnum.DEFAULT;
+        }else if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
+//            offspring = OffspringEnum.DEFAULT;
             return true;
         }else{
             return false;

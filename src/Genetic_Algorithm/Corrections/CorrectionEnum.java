@@ -25,14 +25,14 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             }
         }
     },
-    FIND_ROOM("find_room"){
+    FIND_ROOM("find_room") {
         @Override
         public void correctMap(Map map) {
             Matrix matrix = map.getMapMatrix();
 
             //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
-            Matrix room = new Matrix(5,5);
+            Matrix room = new Matrix(5, 5);
             room.replaceRow(0, new long[]{UNIVERSAL, WALL, UNIVERSAL, WALL, UNIVERSAL});
             room.replaceRow(1, new long[]{WALL, CORRIDOR, CORRIDOR, CORRIDOR, WALL});
             room.replaceRow(2, new long[]{UNIVERSAL, CORRIDOR, CORRIDOR, CORRIDOR, UNIVERSAL});
@@ -43,7 +43,7 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             for (int y = 0; y < matrix.getHeight() - room.getHeight(); y = y + room.getHeight()) {
                 for (int x = 0; x < matrix.getWidth() - room.getWidth(); x = x + room.getWidth()) {
                     cutMatrix = matrix.cutMatrix(x, y, room.getWidth(), room.getHeight());
-                    if(Algorithms.getHammingDistance(room, cutMatrix) <= 0){
+                    if (Algorithms.getHammingDistance(room, cutMatrix) <= 0) {
                         map.setFitnessScore(map.getFitnessScore() + room.getVolume());
                         map.setCorrectionsFound(map.getCorrectionsFound() + 1);
                     }
@@ -51,6 +51,9 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
             }
         }
     };
+    //TODO add
+    // MACHINE_LEARNING_MAPS()
+
     CorrectionEnum(String implementationName){
         this.implementationName = implementationName;
     }

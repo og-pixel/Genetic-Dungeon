@@ -6,7 +6,6 @@ public abstract class AbstractChromosomeEvaluation implements ChromosomeEvaluati
 
     public static final Logger logger = Logger.getLogger(AbstractChromosomeEvaluation.class.getName());
 
-
     public Logger getLogger(){
         return logger;
     }
