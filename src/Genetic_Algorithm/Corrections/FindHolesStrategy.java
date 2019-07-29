@@ -9,8 +9,8 @@ public class FindHolesStrategy implements CorrectionImp {
     public static final String IMPLEMENTATION = "find_holes";
 
     @Override
-    public void correctMap(Map map) {
-        Matrix matrix = map.getMapMatrix();
+    public void correctMap(GameMap gameMap) {
+        Matrix matrix = gameMap.getMapMatrix();
 
             for (int y = 0; y < matrix.getHeight(); y++) {
                 for (int x = 0; x < matrix.getWidth(); x++) {

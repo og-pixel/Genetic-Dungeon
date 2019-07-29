@@ -1,9 +1,9 @@
 package Genetic_Algorithm.Offspring;
 
-import Map.Map;
+import Map.GameMap;
 
 import java.util.ArrayList;
 
 public interface OffspringImp {
-    ArrayList<Map> createNewGeneration(ArrayList<Map> list, double populationSize, double selectionFraction);
+    ArrayList<GameMap> createNewGeneration(ArrayList<GameMap> list, double populationSize, double selectionFraction);
 }

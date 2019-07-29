@@ -1,6 +1,6 @@
 package Genetic_Algorithm.NoiseStrategy;
 
-import Map.Map;
+import Map.GameMap;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,6 @@ public interface NoiseImp {
      * @param numberOfMaps
      * @return
      */
-    ArrayList<Map> createNoise(int width, int height, int numberOfMaps, double odds);
+    ArrayList<GameMap> createNoise(int width, int height, int numberOfMaps, double odds);
 //    String IMPLEMENTATION = "unknown strategy";
 }

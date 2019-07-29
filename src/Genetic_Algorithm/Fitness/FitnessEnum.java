@@ -10,19 +10,19 @@ import static Map.TileList.*;
 public enum FitnessEnum implements FitnessImp {
     IS_TRAVERSABLE("is_traversable", 1) {
         @Override
-        public void evaluateMap(Map map) {
+        public void evaluateMap(GameMap gameMap) {
         }
 
         @Override
-        public void evaluateMapCheap(Map map) {
+        public void evaluateMapCheap(GameMap gameMap) {
         }
     },
     FIND_ALL_ROOMS("find_all_rooms", 0.7) {
-        //TODO I need to work on how visit map works
+        //TODO I need to work on how visit gameMap works
         @Override
-        public void evaluateMap(Map map) {
-            int dungeonWidth = map.getMapWidth();
-            int dungeonHeight = map.getMapHeight();
+        public void evaluateMap(GameMap gameMap) {
+            int dungeonWidth = gameMap.getMapWidth();
+            int dungeonHeight = gameMap.getMapHeight();
 
             int roomSize = 0;
             int numberOfRooms = 0;
@@ -45,12 +45,12 @@ public enum FitnessEnum implements FitnessImp {
                             }
                         }
                     }
-                    if (!(map.getMapMatrix().getElement(x, y) == CORRIDOR)) {
+                    if (!(gameMap.getMapMatrix().getElement(x, y) == CORRIDOR)) {
                         alreadyVisited = true;
                     }
 
                     if (!alreadyVisited) {
-                        visitMap = Algorithms.floodFill(map, x, y);
+                        visitMap = Algorithms.floodFill(gameMap, x, y);
                         listOfRooms.add(visitMap);
 
                         numberOfRooms++;
@@ -70,18 +70,18 @@ public enum FitnessEnum implements FitnessImp {
 
             double score = (distance / numberOfRooms); //More rooms * thier room size
 
-            //Cleanup, save information to the map
-            map.setNumberOfRooms(numberOfRooms);
+            //Cleanup, save information to the gameMap
+            gameMap.setNumberOfRooms(numberOfRooms);
 
             //TODO for now I had to make so score cannot be negative
             //TODO Return between 0 and 100 (0.0 to 1.0)
             //TODO for now I will only try to encourage creating multiple small rooms
-            if(score > 0) map.setFitnessScore(score);
-            else map.setFitnessScore(score);
+            if(score > 0) gameMap.setFitnessScore(score);
+            else gameMap.setFitnessScore(score);
         }
 
         @Override
-        public void evaluateMapCheap(Map map) {
+        public void evaluateMapCheap(GameMap gameMap) {
 
         }
 

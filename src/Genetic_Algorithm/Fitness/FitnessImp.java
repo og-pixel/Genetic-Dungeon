@@ -1,25 +1,25 @@
 package Genetic_Algorithm.Fitness;
 
-import Map.Map;
+import Map.GameMap;
 
 /**
  * Interface defines what a fitness function needs to run
  */
 public interface FitnessImp {
     /**
-     * Evaluate map based on some arbitrary rule (for example give a full score a map that is fully traversable)
-     * @param map map to be evaluated
-     * @return score that the map achieved
+     * Evaluate gameMap based on some arbitrary rule (for example give a full score a gameMap that is fully traversable)
+     * @param gameMap gameMap to be evaluated
+     * @return score that the gameMap achieved
      */
-    void evaluateMap(Map map);
+    void evaluateMap(GameMap gameMap);
 
     /**
      * Each fitness function needs to have a way to evaluate each individual
      * However if program takes too much time, it should run an approximation that should be
      * much faster version of the same (just lest accurate)
-     * @param map map to be evaluated
-     * @return score that the map achieved, it might be not accurate, but fast
+     * @param gameMap gameMap to be evaluated
+     * @return score that the gameMap achieved, it might be not accurate, but fast
      */
-    void evaluateMapCheap(Map map);
+    void evaluateMapCheap(GameMap gameMap);
 }
 

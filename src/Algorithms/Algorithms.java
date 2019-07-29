@@ -18,41 +18,41 @@ import java.util.Random;
  */
 public class Algorithms{
 
-    public static Matrix floodFill(Map map, int x, int y){
-        int dungeonWidth = map.getMapWidth();
-        int dungeonHeight = map.getMapHeight();
+    public static Matrix floodFill(GameMap gameMap, int x, int y){
+        int dungeonWidth = gameMap.getMapWidth();
+        int dungeonHeight = gameMap.getMapHeight();
 
         Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
         visitMap.fillMatrix(0);
 
-        flood(map, visitMap, x, y);
+        flood(gameMap, visitMap, x, y);
 
         return visitMap;
     }
 
-    private static void flood(Map map, Matrix visitMap, int x, int y){
+    private static void flood(GameMap gameMap, Matrix visitMap, int x, int y){
 
-        if(map.getMapMatrix().getElement(x, y) == TileList.CORRIDOR) {
+        if(gameMap.getMapMatrix().getElement(x, y) == TileList.CORRIDOR) {
             visitMap.put(x, y, 1);
 
-            if (x > 0 && map.getMapMatrix().getElement(x - 1, y) == TileList.CORRIDOR) {
+            if (x > 0 && gameMap.getMapMatrix().getElement(x - 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x - 1, y) == 0) {
-                    flood(map, visitMap, x - 1, y);
+                    flood(gameMap, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < map.getMapWidth() && map.getMapMatrix().getElement(x + 1, y) == TileList.CORRIDOR) {
+            if (x + 1 < gameMap.getMapWidth() && gameMap.getMapMatrix().getElement(x + 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x + 1, y) == 0) {
-                    flood(map, visitMap, x + 1, y);
+                    flood(gameMap, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && map.getMapMatrix().getElement(x, y - 1) == TileList.CORRIDOR) {
+            if (y > 0 && gameMap.getMapMatrix().getElement(x, y - 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y - 1) == 0) {
-                    flood(map, visitMap, x, y - 1);
+                    flood(gameMap, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < map.getMapHeight() && map.getMapMatrix().getElement(x, y + 1) == TileList.CORRIDOR) {
+            if (y + 1 < gameMap.getMapHeight() && gameMap.getMapMatrix().getElement(x, y + 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y + 1) == 0) {
-                    flood(map, visitMap, x, y + 1);
+                    flood(gameMap, visitMap, x, y + 1);
                 }
             }
         }
@@ -60,20 +60,20 @@ public class Algorithms{
 
 
     //TODO not working ATM
-    public static void aStarTraverse(Map map){
-        Matrix dungeonMatrix = map.getMapMatrix();
+    public static void aStarTraverse(GameMap gameMap){
+        Matrix dungeonMatrix = gameMap.getMapMatrix();
 
         ArrayList<Point> traverseList = new ArrayList<>();
 
 
-        int startPositionX = map.getStartPoint().getXPos();
-        int startPositionY = map.getStartPoint().getYPos();
+        int startPositionX = gameMap.getStartPoint().getXPos();
+        int startPositionY = gameMap.getStartPoint().getYPos();
 
-        int endPositionX = map.getEndPoint().getXPos();
-        int endPositionY = map.getEndPoint().getYPos();
+        int endPositionX = gameMap.getEndPoint().getXPos();
+        int endPositionY = gameMap.getEndPoint().getYPos();
 
-        int dungeonWidth = map.getMapWidth();
-        int dungeonHeight = map.getMapHeight();
+        int dungeonWidth = gameMap.getMapWidth();
+        int dungeonHeight = gameMap.getMapHeight();
 
         Point currentPosition = new Point(startPositionX, startPositionY);
 
@@ -292,13 +292,13 @@ public class Algorithms{
 
     /**
      * Wrapper method that takes dungeon maps instead
-      * @param map1
-     * @param map2
+      * @param gameMap1
+     * @param gameMap2
      * @return
      */
-    public static int getHammingDistance(Map map1, Map map2){
-        Matrix matrix1 = map1.getMapMatrix();
-        Matrix matrix2 = map2.getMapMatrix();
+    public static int getHammingDistance(GameMap gameMap1, GameMap gameMap2){
+        Matrix matrix1 = gameMap1.getMapMatrix();
+        Matrix matrix2 = gameMap2.getMapMatrix();
 
         return getHammingDistance(matrix1, matrix2);
     }
@@ -321,7 +321,7 @@ public class Algorithms{
     }
 
     public static void writeToFile(String content, Object object) throws IOException {
-        if(object instanceof Map)writeToFile(content, (Map) object);
+        if(object instanceof GameMap)writeToFile(content, (GameMap) object);
         else {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -336,45 +336,45 @@ public class Algorithms{
         }
     }
 
-    private static void writeToFile(String content, Map map) throws IOException {
+    private static void writeToFile(String content, GameMap gameMap) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        int score = (int) map.getFitnessScore();
+        int score = (int) gameMap.getFitnessScore();
         File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
-        content = map.mapToString();
+        content = gameMap.mapToString();
         fileWrite.write(content);
 
         fileWrite.flush();
         fileWrite.close();
     }
 
-    public static Map deepClone(Map map){
+    public static GameMap deepClone(GameMap gameMap){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(map);
+            oos.writeObject(gameMap);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (Map) ois.readObject();
+            return (GameMap) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ArrayList<Map> deepClone(ArrayList<Map> map){
+    public static ArrayList<GameMap> deepClone(ArrayList<GameMap> gameMap){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(map);
+            oos.writeObject(gameMap);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (ArrayList<Map>) ois.readObject();
+            return (ArrayList<GameMap>) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;

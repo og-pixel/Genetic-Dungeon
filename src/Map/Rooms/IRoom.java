@@ -1,5 +1,5 @@
 package Map.Rooms;
 
-public interface RoomImp {
+public interface IRoom {
     String getRoomInfo();
 }

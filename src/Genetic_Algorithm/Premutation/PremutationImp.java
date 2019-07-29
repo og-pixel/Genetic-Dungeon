@@ -1,10 +1,10 @@
 package Genetic_Algorithm.Premutation;
 
-import Map.Map;
+import Map.GameMap;
 
 import java.util.ArrayList;
 
 public interface PremutationImp {
-    void premutateDungeon(Map map);
-    void premutateDungeons(ArrayList<Map> mapList);
+    void premutateDungeon(GameMap gameMap);
+    void premutateDungeons(ArrayList<GameMap> gameMapList);
 }

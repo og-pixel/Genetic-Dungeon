@@ -1,15 +1,15 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
-import Map.Map;
+import Map.GameMap;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessImp;
 import Genetic_Algorithm.Corrections.CorrectionImp;
-import Genetic_Algorithm.Mutator.MutatorImp;
+import Genetic_Algorithm.Mutator.IMutator;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
-import Genetic_Algorithm.Selection.SelectionImp;
+import Genetic_Algorithm.Selection.ISelection;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,8 +24,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     //TODO these are all strategies, as I said, I want them in decorators mostly
     private ArrayList<FitnessImp> fitnessImpList;
-    private MutatorImp mutation;
-    private SelectionImp selection;
+    private IMutator mutation;
+    private ISelection selection;
     private PremutationImp premutation;
     private CorrectionImp correction;
     private OffspringImp offspring;
@@ -37,7 +37,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     //TODO since I can order decorators in whatever order I want, it should make it even more exciting!
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
                                      ArrayList<FitnessImp> fitnessImpList,
-                                     MutatorImp mutation, SelectionImp selection, PremutationImp premutation,
+                                     IMutator mutation, ISelection selection, PremutationImp premutation,
                                      CorrectionImp correction, OffspringImp offspring){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
@@ -71,10 +71,10 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     }
 
     @Override
-    public EvolutionResults crossoverPopulation(ArrayList<Map> mapList) {
+    public EvolutionResults crossoverPopulation(ArrayList<GameMap> gameMapList) {
 
         //Setup Phase
-        ArrayList<Map> newPopulation;
+        ArrayList<GameMap> newPopulation;
         //All results are saved here
         EvolutionResults evolutionResults = new EvolutionResults();
 
@@ -88,7 +88,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //Evaluate all dungeon based on all fitness implementations on the list
             for (FitnessImp fitnessImp : fitnessImpList) {
-                for (Map map : mapList) fitnessImp.evaluateMap(map);
+                for (GameMap gameMap : gameMapList) fitnessImp.evaluateMap(gameMap);
             }
 
             //Correct Maps
@@ -97,7 +97,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 System.out.println("todo, not found correction strategy");
             }
             else{
-                for (Map map : mapList) correction.correctMap(map);
+                for (GameMap gameMap : gameMapList) correction.correctMap(gameMap);
             }
 
             //Selection
@@ -106,12 +106,12 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             // it should me
             // selection.doSomething(map)
             // and make sure it does update accordingly
-            mapList = selection.selectFitIndividuals(mapList, selectionFraction);
+            gameMapList = selection.selectFitIndividuals(gameMapList, selectionFraction);
 
 
 
             //Save previous Generation
-            evolutionResults.addGeneration(Algorithms.deepClone(mapList));
+            evolutionResults.addGeneration(Algorithms.deepClone(gameMapList));
 
 
 
@@ -119,21 +119,21 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
             //TODO WORK HERE, its offspring generator
-            newPopulation = offspring.createNewGeneration(mapList, populationSize, selectionFraction);
+            newPopulation = offspring.createNewGeneration(gameMapList, populationSize, selectionFraction);
 
 
             mutation.mutateDungeons(newPopulation);//TODO it might not mutate sort makes no sense as i didnt evaluate it again
 
-            mapList = newPopulation;//TODO it might make it work or not
-//            newPopulation.sort(Comparator.comparing(Map::getFitnessScore).reversed());
+            gameMapList = newPopulation;//TODO it might make it work or not
+//            newPopulation.sort(Comparator.comparing(GameMap::getFitnessScore).reversed());
 
 
 
             if(generation % iteration == 0) {
                 //TODO while this isnt really necessary, it is nice for debugging
-                logger.log(Level.INFO, generation + "th generation\nTop Map Score: "
-                        + mapList.get(0).getFitnessScore() + "\nTop Map Number of Rooms: "
-                        + mapList.get(0).getNumberOfRooms() + "\n"
+                logger.log(Level.INFO, generation + "th generation\nTop GameMap Score: "
+                        + gameMapList.get(0).getFitnessScore() + "\nTop GameMap Number of Rooms: "
+                        + gameMapList.get(0).getNumberOfRooms() + "\n"
                         + percentageDone + "%");
                 percentageDone++;
             }

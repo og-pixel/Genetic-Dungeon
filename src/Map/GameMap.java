@@ -8,10 +8,10 @@ import static Map.TileList.*;
 
 
 /**
- * Map is an extension to the Matrix class in map generation
+ * GameMap is an extension to the Matrix class in map generation
  * It does contain information about its modifications
  */
-public class Map implements Serializable{
+public class GameMap implements Serializable{
 
     /* Variables */
     private int mapWidth, mapHeight;
@@ -23,7 +23,7 @@ public class Map implements Serializable{
     private Point endPoint;
 
     /*
-    * Map is created as a matrix made out of number Tile objects representing different type of tile
+    * GameMap is created as a matrix made out of number Tile objects representing different type of tile
     * (To be specified in TileList Interface)
     */
     private Matrix mapMatrix;
@@ -41,7 +41,7 @@ public class Map implements Serializable{
      * @param mapWidth
      * @param mapHeight
      */
-    public Map(int mapWidth, int mapHeight) {
+    public GameMap(int mapWidth, int mapHeight) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.mapMatrix = new Matrix(mapWidth, mapHeight);
@@ -49,7 +49,7 @@ public class Map implements Serializable{
     }
 
     //Constructor takes already existing matrix and reset rest of information
-    public Map(Matrix mapMatrix) {
+    public GameMap(Matrix mapMatrix) {
         this.mapWidth = mapMatrix.getWidth();
         this.mapHeight = mapMatrix.getHeight();
         this.mapMatrix = mapMatrix;
@@ -150,7 +150,7 @@ public class Map implements Serializable{
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
-        stringBuilder.append("Mutator Count: ").append(mutationCount).append("\n");
+        stringBuilder.append("DefaultMutator Count: ").append(mutationCount).append("\n");
         stringBuilder.append("Corrections Count: ").append(correctionsFound).append("\n");
         for (int y = 0; y < mapHeight; y++) {
             stringBuilder.append("\n");

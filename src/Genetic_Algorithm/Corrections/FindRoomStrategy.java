@@ -1,7 +1,7 @@
 package Genetic_Algorithm.Corrections;
 
 import DataStructure.Matrix;
-import Map.Map;
+import Map.GameMap;
 import Algorithms.Algorithms;
 
 import static Map.TileList.*;
@@ -11,8 +11,8 @@ public class FindRoomStrategy implements CorrectionImp {
     public static final String IMPLEMENTATION = "find_room";
 
     @Override
-    public void correctMap(Map map) {
-        Matrix matrix = map.getMapMatrix();
+    public void correctMap(GameMap gameMap) {
+        Matrix matrix = gameMap.getMapMatrix();
 
             //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
@@ -28,8 +28,8 @@ public class FindRoomStrategy implements CorrectionImp {
                 for (int x = 0; x < matrix.getWidth() - room.getWidth(); x = x + room.getWidth()) {
                     cutMatrix = matrix.cutMatrix(x, y, room.getWidth(), room.getHeight());
                     if (Algorithms.getHammingDistance(room, cutMatrix) <= 0) {
-                        map.setFitnessScore(map.getFitnessScore() + room.getVolume());
-                        map.setCorrectionsFound(map.getCorrectionsFound() + 1);
+                        gameMap.setFitnessScore(gameMap.getFitnessScore() + room.getVolume());
+                        gameMap.setCorrectionsFound(gameMap.getCorrectionsFound() + 1);
                     }
                 }
             }

@@ -5,14 +5,15 @@ import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Corrections.CorrectionImp;
 import Genetic_Algorithm.Corrections.FindHolesStrategy;
 import Genetic_Algorithm.Corrections.FindRoomStrategy;
-import Genetic_Algorithm.Mutator.MutatorImp;
+import Genetic_Algorithm.Mutator.DefaultMutator;
+import Genetic_Algorithm.Mutator.IMutator;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
 import Genetic_Algorithm.Offspring.DefaultOffspringStrategy;
 import Genetic_Algorithm.Offspring.OffspringImp;
 import Genetic_Algorithm.Premutation.PremutationImp;
-import Genetic_Algorithm.Selection.SelectionImp;
-import Map.Map;
+import Genetic_Algorithm.Selection.ISelection;
+import Map.GameMap;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
@@ -120,14 +121,14 @@ public class Interpreter {
 
 
     //A whole generation of maps
-    private ArrayList<Map> generationOfMaps;
+    private ArrayList<GameMap> generationOfGameMaps;
 
     //Our Fitness implementations, we need at least one way
     // to evaluate a map
     private ArrayList<FitnessImp> fitnessList;
 
-    private SelectionImp selection;
-    private MutatorImp mutator;
+    private ISelection selection;
+    private IMutator mutator;
 
     //if specified, saves maps to the output directory
     private String outputDirectory = null;
@@ -178,7 +179,7 @@ public class Interpreter {
      */
     Interpreter(String... args) {
         fitnessList = new ArrayList<>();
-        generationOfMaps = new ArrayList<>();
+        generationOfGameMaps = new ArrayList<>();
         interpretArguments(args);
     }
 
@@ -242,7 +243,7 @@ public class Interpreter {
 //        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
-        evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfMaps);
+        evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfGameMaps);
 
         //todo its a little silly
         if(outputDirectory != null)evolutionResults.saveAllResults(outputDirectory);
@@ -410,47 +411,59 @@ public class Interpreter {
         }
     }
 
-    private boolean addMutatorStrategy(String option) {
-        String choice = option.toLowerCase().trim();
 
-        if(choice.equals(MutatorEnum.DEFAULT.getImplementationName())){
-            mutator = MutatorEnum.DEFAULT;
-            return true;
-        }else if(choice.equals(MutatorEnum.LOW.getImplementationName())){
-            mutator = MutatorEnum.LOW;
-            return true;
-        }else if(choice.equals(MutatorEnum.LOWER.getImplementationName())){
-            mutator = MutatorEnum.LOWER;
-            return true;
-        }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
-            mutator = MutatorEnum.LOWEST;
-            return true;
-        }
-        else if(choice.equals(MutatorEnum.HIGH.getImplementationName())){
-            mutator = MutatorEnum.HIGH;
-            return true;
-        }
-        else if(choice.equals(MutatorEnum.HIGHEST.getImplementationName())){
-            mutator = MutatorEnum.HIGHEST;
-            return true;
-        }
-        else{
+    //TODO changing enum to one single class that just takes a number, so need a sanity check for that only
+    private boolean addMutatorStrategy(String option) {
+        double odds;
+        try{
+            odds = Double.parseDouble(option);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
             return false;
         }
+
+//        String choice = option.toLowerCase().trim();
+
+//        if(choice.equals(MutatorEnum.DEFAULT.getImplementationName())){
+//            mutator = MutatorEnum.DEFAULT;
+//            return true;
+//        }else if(choice.equals(MutatorEnum.LOW.getImplementationName())){
+//            mutator = MutatorEnum.LOW;
+//            return true;
+//        }else if(choice.equals(MutatorEnum.LOWER.getImplementationName())){
+//            mutator = MutatorEnum.LOWER;
+//            return true;
+//        }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
+//            mutator = MutatorEnum.LOWEST;
+//            return true;
+//        }
+//        else if(choice.equals(MutatorEnum.HIGH.getImplementationName())){
+//            mutator = MutatorEnum.HIGH;
+//            return true;
+//        }
+//        else if(choice.equals(MutatorEnum.HIGHEST.getImplementationName())){
+//            mutator = MutatorEnum.HIGHEST;
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+        mutator = new DefaultMutator(odds);
+        return true;
     }
 
     private boolean noiseMaps() {
         //Create Noise for maps
-        generationOfMaps = noise.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
+        generationOfGameMaps = noise.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
         return true;
     }
 
     private boolean caMaps() {
         //Run Cellular Automate
-        for (int i = 0; i < generationOfMaps.size(); i++) {
-            Matrix k = cellularAutomateImp.generateMap(generationOfMaps.get(i).getMapMatrix());
-            Map kk = new Map(k);
-            generationOfMaps.set(i, kk);
+        for (int i = 0; i < generationOfGameMaps.size(); i++) {
+            Matrix k = cellularAutomateImp.generateMap(generationOfGameMaps.get(i).getMapMatrix());
+            GameMap kk = new GameMap(k);
+            generationOfGameMaps.set(i, kk);
         }
         return true;
     }

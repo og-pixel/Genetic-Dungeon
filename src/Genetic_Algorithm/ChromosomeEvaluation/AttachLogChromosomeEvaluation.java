@@ -1,7 +1,7 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Genetic_Algorithm.Data.EvolutionResults;
-import Map.Map;
+import Map.GameMap;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,9 +16,9 @@ public class AttachLogChromosomeEvaluation extends DecoratorChromosomeEvaluation
 
 
     @Override
-    public EvolutionResults crossoverPopulation(ArrayList<Map> mapList) {
+    public EvolutionResults crossoverPopulation(ArrayList<GameMap> gameMapList) {
         abstractChromosomeEvaluation.getLogger().setLevel(Level.INFO);
-        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(mapList);
+        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(gameMapList);
         return k;
     }
 }

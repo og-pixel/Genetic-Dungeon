@@ -1,30 +1,26 @@
 package Genetic_Algorithm.Mutator;
 
 import DataStructure.Matrix;
+import Exceptions.NegativeNumberException;
 import Map.GameMap;
 
 import java.util.ArrayList;
 import java.util.Random;
-import static Map.TileList.*;
 
-public enum MutatorEnum implements IMutator {
-    DEFAULT("default", 0.01), //1%
-    HIGH("high", 0.02),       //2%
-    HIGHEST("highest", 0.03), //3%
-    LOW("low", 0.007),         //0.7%
-    LOWER("lower", 0.005),     //0.5%
-    LOWEST("lowest", 0.003);   //0.3%
+import static Map.TileList.CORRIDOR;
+import static Map.TileList.WALL;
 
-
+public class DefaultMutator implements IMutator {
     private final double odds;
-    private String implementationName;
 
-    MutatorEnum(String implementationName, double odds) {
-        this.implementationName = implementationName;
+    public DefaultMutator(double odds) {
+        if(odds <= 0)throw new NegativeNumberException();
+        if(odds >= 3){
+            System.err.println("DefaultMutator works best if its value is held between 0.01% and 2%, " +
+                    "anything other than that and its no longer searching.");
+        }
+
         this.odds = odds;
-    }
-    public String getImplementationName() {
-        return implementationName;
     }
 
     @Override

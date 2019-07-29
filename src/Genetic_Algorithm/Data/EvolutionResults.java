@@ -1,8 +1,7 @@
 package Genetic_Algorithm.Data;
 
 import Algorithms.Algorithms;
-import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
-import Map.Map;
+import Map.GameMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,13 +11,13 @@ public class EvolutionResults {
     //Each row represents an entire generation
     //Number of columns is the generation size
     //Number of rows is how many generations were there
-    private ArrayList<ArrayList<Map>> generationsList;
+    private ArrayList<ArrayList<GameMap>> generationsList;
 
     public EvolutionResults(){
         generationsList = new ArrayList<>();
     }
 
-    public void addGeneration(ArrayList<Map> row){
+    public void addGeneration(ArrayList<GameMap> row){
         try{
             generationsList.add(row);
         }catch (Exception e){
@@ -60,11 +59,11 @@ public class EvolutionResults {
         }
     }
 
-    public Map findBest(){
-        Map best = generationsList.get(0).get(0);
-        for (ArrayList<Map> maps : generationsList) {
-            for (Map map : maps) {
-                if (best.getFitnessScore() < map.getFitnessScore()) best = map;
+    public GameMap findBest(){
+        GameMap best = generationsList.get(0).get(0);
+        for (ArrayList<GameMap> gameMaps : generationsList) {
+            for (GameMap gameMap : gameMaps) {
+                if (best.getFitnessScore() < gameMap.getFitnessScore()) best = gameMap;
             }
         }
         return best;

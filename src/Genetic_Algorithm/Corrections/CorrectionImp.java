@@ -1,6 +1,6 @@
 package Genetic_Algorithm.Corrections;
 
-import Map.Map;
+import Map.GameMap;
 
 /**
  * Idea of this interface is to encourage genes to evolve towards our goal plan
@@ -8,5 +8,5 @@ import Map.Map;
  * which would in turn give higher score
  */
 public interface CorrectionImp {
-    void correctMap(Map map);
+    void correctMap(GameMap gameMap);
 }
