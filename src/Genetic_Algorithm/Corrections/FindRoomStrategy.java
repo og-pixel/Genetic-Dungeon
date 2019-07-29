@@ -1,34 +1,17 @@
 package Genetic_Algorithm.Corrections;
 
-import Algorithms.Algorithms;
 import DataStructure.Matrix;
-import Map.*;
+import Map.Map;
+import Map.TileList;
+import Algorithms.Algorithms;
 
-public enum CorrectionEnum implements CorrectionImp, TileList {
-    //Silly and not working right atm
-    FIND_HOLES("find_holes"){
-        @Override
-        public void correctMap(Map map) {
-            Matrix matrix = map.getMapMatrix();
+public class FindRoomStrategy implements CorrectionImp, TileList {
 
-            for (int y = 0; y < matrix.getHeight(); y++) {
-                for (int x = 0; x < matrix.getWidth(); x++) {
-                    if(matrix.getElement(x, y) == CORRIDOR){
-                        if(matrix.getUp(x, y) == WALL &&
-                        matrix.getRight(x, y) == WALL &&
-                        matrix.getDown(x, y) == WALL &&
-                        matrix.getLeft(x, y) == WALL){
-                            matrix.put(x, y, WALL);
-                        }
-                    }
-                }
-            }
-        }
-    },
-    FIND_ROOM("find_room") {
-        @Override
-        public void correctMap(Map map) {
-            Matrix matrix = map.getMapMatrix();
+    public static final String IMPLEMENTATION = "find_room";
+
+    @Override
+    public void correctMap(Map map) {
+        Matrix matrix = map.getMapMatrix();
 
             //TODO rooms need to be a template too
             //TODO room hard expect door at the right side (hole)
@@ -49,16 +32,5 @@ public enum CorrectionEnum implements CorrectionImp, TileList {
                     }
                 }
             }
-        }
-    };
-    //TODO add
-    // MACHINE_LEARNING_MAPS()
-
-    CorrectionEnum(String implementationName){
-        this.implementationName = implementationName;
-    }
-    private String implementationName;
-    public String getImplementationName() {
-        return implementationName;
     }
 }

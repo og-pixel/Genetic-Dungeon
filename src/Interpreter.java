@@ -1,9 +1,10 @@
 import Algorithms.*;
 import Algorithms.CA.*;
 import DataStructure.Matrix;
-import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Corrections.CorrectionImp;
+import Genetic_Algorithm.Corrections.FindHolesStrategy;
+import Genetic_Algorithm.Corrections.FindRoomStrategy;
 import Genetic_Algorithm.Mutator.MutatorImp;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
@@ -17,9 +18,8 @@ import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
 import Genetic_Algorithm.Fitness.FitnessImp;
-import Genetic_Algorithm.Corrections.CorrectionEnum;
+//import Genetic_Algorithm.Corrections.CorrectionEnum;
 import Genetic_Algorithm.Mutator.MutatorEnum;
-import Genetic_Algorithm.Offspring.OffspringEnum;
 import Genetic_Algorithm.NoiseStrategy.*;
 import Genetic_Algorithm.Premutation.PremutationEnum;
 import Genetic_Algorithm.Selection.SelectionEnum;
@@ -86,8 +86,8 @@ public class Interpreter {
         "\n\t" + FitnessEnum.IS_TRAVERSABLE.getImplementationName() +
 
                         "\nCorrections:" +
-       "\n\t" + CorrectionEnum.FIND_ROOM.getImplementationName() +
-       "\n\t" + CorrectionEnum.FIND_HOLES.getImplementationName() +
+       "\n\t" + FindHolesStrategy.IMPLEMENTATION +
+       "\n\t" + FindRoomStrategy.IMPLEMENTATION +
 
                         "\nMutations:" +
        "\n\t" + MutatorEnum.DEFAULT.getImplementationName() +
@@ -370,11 +370,11 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "find_room":
-                correction = CorrectionEnum.FIND_ROOM;
+            case FindRoomStrategy.IMPLEMENTATION:
+                correction = new FindRoomStrategy();
                 return true;
-            case "find_holes":
-                correction = CorrectionEnum.FIND_HOLES;
+            case FindHolesStrategy.IMPLEMENTATION:
+                correction = new FindHolesStrategy();
                 return true;
             default:
                 return false;
