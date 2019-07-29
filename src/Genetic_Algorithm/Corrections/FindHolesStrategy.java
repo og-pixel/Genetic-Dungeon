@@ -4,7 +4,7 @@ import DataStructure.Matrix;
 import Map.*;
 import static Map.TileList.*;
 
-public class FindHolesStrategy implements CorrectionImp {
+public class FindHolesStrategy implements Correction {
 
     public static final String IMPLEMENTATION = "find_holes";
 

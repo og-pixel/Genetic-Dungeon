@@ -5,7 +5,7 @@ import Map.GameMap;
 import java.util.ArrayList;
 import java.util.Random;
 
-public enum PremutationEnum implements PremutationImp{
+public enum PremutationEnum implements Premutation {
     SWAP("swap"){
         @Override
         public void premutateDungeon(GameMap gameMap){

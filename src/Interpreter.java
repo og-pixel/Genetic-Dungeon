@@ -2,23 +2,23 @@ import Algorithms.*;
 import Algorithms.CA.*;
 import DataStructure.Matrix;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
-import Genetic_Algorithm.Corrections.CorrectionImp;
+import Genetic_Algorithm.Corrections.Correction;
 import Genetic_Algorithm.Corrections.FindHolesStrategy;
 import Genetic_Algorithm.Corrections.FindRoomStrategy;
 import Genetic_Algorithm.Mutator.DefaultMutator;
-import Genetic_Algorithm.Mutator.IMutator;
+import Genetic_Algorithm.Mutator.Mutator;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
 import Genetic_Algorithm.Offspring.DefaultOffspringStrategy;
-import Genetic_Algorithm.Offspring.OffspringImp;
-import Genetic_Algorithm.Premutation.PremutationImp;
-import Genetic_Algorithm.Selection.ISelection;
+import Genetic_Algorithm.Offspring.Offspring;
+import Genetic_Algorithm.Premutation.Premutation;
+import Genetic_Algorithm.Selection.Selection;
 import Map.GameMap;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.Fitness.FitnessEnum;
-import Genetic_Algorithm.Fitness.FitnessImp;
+import Genetic_Algorithm.Fitness.Fitness;
 //import Genetic_Algorithm.Corrections.CorrectionEnum;
 import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.NoiseStrategy.*;
@@ -125,10 +125,10 @@ public class Interpreter {
 
     //Our Fitness implementations, we need at least one way
     // to evaluate a map
-    private ArrayList<FitnessImp> fitnessList;
+    private ArrayList<Fitness> fitnessList;
 
-    private ISelection selection;
-    private IMutator mutator;
+    private Selection selection;
+    private Mutator mutator;
 
     //if specified, saves maps to the output directory
     private String outputDirectory = null;
@@ -140,14 +140,14 @@ public class Interpreter {
 
     //Noise Implementation, needed at the start
     // if maps start random
-    private NoiseImp noise;
+    private Noise noise;
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
-    private CellularAutomateImp cellularAutomateImp;
-    private PremutationImp premutation;
-    private CorrectionImp correction;
-    private OffspringImp offspring;
+    private CellularAutomate cellularAutomate;
+    private Premutation premutation;
+    private Correction correction;
+    private Offspring offspring;
 
     //Results after running program
     //It holds all data made during the process
@@ -233,7 +233,7 @@ public class Interpreter {
             }
         }else if(args[0].equals(LOAD_ARGUMENT.get(0)))System.exit(1);//todo finish this path
 
-        if(cellularAutomateImp != null)caMaps();
+        if(cellularAutomate != null)caMaps();
 
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
@@ -346,7 +346,7 @@ public class Interpreter {
 
         switch (choice) {
             case "rule20":
-                cellularAutomateImp = new Rule20CellularAutomate();
+                cellularAutomate = new Rule20CellularAutomate();
                 return true;
             default:
                 return false;
@@ -461,7 +461,7 @@ public class Interpreter {
     private boolean caMaps() {
         //Run Cellular Automate
         for (int i = 0; i < generationOfGameMaps.size(); i++) {
-            Matrix k = cellularAutomateImp.generateMap(generationOfGameMaps.get(i).getMapMatrix());
+            Matrix k = cellularAutomate.generateMap(generationOfGameMaps.get(i).getMapMatrix());
             GameMap kk = new GameMap(k);
             generationOfGameMaps.set(i, kk);
         }

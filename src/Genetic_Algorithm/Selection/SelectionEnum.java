@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
-public enum SelectionEnum implements ISelection {
+public enum SelectionEnum implements Selection {
     //TODO I was thinking a little a bout it and selection fraction cannot be  in the constructor as Id want
     // to be more flexible if needed, since its enum
     ELITE("elite"){

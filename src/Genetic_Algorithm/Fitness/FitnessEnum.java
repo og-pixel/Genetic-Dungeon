@@ -7,7 +7,7 @@ import Map.*;
 import java.util.ArrayList;
 import static Map.TileList.*;
 
-public enum FitnessEnum implements FitnessImp {
+public enum FitnessEnum implements Fitness {
     IS_TRAVERSABLE("is_traversable", 1) {
         @Override
         public void evaluateMap(GameMap gameMap) {

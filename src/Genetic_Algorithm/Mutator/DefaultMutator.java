@@ -10,7 +10,7 @@ import java.util.Random;
 import static Map.TileList.CORRIDOR;
 import static Map.TileList.WALL;
 
-public class DefaultMutator implements IMutator {
+public class DefaultMutator implements Mutator {
     private final double odds;
 
     public DefaultMutator(double odds) {

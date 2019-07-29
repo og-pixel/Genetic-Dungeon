@@ -4,7 +4,7 @@ import Map.GameMap;
 
 import java.util.ArrayList;
 
-public interface PremutationImp {
+public interface Premutation {
     void premutateDungeon(GameMap gameMap);
     void premutateDungeons(ArrayList<GameMap> gameMapList);
 }

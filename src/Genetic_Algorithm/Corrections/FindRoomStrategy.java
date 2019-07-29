@@ -6,7 +6,7 @@ import Algorithms.Algorithms;
 
 import static Map.TileList.*;
 
-public class FindRoomStrategy implements CorrectionImp {
+public class FindRoomStrategy implements Correction {
 
     public static final String IMPLEMENTATION = "find_room";
 

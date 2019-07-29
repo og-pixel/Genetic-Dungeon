@@ -5,7 +5,7 @@ import Map.*;
 import java.util.ArrayList;
 import static Map.TileList.*;
 
-public class FillNoiseStrategy implements NoiseImp {
+public class FillNoiseStrategy implements Noise {
 
     public static final String IMPLEMENTATION = "fill";
 

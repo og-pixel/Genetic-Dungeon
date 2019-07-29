@@ -7,6 +7,6 @@ import Map.GameMap;
  * one implementation might try to find empty spots around map and replace them with walls, decreasing room count
  * which would in turn give higher score
  */
-public interface CorrectionImp {
+public interface Correction {
     void correctMap(GameMap gameMap);
 }

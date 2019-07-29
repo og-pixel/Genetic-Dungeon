@@ -4,12 +4,12 @@ import Algorithms.Algorithms;
 import Map.GameMap;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
-import Genetic_Algorithm.Fitness.FitnessImp;
-import Genetic_Algorithm.Corrections.CorrectionImp;
-import Genetic_Algorithm.Mutator.IMutator;
-import Genetic_Algorithm.Offspring.OffspringImp;
-import Genetic_Algorithm.Premutation.PremutationImp;
-import Genetic_Algorithm.Selection.ISelection;
+import Genetic_Algorithm.Fitness.Fitness;
+import Genetic_Algorithm.Corrections.Correction;
+import Genetic_Algorithm.Mutator.Mutator;
+import Genetic_Algorithm.Offspring.Offspring;
+import Genetic_Algorithm.Premutation.Premutation;
+import Genetic_Algorithm.Selection.Selection;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,12 +23,12 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
     //TODO these are all strategies, as I said, I want them in decorators mostly
-    private ArrayList<FitnessImp> fitnessImpList;
-    private IMutator mutation;
-    private ISelection selection;
-    private PremutationImp premutation;
-    private CorrectionImp correction;
-    private OffspringImp offspring;
+    private ArrayList<Fitness> FitnessList;
+    private Mutator mutation;
+    private Selection selection;
+    private Premutation premutation;
+    private Correction correction;
+    private Offspring offspring;
 
     //TODO make basic chromosome do excatly that, just basic, maybe only use fitness, add decorators to
     // add more features if possible (it should be, it all in steps)
@@ -36,9 +36,9 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     //TODO since I can order decorators in whatever order I want, it should make it even more exciting!
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
-                                     ArrayList<FitnessImp> fitnessImpList,
-                                     IMutator mutation, ISelection selection, PremutationImp premutation,
-                                     CorrectionImp correction, OffspringImp offspring){
+                                     ArrayList<Fitness> FitnessList,
+                                     Mutator mutation, Selection selection, Premutation premutation,
+                                     Correction correction, Offspring offspring){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
@@ -55,7 +55,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 //        if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
 
         //TODO consctreuctor now can determinate whenever yoou can use the method or not (it can have methods to complete what's missing)
-        this.fitnessImpList = fitnessImpList;
+        this.FitnessList = FitnessList;
         this.numberOfGenerations = numberOfGenerations;
         this.mutation = mutation;
         this.selection = selection;
@@ -87,7 +87,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
             //Evaluate all dungeon based on all fitness implementations on the list
-            for (FitnessImp fitnessImp : fitnessImpList) {
+            for (Fitness fitnessImp : FitnessList) {
                 for (GameMap gameMap : gameMapList) fitnessImp.evaluateMap(gameMap);
             }
 

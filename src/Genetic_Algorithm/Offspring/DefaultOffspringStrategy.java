@@ -5,7 +5,7 @@ import Algorithms.Algorithms;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DefaultOffspringStrategy implements OffspringImp {
+public class DefaultOffspringStrategy implements Offspring {
 
     public static final String IMPLEMENTATION = "default";
 

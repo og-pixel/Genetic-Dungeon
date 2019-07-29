@@ -5,7 +5,7 @@ import Map.GameMap;
 /**
  * Interface defines what a fitness function needs to run
  */
-public interface FitnessImp {
+public interface Fitness {
     /**
      * Evaluate gameMap based on some arbitrary rule (for example give a full score a gameMap that is fully traversable)
      * @param gameMap gameMap to be evaluated

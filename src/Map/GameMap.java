@@ -149,7 +149,7 @@ public class GameMap implements Serializable{
     public String mapToString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
+        stringBuilder.append("DefaultRoom Count: ").append(numberOfRooms).append("\n");
         stringBuilder.append("DefaultMutator Count: ").append(mutationCount).append("\n");
         stringBuilder.append("Corrections Count: ").append(correctionsFound).append("\n");
         for (int y = 0; y < mapHeight; y++) {

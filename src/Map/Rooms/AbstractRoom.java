@@ -2,7 +2,7 @@ package Map.Rooms;
 
 import DataStructure.Matrix;
 
-public abstract class AbstractRoom implements IRoom {
+public abstract class AbstractRoom implements Room {
     String roomName;
     int roomWidth;
     int roomHeight;
