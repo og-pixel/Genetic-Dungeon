@@ -4,12 +4,12 @@ import Algorithms.Algorithms;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
 import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
-import Genetic_Algorithm.Selection.SelectionStrategy;
-import Map.GameMap;
+import Genetic_Algorithm.SelectionStrategy.SelectionStrategy;
+import GameMap.GameMap;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
-import Genetic_Algorithm.Corrections.Correction;
+import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,7 +27,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private MutatorStrategy mutation;
     private SelectionStrategy selectionStrategy;
     private PermutationStrategy permutationStrategy;
-    private Correction correction;
+    private CorrectionStrategy correctionStrategy;
     private OffspringStrategy offspringStrategy;
 
     //TODO make basic chromosome do excatly that, just basic, maybe only use fitness, add decorators to
@@ -38,7 +38,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
                                      ArrayList<FitnessStrategy> fitnessStrategyList,
                                      MutatorStrategy mutation, SelectionStrategy selectionStrategy, PermutationStrategy permutationStrategy,
-                                     Correction correction, OffspringStrategy offspringStrategy){
+                                     CorrectionStrategy correctionStrategy, OffspringStrategy offspringStrategy){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
@@ -60,7 +60,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         this.mutation = mutation;
         this.selectionStrategy = selectionStrategy;
         this.permutationStrategy = permutationStrategy;
-        this.correction = correction;
+        this.correctionStrategy = correctionStrategy;
         this.offspringStrategy = offspringStrategy;
 
 
@@ -93,11 +93,11 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //Correct Maps
             //TODO make better error checking in interpeter
-            if(correction == null) {
-                System.out.println("todo, not found correction strategy");
+            if(correctionStrategy == null) {
+                System.out.println("todo, not found correctionStrategy strategy");
             }
             else{
-                for (GameMap gameMap : gameMapList) correction.correctMap(gameMap);
+                for (GameMap gameMap : gameMapList) correctionStrategy.correctMap(gameMap);
             }
 
             //SelectionStrategy

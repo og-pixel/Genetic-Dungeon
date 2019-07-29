@@ -1,7 +1,7 @@
-package Genetic_Algorithm.Selection;
+package Genetic_Algorithm.SelectionStrategy;
 
 import Exceptions.VariableBoundsException;
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.util.ArrayList;
 

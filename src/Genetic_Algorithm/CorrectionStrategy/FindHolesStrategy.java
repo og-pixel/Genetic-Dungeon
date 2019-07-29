@@ -1,10 +1,10 @@
-package Genetic_Algorithm.Corrections;
+package Genetic_Algorithm.CorrectionStrategy;
 
 import DataStructure.Matrix;
-import Map.*;
-import static Map.TileList.*;
+import GameMap.*;
+import static GameMap.TileList.*;
 
-public class FindHolesStrategy implements Correction {
+public class FindHolesStrategy implements CorrectionStrategy {
 
     public static final String IMPLEMENTATION = "find_holes";
 

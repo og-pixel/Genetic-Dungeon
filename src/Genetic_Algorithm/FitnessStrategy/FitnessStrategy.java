@@ -1,6 +1,6 @@
 package Genetic_Algorithm.FitnessStrategy;
 
-import Map.GameMap;
+import GameMap.GameMap;
 
 /**
  * Interface defines what a fitness function needs to run

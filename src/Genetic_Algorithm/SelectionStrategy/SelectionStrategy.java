@@ -1,6 +1,6 @@
-package Genetic_Algorithm.Selection;
+package Genetic_Algorithm.SelectionStrategy;
 
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.util.ArrayList;
 

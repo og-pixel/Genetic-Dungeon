@@ -1,15 +1,15 @@
 package Genetic_Algorithm.NoiseStrategy;
 
 import Exceptions.VariableBoundsException;
-import Map.*;
+import GameMap.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
-public class NoiseNoiseStrategy implements NoiseStrategy {
+public class RandomNoiseStrategy implements NoiseStrategy {
 
-    public static final String IMPLEMENTATION = "noise";
+    public static final String IMPLEMENTATION = "random_noise";
 
     @Override
     public ArrayList<GameMap> createNoise(int width, int height, int numberOfMaps, double odds) {

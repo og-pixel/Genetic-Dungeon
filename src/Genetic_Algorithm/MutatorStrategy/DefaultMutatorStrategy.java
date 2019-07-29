@@ -2,13 +2,13 @@ package Genetic_Algorithm.MutatorStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.NegativeNumberException;
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static Map.TileList.CORRIDOR;
-import static Map.TileList.WALL;
+import static GameMap.TileList.CORRIDOR;
+import static GameMap.TileList.WALL;
 
 public class DefaultMutatorStrategy implements MutatorStrategy {
     private final double odds;

@@ -2,11 +2,11 @@ package Genetic_Algorithm.FitnessStrategy;
 
 import Algorithms.Algorithms;
 import DataStructure.Matrix;
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.util.ArrayList;
 
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
 public class FindAllRoomsFitnessStrategy implements FitnessStrategy {
 

@@ -1,4 +1,4 @@
-package Map.Rooms;
+package GameMap.Rooms;
 
 public class AltarRoom extends AbstractRoom {
     public AltarRoom(int roomWidth, int roomHeight) {

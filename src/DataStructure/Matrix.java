@@ -1,6 +1,5 @@
 package DataStructure;
 
-import Map.TileList;
 import Exceptions.MatrixTooSmallException;
 
 import java.io.Serializable;

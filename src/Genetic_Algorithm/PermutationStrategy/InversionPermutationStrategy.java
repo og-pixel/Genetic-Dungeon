@@ -1,6 +1,6 @@
 package Genetic_Algorithm.PermutationStrategy;
 
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.util.ArrayList;
 

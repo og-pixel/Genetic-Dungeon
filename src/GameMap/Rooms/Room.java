@@ -1,4 +1,4 @@
-package Map.Rooms;
+package GameMap.Rooms;
 
 public interface Room {
     String getRoomInfo();

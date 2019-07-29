@@ -1,9 +1,9 @@
 package Genetic_Algorithm.NoiseStrategy;
 
-import Map.*;
+import GameMap.*;
 
 import java.util.ArrayList;
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
 public class FillNoiseStrategy implements NoiseStrategy {
 

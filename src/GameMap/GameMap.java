@@ -1,10 +1,10 @@
-package Map;
+package GameMap;
 
 import DataStructure.Matrix;
 
 import java.io.Serializable;
 
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
 
 /**
@@ -151,7 +151,7 @@ public class GameMap implements Serializable{
 
         stringBuilder.append("DefaultRoom Count: ").append(numberOfRooms).append("\n");
         stringBuilder.append("DefaultMutatorStrategy Count: ").append(mutationCount).append("\n");
-        stringBuilder.append("Corrections Count: ").append(correctionsFound).append("\n");
+        stringBuilder.append("CorrectionStrategy Count: ").append(correctionsFound).append("\n");
         for (int y = 0; y < mapHeight; y++) {
             stringBuilder.append("\n");
             for (int x = 0; x < mapWidth; x++) {

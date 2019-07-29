@@ -1,4 +1,4 @@
-package Map.Rooms;
+package GameMap.Rooms;
 
 import DataStructure.Matrix;
 

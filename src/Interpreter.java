@@ -2,24 +2,24 @@ import Algorithms.*;
 import Algorithms.CA.*;
 import DataStructure.Matrix;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
-import Genetic_Algorithm.Corrections.Correction;
-import Genetic_Algorithm.Corrections.FindHolesStrategy;
-import Genetic_Algorithm.Corrections.FindRoomStrategy;
+import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
+import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
+import Genetic_Algorithm.CorrectionStrategy.FindRoomStrategy;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
 import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
-import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
+import Genetic_Algorithm.NoiseStrategy.RandomNoiseStrategy;
 import Genetic_Algorithm.OffspringStrategy.DefaultOffspringStrategy;
 import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
 import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
-import Genetic_Algorithm.Selection.*;
-import Map.GameMap;
+import Genetic_Algorithm.SelectionStrategy.*;
+import GameMap.GameMap;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.FitnessStrategy.*;
-//import Genetic_Algorithm.Corrections.CorrectionEnum;
+//import Genetic_Algorithm.CorrectionStrategy.CorrectionEnum;
 import Genetic_Algorithm.NoiseStrategy.*;
 import Genetic_Algorithm.PermutationStrategy.*;
 
@@ -42,10 +42,10 @@ public class Interpreter {
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
     private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
-    private final ArrayList<String> PREMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
+    private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
-    private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noiseStrategy"));
+    private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
     private final ArrayList<String> SELECTION_ARGUMENT = new ArrayList(Arrays.asList("-s", "--selection"));
     private final ArrayList<String> OFFSPRING_ARGUMENT = new ArrayList(Arrays.asList("-g", "--offspring"));
     private final ArrayList<String> SAVE_LOCATION_ARGUMENT = new ArrayList(Arrays.asList("-o", "--output"));
@@ -63,7 +63,7 @@ public class Interpreter {
             "\n" + CHROMOSOME_EVALUATION_ARGUMENT + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
             "\n" + NOISE_ARGUMENT + "\t[NAME]\t\t\tAdd [NOISE] Function" +
             "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-            "\n" + PREMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
+            "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
             "\n" + OFFSPRING_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_ARGUMENT + "\t\t\t\t\t\tVerbose output" +
@@ -84,7 +84,7 @@ public class Interpreter {
         "\n\t" + FindAllRoomsFitnessStrategy.IMPLEMENTATION  +
         "\n\t" + IsTraversableStrategy.IMPLEMENTATION  +
 
-                        "\nCorrections:" +
+                        "\nCorrectionStrategy:" +
        "\n\t" + FindHolesStrategy.IMPLEMENTATION +
        "\n\t" + FindRoomStrategy.IMPLEMENTATION +
 
@@ -93,7 +93,7 @@ public class Interpreter {
 
                         "\nNoise:" +
        "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
-       "\n\t" + NoiseNoiseStrategy.IMPLEMENTATION +
+       "\n\t" + RandomNoiseStrategy.IMPLEMENTATION +
 
                         "\nPermutation:" +
        "\n\t" + SwapPermutationStrategy.IMPLEMENTATION +
@@ -109,7 +109,6 @@ public class Interpreter {
 
                         "\nOffspring:" +
        "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION +
-//       "\n\t" + OffspringEnum.DASD.getImplementationName() +
 
                         "\nCellular Automate Method:" +
        "\n\t" + "rule20";
@@ -141,7 +140,7 @@ public class Interpreter {
     // used in Evolving Cellular Automate (ECA)
     private CellularAutomate cellularAutomate;
     private PermutationStrategy permutationStrategy;
-    private Correction correction;
+    private CorrectionStrategy correctionStrategy;
     private OffspringStrategy offspringStrategy;
 
     //Results after running program
@@ -233,7 +232,7 @@ public class Interpreter {
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
-                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correction, offspringStrategy);
+                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correctionStrategy, offspringStrategy);
 
 //        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
@@ -268,7 +267,7 @@ public class Interpreter {
         else if(CA_ARGUMENT.contains(args[i])){
             addCellularAutomataStrategy(args[i + 1]);
         }
-        else if(PREMUTATION_ARGUMENT.contains(args[i])){
+        else if(PERMUTATION_ARGUMENT.contains(args[i])){
             addPermutationStrategy(args[i + 1]);
         }
         else if(CHROMOSOME_EVALUATION_ARGUMENT.contains(args[i])){
@@ -298,7 +297,7 @@ public class Interpreter {
             case "basic":
                 chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
                         numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy,
-                        correction, offspringStrategy);
+                        correctionStrategy, offspringStrategy);
                 return true;
             default:
                 return false;
@@ -311,7 +310,7 @@ public class Interpreter {
         switch (choice) {
             case "noiseStrategy":
                 //noiseStrategy = NoiseEnum.NOISE;
-                noiseStrategy = new NoiseNoiseStrategy();
+                noiseStrategy = new RandomNoiseStrategy();
                 return true;
             case "fill":
                 noiseStrategy = new FillNoiseStrategy();
@@ -368,10 +367,10 @@ public class Interpreter {
 
         switch (choice) {
             case FindRoomStrategy.IMPLEMENTATION:
-                correction = new FindRoomStrategy();
+                correctionStrategy = new FindRoomStrategy();
                 return true;
             case FindHolesStrategy.IMPLEMENTATION:
-                correction = new FindHolesStrategy();
+                correctionStrategy = new FindHolesStrategy();
                 return true;
             default:
                 return false;

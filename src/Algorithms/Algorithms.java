@@ -1,7 +1,7 @@
 package Algorithms;
 
 import DataStructure.Matrix;
-import Map.*;
+import GameMap.*;
 import Exceptions.MatrixWrongDimensionsException;
 
 import java.io.*;

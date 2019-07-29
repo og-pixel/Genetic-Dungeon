@@ -2,7 +2,7 @@ package Algorithms.CA;
 
 import DataStructure.Matrix;
 
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
 public class Rule20CellularAutomate implements CellularAutomate {
     @Override

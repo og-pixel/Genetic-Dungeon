@@ -1,6 +1,6 @@
 package Genetic_Algorithm.OffspringStrategy;
 
-import Map.GameMap;
+import GameMap.GameMap;
 import Algorithms.Algorithms;
 import java.util.ArrayList;
 import java.util.Random;

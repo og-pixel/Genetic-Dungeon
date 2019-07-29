@@ -1,12 +1,12 @@
-package Genetic_Algorithm.Corrections;
+package Genetic_Algorithm.CorrectionStrategy;
 
 import DataStructure.Matrix;
-import Map.GameMap;
+import GameMap.GameMap;
 import Algorithms.Algorithms;
 
-import static Map.TileList.*;
+import static GameMap.TileList.*;
 
-public class FindRoomStrategy implements Correction {
+public class FindRoomStrategy implements CorrectionStrategy {
 
     public static final String IMPLEMENTATION = "find_room";
 

@@ -1,7 +1,7 @@
 package Genetic_Algorithm.Data;
 
 import Algorithms.Algorithms;
-import Map.GameMap;
+import GameMap.GameMap;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package Genetic_Algorithm.FitnessStrategy;
 
-import Map.GameMap;
+import GameMap.GameMap;
 
 public class IsTraversableStrategy implements FitnessStrategy {
 
