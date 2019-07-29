@@ -10,7 +10,7 @@ import java.io.Serializable;
  * It provides basic functions to manipulate it, such as;
  * replacing rows and columns, cutting parts of the map etc.
  */
-public class Matrix implements Serializable, TileList {
+public class Matrix implements Serializable {
 
     private long[][] matrix;
     private int width, height;

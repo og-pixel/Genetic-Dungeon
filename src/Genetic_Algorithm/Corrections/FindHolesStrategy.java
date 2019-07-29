@@ -2,8 +2,9 @@ package Genetic_Algorithm.Corrections;
 
 import DataStructure.Matrix;
 import Map.*;
+import static Map.TileList.*;
 
-public class FindHolesStrategy implements CorrectionImp, TileList {
+public class FindHolesStrategy implements CorrectionImp {
 
     public static final String IMPLEMENTATION = "find_holes";
 

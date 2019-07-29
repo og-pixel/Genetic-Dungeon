@@ -5,7 +5,9 @@ import DataStructure.Matrix;
 import Map.*;
 
 import java.util.ArrayList;
-public enum FitnessEnum implements FitnessImp, TileList {
+import static Map.TileList.*;
+
+public enum FitnessEnum implements FitnessImp {
     IS_TRAVERSABLE("is_traversable", 1) {
         @Override
         public void evaluateMap(Map map) {

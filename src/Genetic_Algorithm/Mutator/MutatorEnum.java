@@ -6,8 +6,9 @@ import Map.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import static Map.TileList.*;
 
-public enum MutatorEnum implements MutatorImp, TileList{
+public enum MutatorEnum implements MutatorImp {
     DEFAULT("default", 0.01), //1%
     HIGH("high", 0.02),       //2%
     HIGHEST("highest", 0.03), //3%

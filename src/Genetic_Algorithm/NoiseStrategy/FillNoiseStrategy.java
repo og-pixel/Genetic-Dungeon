@@ -3,8 +3,9 @@ package Genetic_Algorithm.NoiseStrategy;
 import Map.*;
 
 import java.util.ArrayList;
+import static Map.TileList.*;
 
-public class FillNoiseStrategy implements NoiseImp, TileList {
+public class FillNoiseStrategy implements NoiseImp {
 
     public static final String IMPLEMENTATION = "fill";
 

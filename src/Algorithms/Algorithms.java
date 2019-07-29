@@ -13,10 +13,10 @@ import java.util.Random;
 
 
 /**
- * Static class implementing a bunch of algorithms
+ * Class implementing a bunch of static method algorithms
  * used to evaluate dungeon and give them a score
  */
-public class Algorithms implements TileList{
+public class Algorithms{
 
     public static Matrix floodFill(Map map, int x, int y){
         int dungeonWidth = map.getMapWidth();
@@ -32,25 +32,25 @@ public class Algorithms implements TileList{
 
     private static void flood(Map map, Matrix visitMap, int x, int y){
 
-        if(map.getMapMatrix().getElement(x, y) == CORRIDOR) {
+        if(map.getMapMatrix().getElement(x, y) == TileList.CORRIDOR) {
             visitMap.put(x, y, 1);
 
-            if (x > 0 && map.getMapMatrix().getElement(x - 1, y) == CORRIDOR) {
+            if (x > 0 && map.getMapMatrix().getElement(x - 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x - 1, y) == 0) {
                     flood(map, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < map.getMapWidth() && map.getMapMatrix().getElement(x + 1, y) == CORRIDOR) {
+            if (x + 1 < map.getMapWidth() && map.getMapMatrix().getElement(x + 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x + 1, y) == 0) {
                     flood(map, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && map.getMapMatrix().getElement(x, y - 1) == CORRIDOR) {
+            if (y > 0 && map.getMapMatrix().getElement(x, y - 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y - 1) == 0) {
                     flood(map, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < map.getMapHeight() && map.getMapMatrix().getElement(x, y + 1) == CORRIDOR) {
+            if (y + 1 < map.getMapHeight() && map.getMapMatrix().getElement(x, y + 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y + 1) == 0) {
                     flood(map, visitMap, x, y + 1);
                 }
@@ -100,8 +100,8 @@ public class Algorithms implements TileList{
                 canExpand[i] = false;
             }
 
-            if (dungeonMatrix.getUp(x, y) == CORRIDOR ||
-                    dungeonMatrix.getUp(x, y) == END) {
+            if (dungeonMatrix.getUp(x, y) == TileList.CORRIDOR ||
+                    dungeonMatrix.getUp(x, y) == TileList.END) {
                 Point point1 = new Point(x, y - 1, currentSteps + 1);
                 point1.setSteps(Algorithms.getManhattanDistance(x, y - 1,
                         startPositionX, startPositionY));
@@ -114,8 +114,8 @@ public class Algorithms implements TileList{
                 traverseList.add(point1);
             }
 
-            if (dungeonMatrix.getRight(x, y) == CORRIDOR ||
-                    dungeonMatrix.getRight(x, y) == END) {
+            if (dungeonMatrix.getRight(x, y) == TileList.CORRIDOR ||
+                    dungeonMatrix.getRight(x, y) == TileList.END) {
                 Point point2 = new Point(x + 1, y, currentSteps + 1);
                 point2.setSteps(Algorithms.getManhattanDistance(x + 1, y,
                         startPositionX, startPositionY));
@@ -128,8 +128,8 @@ public class Algorithms implements TileList{
                 traverseList.add(point2);
             }
 
-            if (dungeonMatrix.getDown(x, y) == CORRIDOR ||
-                    dungeonMatrix.getDown(x, y) == END) {
+            if (dungeonMatrix.getDown(x, y) == TileList.CORRIDOR ||
+                    dungeonMatrix.getDown(x, y) == TileList.END) {
                 Point point3 = new Point(x, y + 1, currentSteps + 1);
                 point3.setSteps(Algorithms.getManhattanDistance(x, y + 1,
                         startPositionX, startPositionY));
@@ -143,8 +143,8 @@ public class Algorithms implements TileList{
                 traverseList.add(point3);
             }
 
-            if (dungeonMatrix.getLeft(x, y) == CORRIDOR ||
-                    dungeonMatrix.getLeft(x, y) == END) {
+            if (dungeonMatrix.getLeft(x, y) == TileList.CORRIDOR ||
+                    dungeonMatrix.getLeft(x, y) == TileList.END) {
                 Point point4 = new Point(x - 1, y, currentSteps + 1);
                 point4.setSteps(Algorithms.getManhattanDistance(x - 1, y,
                         startPositionX, startPositionY));
@@ -281,7 +281,7 @@ public class Algorithms implements TileList{
             for (int x = 0; x < matrix2.getWidth(); x++) {
                 //To increase a distance element needs to be different
                 // AND does not contain UNIVERSAL (don't care) value
-                if (matrix1.getElement(x, y) != UNIVERSAL ||
+                if (matrix1.getElement(x, y) != TileList.UNIVERSAL ||
                         matrix1.getElement(x, y) != matrix2.getElement(x, y)){
                     distance++;
                 }

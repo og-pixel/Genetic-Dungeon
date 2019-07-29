@@ -1,10 +1,12 @@
 package Map;
 
-public interface TileList {
-    long NOT_A_NUMBER = -1; //For Error codes
-    long UNIVERSAL = 0; //"Don't care" variable, if its 0, it is anything
-    long CORRIDOR = 1;
-    long WALL = 2;
-    long START = 3;
-    long END = 4;
+public class TileList {
+    public static final int NOT_A_NUMBER = -1;
+    public static final int UNIVERSAL = 0;
+    public static final int CORRIDOR = 1;
+    public static final int WALL = 2;
+    public static final int START = 3;
+    public static final int END = 4;
+
+    private TileList(){}
 }

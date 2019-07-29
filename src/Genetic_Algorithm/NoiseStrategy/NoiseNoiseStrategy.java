@@ -5,8 +5,9 @@ import Map.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+import static Map.TileList.*;
 
-public class NoiseNoiseStrategy implements NoiseImp, TileList {
+public class NoiseNoiseStrategy implements NoiseImp {
 
     public static final String IMPLEMENTATION = "noise";
 

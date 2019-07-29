@@ -2,8 +2,9 @@ package Algorithms.CA;
 
 import DataStructure.Matrix;
 import Map.*;
+import static Map.TileList.*;
 
-public class Rule20CellularAutomate implements CellularAutomateImp, TileList {
+public class Rule20CellularAutomate implements CellularAutomateImp {
     @Override
     public Matrix generateMap(Matrix map) {
         int mapHeight = map.getHeight();

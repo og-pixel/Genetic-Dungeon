@@ -4,11 +4,14 @@ import DataStructure.Matrix;
 
 import java.io.Serializable;
 
+import static Map.TileList.*;
+
+
 /**
  * Map is an extension to the Matrix class in map generation
  * It does contain information about its modifications
  */
-public class Map implements Serializable, TileList{
+public class Map implements Serializable{
 
     /* Variables */
     private int mapWidth, mapHeight;

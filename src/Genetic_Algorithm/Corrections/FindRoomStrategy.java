@@ -2,10 +2,11 @@ package Genetic_Algorithm.Corrections;
 
 import DataStructure.Matrix;
 import Map.Map;
-import Map.TileList;
 import Algorithms.Algorithms;
 
-public class FindRoomStrategy implements CorrectionImp, TileList {
+import static Map.TileList.*;
+
+public class FindRoomStrategy implements CorrectionImp {
 
     public static final String IMPLEMENTATION = "find_room";
 
