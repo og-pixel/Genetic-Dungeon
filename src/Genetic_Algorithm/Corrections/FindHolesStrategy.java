@@ -16,9 +16,9 @@ public class FindHolesStrategy implements Correction {
                 for (int x = 0; x < matrix.getWidth(); x++) {
                     if(matrix.getElement(x, y) == CORRIDOR){
                         if(matrix.getUp(x, y) == WALL &&
-                        matrix.getRight(x, y) == WALL &&
-                        matrix.getDown(x, y) == WALL &&
-                        matrix.getLeft(x, y) == WALL){
+                            matrix.getRight(x, y) == WALL &&
+                            matrix.getDown(x, y) == WALL &&
+                            matrix.getLeft(x, y) == WALL){
                             matrix.put(x, y, WALL);
                         }
                     }

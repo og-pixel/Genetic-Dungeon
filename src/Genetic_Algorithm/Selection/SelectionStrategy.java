@@ -4,6 +4,6 @@ import Map.GameMap;
 
 import java.util.ArrayList;
 
-public interface Selection {
+public interface SelectionStrategy {
     ArrayList<GameMap> selectFitIndividuals(ArrayList<GameMap> gameMap, double selectionFraction);
 }

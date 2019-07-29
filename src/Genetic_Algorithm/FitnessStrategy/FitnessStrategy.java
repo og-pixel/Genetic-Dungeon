@@ -1,11 +1,11 @@
-package Genetic_Algorithm.Fitness;
+package Genetic_Algorithm.FitnessStrategy;
 
 import Map.GameMap;
 
 /**
  * Interface defines what a fitness function needs to run
  */
-public interface Fitness {
+public interface FitnessStrategy {
     /**
      * Evaluate gameMap based on some arbitrary rule (for example give a full score a gameMap that is fully traversable)
      * @param gameMap gameMap to be evaluated

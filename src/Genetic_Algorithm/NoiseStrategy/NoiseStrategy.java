@@ -4,7 +4,7 @@ import Map.GameMap;
 
 import java.util.ArrayList;
 
-public interface Noise {
+public interface NoiseStrategy {
     /**
      * Creates a base noise used in random map generation
      * @param width

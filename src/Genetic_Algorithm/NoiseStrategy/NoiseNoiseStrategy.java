@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import static Map.TileList.*;
 
-public class NoiseNoiseStrategy implements Noise {
+public class NoiseNoiseStrategy implements NoiseStrategy {
 
     public static final String IMPLEMENTATION = "noise";
 

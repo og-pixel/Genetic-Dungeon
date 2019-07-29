@@ -1,11 +1,11 @@
-package Genetic_Algorithm.Offspring;
+package Genetic_Algorithm.OffspringStrategy;
 
 import Map.GameMap;
 import Algorithms.Algorithms;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DefaultOffspringStrategy implements Offspring {
+public class DefaultOffspringStrategy implements OffspringStrategy {
 
     public static final String IMPLEMENTATION = "default";
 

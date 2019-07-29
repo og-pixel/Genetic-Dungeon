@@ -1,15 +1,15 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
+import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
+import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
+import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
+import Genetic_Algorithm.Selection.SelectionStrategy;
 import Map.GameMap;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
-import Genetic_Algorithm.Fitness.Fitness;
+import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
 import Genetic_Algorithm.Corrections.Correction;
-import Genetic_Algorithm.Mutator.Mutator;
-import Genetic_Algorithm.Offspring.Offspring;
-import Genetic_Algorithm.Premutation.Premutation;
-import Genetic_Algorithm.Selection.Selection;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,12 +23,12 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
     //TODO these are all strategies, as I said, I want them in decorators mostly
-    private ArrayList<Fitness> FitnessList;
-    private Mutator mutation;
-    private Selection selection;
-    private Premutation premutation;
+    private ArrayList<FitnessStrategy> fitnessStrategyList;
+    private MutatorStrategy mutation;
+    private SelectionStrategy selectionStrategy;
+    private PermutationStrategy permutationStrategy;
     private Correction correction;
-    private Offspring offspring;
+    private OffspringStrategy offspringStrategy;
 
     //TODO make basic chromosome do excatly that, just basic, maybe only use fitness, add decorators to
     // add more features if possible (it should be, it all in steps)
@@ -36,9 +36,9 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
     //TODO since I can order decorators in whatever order I want, it should make it even more exciting!
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
-                                     ArrayList<Fitness> FitnessList,
-                                     Mutator mutation, Selection selection, Premutation premutation,
-                                     Correction correction, Offspring offspring){
+                                     ArrayList<FitnessStrategy> fitnessStrategyList,
+                                     MutatorStrategy mutation, SelectionStrategy selectionStrategy, PermutationStrategy permutationStrategy,
+                                     Correction correction, OffspringStrategy offspringStrategy){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
@@ -55,13 +55,13 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 //        if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
 
         //TODO consctreuctor now can determinate whenever yoou can use the method or not (it can have methods to complete what's missing)
-        this.FitnessList = FitnessList;
+        this.fitnessStrategyList = fitnessStrategyList;
         this.numberOfGenerations = numberOfGenerations;
         this.mutation = mutation;
-        this.selection = selection;
-        this.premutation = premutation;
+        this.selectionStrategy = selectionStrategy;
+        this.permutationStrategy = permutationStrategy;
         this.correction = correction;
-        this.offspring = offspring;
+        this.offspringStrategy = offspringStrategy;
 
 
         //todo this sets logger to be turned off, used in decorator, maybe overkill? but then i can attach however i fancy
@@ -87,8 +87,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
             //Evaluate all dungeon based on all fitness implementations on the list
-            for (Fitness fitnessImp : FitnessList) {
-                for (GameMap gameMap : gameMapList) fitnessImp.evaluateMap(gameMap);
+            for (FitnessStrategy fitnessStrategy : fitnessStrategyList) {
+                for (GameMap gameMap : gameMapList) fitnessStrategy.evaluateMap(gameMap);
             }
 
             //Correct Maps
@@ -100,13 +100,15 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 for (GameMap gameMap : gameMapList) correction.correctMap(gameMap);
             }
 
-            //Selection
+            //SelectionStrategy
             //todo i should not do so I write code like
-            // map = selection.doSomething(map);
-            // it should me
-            // selection.doSomething(map)
+            // map = selectionStrategy.doSomething(map);
+            // it should be
+            // selectionStrategy.doSomething(map)
             // and make sure it does update accordingly
-            gameMapList = selection.selectFitIndividuals(gameMapList, selectionFraction);
+
+            /*gameMapList = */
+            selectionStrategy.selectFitIndividuals(gameMapList, selectionFraction);
 
 
 
@@ -118,8 +120,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
 
-            //TODO WORK HERE, its offspring generator
-            newPopulation = offspring.createNewGeneration(gameMapList, populationSize, selectionFraction);
+            //TODO WORK HERE, its offspringStrategy generator
+            newPopulation = offspringStrategy.createNewGeneration(gameMapList, populationSize, selectionFraction);
 
 
             mutation.mutateDungeons(newPopulation);//TODO it might not mutate sort makes no sense as i didnt evaluate it again

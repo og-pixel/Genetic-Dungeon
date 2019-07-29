@@ -1,4 +1,4 @@
-package Genetic_Algorithm.Mutator;
+package Genetic_Algorithm.MutatorStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.NegativeNumberException;
@@ -10,13 +10,14 @@ import java.util.Random;
 import static Map.TileList.CORRIDOR;
 import static Map.TileList.WALL;
 
-public class DefaultMutator implements Mutator {
+public class DefaultMutatorStrategy implements MutatorStrategy {
     private final double odds;
+    public static final String IMPLEMENTATION = "default_mutator";
 
-    public DefaultMutator(double odds) {
+    public DefaultMutatorStrategy(double odds) {
         if(odds <= 0)throw new NegativeNumberException();
         if(odds >= 3){
-            System.err.println("DefaultMutator works best if its value is held between 0.01% and 2%, " +
+            System.err.println("DefaultMutatorStrategy works best if its value is held between 0.01% and 2%, " +
                     "anything other than that and its no longer searching.");
         }
 

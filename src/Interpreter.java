@@ -5,25 +5,23 @@ import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.Corrections.Correction;
 import Genetic_Algorithm.Corrections.FindHolesStrategy;
 import Genetic_Algorithm.Corrections.FindRoomStrategy;
-import Genetic_Algorithm.Mutator.DefaultMutator;
-import Genetic_Algorithm.Mutator.Mutator;
+import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
+import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
+import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.NoiseNoiseStrategy;
-import Genetic_Algorithm.Offspring.DefaultOffspringStrategy;
-import Genetic_Algorithm.Offspring.Offspring;
-import Genetic_Algorithm.Premutation.Premutation;
-import Genetic_Algorithm.Selection.Selection;
+import Genetic_Algorithm.OffspringStrategy.DefaultOffspringStrategy;
+import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
+import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
+import Genetic_Algorithm.Selection.*;
 import Map.GameMap;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
-import Genetic_Algorithm.Fitness.FitnessEnum;
-import Genetic_Algorithm.Fitness.Fitness;
+import Genetic_Algorithm.FitnessStrategy.*;
 //import Genetic_Algorithm.Corrections.CorrectionEnum;
-import Genetic_Algorithm.Mutator.MutatorEnum;
 import Genetic_Algorithm.NoiseStrategy.*;
-import Genetic_Algorithm.Premutation.PremutationEnum;
-import Genetic_Algorithm.Selection.SelectionEnum;
+import Genetic_Algorithm.PermutationStrategy.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,10 +42,10 @@ public class Interpreter {
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
     private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
-    private final ArrayList<String> PREMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--premutation"));
+    private final ArrayList<String> PREMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
-    private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
+    private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noiseStrategy"));
     private final ArrayList<String> SELECTION_ARGUMENT = new ArrayList(Arrays.asList("-s", "--selection"));
     private final ArrayList<String> OFFSPRING_ARGUMENT = new ArrayList(Arrays.asList("-g", "--offspring"));
     private final ArrayList<String> SAVE_LOCATION_ARGUMENT = new ArrayList(Arrays.asList("-o", "--output"));
@@ -76,59 +74,56 @@ public class Interpreter {
 
 
     private final String README = "\nExamples:" +
-            "\njava GMaps --create --noise noise --fitness find_all_rooms --selection tournament --offspring default --mutator" +
-            " default --cellular rule20 --premutation swap -r find_room 100 3000 30 25" +
+            "\njava GMaps --create --noiseStrategy noiseStrategy --fitness find_all_rooms --selectionStrategy tournament --offspringStrategy default --mutatorStrategy" +
+            " default --cellular rule20 --permutationStrategy swap -r find_room 100 3000 30 25" +
             "\njava GMaps --load /home/user/folder/ 1 10 150 100";
 
     private final String AVAILABLE_OPTIONS =
                 "\nAvailable [NAME]:\n" +
                         "\nFitness:" +
-        "\n\t" + FitnessEnum.FIND_ALL_ROOMS.getImplementationName() +
-        "\n\t" + FitnessEnum.IS_TRAVERSABLE.getImplementationName() +
+        "\n\t" + FindAllRoomsFitnessStrategy.IMPLEMENTATION  +
+        "\n\t" + IsTraversableStrategy.IMPLEMENTATION  +
 
                         "\nCorrections:" +
        "\n\t" + FindHolesStrategy.IMPLEMENTATION +
        "\n\t" + FindRoomStrategy.IMPLEMENTATION +
 
                         "\nMutations:" +
-       "\n\t" + MutatorEnum.DEFAULT.getImplementationName() +
-       "\n\t" + MutatorEnum.LOW.getImplementationName() +
-       "\n\t" + MutatorEnum.LOWER.getImplementationName() +
-       "\n\t" + MutatorEnum.LOWEST.getImplementationName() +
+       "\n\t" + DefaultMutatorStrategy.IMPLEMENTATION +
 
-                        "\nNoiseStrategy Noise:" +
+                        "\nNoise:" +
        "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
        "\n\t" + NoiseNoiseStrategy.IMPLEMENTATION +
 
-                        "\nPremutation:" +
-       "\n\t" + PremutationEnum.SWAP.getImplementationName() +
-       "\n\t" + PremutationEnum.INVERSION.getImplementationName() +
-       "\n\t" + PremutationEnum.SCRAMBLE.getImplementationName() +
+                        "\nPermutation:" +
+       "\n\t" + SwapPermutationStrategy.IMPLEMENTATION +
+       "\n\t" + InversionPermutationStrategy.IMPLEMENTATION  +
+       "\n\t" + ScramblePermutationStrategy.IMPLEMENTATION  +
 
-                        "\nSelection Method:" +
-       "\n\t" + SelectionEnum.ELITE.getImplementationName() +
-       "\n\t" + SelectionEnum.TOURNAMENT.getImplementationName() +
-       "\n\t" + SelectionEnum.ROULETTE.getImplementationName() +
-       "\n\t" + SelectionEnum.RANK.getImplementationName() +
-       "\n\t" + SelectionEnum.StochasticTwo.getImplementationName() +
+                        "\nSelection:" +
+       "\n\t" + EliteSelectionStrategy.IMPLEMENTATION  +
+       "\n\t" + TournamentSelectionStrategy.IMPLEMENTATION  +
+       "\n\t" + RouletteSelectionStrategy.IMPLEMENTATION  +
+       "\n\t" + RankSelectionStrategy.IMPLEMENTATION  +
+       "\n\t" + StochasticTwoSelectionStrategy.IMPLEMENTATION  +
 
-                        "\n Offspring Selection Method:" +
+                        "\nOffspring:" +
        "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION +
 //       "\n\t" + OffspringEnum.DASD.getImplementationName() +
 
-                        "\n Cellular Automate Method:" +
+                        "\nCellular Automate Method:" +
        "\n\t" + "rule20";
 
 
     //A whole generation of maps
     private ArrayList<GameMap> generationOfGameMaps;
 
-    //Our Fitness implementations, we need at least one way
+    //Our FitnessStrategy implementations, we need at least one way
     // to evaluate a map
-    private ArrayList<Fitness> fitnessList;
+    private ArrayList<FitnessStrategy> fitnessStrategyList;
 
-    private Selection selection;
-    private Mutator mutator;
+    private SelectionStrategy selectionStrategy;
+    private MutatorStrategy mutatorStrategy;
 
     //if specified, saves maps to the output directory
     private String outputDirectory = null;
@@ -138,16 +133,16 @@ public class Interpreter {
     // and evaluates our whole project
     private AbstractChromosomeEvaluation chromosomeEvaluation;
 
-    //Noise Implementation, needed at the start
+    //NoiseStrategy Implementation, needed at the start
     // if maps start random
-    private Noise noise;
+    private NoiseStrategy noiseStrategy;
     //Cellular Automate is an outside factor to
     // scramble a map to look like a "cave"
     // used in Evolving Cellular Automate (ECA)
     private CellularAutomate cellularAutomate;
-    private Premutation premutation;
+    private PermutationStrategy permutationStrategy;
     private Correction correction;
-    private Offspring offspring;
+    private OffspringStrategy offspringStrategy;
 
     //Results after running program
     //It holds all data made during the process
@@ -178,7 +173,7 @@ public class Interpreter {
      * how to generate maps and interprets them
      */
     Interpreter(String... args) {
-        fitnessList = new ArrayList<>();
+        fitnessStrategyList = new ArrayList<>();
         generationOfGameMaps = new ArrayList<>();
         interpretArguments(args);
     }
@@ -223,9 +218,9 @@ public class Interpreter {
             System.exit(1);
         }
 
-        //Preparation, either create maps from noise or load some
+        //Preparation, either create maps from noiseStrategy or load some
         if(CREATE_ARGUMENT.contains(args[0])) {
-            if (noise == null){
+            if (noiseStrategy == null){
                 throw new RuntimeException("todo error");
             }
             else{
@@ -238,7 +233,7 @@ public class Interpreter {
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
-                fitnessList, mutator, selection, premutation, correction, offspring);
+                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correction, offspringStrategy);
 
 //        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
@@ -274,7 +269,7 @@ public class Interpreter {
             addCellularAutomataStrategy(args[i + 1]);
         }
         else if(PREMUTATION_ARGUMENT.contains(args[i])){
-            addPremutationStrategy(args[i + 1]);
+            addPermutationStrategy(args[i + 1]);
         }
         else if(CHROMOSOME_EVALUATION_ARGUMENT.contains(args[i])){
             addChromosomeEvaluationStrategy(args[i + 1]);
@@ -302,8 +297,8 @@ public class Interpreter {
         switch (choice) {
             case "basic":
                 chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
-                        numberOfGenerations, 0.3, fitnessList, mutator, selection, premutation,
-                        correction, offspring);
+                        numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy,
+                        correction, offspringStrategy);
                 return true;
             default:
                 return false;
@@ -314,13 +309,13 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "noise":
-                //noise = NoiseEnum.NOISE;
-                noise = new NoiseNoiseStrategy();
+            case "noiseStrategy":
+                //noiseStrategy = NoiseEnum.NOISE;
+                noiseStrategy = new NoiseNoiseStrategy();
                 return true;
             case "fill":
-                noise = new FillNoiseStrategy();
-//                noise =  NoiseEnum.FILL;
+                noiseStrategy = new FillNoiseStrategy();
+//                noiseStrategy =  NoiseEnum.FILL;
                 return true;
             default:
                 return false;
@@ -331,11 +326,12 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "find_all_rooms":
-                fitnessList.add(FitnessEnum.FIND_ALL_ROOMS);
+            case FindAllRoomsFitnessStrategy.IMPLEMENTATION :
+                fitnessStrategyList.add(new FindAllRoomsFitnessStrategy());
                 return true;
-            case "is_traversable":
-                fitnessList.add(FitnessEnum.IS_TRAVERSABLE);
+            case IsTraversableStrategy.IMPLEMENTATION :
+                fitnessStrategyList.add(new IsTraversableStrategy());
+                return true;
             default:
                 return false;
         }
@@ -354,12 +350,12 @@ public class Interpreter {
     }
 
     //TODO there could be a list of premutations, they are also kinda meh anyway
-    private boolean addPremutationStrategy(String option) {
+    private boolean addPermutationStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "swap":
-                premutation = PremutationEnum.SWAP;
+            case SwapPermutationStrategy.IMPLEMENTATION:
+                permutationStrategy = new SwapPermutationStrategy();
                 return true;
             default:
                 return false;
@@ -386,11 +382,11 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "elite":
-                selection = SelectionEnum.ELITE;
+            case EliteSelectionStrategy.IMPLEMENTATION:
+                selectionStrategy = new EliteSelectionStrategy();
                 return true;
-            case "tournament":
-                selection = SelectionEnum.TOURNAMENT;
+            case TournamentSelectionStrategy.IMPLEMENTATION:
+                selectionStrategy = new TournamentSelectionStrategy();
                 return true;
             default:
                 return false;
@@ -401,10 +397,10 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
-            offspring = new DefaultOffspringStrategy();
+            offspringStrategy = new DefaultOffspringStrategy();
             return true;
         }else if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
-//            offspring = OffspringEnum.DEFAULT;
+//            offspringStrategy = OffspringEnum.DEFAULT;
             return true;
         }else{
             return false;
@@ -425,36 +421,36 @@ public class Interpreter {
 //        String choice = option.toLowerCase().trim();
 
 //        if(choice.equals(MutatorEnum.DEFAULT.getImplementationName())){
-//            mutator = MutatorEnum.DEFAULT;
+//            mutatorStrategy = MutatorEnum.DEFAULT;
 //            return true;
 //        }else if(choice.equals(MutatorEnum.LOW.getImplementationName())){
-//            mutator = MutatorEnum.LOW;
+//            mutatorStrategy = MutatorEnum.LOW;
 //            return true;
 //        }else if(choice.equals(MutatorEnum.LOWER.getImplementationName())){
-//            mutator = MutatorEnum.LOWER;
+//            mutatorStrategy = MutatorEnum.LOWER;
 //            return true;
 //        }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
-//            mutator = MutatorEnum.LOWEST;
+//            mutatorStrategy = MutatorEnum.LOWEST;
 //            return true;
 //        }
 //        else if(choice.equals(MutatorEnum.HIGH.getImplementationName())){
-//            mutator = MutatorEnum.HIGH;
+//            mutatorStrategy = MutatorEnum.HIGH;
 //            return true;
 //        }
 //        else if(choice.equals(MutatorEnum.HIGHEST.getImplementationName())){
-//            mutator = MutatorEnum.HIGHEST;
+//            mutatorStrategy = MutatorEnum.HIGHEST;
 //            return true;
 //        }
 //        else{
 //            return false;
 //        }
-        mutator = new DefaultMutator(odds);
+        mutatorStrategy = new DefaultMutatorStrategy(odds);
         return true;
     }
 
     private boolean noiseMaps() {
-        //Create Noise for maps
-        generationOfGameMaps = noise.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
+        //Create NoiseStrategy for maps
+        generationOfGameMaps = noiseStrategy.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
         return true;
     }
 
