@@ -379,6 +379,15 @@ public class Interpreter {
             case TournamentSelectionStrategy.IMPLEMENTATION:
                 selectionStrategy = new TournamentSelectionStrategy();
                 return true;
+            case RouletteSelectionStrategy.IMPLEMENTATION:
+                selectionStrategy = new RouletteSelectionStrategy();
+                return true;
+            case StochasticTwoSelectionStrategy.IMPLEMENTATION:
+                selectionStrategy = new StochasticTwoSelectionStrategy();
+                return true;
+            case RankSelectionStrategy.IMPLEMENTATION:
+                selectionStrategy = new RankSelectionStrategy();
+                return true;
             default:
                 return false;
         }
