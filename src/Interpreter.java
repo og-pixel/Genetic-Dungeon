@@ -1,6 +1,5 @@
 import Algorithms.*;
 import Algorithms.CA.*;
-import DataStructure.Matrix;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
@@ -95,7 +94,7 @@ public class Interpreter {
                         "\nNoise:" +
         "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
         "\n\t" + RandomNoiseStrategy.IMPLEMENTATION +
-        "\n\t" + CellularAutomateNoise.IMPLEMENTATION +
+        "\n\t" + CaveCellularAutomateNoise.IMPLEMENTATION +
 
                         "\nPermutation:" +
         "\n\t" + SwapPermutationStrategy.IMPLEMENTATION +
@@ -318,8 +317,8 @@ public class Interpreter {
             case FillNoiseStrategy.IMPLEMENTATION:
                 noiseStrategy = new FillNoiseStrategy();
                 return true;
-            case CellularAutomateNoise.IMPLEMENTATION:
-                noiseStrategy = new CellularAutomateNoise();
+            case CaveCellularAutomateNoise.IMPLEMENTATION:
+                noiseStrategy = new CaveCellularAutomateNoise();
                 return true;
             default:
                 return false;

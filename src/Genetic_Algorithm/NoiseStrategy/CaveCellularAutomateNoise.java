@@ -12,7 +12,7 @@ import Algorithms.Algorithms;
 
 import static GameMap.TileList.*;
 
-public class CellularAutomateNoise implements NoiseStrategy {
+public class CaveCellularAutomateNoise implements NoiseStrategy {
 
     public static final String IMPLEMENTATION = "cellular";
 

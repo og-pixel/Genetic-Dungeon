@@ -94,7 +94,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             //Correct Maps
             //TODO make better error checking in interpeter
             if(correctionStrategy == null) {
-                System.out.println("todo, not found correctionStrategy strategy");
+
+//                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
             }
             else{
                 for (GameMap gameMap : gameMapList) correctionStrategy.correctMap(gameMap);
