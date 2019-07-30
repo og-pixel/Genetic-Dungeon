@@ -1,6 +1,6 @@
 package Genetic_Algorithm.PermutationStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
@@ -9,12 +9,12 @@ public class ScramblePermutationStrategy implements PermutationStrategy {
 
 
     @Override
-    public void permutateDungeon(GameMap gameMap) {
+    public void permutateDungeon(Chromosome chromosome) {
 
     }
 
     @Override
-    public void permutateDungeons(ArrayList<GameMap> gameMapList) {
+    public void permutateDungeons(ArrayList<Chromosome> chromosomeList) {
 
     }
 }

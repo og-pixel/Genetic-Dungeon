@@ -1,16 +1,16 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
 import DataStructure.Matrix;
-import GameMap.*;
-import static GameMap.TileList.*;
+import Chromosome.*;
+import static Chromosome.TileList.*;
 
 public class FindHolesStrategy implements CorrectionStrategy {
 
     public static final String IMPLEMENTATION = "find_holes";
 
     @Override
-    public void correctMap(GameMap gameMap) {
-        Matrix matrix = gameMap.getMapMatrix();
+    public void correctMap(Chromosome chromosome) {
+        Matrix matrix = chromosome.getMapMatrix();
 
             for (int y = 0; y < matrix.getHeight(); y++) {
                 for (int x = 0; x < matrix.getWidth(); x++) {

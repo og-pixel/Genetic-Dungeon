@@ -1,7 +1,7 @@
 package Genetic_Algorithm.Data;
 
 import Algorithms.Algorithms;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ public class EvolutionResults {
     //Each row represents an entire generation
     //Number of columns is the generation size
     //Number of rows is how many generations were there
-    private ArrayList<ArrayList<GameMap>> generationsList;
+    private ArrayList<ArrayList<Chromosome>> generationsList;
 
     public EvolutionResults(){
         generationsList = new ArrayList<>();
     }
 
-    public void addGeneration(ArrayList<GameMap> row){
+    public void addGeneration(ArrayList<Chromosome> row){
         try{
             generationsList.add(row);
         }catch (Exception e){
@@ -59,11 +59,11 @@ public class EvolutionResults {
         }
     }
 
-    public GameMap findBest(){
-        GameMap best = generationsList.get(0).get(0);
-        for (ArrayList<GameMap> gameMaps : generationsList) {
-            for (GameMap gameMap : gameMaps) {
-                if (best.getFitnessScore() < gameMap.getFitnessScore()) best = gameMap;
+    public Chromosome findBest(){
+        Chromosome best = generationsList.get(0).get(0);
+        for (ArrayList<Chromosome> chromosomes : generationsList) {
+            for (Chromosome chromosome : chromosomes) {
+                if (best.getFitnessScore() < chromosome.getFitnessScore()) best = chromosome;
             }
         }
         return best;

@@ -1,7 +1,7 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Genetic_Algorithm.Data.EvolutionResults;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,9 +16,9 @@ public class MeasureTimeChromosomeEvaluation extends DecoratorChromosomeEvaluati
     }
 
     @Override
-    public EvolutionResults crossoverPopulation(ArrayList<GameMap> gameMapList) {
+    public EvolutionResults crossoverPopulation(ArrayList<Chromosome> chromosomeList) {
         long startTime = System.nanoTime();
-        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(gameMapList);
+        EvolutionResults k = abstractChromosomeEvaluation.crossoverPopulation(chromosomeList);
         getLogger().setLevel(Level.INFO);
         getLogger().log(Level.INFO, "It took: " + ((System.nanoTime() - startTime) / 1000000000) + " seconds");
         getLogger().setLevel(Level.SEVERE);

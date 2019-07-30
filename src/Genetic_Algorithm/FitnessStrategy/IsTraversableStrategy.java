@@ -1,18 +1,18 @@
 package Genetic_Algorithm.FitnessStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 public class IsTraversableStrategy implements FitnessStrategy {
 
     public static final String IMPLEMENTATION = "is_traversable";
 
     @Override
-    public void evaluateMap(GameMap gameMap) {
+    public void evaluateMap(Chromosome chromosome) {
 
     }
 
     @Override
-    public void evaluateMapCheap(GameMap gameMap) {
+    public void evaluateMapCheap(Chromosome chromosome) {
 
     }
 }

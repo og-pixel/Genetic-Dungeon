@@ -1,10 +1,10 @@
 package Genetic_Algorithm.PermutationStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
 public interface PermutationStrategy {
-    void permutateDungeon(GameMap gameMap);
-    void permutateDungeons(ArrayList<GameMap> gameMapList);
+    void permutateDungeon(Chromosome chromosome);
+    void permutateDungeons(ArrayList<Chromosome> chromosomeList);
 }

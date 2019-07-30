@@ -1,11 +1,11 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
+import Chromosome.Chromosome;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
 import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
 import Genetic_Algorithm.SelectionStrategy.SelectionStrategy;
-import GameMap.GameMap;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
@@ -71,10 +71,10 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     }
 
     @Override
-    public EvolutionResults crossoverPopulation(ArrayList<GameMap> gameMapList) {
+    public EvolutionResults crossoverPopulation(ArrayList<Chromosome> chromosomeList) {
 
         //Setup Phase
-        ArrayList<GameMap> newPopulation;
+        ArrayList<Chromosome> newPopulation;
         //All results are saved here
         EvolutionResults evolutionResults = new EvolutionResults();
 
@@ -88,7 +88,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
             //Evaluate all dungeon based on all fitness implementations on the list
             for (FitnessStrategy fitnessStrategy : fitnessStrategyList) {
-                for (GameMap gameMap : gameMapList) fitnessStrategy.evaluateMap(gameMap);
+                for (Chromosome chromosome : chromosomeList) fitnessStrategy.evaluateMap(chromosome);
             }
 
             //Correct Maps
@@ -98,7 +98,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 //                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
             }
             else{
-                for (GameMap gameMap : gameMapList) correctionStrategy.correctMap(gameMap);
+                for (Chromosome chromosome : chromosomeList) correctionStrategy.correctMap(chromosome);
             }
 
             //SelectionStrategy
@@ -108,13 +108,13 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             // selectionStrategy.doSomething(map)
             // and make sure it does update accordingly
 
-            /*gameMapList = */
-            selectionStrategy.selectFitIndividuals(gameMapList, selectionFraction);
+            /*chromosomeList = */
+            selectionStrategy.selectFitIndividuals(chromosomeList, selectionFraction);
 
 
 
             //Save previous Generation
-            evolutionResults.addGeneration(Algorithms.deepClone(gameMapList));
+            evolutionResults.addGeneration(Algorithms.deepClone(chromosomeList));
 
 
 
@@ -122,21 +122,21 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
 
             //TODO WORK HERE, its offspringStrategy generator
-            newPopulation = offspringStrategy.createNewGeneration(gameMapList, populationSize, selectionFraction);
+            newPopulation = offspringStrategy.createNewGeneration(chromosomeList, populationSize, selectionFraction);
 
 
             mutation.mutateDungeons(newPopulation);//TODO it might not mutate sort makes no sense as i didnt evaluate it again
 
-            gameMapList = newPopulation;//TODO it might make it work or not
-//            newPopulation.sort(Comparator.comparing(GameMap::getFitnessScore).reversed());
+            chromosomeList = newPopulation;//TODO it might make it work or not
+//            newPopulation.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
 
 
 
             if(generation % iteration == 0) {
                 //TODO while this isnt really necessary, it is nice for debugging
-                logger.log(Level.INFO, generation + "th generation\nTop GameMap Score: "
-                        + gameMapList.get(0).getFitnessScore() + "\nTop GameMap Number of Rooms: "
-                        + gameMapList.get(0).getNumberOfRooms() + "\n"
+                logger.log(Level.INFO, generation + "th generation\nTop Chromosome Score: "
+                        + chromosomeList.get(0).getFitnessScore() + "\nTop Chromosome Number of Rooms: "
+                        + chromosomeList.get(0).getNumberOfRooms() + "\n"
                         + percentageDone + "%");
                 percentageDone++;
             }

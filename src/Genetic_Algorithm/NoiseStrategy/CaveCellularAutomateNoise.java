@@ -2,58 +2,57 @@ package Genetic_Algorithm.NoiseStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.VariableBoundsException;
-import GameMap.GameMap;
-import com.sun.javafx.scene.traversal.Algorithm;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import Algorithms.Algorithms;
 
-import static GameMap.TileList.*;
+import static Chromosome.TileList.*;
 
 public class CaveCellularAutomateNoise implements NoiseStrategy {
 
     public static final String IMPLEMENTATION = "cellular";
 
     @Override
-    public ArrayList<GameMap> createNoise(int width, int height, int numberOfMaps, double odds) {
-        ArrayList<GameMap> noisyMaps;
+    public ArrayList<Chromosome> createNoise(int width, int height, int numberOfMaps, double odds) {
+        ArrayList<Chromosome> noisyMaps;
         noisyMaps = preNoise(width, height, numberOfMaps, odds);
 
         return noisyMaps;
     }
 
-    private ArrayList<GameMap> preNoise(int width, int height, int numberOfMaps, double odds) {
+    private ArrayList<Chromosome> preNoise(int width, int height, int numberOfMaps, double odds) {
         if (odds <= 0 || odds > 1) throw new VariableBoundsException(0, 1.0);
         Random random = new Random();
 
-        ArrayList<GameMap> gameMapList = new ArrayList<>();
+        ArrayList<Chromosome> chromosomeList = new ArrayList<>();
         for (int i = 0; i < numberOfMaps; i++) {
-            gameMapList.add(new GameMap(width, height));
+            chromosomeList.add(new Chromosome(width, height));
 
-            for (GameMap gameMap : gameMapList) {
+            for (Chromosome chromosome : chromosomeList) {
 
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {
-                        if (random.nextDouble() > odds) gameMap.getMapMatrix().put(x, y, CORRIDOR);
-                        else gameMap.getMapMatrix().put(x, y, WALL);
+                        if (random.nextDouble() > odds) chromosome.getMapMatrix().put(x, y, CORRIDOR);
+                        else chromosome.getMapMatrix().put(x, y, WALL);
                     }
                 }
-                cellularAutomate(gameMap);
+                cellularAutomate(chromosome);
             }
         }
         System.out.println("time elapsed: " + Algorithms.TIME_ELAPSED);
-        return gameMapList;
+        return chromosomeList;
     }
 
 
-    private void cellularAutomate(GameMap gameMap){
+    private void cellularAutomate(Chromosome chromosome){
         int count = 0;
-        int mapWidth = gameMap.getMapWidth();
-        int mapHeight = gameMap.getMapHeight();
+        int mapWidth = chromosome.getMapWidth();
+        int mapHeight = chromosome.getMapHeight();
 
-        Matrix map = gameMap.getMapMatrix();
+        Matrix map = chromosome.getMapMatrix();
 
         Matrix newMatrix = new Matrix(mapWidth, mapHeight);
         newMatrix.fillMatrix(NOT_A_NUMBER);
@@ -111,6 +110,6 @@ public class CaveCellularAutomateNoise implements NoiseStrategy {
             }
             map = (Matrix) Algorithms.deepClone(newMatrix);
         }
-        gameMap.setMapMatrix(newMatrix);
+        chromosome.setMapMatrix(newMatrix);
     }
 }

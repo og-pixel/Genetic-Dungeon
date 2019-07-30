@@ -1,4 +1,4 @@
-package GameMap;
+package Chromosome;
 
 public class TileList {
     public static final int NOT_A_NUMBER = -1;

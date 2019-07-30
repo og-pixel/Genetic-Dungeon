@@ -1,4 +1,4 @@
-package GameMap.Rooms;
+package Chromosome.Rooms;
 
 import DataStructure.Matrix;
 

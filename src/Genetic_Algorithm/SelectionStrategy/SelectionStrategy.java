@@ -1,9 +1,9 @@
 package Genetic_Algorithm.SelectionStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
 public interface SelectionStrategy {
-    ArrayList<GameMap> selectFitIndividuals(ArrayList<GameMap> gameMap, double selectionFraction);
+    ArrayList<Chromosome> selectFitIndividuals(ArrayList<Chromosome> chromosome, double selectionFraction);
 }

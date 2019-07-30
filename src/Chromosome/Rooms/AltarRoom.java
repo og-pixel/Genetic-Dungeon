@@ -1,4 +1,4 @@
-package GameMap.Rooms;
+package Chromosome.Rooms;
 
 public class AltarRoom extends AbstractRoom {
     public AltarRoom(int roomWidth, int roomHeight) {

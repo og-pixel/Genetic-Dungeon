@@ -2,20 +2,20 @@ package Genetic_Algorithm.FitnessStrategy;
 
 import Algorithms.Algorithms;
 import DataStructure.Matrix;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
-import static GameMap.TileList.*;
+import static Chromosome.TileList.*;
 
 public class FindAllRoomsFitnessStrategy implements FitnessStrategy {
 
     public static final String IMPLEMENTATION = "find_all_rooms";
 
     @Override
-    public void evaluateMap(GameMap gameMap) {
-        int dungeonWidth = gameMap.getMapWidth();
-        int dungeonHeight = gameMap.getMapHeight();
+    public void evaluateMap(Chromosome chromosome) {
+        int dungeonWidth = chromosome.getMapWidth();
+        int dungeonHeight = chromosome.getMapHeight();
 
         int roomSize = 0;
         int numberOfRooms = 0;
@@ -38,12 +38,12 @@ public class FindAllRoomsFitnessStrategy implements FitnessStrategy {
                         }
                     }
                 }
-                if (!(gameMap.getMapMatrix().getElement(x, y) == CORRIDOR)) {
+                if (!(chromosome.getMapMatrix().getElement(x, y) == CORRIDOR)) {
                     alreadyVisited = true;
                 }
 
                 if (!alreadyVisited) {
-                    visitMap = Algorithms.floodFill(gameMap, x, y);
+                    visitMap = Algorithms.floodFill(chromosome, x, y);
                     listOfRooms.add(visitMap);
 
                     numberOfRooms++;
@@ -63,18 +63,18 @@ public class FindAllRoomsFitnessStrategy implements FitnessStrategy {
 
         double score = (distance / numberOfRooms); //More rooms * thier room size
 
-        //Cleanup, save information to the gameMap
-        gameMap.setNumberOfRooms(numberOfRooms);
+        //Cleanup, save information to the chromosome
+        chromosome.setNumberOfRooms(numberOfRooms);
 
         //TODO for now I had to make so score cannot be negative
         //TODO Return between 0 and 100 (0.0 to 1.0)
         //TODO for now I will only try to encourage creating multiple small rooms
-        if(score > 0) gameMap.setFitnessScore(score);
-        else gameMap.setFitnessScore(score);
+        if(score > 0) chromosome.setFitnessScore(score);
+        else chromosome.setFitnessScore(score);
     }
 
     @Override
-    public void evaluateMapCheap(GameMap gameMap) {
+    public void evaluateMapCheap(Chromosome chromosome) {
 
     }
 

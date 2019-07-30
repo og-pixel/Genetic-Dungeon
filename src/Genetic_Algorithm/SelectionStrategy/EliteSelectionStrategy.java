@@ -2,7 +2,7 @@ package Genetic_Algorithm.SelectionStrategy;
 
 import Algorithms.Algorithms;
 import Exceptions.VariableBoundsException;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,14 +11,14 @@ public class EliteSelectionStrategy implements SelectionStrategy {
     public static final String IMPLEMENTATION = "elite";
 
     @Override
-    public ArrayList<GameMap> selectFitIndividuals(ArrayList<GameMap> gameMap, double selectionFraction) {
+    public ArrayList<Chromosome> selectFitIndividuals(ArrayList<Chromosome> chromosome, double selectionFraction) {
         if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
         //First elements are the most fit
-        gameMap.sort(Comparator.comparing(GameMap::getFitnessScore).reversed());
-        gameMap.subList((int)(gameMap.size() * selectionFraction), gameMap.size()).clear();
+        chromosome.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
+        chromosome.subList((int)(chromosome.size() * selectionFraction), chromosome.size()).clear();
 
-        gameMap = Algorithms.deepClone(gameMap);
-        return gameMap;
+        chromosome = Algorithms.deepClone(chromosome);
+        return chromosome;
     }
 }

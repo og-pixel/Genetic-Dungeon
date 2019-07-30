@@ -1,6 +1,6 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 /**
  * Idea of this interface is to encourage genes to evolve towards our goal plan
@@ -8,5 +8,5 @@ import GameMap.GameMap;
  * which would in turn give higher score
  */
 public interface CorrectionStrategy {
-    void correctMap(GameMap gameMap);
+    void correctMap(Chromosome chromosome);
 }

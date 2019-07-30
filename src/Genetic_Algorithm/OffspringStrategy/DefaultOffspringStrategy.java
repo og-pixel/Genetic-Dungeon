@@ -1,6 +1,6 @@
 package Genetic_Algorithm.OffspringStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 import Algorithms.Algorithms;
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,21 +10,21 @@ public class DefaultOffspringStrategy implements OffspringStrategy {
     public static final String IMPLEMENTATION = "default";
 
     @Override
-    public ArrayList<GameMap> createNewGeneration(ArrayList<GameMap> list, double populationSize, double selectionFraction) {
+    public ArrayList<Chromosome> createNewGeneration(ArrayList<Chromosome> list, double populationSize, double selectionFraction) {
 
         Random random = new Random();
-        ArrayList<GameMap> newPopulation = new ArrayList<>();
+        ArrayList<Chromosome> newPopulation = new ArrayList<>();
 
         while (newPopulation.size() < populationSize) {
             //THIS is mutation part
             int randomPick = random.nextInt(list.size());
-            GameMap parent1 = list.get(randomPick);
+            Chromosome parent1 = list.get(randomPick);
 
             randomPick = random.nextInt(list.size());
-            GameMap parent2 = list.get(randomPick);
+            Chromosome parent2 = list.get(randomPick);
 
-            GameMap child1 = Algorithms.deepClone(parent1);
-            GameMap child2 = Algorithms.deepClone(parent2);
+            Chromosome child1 = Algorithms.deepClone(parent1);
+            Chromosome child2 = Algorithms.deepClone(parent2);
 
             int crossPointX = random.nextInt(parent1.getMapWidth());
             int crossPointY = random.nextInt(parent1.getMapHeight());

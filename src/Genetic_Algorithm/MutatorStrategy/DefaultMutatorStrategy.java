@@ -2,13 +2,13 @@ package Genetic_Algorithm.MutatorStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.NegativeNumberException;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static GameMap.TileList.CORRIDOR;
-import static GameMap.TileList.WALL;
+import static Chromosome.TileList.CORRIDOR;
+import static Chromosome.TileList.WALL;
 
 public class DefaultMutatorStrategy implements MutatorStrategy {
     private final double odds;
@@ -25,23 +25,23 @@ public class DefaultMutatorStrategy implements MutatorStrategy {
     }
 
     @Override
-    public void mutateDungeon(GameMap gameMap) {
-        Matrix dungeonMatrix = gameMap.getMapMatrix();
+    public void mutateDungeon(Chromosome chromosome) {
+        Matrix dungeonMatrix = chromosome.getMapMatrix();
         Random random = new Random();
-        for (int y = 0; y < gameMap.getMapHeight(); y++) {
-            for (int x = 0; x < gameMap.getMapWidth(); x++) {
+        for (int y = 0; y < chromosome.getMapHeight(); y++) {
+            for (int x = 0; x < chromosome.getMapWidth(); x++) {
                 if(random.nextDouble() <= odds){
                     if (dungeonMatrix.getElement(x,y) == CORRIDOR) dungeonMatrix.put(x, y, WALL);
                     else dungeonMatrix.put(x, y, CORRIDOR);
 
-                    gameMap.setMutationCount(gameMap.getMutationCount() + 1);
+                    chromosome.setMutationCount(chromosome.getMutationCount() + 1);
                 }
             }
         }
     }
 
     @Override
-    public void mutateDungeons(ArrayList<GameMap> gameMapList) {
-        for (GameMap gameMap : gameMapList) mutateDungeon(gameMap);
+    public void mutateDungeons(ArrayList<Chromosome> chromosomeList) {
+        for (Chromosome chromosome : chromosomeList) mutateDungeon(chromosome);
     }
 }

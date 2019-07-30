@@ -1,25 +1,25 @@
 package Genetic_Algorithm.NoiseStrategy;
 
-import GameMap.*;
+import Chromosome.*;
 
 import java.util.ArrayList;
-import static GameMap.TileList.*;
+import static Chromosome.TileList.*;
 
 public class FillNoiseStrategy implements NoiseStrategy {
 
     public static final String IMPLEMENTATION = "fill";
 
     @Override
-    public ArrayList<GameMap> createNoise(int width, int height, int numberOfMaps, double odds) {
-         ArrayList<GameMap> gameMapList = new ArrayList<>();
+    public ArrayList<Chromosome> createNoise(int width, int height, int numberOfMaps, double odds) {
+         ArrayList<Chromosome> chromosomeList = new ArrayList<>();
             for (int i = 0; i < numberOfMaps; i++) {
-                gameMapList.add(new GameMap(width, height));
+                chromosomeList.add(new Chromosome(width, height));
 
-                gameMapList.get(i).getMapMatrix().fillMatrix(WALL);
+                chromosomeList.get(i).getMapMatrix().fillMatrix(WALL);
 
-                gameMapList.get(i).createStartPosition();
-                gameMapList.get(i).createEndPosition();
+                chromosomeList.get(i).createStartPosition();
+                chromosomeList.get(i).createEndPosition();
             }
-            return gameMapList;
+            return chromosomeList;
     }
 }

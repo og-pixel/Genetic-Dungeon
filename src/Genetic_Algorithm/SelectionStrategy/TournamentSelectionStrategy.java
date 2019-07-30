@@ -2,35 +2,37 @@ package Genetic_Algorithm.SelectionStrategy;
 
 import Algorithms.Algorithms;
 import Exceptions.VariableBoundsException;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
 public class TournamentSelectionStrategy implements SelectionStrategy {
+
     public static final String IMPLEMENTATION = "tournament";
 
     @Override
-    public ArrayList<GameMap> selectFitIndividuals(ArrayList<GameMap> gameMap, double selectionFraction) {
+    public ArrayList<Chromosome> selectFitIndividuals(ArrayList<Chromosome> chromosome, double selectionFraction) {
         if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
+
         //TODO i dont like limit variable
-        double limit = gameMap.size() * selectionFraction;
+        double limit = chromosome.size() * selectionFraction;
         Random random = new Random();
 
-        gameMap.sort(Comparator.comparing(GameMap::getFitnessScore).reversed());
-        ArrayList<GameMap> selectedList = new ArrayList<>();
+        chromosome.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
+        ArrayList<Chromosome> selectedList = new ArrayList<>();
 
 
         while(selectedList.size() < limit) {
-            ArrayList<GameMap> tournamentList = new ArrayList<>();
+            ArrayList<Chromosome> tournamentList = new ArrayList<>();
             for (int i = 0; i < limit; i++) {
-                GameMap selectedGameMap = gameMap.get(random.nextInt(gameMap.size()));
-                tournamentList.add(selectedGameMap);
+                Chromosome selectedChromosome = chromosome.get(random.nextInt(chromosome.size()));
+                tournamentList.add(selectedChromosome);
             }
 
             //TODO get top guy, i am not sure if this method is fast, it sorts entire arry, i just need to pull one object
-            tournamentList.sort((Comparator.comparing(GameMap::getFitnessScore).reversed()));
+            tournamentList.sort((Comparator.comparing(Chromosome::getFitnessScore).reversed()));
             selectedList.add(Algorithms.deepClone(tournamentList.get(0)));
         }
 

@@ -4,8 +4,8 @@
 - [x] Create some sort of "menu" where  I can directly control app better (but still by arguments only). This will be work of the interpreter
 - [ ] Try to create basic manual corection where we look for rooms of certain size (square stuff or summin)
 - [ ] Try to split program into making rooms only
-- [ ] Create one gameMap by hand (that looks like gameMap) and run this one as controlled environment
-(also to check whenever I can get something ***Interesting*** out of already made gameMaps)
+- [ ] Create one chromosome by hand (that looks like chromosome) and run this one as controlled environment
+(also to check whenever I can get something ***Interesting*** out of already made chromosomes)
 - [ ] In report mention, problems with good evaluation
 - [ ]
 - [ ]
@@ -30,7 +30,7 @@
 - [ ] No Crossover (total random)
 - [ ] THERE IS MUCH MORE
 ##TODO MUTATION if mutation is high, its just random (so i guess 1%-3% is top) WITHOUT MUTATION THERE IS NO SE    ARACH
-- [ x ] Mutation by changing values (from one to another, it 1,0 gameMap)
+- [ x ] Mutation by changing values (from one to another, it 1,0 chromosome)
 ##TODO PREMUTATIONS
 - [ ] Swap inside the same chromosome (permutationStrategy?)
 - [ ] Scramble

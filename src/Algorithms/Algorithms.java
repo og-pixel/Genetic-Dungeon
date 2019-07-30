@@ -1,7 +1,7 @@
 package Algorithms;
 
 import DataStructure.Matrix;
-import GameMap.*;
+import Chromosome.*;
 import Exceptions.MatrixWrongDimensionsException;
 
 import java.io.*;
@@ -21,41 +21,41 @@ public class Algorithms{
     //TODO this is a debug value to count how long i waste on deep cloning
     public static long TIME_ELAPSED = 0;
 
-    public static Matrix floodFill(GameMap gameMap, int x, int y){
-        int dungeonWidth = gameMap.getMapWidth();
-        int dungeonHeight = gameMap.getMapHeight();
+    public static Matrix floodFill(Chromosome chromosome, int x, int y){
+        int dungeonWidth = chromosome.getMapWidth();
+        int dungeonHeight = chromosome.getMapHeight();
 
         Matrix visitMap = new Matrix(dungeonWidth, dungeonHeight);
         visitMap.fillMatrix(0);
 
-        flood(gameMap, visitMap, x, y);
+        flood(chromosome, visitMap, x, y);
 
         return visitMap;
     }
 
-    private static void flood(GameMap gameMap, Matrix visitMap, int x, int y){
+    private static void flood(Chromosome chromosome, Matrix visitMap, int x, int y){
 
-        if(gameMap.getMapMatrix().getElement(x, y) == TileList.CORRIDOR) {
+        if(chromosome.getMapMatrix().getElement(x, y) == TileList.CORRIDOR) {
             visitMap.put(x, y, 1);
 
-            if (x > 0 && gameMap.getMapMatrix().getElement(x - 1, y) == TileList.CORRIDOR) {
+            if (x > 0 && chromosome.getMapMatrix().getElement(x - 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x - 1, y) == 0) {
-                    flood(gameMap, visitMap, x - 1, y);
+                    flood(chromosome, visitMap, x - 1, y);
                 }
             }
-            if (x + 1 < gameMap.getMapWidth() && gameMap.getMapMatrix().getElement(x + 1, y) == TileList.CORRIDOR) {
+            if (x + 1 < chromosome.getMapWidth() && chromosome.getMapMatrix().getElement(x + 1, y) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x + 1, y) == 0) {
-                    flood(gameMap, visitMap, x + 1, y);
+                    flood(chromosome, visitMap, x + 1, y);
                 }
             }
-            if (y > 0 && gameMap.getMapMatrix().getElement(x, y - 1) == TileList.CORRIDOR) {
+            if (y > 0 && chromosome.getMapMatrix().getElement(x, y - 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y - 1) == 0) {
-                    flood(gameMap, visitMap, x, y - 1);
+                    flood(chromosome, visitMap, x, y - 1);
                 }
             }
-            if (y + 1 < gameMap.getMapHeight() && gameMap.getMapMatrix().getElement(x, y + 1) == TileList.CORRIDOR) {
+            if (y + 1 < chromosome.getMapHeight() && chromosome.getMapMatrix().getElement(x, y + 1) == TileList.CORRIDOR) {
                 if (visitMap.getElement(x, y + 1) == 0) {
-                    flood(gameMap, visitMap, x, y + 1);
+                    flood(chromosome, visitMap, x, y + 1);
                 }
             }
         }
@@ -63,20 +63,20 @@ public class Algorithms{
 
 
     //TODO not working ATM
-    public static void aStarTraverse(GameMap gameMap){
-        Matrix dungeonMatrix = gameMap.getMapMatrix();
+    public static void aStarTraverse(Chromosome chromosome){
+        Matrix dungeonMatrix = chromosome.getMapMatrix();
 
         ArrayList<Point> traverseList = new ArrayList<>();
 
 
-        int startPositionX = gameMap.getStartPoint().getXPos();
-        int startPositionY = gameMap.getStartPoint().getYPos();
+        int startPositionX = chromosome.getStartPoint().getXPos();
+        int startPositionY = chromosome.getStartPoint().getYPos();
 
-        int endPositionX = gameMap.getEndPoint().getXPos();
-        int endPositionY = gameMap.getEndPoint().getYPos();
+        int endPositionX = chromosome.getEndPoint().getXPos();
+        int endPositionY = chromosome.getEndPoint().getYPos();
 
-        int dungeonWidth = gameMap.getMapWidth();
-        int dungeonHeight = gameMap.getMapHeight();
+        int dungeonWidth = chromosome.getMapWidth();
+        int dungeonHeight = chromosome.getMapHeight();
 
         Point currentPosition = new Point(startPositionX, startPositionY);
 
@@ -295,13 +295,13 @@ public class Algorithms{
 
     /**
      * Wrapper method that takes dungeon maps instead
-      * @param gameMap1
-     * @param gameMap2
+      * @param chromosome1
+     * @param chromosome2
      * @return
      */
-    public static int getHammingDistance(GameMap gameMap1, GameMap gameMap2){
-        Matrix matrix1 = gameMap1.getMapMatrix();
-        Matrix matrix2 = gameMap2.getMapMatrix();
+    public static int getHammingDistance(Chromosome chromosome1, Chromosome chromosome2){
+        Matrix matrix1 = chromosome1.getMapMatrix();
+        Matrix matrix2 = chromosome2.getMapMatrix();
 
         return getHammingDistance(matrix1, matrix2);
     }
@@ -324,7 +324,7 @@ public class Algorithms{
     }
 
     public static void writeToFile(String content, Object object) throws IOException {
-        if(object instanceof GameMap)writeToFile(content, (GameMap) object);
+        if(object instanceof Chromosome)writeToFile(content, (Chromosome) object);
         else {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -339,15 +339,15 @@ public class Algorithms{
         }
     }
 
-    private static void writeToFile(String content, GameMap gameMap) throws IOException {
+    private static void writeToFile(String content, Chromosome chromosome) throws IOException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        int score = (int) gameMap.getFitnessScore();
+        int score = (int) chromosome.getFitnessScore();
         File file = new File( content + ": " + score + ": " + timestamp.toString() + ":" +  ".txt");
         file.createNewFile();
 
         FileWriter fileWrite = new FileWriter(file);
-        content = gameMap.mapToString();
+        content = chromosome.mapToString();
         fileWrite.write(content);
 
         fileWrite.flush();
@@ -369,30 +369,30 @@ public class Algorithms{
         }
     }
 
-    public static GameMap deepClone(GameMap gameMap){
+    public static Chromosome deepClone(Chromosome chromosome){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(gameMap);
+            oos.writeObject(chromosome);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (GameMap) ois.readObject();
+            return (Chromosome) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ArrayList<GameMap> deepClone(ArrayList<GameMap> gameMap){
+    public static ArrayList<Chromosome> deepClone(ArrayList<Chromosome> chromosome){
         try{
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(gameMap);
+            oos.writeObject(chromosome);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
-            return (ArrayList<GameMap>) ois.readObject();
+            return (ArrayList<Chromosome>) ois.readObject();
         }catch (Exception e) {
             e.printStackTrace();
             return null;

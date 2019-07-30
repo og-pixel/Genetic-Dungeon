@@ -1,6 +1,6 @@
 package Genetic_Algorithm.PermutationStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
@@ -8,12 +8,12 @@ public class InversionPermutationStrategy implements PermutationStrategy {
     public static final String IMPLEMENTATION = "inversion";
 
     @Override
-    public void permutateDungeon(GameMap gameMap) {
+    public void permutateDungeon(Chromosome chromosome) {
 
     }
 
     @Override
-    public void permutateDungeons(ArrayList<GameMap> gameMapList) {
+    public void permutateDungeons(ArrayList<Chromosome> chromosomeList) {
 
     }
 }

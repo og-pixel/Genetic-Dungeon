@@ -1,4 +1,4 @@
-package GameMap;
+package Chromosome;
 
 import java.io.Serializable;
 

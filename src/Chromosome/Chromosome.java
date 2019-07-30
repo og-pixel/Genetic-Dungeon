@@ -1,17 +1,17 @@
-package GameMap;
+package Chromosome;
 
 import DataStructure.Matrix;
 
 import java.io.Serializable;
 
-import static GameMap.TileList.*;
+import static Chromosome.TileList.*;
 
 
 /**
- * GameMap is an extension to the Matrix class in map generation
+ * Chromosome is an extension to the Matrix class in map generation
  * It does contain information about its modifications
  */
-public class GameMap implements Serializable{
+public class Chromosome implements Serializable{
 
     /* Variables */
     private int mapWidth, mapHeight;
@@ -23,7 +23,7 @@ public class GameMap implements Serializable{
     private Point endPoint;
 
     /*
-    * GameMap is created as a matrix made out of number Tile objects representing different type of tile
+    * Chromosome is created as a matrix made out of number Tile objects representing different type of tile
     * (To be specified in TileList Interface)
     */
     private Matrix mapMatrix;
@@ -41,7 +41,7 @@ public class GameMap implements Serializable{
      * @param mapWidth
      * @param mapHeight
      */
-    public GameMap(int mapWidth, int mapHeight) {
+    public Chromosome(int mapWidth, int mapHeight) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.mapMatrix = new Matrix(mapWidth, mapHeight);
@@ -49,7 +49,7 @@ public class GameMap implements Serializable{
     }
 
     //Constructor takes already existing matrix and reset rest of information
-    public GameMap(Matrix mapMatrix) {
+    public Chromosome(Matrix mapMatrix) {
         this.mapWidth = mapMatrix.getWidth();
         this.mapHeight = mapMatrix.getHeight();
         this.mapMatrix = mapMatrix;

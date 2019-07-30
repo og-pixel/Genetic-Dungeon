@@ -1,6 +1,6 @@
 package Genetic_Algorithm.MutatorStrategy;
 
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,6 @@ import java.util.ArrayList;
  * Iterate over maps and mutate them
  */
 public interface MutatorStrategy {
-    void mutateDungeon(GameMap gameMap);
-    void mutateDungeons(ArrayList<GameMap> gameMapList);
+    void mutateDungeon(Chromosome chromosome);
+    void mutateDungeons(ArrayList<Chromosome> chromosomeList);
 }

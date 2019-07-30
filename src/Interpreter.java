@@ -14,7 +14,7 @@ import Genetic_Algorithm.OffspringStrategy.DefaultOffspringStrategy;
 import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
 import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
 import Genetic_Algorithm.SelectionStrategy.*;
-import GameMap.GameMap;
+import Chromosome.Chromosome;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
@@ -116,7 +116,7 @@ public class Interpreter {
 
 
     //A whole generation of maps
-    private ArrayList<GameMap> generationOfGameMaps;
+    private ArrayList<Chromosome> generationOfGameMaps;
 
     //Our FitnessStrategy implementations, we need at least one way
     // to evaluate a map
@@ -423,7 +423,7 @@ public class Interpreter {
 //        //Run Cellular Automate
 //        for (int i = 0; i < generationOfGameMaps.size(); i++) {
 //            Matrix k = cellularAutomate.generateMap(generationOfGameMaps.get(i).getMapMatrix());
-//            GameMap kk = new GameMap(k);
+//            Chromosome kk = new Chromosome(k);
 //            generationOfGameMaps.set(i, kk);
 //        }
 //        return true;
