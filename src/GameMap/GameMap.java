@@ -142,6 +142,10 @@ public class GameMap implements Serializable{
         this.correctionsFound = correctionsFound;
     }
 
+    public void setMapMatrix(Matrix mapMatrix) {
+        this.mapMatrix = mapMatrix;
+    }
+
     /**
      * Get map, its information and return a string of it
      * @return Text representation od a map with additional information

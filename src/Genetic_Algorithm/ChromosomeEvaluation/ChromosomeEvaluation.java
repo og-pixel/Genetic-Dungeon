@@ -5,6 +5,6 @@ import GameMap.GameMap;
 
 import java.util.ArrayList;
 
-public interface ChromosomeEvaluationImp {
+public interface ChromosomeEvaluation {
     EvolutionResults crossoverPopulation(ArrayList<GameMap> gameMapList);
 }

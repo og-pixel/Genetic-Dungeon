@@ -41,7 +41,7 @@ public class Interpreter {
     private final ArrayList<String> VERBOSE_ARGUMENT = new ArrayList(Arrays.asList("-v", "--verbose"));
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
-    private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
+//    private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
     private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
@@ -62,7 +62,7 @@ public class Interpreter {
             "\n" + MUTATOR_ARGUMENT + "\t[NAME]\t\t\tAdd [MUTATOR] Function" +
             "\n" + CHROMOSOME_EVALUATION_ARGUMENT + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
             "\n" + NOISE_ARGUMENT + "\t[NAME]\t\t\tAdd [NOISE] Function" +
-            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
+//            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
             "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
             "\n" + OFFSPRING_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
@@ -85,33 +85,34 @@ public class Interpreter {
         "\n\t" + IsTraversableStrategy.IMPLEMENTATION  +
 
                         "\nCorrectionStrategy:" +
-       "\n\t" + FindHolesStrategy.IMPLEMENTATION +
-       "\n\t" + FindRoomStrategy.IMPLEMENTATION +
+        "\n\t" + FindHolesStrategy.IMPLEMENTATION +
+        "\n\t" + FindRoomStrategy.IMPLEMENTATION +
 
                         "\nMutations:" +
-       "\n\t" + DefaultMutatorStrategy.IMPLEMENTATION +
+        "\n\t" + DefaultMutatorStrategy.IMPLEMENTATION +
 
                         "\nNoise:" +
-       "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
-       "\n\t" + RandomNoiseStrategy.IMPLEMENTATION +
+        "\n\t" + FillNoiseStrategy.IMPLEMENTATION +
+        "\n\t" + RandomNoiseStrategy.IMPLEMENTATION +
+        "\n\t" + CellularAutomateNoise.IMPLEMENTATION +
 
                         "\nPermutation:" +
-       "\n\t" + SwapPermutationStrategy.IMPLEMENTATION +
-       "\n\t" + InversionPermutationStrategy.IMPLEMENTATION  +
-       "\n\t" + ScramblePermutationStrategy.IMPLEMENTATION  +
+        "\n\t" + SwapPermutationStrategy.IMPLEMENTATION +
+        "\n\t" + InversionPermutationStrategy.IMPLEMENTATION  +
+        "\n\t" + ScramblePermutationStrategy.IMPLEMENTATION  +
 
                         "\nSelection:" +
-       "\n\t" + EliteSelectionStrategy.IMPLEMENTATION  +
-       "\n\t" + TournamentSelectionStrategy.IMPLEMENTATION  +
-       "\n\t" + RouletteSelectionStrategy.IMPLEMENTATION  +
-       "\n\t" + RankSelectionStrategy.IMPLEMENTATION  +
-       "\n\t" + StochasticTwoSelectionStrategy.IMPLEMENTATION  +
+        "\n\t" + EliteSelectionStrategy.IMPLEMENTATION  +
+        "\n\t" + TournamentSelectionStrategy.IMPLEMENTATION  +
+        "\n\t" + RouletteSelectionStrategy.IMPLEMENTATION  +
+        "\n\t" + RankSelectionStrategy.IMPLEMENTATION  +
+        "\n\t" + StochasticTwoSelectionStrategy.IMPLEMENTATION  +
 
                         "\nOffspring:" +
-       "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION +
+        "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION;
 
-                        "\nCellular Automate Method:" +
-       "\n\t" + "rule20";
+//                        "\nCellular Automate Method:" +
+//       "\n\t" + "rule20";
 
 
     //A whole generation of maps
@@ -227,7 +228,7 @@ public class Interpreter {
             }
         }else if(args[0].equals(LOAD_ARGUMENT.get(0)))System.exit(1);//todo finish this path
 
-        if(cellularAutomate != null)caMaps();
+//        if(cellularAutomate != null)caMaps();
 
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
@@ -239,15 +240,17 @@ public class Interpreter {
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfGameMaps);
 
-        //todo its a little silly
-        if(outputDirectory != null)evolutionResults.saveAllResults(outputDirectory);
-        else evolutionResults.saveAllResults();
-
         try {
             Algorithms.writeToFile("BEST", evolutionResults.findBest());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //todo its a little silly
+        if(outputDirectory != null)evolutionResults.saveAllResults(outputDirectory);
+        else evolutionResults.saveAllResults();
+
+
     }
 
     private void findOptions(int i, String... args) {
@@ -264,9 +267,9 @@ public class Interpreter {
         else if(MUTATOR_ARGUMENT.contains(args[i])){
             addMutatorStrategy(args[i + 1]);
         }
-        else if(CA_ARGUMENT.contains(args[i])){
-            addCellularAutomataStrategy(args[i + 1]);
-        }
+//        else if(CA_ARGUMENT.contains(args[i])){
+//            addCellularAutomataStrategy(args[i + 1]);
+//        }
         else if(PERMUTATION_ARGUMENT.contains(args[i])){
             addPermutationStrategy(args[i + 1]);
         }
@@ -308,13 +311,14 @@ public class Interpreter {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case "noiseStrategy":
-                //noiseStrategy = NoiseEnum.NOISE;
+            case RandomNoiseStrategy.IMPLEMENTATION:
                 noiseStrategy = new RandomNoiseStrategy();
                 return true;
-            case "fill":
+            case FillNoiseStrategy.IMPLEMENTATION:
                 noiseStrategy = new FillNoiseStrategy();
-//                noiseStrategy =  NoiseEnum.FILL;
+                return true;
+            case CellularAutomateNoise.IMPLEMENTATION:
+                noiseStrategy = new CellularAutomateNoise();
                 return true;
             default:
                 return false;
@@ -330,18 +334,6 @@ public class Interpreter {
                 return true;
             case IsTraversableStrategy.IMPLEMENTATION :
                 fitnessStrategyList.add(new IsTraversableStrategy());
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    private boolean addCellularAutomataStrategy(String option) {
-        String choice = option.toLowerCase().trim();
-
-        switch (choice) {
-            case "rule20":
-                cellularAutomate = new Rule20CellularAutomate();
                 return true;
             default:
                 return false;
@@ -395,14 +387,15 @@ public class Interpreter {
     private boolean addOffspringStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
-        if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
-            offspringStrategy = new DefaultOffspringStrategy();
-            return true;
-        }else if(choice.equals(DefaultOffspringStrategy.IMPLEMENTATION)){
-//            offspringStrategy = OffspringEnum.DEFAULT;
-            return true;
-        }else{
-            return false;
+        switch (choice) {
+            case DefaultOffspringStrategy.IMPLEMENTATION:
+                offspringStrategy = new DefaultOffspringStrategy();
+                return true;
+//            case DefaultOffspringStrategy.IMPLEMENTATION:
+//                selectionStrategy = new TournamentSelectionStrategy();
+//                return true;
+            default:
+                return false;
         }
     }
 
@@ -416,33 +409,6 @@ public class Interpreter {
             e.printStackTrace();
             return false;
         }
-
-//        String choice = option.toLowerCase().trim();
-
-//        if(choice.equals(MutatorEnum.DEFAULT.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.DEFAULT;
-//            return true;
-//        }else if(choice.equals(MutatorEnum.LOW.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.LOW;
-//            return true;
-//        }else if(choice.equals(MutatorEnum.LOWER.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.LOWER;
-//            return true;
-//        }else if(choice.equals(MutatorEnum.LOWEST.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.LOWEST;
-//            return true;
-//        }
-//        else if(choice.equals(MutatorEnum.HIGH.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.HIGH;
-//            return true;
-//        }
-//        else if(choice.equals(MutatorEnum.HIGHEST.getImplementationName())){
-//            mutatorStrategy = MutatorEnum.HIGHEST;
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
         mutatorStrategy = new DefaultMutatorStrategy(odds);
         return true;
     }
@@ -453,15 +419,15 @@ public class Interpreter {
         return true;
     }
 
-    private boolean caMaps() {
-        //Run Cellular Automate
-        for (int i = 0; i < generationOfGameMaps.size(); i++) {
-            Matrix k = cellularAutomate.generateMap(generationOfGameMaps.get(i).getMapMatrix());
-            GameMap kk = new GameMap(k);
-            generationOfGameMaps.set(i, kk);
-        }
-        return true;
-    }
+//    private boolean caMaps() {
+//        //Run Cellular Automate
+//        for (int i = 0; i < generationOfGameMaps.size(); i++) {
+//            Matrix k = cellularAutomate.generateMap(generationOfGameMaps.get(i).getMapMatrix());
+//            GameMap kk = new GameMap(k);
+//            generationOfGameMaps.set(i, kk);
+//        }
+//        return true;
+//    }
 
     private void displayHelp() {
        System.out.println(HELP_PAGE);

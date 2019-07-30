@@ -13,13 +13,13 @@ public class RandomNoiseStrategy implements NoiseStrategy {
 
     @Override
     public ArrayList<GameMap> createNoise(int width, int height, int numberOfMaps, double odds) {
-        if (odds < 0.1 || odds > 1) throw new VariableBoundsException(0.1, 1.0); //TOOD i am not sure if i need that
+        if (odds <= 0 || odds > 1) throw new VariableBoundsException(0, 1.0);
+        Random random = new Random();
 
         ArrayList<GameMap> gameMapList = new ArrayList<>();
         for (int i = 0; i < numberOfMaps; i++) {
             gameMapList.add(new GameMap(width, height));
 
-            Random random = new Random();
             for (GameMap gameMap : gameMapList) {
 
                 for (int y = 0; y < height; y++) {

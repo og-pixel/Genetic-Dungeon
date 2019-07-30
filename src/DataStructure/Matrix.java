@@ -166,9 +166,10 @@ public class Matrix implements Serializable {
         StringBuilder string = new StringBuilder();
 
         for (int y = 0; y < height; y++) {
-            string.append(" { ");
+            string.append(" {");
             for (int x = 0; x < width; x++) {
-                string.append(matrix[height][width]).append(", ");
+                string.append(matrix[y][x]);
+                if(x != width - 1)string.append(", ");
             }
             string.append("}\n");
         }
