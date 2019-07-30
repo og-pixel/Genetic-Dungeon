@@ -34,9 +34,6 @@ public class TournamentSelectionStrategy implements SelectionStrategy {
             selectedList.add(Algorithms.deepClone(tournamentList.get(0)));
         }
 
-        //TODO remove if wrong
-        gameMap = selectedList;
-
         return selectedList;
     }
 }

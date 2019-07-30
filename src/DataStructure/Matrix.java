@@ -157,6 +157,46 @@ public class Matrix implements Serializable {
         return getElement(x - 1, y);
     }
 
+    public long getUpLeft(int x, int y){
+        if(((y - 1) < 0) &&
+                ((x - 1) < 0)) return -1;
+
+        return getElement(x, y);
+    }
+
+    public long getUpRight(int x, int y){
+        if(((y - 1) < 0) &&
+                ((x + 1) >= width)) return -1;
+
+        return getElement(x, y);
+    }
+
+    public long getDownLeft(int x, int y){
+        if(((y + 1) >= height) &&
+                ((x - 1) < 0)) return -1;
+
+        return getElement(x, y);
+    }
+
+    public long getDownRight(int x, int y){
+        if(((y + 1) >= height) &&
+                ((x + 1) >= width)) return -1;
+
+        return getElement(x, y);
+    }
+
+
+    //TODO this is meant to surround the matrix with the walls
+    public void surroundMatrix(int value){
+
+
+//        replaceRow(0, new long[]{value, value, value, value, value});
+//        replaceRow(height, new long[]{value, value, value, value, value});
+//
+
+
+    }
+
     public long getVolume(){
         return width * height;
     }

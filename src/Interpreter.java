@@ -1,6 +1,7 @@
 import Algorithms.*;
 import Algorithms.CA.*;
 import DataStructure.Matrix;
+import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
@@ -235,7 +236,7 @@ public class Interpreter {
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
                 fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correctionStrategy, offspringStrategy);
 
-//        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
+        chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
 
         evolutionResults = chromosomeEvaluation.crossoverPopulation(generationOfGameMaps);
@@ -415,7 +416,7 @@ public class Interpreter {
 
     private boolean noiseMaps() {
         //Create NoiseStrategy for maps
-        generationOfGameMaps = noiseStrategy.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.55);
+        generationOfGameMaps = noiseStrategy.createNoise(dungeonWidth, dungeonHeight, populationSize, 0.45);
         return true;
     }
 

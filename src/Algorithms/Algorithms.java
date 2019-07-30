@@ -18,6 +18,9 @@ import java.util.Random;
  */
 public class Algorithms{
 
+    //TODO this is a debug value to count how long i waste on deep cloning
+    public static long TIME_ELAPSED = 0;
+
     public static Matrix floodFill(GameMap gameMap, int x, int y){
         int dungeonWidth = gameMap.getMapWidth();
         int dungeonHeight = gameMap.getMapHeight();
@@ -349,6 +352,21 @@ public class Algorithms{
 
         fileWrite.flush();
         fileWrite.close();
+    }
+
+    public static Object deepClone(Object object){
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return ois.readObject();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static GameMap deepClone(GameMap gameMap){
