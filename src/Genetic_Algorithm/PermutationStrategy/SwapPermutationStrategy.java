@@ -15,7 +15,7 @@ public class SwapPermutationStrategy implements PermutationStrategy {
         int dungeonWidth = chromosome.getMapWidth();
         int x1 ,y1;
         int x2, y2;
-        //While it is a loop, it is meant to be run once 99% ot the time
+        //While it is a loop, it is meant to be run once majority ot the time
         do {
             x1 = random.nextInt(dungeonWidth);
             y1 = random.nextInt(dungeonHeight);

@@ -3,6 +3,7 @@ package DataStructure;
 import Exceptions.MatrixTooSmallException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Relatively simple matrix class that is an array of numerical arrays
@@ -13,6 +14,11 @@ public class Matrix implements Serializable {
 
     private long[][] matrix;
     private int width, height;
+
+    //Addinational
+//    private MutabilityMatrix mutabilityMatrix;
+//    private boolean[][] mutabilityMatrix;
+
 
     /**
      * Constructor

@@ -1,11 +1,11 @@
-package Genetic_Algorithm.OffspringStrategy;
+package Genetic_Algorithm.CrossoverStrategy;
 
 import Chromosome.Chromosome;
 import Algorithms.Algorithms;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DefaultOffspringStrategy implements OffspringStrategy {
+public class DefaultCrossoverStrategy implements CrossoverStrategy {
 
     public static final String IMPLEMENTATION = "default";
 
@@ -15,6 +15,8 @@ public class DefaultOffspringStrategy implements OffspringStrategy {
         Random random = new Random();
         ArrayList<Chromosome> newPopulation = new ArrayList<>();
 
+        //TODO the fact that it does create two children right away (which are in a way, direct opposites)
+        // makes it a bit odd, I think I wouldn't call it default strategy
         while (newPopulation.size() < populationSize) {
             //THIS is mutation part
             int randomPick = random.nextInt(list.size());

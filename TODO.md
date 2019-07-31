@@ -29,7 +29,7 @@
 - [ ] Double point crossover
 - [ ] No Crossover (total random)
 - [ ] THERE IS MUCH MORE
-##TODO MUTATION if mutation is high, its just random (so i guess 1%-3% is top) WITHOUT MUTATION THERE IS NO SE    ARACH
+##TODO MUTATION if mutatorStrategy is high, its just random (so i guess 1%-3% is top) WITHOUT MUTATION THERE IS NO SE    ARACH
 - [ x ] Mutation by changing values (from one to another, it 1,0 chromosome)
 ##TODO PREMUTATIONS
 - [ ] Swap inside the same chromosome (permutationStrategy?)

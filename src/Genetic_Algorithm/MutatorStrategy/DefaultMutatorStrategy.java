@@ -31,7 +31,9 @@ public class DefaultMutatorStrategy implements MutatorStrategy {
         for (int y = 0; y < chromosome.getMapHeight(); y++) {
             for (int x = 0; x < chromosome.getMapWidth(); x++) {
                 if(random.nextDouble() <= odds){
-                    if (dungeonMatrix.getElement(x,y) == CORRIDOR) dungeonMatrix.put(x, y, WALL);
+                    if (dungeonMatrix.getElement(x,y) == CORRIDOR) {
+                        dungeonMatrix.put(x, y, WALL);
+                    }
                     else dungeonMatrix.put(x, y, CORRIDOR);
 
                     chromosome.setMutationCount(chromosome.getMutationCount() + 1);

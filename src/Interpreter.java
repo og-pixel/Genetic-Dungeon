@@ -5,13 +5,14 @@ import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindRoomStrategy;
+import Genetic_Algorithm.CrossoverStrategy.UniformCrossoverStrategy;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
 import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.RandomNoiseStrategy;
-import Genetic_Algorithm.OffspringStrategy.DefaultOffspringStrategy;
-import Genetic_Algorithm.OffspringStrategy.OffspringStrategy;
+import Genetic_Algorithm.CrossoverStrategy.DefaultCrossoverStrategy;
+import Genetic_Algorithm.CrossoverStrategy.CrossoverStrategy;
 import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
 import Genetic_Algorithm.SelectionStrategy.*;
 import Chromosome.Chromosome;
@@ -41,13 +42,12 @@ public class Interpreter {
     private final ArrayList<String> VERBOSE_ARGUMENT = new ArrayList(Arrays.asList("-v", "--verbose"));
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
-//    private final ArrayList<String> CA_ARGUMENT = new ArrayList(Arrays.asList("-a", "--cellular"));
     private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
     private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
     private final ArrayList<String> SELECTION_ARGUMENT = new ArrayList(Arrays.asList("-s", "--selection"));
-    private final ArrayList<String> OFFSPRING_ARGUMENT = new ArrayList(Arrays.asList("-g", "--offspring"));
+    private final ArrayList<String> CROSSOVER_ARGUMENT = new ArrayList(Arrays.asList("-g", "--crossover"));
     private final ArrayList<String> SAVE_LOCATION_ARGUMENT = new ArrayList(Arrays.asList("-o", "--output"));
 
     //Some data to display for user
@@ -65,7 +65,7 @@ public class Interpreter {
 //            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
             "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
-            "\n" + OFFSPRING_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
+            "\n" + CROSSOVER_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_ARGUMENT + "\t\t\t\t\t\tVerbose output" +
             "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
             "\n If you are creating maps, you need to add [NOISE]" +
@@ -74,7 +74,7 @@ public class Interpreter {
 
 
     private final String README = "\nExamples:" +
-            "\njava GMaps --create --noiseStrategy noiseStrategy --fitness find_all_rooms --selectionStrategy tournament --offspringStrategy default --mutatorStrategy" +
+            "\njava GMaps --create --noiseStrategy noiseStrategy --fitness find_all_rooms --selectionStrategy tournament --crossoverStrategy default --mutatorStrategy" +
             " default --cellular rule20 --permutationStrategy swap -r find_room 100 3000 30 25" +
             "\njava GMaps --load /home/user/folder/ 1 10 150 100";
 
@@ -109,7 +109,7 @@ public class Interpreter {
         "\n\t" + StochasticTwoSelectionStrategy.IMPLEMENTATION  +
 
                         "\nOffspring:" +
-        "\n\t" + DefaultOffspringStrategy.IMPLEMENTATION;
+        "\n\t" + DefaultCrossoverStrategy.IMPLEMENTATION;
 
 //                        "\nCellular Automate Method:" +
 //       "\n\t" + "rule20";
@@ -142,7 +142,7 @@ public class Interpreter {
     private CellularAutomate cellularAutomate;
     private PermutationStrategy permutationStrategy;
     private CorrectionStrategy correctionStrategy;
-    private OffspringStrategy offspringStrategy;
+    private CrossoverStrategy crossoverStrategy;
 
     //Results after running program
     //It holds all data made during the process
@@ -233,7 +233,7 @@ public class Interpreter {
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
-                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correctionStrategy, offspringStrategy);
+                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correctionStrategy, crossoverStrategy);
 
         chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
@@ -285,8 +285,9 @@ public class Interpreter {
         else if(SELECTION_ARGUMENT.contains(args[i])){
             addSelectionStrategy(args[i + 1]);
         }
-        else if(OFFSPRING_ARGUMENT.contains(args[i])){
-            addOffspringStrategy(args[i + 1]);
+        else if(CROSSOVER_ARGUMENT.contains(args[i])){
+            //TODO this one in particular takes an argument
+            addCrossoverStrategy(args[i + 1]);
         }
         else if(SAVE_LOCATION_ARGUMENT.contains(args[i])){
             outputDirectory = args[i + 1];
@@ -300,7 +301,7 @@ public class Interpreter {
             case "basic":
                 chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
                         numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy,
-                        correctionStrategy, offspringStrategy);
+                        correctionStrategy, crossoverStrategy);
                 return true;
             default:
                 return false;
@@ -393,16 +394,16 @@ public class Interpreter {
         }
     }
 
-    private boolean addOffspringStrategy(String option) {
+    private boolean addCrossoverStrategy(String option) {
         String choice = option.toLowerCase().trim();
 
         switch (choice) {
-            case DefaultOffspringStrategy.IMPLEMENTATION:
-                offspringStrategy = new DefaultOffspringStrategy();
+            case DefaultCrossoverStrategy.IMPLEMENTATION:
+                crossoverStrategy = new DefaultCrossoverStrategy();
                 return true;
-//            case DefaultOffspringStrategy.IMPLEMENTATION:
-//                selectionStrategy = new TournamentSelectionStrategy();
-//                return true;
+            case UniformCrossoverStrategy.IMPLEMENTATION:
+                crossoverStrategy = new UniformCrossoverStrategy();
+                return true;
             default:
                 return false;
         }
