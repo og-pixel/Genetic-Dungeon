@@ -1,6 +1,7 @@
 package Chromosome;
 
 import DataStructure.Matrix;
+import DataStructure.MutabilityMatrix;
 
 import java.io.Serializable;
 
@@ -41,10 +42,12 @@ public class Chromosome implements Serializable{
      * @param mapWidth
      * @param mapHeight
      */
+    //TODO if I want to keep multiple matrix versions, I should specify in the constructor which one I want
     public Chromosome(int mapWidth, int mapHeight) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        this.mapMatrix = new Matrix(mapWidth, mapHeight);
+        //TODO for now matrix becomes the better verion of itself, I need either a wrapper or just stick to it
+        this.mapMatrix = new MutabilityMatrix(mapWidth, mapHeight);
         fitnessScore = 1;
     }
 

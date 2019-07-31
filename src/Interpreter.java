@@ -2,6 +2,7 @@ import Algorithms.*;
 import Algorithms.CA.*;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
+import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindRoomStrategy;
@@ -121,9 +122,12 @@ public class Interpreter {
     //Our FitnessStrategy implementations, we need at least one way
     // to evaluate a map
     private ArrayList<FitnessStrategy> fitnessStrategyList;
-
     private SelectionStrategy selectionStrategy;
     private MutatorStrategy mutatorStrategy;
+    private NoiseStrategy noiseStrategy;
+    private PermutationStrategy permutationStrategy;
+    private CorrectionStrategy correctionStrategy;
+    private CrossoverStrategy crossoverStrategy;
 
     //if specified, saves maps to the output directory
     private String outputDirectory = null;
@@ -133,16 +137,7 @@ public class Interpreter {
     // and evaluates our whole project
     private AbstractChromosomeEvaluation chromosomeEvaluation;
 
-    //NoiseStrategy Implementation, needed at the start
-    // if maps start random
-    private NoiseStrategy noiseStrategy;
-    //Cellular Automate is an outside factor to
-    // scramble a map to look like a "cave"
-    // used in Evolving Cellular Automate (ECA)
-    private CellularAutomate cellularAutomate;
-    private PermutationStrategy permutationStrategy;
-    private CorrectionStrategy correctionStrategy;
-    private CrossoverStrategy crossoverStrategy;
+
 
     //Results after running program
     //It holds all data made during the process
@@ -364,6 +359,9 @@ public class Interpreter {
                 return true;
             case FindHolesStrategy.IMPLEMENTATION:
                 correctionStrategy = new FindHolesStrategy();
+                return true;
+            case AddPermanentWallsStrategy.IMPLEMENTATION:
+                correctionStrategy = new AddPermanentWallsStrategy();
                 return true;
             default:
                 return false;

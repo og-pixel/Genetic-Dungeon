@@ -34,9 +34,12 @@ public class MutabilityMatrix extends Matrix{
 
         long[] newContent = new long[width];
 
-        for (int y = 0; y < row; y++) {
-            if(canMutateMatrix[row][y])
-                newContent[y] = content[y];
+        for (int x = 0; x < width; x++) {
+            if(canMutateMatrix[row][x]) {
+                newContent[x] = content[x];
+            }else {
+                newContent[x] = getElement(x, row);
+            }
         }
 
         super.replaceRow(row, newContent);
