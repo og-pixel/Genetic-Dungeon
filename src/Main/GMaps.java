@@ -1,13 +1,4 @@
-import Chromosome.Chromosome;
-import DataStructure.Matrix;
-import DataStructure.MutabilityMatrix;
-import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
-import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
-import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
-import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
-
-import static Chromosome.TileList.CORRIDOR;
-import static Chromosome.TileList.WALL;
+package Main;
 
 public class GMaps {
     public static void main(String[] args){

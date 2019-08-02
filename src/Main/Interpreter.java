@@ -1,3 +1,5 @@
+package Main;
+
 import Algorithms.*;
 import Algorithms.CA.*;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Basic Interpreter is used for demonstrations of the entire project
+ * Basic Main.Interpreter is used for demonstrations of the entire project
  * it does read arguments and does something with them
  */
 public class Interpreter {
@@ -52,7 +54,7 @@ public class Interpreter {
     private final ArrayList<String> SAVE_LOCATION_ARGUMENT = new ArrayList(Arrays.asList("-o", "--output"));
 
     //Some data to display for user
-    private String HELP_PAGE = "\nUsage: GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
+    private String HELP_PAGE = "\nUsage: Main.GMaps [ARGUMENT] [GENERATIONS] [NO.MAPS] [WIDTH] [HEIGHT]" +
             "\n\n[ARGUMENT]: " +
             "\n" + CREATE_ARGUMENT + "\t[OPTIONS]... \t\tCreate map evaluation" +
             "\n" + LOAD_ARGUMENT + "\t[SOURCE] [OPTIONS]... \t\tLoad premade maps evaluation" +
@@ -75,9 +77,9 @@ public class Interpreter {
 
 
     private final String README = "\nExamples:" +
-            "\njava GMaps --create --noiseStrategy noiseStrategy --fitness find_all_rooms --selectionStrategy tournament --crossoverStrategy default --mutatorStrategy" +
+            "\njava Main.GMaps --create --noiseStrategy noiseStrategy --fitness find_all_rooms --selectionStrategy tournament --crossoverStrategy default --mutatorStrategy" +
             " default --cellular rule20 --permutationStrategy swap -r find_room 100 3000 30 25" +
-            "\njava GMaps --load /home/user/folder/ 1 10 150 100";
+            "\njava Main.GMaps --load /home/user/folder/ 1 10 150 100";
 
     private final String AVAILABLE_OPTIONS =
                 "\nAvailable [NAME]:\n" +
@@ -167,7 +169,7 @@ public class Interpreter {
      * Takes all string arguments meant to describe
      * how to generate maps and interprets them
      */
-    Interpreter(String... args) {
+    public Interpreter(String... args) {
         fitnessStrategyList = new ArrayList<>();
         generationOfGameMaps = new ArrayList<>();
         interpretArguments(args);
