@@ -346,6 +346,12 @@ public class Interpreter {
             case SwapPermutationStrategy.IMPLEMENTATION:
                 permutationStrategy = new SwapPermutationStrategy();
                 return true;
+            case ScramblePermutationStrategy.IMPLEMENTATION:
+                permutationStrategy = new ScramblePermutationStrategy();
+                return true;
+            case InversionPermutationStrategy.IMPLEMENTATION:
+                permutationStrategy = new InversionPermutationStrategy();
+                return true;
             default:
                 return false;
         }

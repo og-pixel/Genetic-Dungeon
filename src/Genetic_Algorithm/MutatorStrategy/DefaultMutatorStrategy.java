@@ -15,10 +15,10 @@ public class DefaultMutatorStrategy implements MutatorStrategy {
     public static final String IMPLEMENTATION = "default_mutator";
 
     public DefaultMutatorStrategy(double odds) {
-        if(odds <= 0)throw new NegativeNumberException();
+        if(odds < 0)throw new NegativeNumberException();
         if(odds >= 3){
-            System.err.println("DefaultMutatorStrategy works best if its value is held between 0.01% and 2%, " +
-                    "anything other than that and its no longer searching.");
+            System.err.println("Genetic Mutation works best if its value is held between 0.01% and 2%.\n" +
+                    "Anything other than that and its no longer searching.");
         }
 
         this.odds = odds;
