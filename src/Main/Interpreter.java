@@ -1,7 +1,6 @@
 package Main;
 
 import Algorithms.*;
-import Algorithms.CA.*;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
 import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
@@ -10,13 +9,11 @@ import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
 import Genetic_Algorithm.CorrectionStrategy.FindRoomStrategy;
 import Genetic_Algorithm.CrossoverStrategy.UniformCrossoverStrategy;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
-import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
-import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
+import Genetic_Algorithm.MutatorStrategy.*;
 import Genetic_Algorithm.NoiseStrategy.FillNoiseStrategy;
 import Genetic_Algorithm.NoiseStrategy.RandomNoiseStrategy;
 import Genetic_Algorithm.CrossoverStrategy.DefaultCrossoverStrategy;
 import Genetic_Algorithm.CrossoverStrategy.CrossoverStrategy;
-import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
 import Genetic_Algorithm.SelectionStrategy.*;
 import Chromosome.Chromosome;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
@@ -25,7 +22,6 @@ import Genetic_Algorithm.Data.EvolutionResults;
 import Genetic_Algorithm.FitnessStrategy.*;
 //import Genetic_Algorithm.CorrectionStrategy.CorrectionEnum;
 import Genetic_Algorithm.NoiseStrategy.*;
-import Genetic_Algorithm.PermutationStrategy.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +41,7 @@ public class Interpreter {
     private final ArrayList<String> VERBOSE_ARGUMENT = new ArrayList(Arrays.asList("-v", "--verbose"));
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
-    private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
+//    private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
     private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
@@ -66,7 +62,7 @@ public class Interpreter {
             "\n" + CHROMOSOME_EVALUATION_ARGUMENT + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
             "\n" + NOISE_ARGUMENT + "\t[NAME]\t\t\tAdd [NOISE] Function" +
 //            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-            "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
+//            "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
             "\n" + CROSSOVER_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_ARGUMENT + "\t\t\t\t\t\tVerbose output" +
@@ -127,7 +123,6 @@ public class Interpreter {
     private SelectionStrategy selectionStrategy;
     private MutatorStrategy mutatorStrategy;
     private NoiseStrategy noiseStrategy;
-    private PermutationStrategy permutationStrategy;
     private CorrectionStrategy correctionStrategy;
     private CrossoverStrategy crossoverStrategy;
 
@@ -230,7 +225,7 @@ public class Interpreter {
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
-                fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy, correctionStrategy, crossoverStrategy);
+                fitnessStrategyList, mutatorStrategy, selectionStrategy, correctionStrategy, crossoverStrategy);
 
         chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
@@ -262,14 +257,14 @@ public class Interpreter {
             System.exit(1);
         }
         else if(MUTATOR_ARGUMENT.contains(args[i])){
-            addMutatorStrategy(args[i + 1]);
+            addMutatorStrategy(args[i + 1], args[i + 2]);
         }
 //        else if(CA_ARGUMENT.contains(args[i])){
 //            addCellularAutomataStrategy(args[i + 1]);
 //        }
-        else if(PERMUTATION_ARGUMENT.contains(args[i])){
-            addPermutationStrategy(args[i + 1]);
-        }
+//        else if(PERMUTATION_ARGUMENT.contains(args[i])){
+//            addPermutationStrategy(args[i + 1]);
+//        }
         else if(CHROMOSOME_EVALUATION_ARGUMENT.contains(args[i])){
             addChromosomeEvaluationStrategy(args[i + 1]);
         }
@@ -297,8 +292,8 @@ public class Interpreter {
         switch (choice) {
             case "basic":
                 chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
-                        numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy, selectionStrategy, permutationStrategy,
-                        correctionStrategy, crossoverStrategy);
+                        numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy,
+                        selectionStrategy, correctionStrategy, crossoverStrategy);
                 return true;
             default:
                 return false;
@@ -338,24 +333,24 @@ public class Interpreter {
         }
     }
 
-    //TODO there could be a list of premutations, they are also kinda meh anyway
-    private boolean addPermutationStrategy(String option) {
-        String choice = option.toLowerCase().trim();
-
-        switch (choice) {
-            case SwapPermutationStrategy.IMPLEMENTATION:
-                permutationStrategy = new SwapPermutationStrategy();
-                return true;
-            case ScramblePermutationStrategy.IMPLEMENTATION:
-                permutationStrategy = new ScramblePermutationStrategy();
-                return true;
-            case InversionPermutationStrategy.IMPLEMENTATION:
-                permutationStrategy = new InversionPermutationStrategy();
-                return true;
-            default:
-                return false;
-        }
-    }
+//    //TODO there could be a list of premutations, they are also kinda meh anyway
+//    private boolean addPermutationStrategy(String option) {
+//        String choice = option.toLowerCase().trim();
+//
+//        switch (choice) {
+//            case SwapPermutationStrategy.IMPLEMENTATION:
+//                permutationStrategy = new SwapPermutationStrategy();
+//                return true;
+//            case ScramblePermutationStrategy.IMPLEMENTATION:
+//                permutationStrategy = new ScramblePermutationStrategy();
+//                return true;
+//            case InversionPermutationStrategy.IMPLEMENTATION:
+//                permutationStrategy = new InversionPermutationStrategy();
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     //TODO this might be a list
     private boolean addCorrectionStrategy(String option) {
@@ -416,17 +411,29 @@ public class Interpreter {
     }
 
 
-    //TODO changing enum to one single class that just takes a number, so need a sanity check for that only
-    private boolean addMutatorStrategy(String option) {
-        double odds;
+    //TODO I need to make it a switch and look for
+    private boolean addMutatorStrategy(String option, String odds) {
+        option = option.toLowerCase().trim();
+        //TODO change this odds and odds2
+        double odds2;
+
         try{
-            odds = Double.parseDouble(option);
+            odds2 = Double.parseDouble(odds);
         }catch (NumberFormatException e){
             e.printStackTrace();
             return false;
         }
-        mutatorStrategy = new DefaultMutatorStrategy(odds);
-        return true;
+
+        switch (option) {
+            case DefaultMutatorStrategy.IMPLEMENTATION:
+                mutatorStrategy = new DefaultMutatorStrategy(odds2);
+                return true;
+            case SwapPermutationStrategy.IMPLEMENTATION:
+                mutatorStrategy= new SwapPermutationStrategy(odds2);
+                return true;
+            default:
+                return false;
+        }
     }
 
     private boolean noiseMaps() {

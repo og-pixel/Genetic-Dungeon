@@ -4,7 +4,6 @@ import Algorithms.Algorithms;
 import Chromosome.Chromosome;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.CrossoverStrategy.CrossoverStrategy;
-import Genetic_Algorithm.PermutationStrategy.PermutationStrategy;
 import Genetic_Algorithm.SelectionStrategy.SelectionStrategy;
 import Exceptions.VariableBoundsException;
 import Genetic_Algorithm.Data.EvolutionResults;
@@ -26,7 +25,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private ArrayList<FitnessStrategy> fitnessStrategyList;
     private MutatorStrategy mutatorStrategy;
     private SelectionStrategy selectionStrategy;
-    private PermutationStrategy permutationStrategy;
+//    private PermutationStrategy permutationStrategy;
     private CorrectionStrategy correctionStrategy;
     private CrossoverStrategy crossoverStrategy;
 
@@ -37,7 +36,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     //TODO since I can order decorators in whatever order I want, it should make it even more exciting!
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
                                      ArrayList<FitnessStrategy> fitnessStrategyList,
-                                     MutatorStrategy mutatorStrategy, SelectionStrategy selectionStrategy, PermutationStrategy permutationStrategy,
+                                     MutatorStrategy mutatorStrategy, SelectionStrategy selectionStrategy,
                                      CorrectionStrategy correctionStrategy, CrossoverStrategy crossoverStrategy){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
@@ -59,7 +58,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         this.numberOfGenerations = numberOfGenerations;
         this.mutatorStrategy = mutatorStrategy;
         this.selectionStrategy = selectionStrategy;
-        this.permutationStrategy = permutationStrategy;
         this.correctionStrategy = correctionStrategy;
         this.crossoverStrategy = crossoverStrategy;
 
