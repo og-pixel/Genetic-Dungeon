@@ -1,6 +1,6 @@
 package Genetic_Algorithm.FitnessStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 public class IsTraversableStrategy implements FitnessStrategy {
 

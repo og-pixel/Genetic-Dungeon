@@ -1,6 +1,6 @@
 package Genetic_Algorithm.SelectionStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 import java.util.List;

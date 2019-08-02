@@ -1,7 +1,7 @@
 package Genetic_Algorithm.Data;
 
 import Algorithms.Algorithms;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

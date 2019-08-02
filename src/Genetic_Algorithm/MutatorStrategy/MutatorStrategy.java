@@ -1,6 +1,6 @@
 package Genetic_Algorithm.MutatorStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 

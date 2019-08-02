@@ -12,7 +12,7 @@ import Genetic_Algorithm.NoiseStrategy.RandomNoiseStrategy;
 import Genetic_Algorithm.CrossoverStrategy.DefaultCrossoverStrategy;
 import Genetic_Algorithm.CrossoverStrategy.CrossoverStrategy;
 import Genetic_Algorithm.SelectionStrategy.*;
-import Chromosome.Chromosome;
+import Chromosome.*;
 import Genetic_Algorithm.ChromosomeEvaluation.AbstractChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.BasicChromosomeEvaluation;
 import Genetic_Algorithm.Data.EvolutionResults;
@@ -365,7 +365,7 @@ public class Interpreter {
                 return true;
             case AddPermanentRoomsStrategy.IMPLEMENTATION:
                 //TODO this count number
-                correctionStrategy = new AddPermanentRoomsStrategy(1);
+                correctionStrategy = new AddPermanentRoomsStrategy(10);
                 return true;
             default:
                 return false;

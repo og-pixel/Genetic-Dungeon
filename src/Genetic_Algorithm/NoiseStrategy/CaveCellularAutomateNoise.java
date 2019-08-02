@@ -2,7 +2,7 @@ package Genetic_Algorithm.NoiseStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.VariableBoundsException;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 import java.util.Random;

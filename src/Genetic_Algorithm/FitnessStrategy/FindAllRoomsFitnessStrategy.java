@@ -2,7 +2,7 @@ package Genetic_Algorithm.FitnessStrategy;
 
 import Algorithms.Algorithms;
 import DataStructure.Matrix;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Algorithms.Algorithms;
-import Chromosome.Chromosome;
+import Chromosome.*;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
 import Genetic_Algorithm.CrossoverStrategy.CrossoverStrategy;
 import Genetic_Algorithm.SelectionStrategy.SelectionStrategy;

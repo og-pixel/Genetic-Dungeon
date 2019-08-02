@@ -2,7 +2,7 @@ package Genetic_Algorithm.MutatorStrategy;
 
 import DataStructure.Matrix;
 import Exceptions.NegativeNumberException;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 import java.util.Random;

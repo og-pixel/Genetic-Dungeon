@@ -1,6 +1,6 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 /**
  * Idea of this interface is to encourage genes to evolve towards our goal plan

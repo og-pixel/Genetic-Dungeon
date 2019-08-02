@@ -1,6 +1,6 @@
 package Genetic_Algorithm.CrossoverStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 

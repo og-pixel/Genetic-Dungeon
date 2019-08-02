@@ -1,6 +1,6 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 import DataStructure.MutabilityMatrix;
 
 import static Chromosome.TileList.WALL;

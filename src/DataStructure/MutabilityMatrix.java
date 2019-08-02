@@ -45,6 +45,39 @@ public class MutabilityMatrix extends Matrix{
         super.replaceRow(row, newContent);
     }
 
+    //TODO I think its good but let me make sure
+    public boolean fillMatrixArea(int pickX, int pickY, Matrix smallerMatrix){
+        int smallWidth = smallerMatrix.getWidth();
+        int smallHeight = smallerMatrix.getHeight();
+
+        for (int y = 0; y < smallHeight; y++) {
+            for (int x = 0; x < smallWidth; x++) {
+                if(!canMutateMatrix[y][x]) {
+                    System.err.println("Cant put room here");
+                    return false;
+                }
+            }
+        }
+
+        super.fillMatrixArea(pickX, pickY, smallerMatrix);
+        return true;
+    }
+
+
+    public void makeAreaImmutable(int pickX, int pickY, Matrix smallerMatrix){
+        int matrixWidth = smallerMatrix.getWidth();
+        int matrixHeight = smallerMatrix.getHeight();
+
+        if(getWidth() > (matrixWidth + pickX))
+            if(getHeight() > (matrixHeight + pickY)){
+
+                for (int y = 0; y < matrixHeight; y++) {
+                    for (int x = 0; x < matrixWidth; x++) {
+                        makeImmutable(pickX + x, pickY + y);
+                    }
+                }
+            }
+    }
 
     public void makeImmutable(int x, int y){
         canMutateMatrix[y][x] = false;
@@ -52,5 +85,25 @@ public class MutabilityMatrix extends Matrix{
 
     public void makeMutable(int x, int y){
         canMutateMatrix[y][x] = true;
+    }
+
+
+    //Its a toString() method...
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append(super.toString()).append("\n\n Mutablity Matrix:\n");
+
+        for (int y = 0; y < getHeight(); y++) {
+            string.append(" {");
+            for (int x = 0; x < getWidth(); x++) {
+                if(canMutateMatrix[y][x])string.append(1);
+                else string.append(0);
+
+//                string.append(canMutateMatrix[y][x]);
+                if(x != getWidth() - 1) string.append(", ");
+            }
+            string.append("}\n");
+        }
+        return string.toString();
     }
 }

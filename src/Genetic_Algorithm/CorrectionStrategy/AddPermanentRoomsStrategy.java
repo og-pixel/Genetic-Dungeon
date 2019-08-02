@@ -1,8 +1,7 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
-import Chromosome.Chromosome;
-import Chromosome.Rooms.DefaultRoom;
-import Chromosome.Rooms.Room;
+import Chromosome.Rooms.*;
+import Chromosome.*;
 import DataStructure.Matrix;
 import DataStructure.MutabilityMatrix;
 
@@ -52,24 +51,17 @@ public class AddPermanentRoomsStrategy implements CorrectionStrategy {
         for (int i = 0; i < roomList.size(); i++) {
             Matrix roomMatrix = roomList.get(i).getRoomInfo();
 
-//            for (int y = 0; y < matrix.getHeight(); y++) {
-//                for (int x = 0; x < matrix.getWidth(); x++) {
-
             //TODO for the time being pickX and Y are 0, 0
 
             int pickX = random.nextInt(matrix.getWidth());
             int pickY = random.nextInt(matrix.getHeight());
 
-                    matrix.fillMatrixArea(pickX, pickY, roomMatrix);
 
+            if(matrix.fillMatrixArea(pickX, pickY, roomMatrix)){
+                matrix.makeAreaImmutable(pickX, pickY, roomMatrix);
+            }
+            System.out.println();
 
-//                    if(roomMatrix.getWidth() < (matrix.getWidth() - x)) {
-//                        if(roomMatrix.getHeight() < (matrix.getHeight() - y)) {
-//
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 }

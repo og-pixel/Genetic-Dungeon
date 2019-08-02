@@ -1,6 +1,6 @@
 package Genetic_Algorithm.FitnessStrategy;
 
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 /**
  * Interface defines what a fitness function needs to run

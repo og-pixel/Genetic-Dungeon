@@ -1,7 +1,7 @@
 package Genetic_Algorithm.ChromosomeEvaluation;
 
 import Genetic_Algorithm.Data.*;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package Genetic_Algorithm.SelectionStrategy;
 
 import Algorithms.Algorithms;
 import Exceptions.VariableBoundsException;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;

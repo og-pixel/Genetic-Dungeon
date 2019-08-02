@@ -1,7 +1,7 @@
 package Genetic_Algorithm.CorrectionStrategy;
 
 import DataStructure.Matrix;
-import Chromosome.Chromosome;
+import Chromosome.*;
 import Algorithms.Algorithms;
 
 import static Chromosome.TileList.*;

@@ -1,7 +1,7 @@
 package Main;
 
 import Algorithms.Algorithms;
-import Chromosome.Chromosome;
+import Chromosome.*;
 import DataStructure.Matrix;
 import DataStructure.MutabilityMatrix;
 

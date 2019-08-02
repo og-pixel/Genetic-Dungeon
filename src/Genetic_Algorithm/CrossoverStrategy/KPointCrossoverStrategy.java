@@ -1,7 +1,7 @@
 package Genetic_Algorithm.CrossoverStrategy;
 
 import Algorithms.Algorithms;
-import Chromosome.Chromosome;
+import Chromosome.*;
 
 import java.util.ArrayList;
 import java.util.Random;
