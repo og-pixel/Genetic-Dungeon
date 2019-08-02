@@ -78,7 +78,7 @@ public class Matrix implements Serializable {
      * Swap two elements on the matrix
      * Program will not replace any values if only
      * one put is successful
-      * @param x1 coordinate x for point 1
+     * @param x1 coordinate x for point 1
      * @param y1 coordinate y for point 1
      * @param x2 coordinate x for point 2
      * @param y2 coordinate y for point 2
@@ -94,6 +94,24 @@ public class Matrix implements Serializable {
             else put(x1, y1, tmp); //return to what it was
         } return false;
     }
+
+    public boolean fillMatrixArea(int pickX, int pickY, Matrix smallerMatrix){
+        int matrixWidth = smallerMatrix.getWidth();
+        int matrixHeight = smallerMatrix.getHeight();
+
+        if(width > (matrixWidth + pickX))
+            if(height > (matrixHeight + pickY)){
+
+                for (int y = 0; y < matrixHeight; y++) {
+                    for (int x = 0; x < matrixWidth; x++) {
+                        put(pickX + x, pickY + y, smallerMatrix.getElement(x, y));
+
+                    }
+                }
+            }
+        return true;
+    }
+
 
     /**
      * Cut a matrix, starting from the UPPER-LEFT corner as pickX and pickY coordinates

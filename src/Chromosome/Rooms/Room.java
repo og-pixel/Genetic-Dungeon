@@ -1,5 +1,7 @@
 package Chromosome.Rooms;
 
+import DataStructure.Matrix;
+
 public interface Room {
-    String getRoomInfo();
+    Matrix getRoomInfo();
 }

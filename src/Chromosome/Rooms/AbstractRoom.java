@@ -2,6 +2,8 @@ package Chromosome.Rooms;
 
 import DataStructure.Matrix;
 
+import static Chromosome.TileList.CORRIDOR;
+
 public abstract class AbstractRoom implements Room {
     String roomName;
     int roomWidth;
@@ -12,13 +14,12 @@ public abstract class AbstractRoom implements Room {
         this.roomWidth = roomWidth;
         this.roomHeight = roomHeight;
         room = new Matrix(roomWidth, roomHeight);
-        room.fillMatrix(0);
+//        room.fillMatrix(CORRIDOR);
 
     }
 
-    public String getRoomInfo() {
-
-        return null;
+    public Matrix getRoomInfo() {
+        return room;
     }
 
 }

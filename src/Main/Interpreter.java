@@ -3,10 +3,7 @@ package Main;
 import Algorithms.*;
 import Genetic_Algorithm.ChromosomeEvaluation.AttachLogChromosomeEvaluation;
 import Genetic_Algorithm.ChromosomeEvaluation.MeasureTimeChromosomeEvaluation;
-import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
-import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
-import Genetic_Algorithm.CorrectionStrategy.FindHolesStrategy;
-import Genetic_Algorithm.CorrectionStrategy.FindRoomStrategy;
+import Genetic_Algorithm.CorrectionStrategy.*;
 import Genetic_Algorithm.CrossoverStrategy.UniformCrossoverStrategy;
 import Genetic_Algorithm.FitnessStrategy.FitnessStrategy;
 import Genetic_Algorithm.MutatorStrategy.*;
@@ -365,6 +362,10 @@ public class Interpreter {
                 return true;
             case AddPermanentWallsStrategy.IMPLEMENTATION:
                 correctionStrategy = new AddPermanentWallsStrategy();
+                return true;
+            case AddPermanentRoomsStrategy.IMPLEMENTATION:
+                //TODO this count number
+                correctionStrategy = new AddPermanentRoomsStrategy(1);
                 return true;
             default:
                 return false;

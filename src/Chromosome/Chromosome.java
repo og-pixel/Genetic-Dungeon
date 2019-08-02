@@ -159,6 +159,7 @@ public class Chromosome implements Serializable{
         stringBuilder.append("DefaultRoom Count: ").append(numberOfRooms).append("\n");
         stringBuilder.append("DefaultMutatorStrategy Count: ").append(mutationCount).append("\n");
         stringBuilder.append("CorrectionStrategy Count: ").append(correctionsFound).append("\n");
+
         for (int y = 0; y < mapHeight; y++) {
             stringBuilder.append("\n");
             for (int x = 0; x < mapWidth; x++) {

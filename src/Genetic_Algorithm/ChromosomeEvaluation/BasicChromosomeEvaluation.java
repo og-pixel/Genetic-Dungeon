@@ -79,6 +79,18 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         double iteration = numberOfGenerations * 0.01; //every 1%
         int percentageDone = 0;
 
+        //Correct Maps
+        //TODO make better error checking in interpeter
+        if(correctionStrategy == null) {
+
+//                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
+        }
+        else{
+            for (Chromosome chromosome : chromosomeList) {
+                correctionStrategy.correctMap(chromosome);
+            }
+        }
+
 
         //Run Project
         for (int generation = 0; generation < numberOfGenerations; generation++) {
@@ -91,17 +103,18 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 }
             }
 
-            //Correct Maps
-            //TODO make better error checking in interpeter
-            if(correctionStrategy == null) {
-
-//                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
-            }
-            else{
-                for (Chromosome chromosome : chromosomeList) {
-                    correctionStrategy.correctMap(chromosome);
-                }
-            }
+            //TODo now corrections should be ran once before it starts
+//            //Correct Maps
+//            //TODO make better error checking in interpeter
+//            if(correctionStrategy == null) {
+//
+////                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
+//            }
+//            else{
+//                for (Chromosome chromosome : chromosomeList) {
+//                    correctionStrategy.correctMap(chromosome);
+//                }
+//            }
 
 
             selectionStrategy.selectFitIndividuals(chromosomeList, selectionFraction);
