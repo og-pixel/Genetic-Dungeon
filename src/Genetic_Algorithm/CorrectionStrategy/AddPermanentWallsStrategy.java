@@ -34,6 +34,7 @@ public class AddPermanentWallsStrategy implements CorrectionStrategy {
             matrix.makeImmutable(matrix.getWidth() - 1, y);
         }
 
+        System.out.println();
 //        for (int y = 0; y < matrix.getHeight(); y++) {
 //            for (int x = 0; x < matrix.getWidth(); x++) {
 //                matrix.replaceRow(0,  new long[]{});

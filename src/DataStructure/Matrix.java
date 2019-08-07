@@ -203,18 +203,6 @@ public class Matrix implements Serializable {
         return getElement(x, y);
     }
 
-
-    //TODO this is meant to surround the matrix with the walls
-    public void surroundMatrix(int value){
-
-
-//        replaceRow(0, new long[]{value, value, value, value, value});
-//        replaceRow(height, new long[]{value, value, value, value, value});
-//
-
-
-    }
-
     public long getVolume(){
         return width * height;
     }

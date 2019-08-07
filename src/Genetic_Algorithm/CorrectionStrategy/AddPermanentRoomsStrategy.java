@@ -36,32 +36,22 @@ public class AddPermanentRoomsStrategy implements CorrectionStrategy {
 
             roomList.add(new DefaultRoom(result, result2));
         }
-        System.out.println();
     }
 
     @Override
     public void correctMap(Chromosome chromosome) {
-//        if(!(chromosome.getMapMatrix() instanceof MutabilityMatrix))
-//            throw new WrongClassInstanceException(MutabilityMatrix.class.toString());
-
-        //TODO while this does throw an error, if cast is wrong, I think its fine as
-        // I don't want to continue execution if objects are wrong
         MutabilityMatrix matrix = (MutabilityMatrix) chromosome.getMapMatrix();
 
-        for (int i = 0; i < roomList.size(); i++) {
-            Matrix roomMatrix = roomList.get(i).getRoomInfo();
-
-            //TODO for the time being pickX and Y are 0, 0
+        for (Room room : roomList) {
+            Matrix roomMatrix = room.getRoomInfo();
 
             int pickX = random.nextInt(matrix.getWidth());
             int pickY = random.nextInt(matrix.getHeight());
 
 
-            if(matrix.fillMatrixArea(pickX, pickY, roomMatrix)){
+            if (matrix.fillMatrixArea(pickX, pickY, roomMatrix)) {
                 matrix.makeAreaImmutable(pickX, pickY, roomMatrix);
             }
-            System.out.println();
-
         }
     }
 }

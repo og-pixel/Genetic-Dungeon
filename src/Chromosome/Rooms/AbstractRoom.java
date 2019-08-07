@@ -14,12 +14,23 @@ public abstract class AbstractRoom implements Room {
         this.roomWidth = roomWidth;
         this.roomHeight = roomHeight;
         room = new Matrix(roomWidth, roomHeight);
-//        room.fillMatrix(CORRIDOR);
-
     }
 
     public Matrix getRoomInfo() {
         return room;
     }
 
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+
+        for (int y = 0; y < roomHeight; y++) {
+            string.append(" {");
+            for (int x = 0; x < roomWidth; x++) {
+                string.append(room.getElement(x, y));
+                if(x != roomWidth - 1)string.append(", ");
+            }
+            string.append("}\n");
+        }
+        return string.toString();
+    }
 }

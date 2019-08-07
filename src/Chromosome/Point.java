@@ -25,13 +25,6 @@ public class Point implements Serializable {
         this.steps = steps;
     }
 
-
-    //TODO delete
-    public void setTotalCost(int totalCost){
-        this.totalCost = totalCost;
-    }
-
-
     public int getSteps() {
         totalCost = steps + distanceToFinish;
         return steps;

@@ -18,29 +18,24 @@ public class Chromosome implements Serializable{
     private int mapWidth, mapHeight;
     private double fitnessScore;
 
-    //TODO I kinda don't like creating classes just to get points on the map better,
-    // but I have no better idea ATM (maybe evaluation would just look for them and save)
     private Point startPoint;
     private Point endPoint;
 
     /*
     * Chromosome is created as a matrix made out of number Tile objects representing different type of tile
-    * (To be specified in TileList Interface)
     */
     private Matrix mapMatrix;
 
     /*
-     * INFORMATION ABOUT DUNGEON AFTER EVALUATION
+     * Information about dungeon after evaluation
      */
     private int numberOfRooms = 0;
     private double wallToCorridorRatio = 0;
     private int mutationCount = 0;
-    private int correctionsFound = 0; //todo maybe delete later
+    private int correctionsFound = 0;
 
     /**
      * Constructor
-     * @param mapWidth
-     * @param mapHeight
      */
     //TODO if I want to keep multiple matrix versions, I should specify in the constructor which one I want
     public Chromosome(int mapWidth, int mapHeight) {
@@ -56,12 +51,6 @@ public class Chromosome implements Serializable{
         this.mapWidth = mapMatrix.getWidth();
         this.mapHeight = mapMatrix.getHeight();
         this.mapMatrix = mapMatrix;
-
-        //TODO for now i delclare those outside of constructor, I think it might be better
-//        numberOfRooms = 0;
-//        wallToCorridorRatio;
-//        mutationCount;
-//        correctionsFound;
         fitnessScore = 1;
     }
 
@@ -156,8 +145,8 @@ public class Chromosome implements Serializable{
     public String mapToString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("DefaultRoom Count: ").append(numberOfRooms).append("\n");
-        stringBuilder.append("DefaultMutatorStrategy Count: ").append(mutationCount).append("\n");
+        stringBuilder.append("Room Count: ").append(numberOfRooms).append("\n");
+        stringBuilder.append("Mutation Count: ").append(mutationCount).append("\n");
         stringBuilder.append("CorrectionStrategy Count: ").append(correctionsFound).append("\n");
 
         for (int y = 0; y < mapHeight; y++) {
@@ -174,6 +163,21 @@ public class Chromosome implements Serializable{
             }
         }
         stringBuilder.append("\n");
+
+
+        if(mapMatrix instanceof MutabilityMatrix) {
+            for (int y = 0; y < mapHeight; y++) {
+                stringBuilder.append("\n");
+                for (int x = 0; x < mapWidth; x++) {
+                    if (((MutabilityMatrix) mapMatrix).getMutateElement(x, y))
+                        stringBuilder.append("1");
+                    else
+                        stringBuilder.append("0");
+                }
+            }
+            stringBuilder.append("\n");
+        }
+
         return stringBuilder.toString();
     }
 }

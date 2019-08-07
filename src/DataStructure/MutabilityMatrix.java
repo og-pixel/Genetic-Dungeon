@@ -50,15 +50,15 @@ public class MutabilityMatrix extends Matrix{
         int smallWidth = smallerMatrix.getWidth();
         int smallHeight = smallerMatrix.getHeight();
 
-        for (int y = 0; y < smallHeight; y++) {
-            for (int x = 0; x < smallWidth; x++) {
+        for (int y = pickY; y < smallHeight + pickY; y++) {
+            for (int x = pickX; x < smallWidth + pickX; x++) {
                 if(!canMutateMatrix[y][x]) {
                     System.err.println("Cant put room here");
                     return false;
                 }
             }
         }
-
+        System.out.println("Room has been put");
         super.fillMatrixArea(pickX, pickY, smallerMatrix);
         return true;
     }
@@ -87,6 +87,10 @@ public class MutabilityMatrix extends Matrix{
         canMutateMatrix[y][x] = true;
     }
 
+    public boolean getMutateElement(int x, int y){
+        return canMutateMatrix[y][x];
+    }
+
 
     //Its a toString() method...
     public String toString() {
@@ -99,7 +103,6 @@ public class MutabilityMatrix extends Matrix{
                 if(canMutateMatrix[y][x])string.append(1);
                 else string.append(0);
 
-//                string.append(canMutateMatrix[y][x]);
                 if(x != getWidth() - 1) string.append(", ");
             }
             string.append("}\n");

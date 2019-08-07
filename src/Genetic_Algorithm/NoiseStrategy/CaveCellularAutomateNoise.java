@@ -42,7 +42,6 @@ public class CaveCellularAutomateNoise implements NoiseStrategy {
                 cellularAutomate(chromosome);
             }
         }
-        System.out.println("time elapsed: " + Algorithms.TIME_ELAPSED);
         return chromosomeList;
     }
 

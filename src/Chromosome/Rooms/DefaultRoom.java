@@ -1,6 +1,8 @@
 package Chromosome.Rooms;
 
 
+import java.util.Random;
+
 import static Chromosome.TileList.CORRIDOR;
 import static Chromosome.TileList.WALL;
 
@@ -19,6 +21,10 @@ public class DefaultRoom extends AbstractRoom {
             room.put(0, y, WALL);
             room.put(room.getWidth() - 1, y, WALL);
         }
+        Random random = new Random();
+        room.put(random.nextInt(room.getWidth() - 1), roomHeight - 1, CORRIDOR);
 
+        System.out.println();
     }
+
 }

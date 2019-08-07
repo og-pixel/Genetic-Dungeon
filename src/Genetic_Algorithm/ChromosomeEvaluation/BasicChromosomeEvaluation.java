@@ -25,9 +25,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     private ArrayList<FitnessStrategy> fitnessStrategyList;
     private MutatorStrategy mutatorStrategy;
     private SelectionStrategy selectionStrategy;
-//    private PermutationStrategy permutationStrategy;
-    private CorrectionStrategy correctionStrategy;
     private CrossoverStrategy crossoverStrategy;
+    private ArrayList<CorrectionStrategy> correctionStrategyList;
 
     //TODO make basic chromosome do excatly that, just basic, maybe only use fitness, add decorators to
     // add more features if possible (it should be, it all in steps)
@@ -37,7 +36,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
                                      ArrayList<FitnessStrategy> fitnessStrategyList,
                                      MutatorStrategy mutatorStrategy, SelectionStrategy selectionStrategy,
-                                     CorrectionStrategy correctionStrategy, CrossoverStrategy crossoverStrategy){
+                                     ArrayList<CorrectionStrategy> correctionStrategyList, CrossoverStrategy crossoverStrategy){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
@@ -58,7 +57,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         this.numberOfGenerations = numberOfGenerations;
         this.mutatorStrategy = mutatorStrategy;
         this.selectionStrategy = selectionStrategy;
-        this.correctionStrategy = correctionStrategy;
+        this.correctionStrategyList = correctionStrategyList;
         this.crossoverStrategy = crossoverStrategy;
 
 
@@ -81,13 +80,15 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
         //Correct Maps
         //TODO make better error checking in interpeter
-        if(correctionStrategy == null) {
+        if(correctionStrategyList == null) {
 
-//                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
+//                System.out.println("todo, not found correctionStrategyList strategy, this is fine for debug");
         }
         else{
             for (Chromosome chromosome : chromosomeList) {
-                correctionStrategy.correctMap(chromosome);
+                for (CorrectionStrategy correctionStrategy : correctionStrategyList) {
+                    correctionStrategy.correctMap(chromosome);
+                }
             }
         }
 
@@ -106,13 +107,13 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             //TODo now corrections should be ran once before it starts
 //            //Correct Maps
 //            //TODO make better error checking in interpeter
-//            if(correctionStrategy == null) {
+//            if(correctionStrategyList == null) {
 //
-////                System.out.println("todo, not found correctionStrategy strategy, this is fine for debug");
+////                System.out.println("todo, not found correctionStrategyList strategy, this is fine for debug");
 //            }
 //            else{
 //                for (Chromosome chromosome : chromosomeList) {
-//                    correctionStrategy.correctMap(chromosome);
+//                    correctionStrategyList.correctMap(chromosome);
 //                }
 //            }
 

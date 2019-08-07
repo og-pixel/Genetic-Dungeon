@@ -38,7 +38,6 @@ public class Interpreter {
     private final ArrayList<String> VERBOSE_ARGUMENT = new ArrayList(Arrays.asList("-v", "--verbose"));
     private final ArrayList<String> FITNESS_ARGUMENT = new ArrayList(Arrays.asList("-f", "--fitness"));
     private final ArrayList<String> MUTATOR_ARGUMENT = new ArrayList(Arrays.asList("-m", "--mutator"));
-//    private final ArrayList<String> PERMUTATION_ARGUMENT = new ArrayList(Arrays.asList("-p", "--permutation"));
     private final ArrayList<String> CHROMOSOME_EVALUATION_ARGUMENT = new ArrayList(Arrays.asList("-e", "--evaluation"));
     private final ArrayList<String> CORRECTION_ARGUMENT = new ArrayList(Arrays.asList("-r", "--correction"));
     private final ArrayList<String> NOISE_ARGUMENT = new ArrayList(Arrays.asList("-n", "--noise"));
@@ -58,15 +57,13 @@ public class Interpreter {
             "\n" + MUTATOR_ARGUMENT + "\t[NAME]\t\t\tAdd [MUTATOR] Function" +
             "\n" + CHROMOSOME_EVALUATION_ARGUMENT + "\t[NAME]\t\t\tAdd [CHROMOSOME EVALUATION] Function" +
             "\n" + NOISE_ARGUMENT + "\t[NAME]\t\t\tAdd [NOISE] Function" +
-//            "\n" + CA_ARGUMENT + "\t[NAME]\t\t\tAdd [CELLULAR AUTOMATE] Function" +
-//            "\n" + PERMUTATION_ARGUMENT + "\t[NAME]\t\t\tAdd [PREMUTATION] Function" +
             "\n" + CORRECTION_ARGUMENT + "\t[NAME]\t\t\tAdd [CORRECTION] Function" +
             "\n" + CROSSOVER_ARGUMENT + "\t[NAME]\t\t\tAdd [OFFSPRING] Function" +
             "\n" + VERBOSE_ARGUMENT + "\t\t\t\t\t\tVerbose output" +
             "\n\n\n Genetic Algorithm to work at minimum needs: [FITNESS]... [SELECTION] [OFFSPRING] [MUTATOR] [CHROMOSOME EVALUATION]" +
             "\n If you are creating maps, you need to add [NOISE]" +
             "\n If you are loading maps, [SOURCE] needs to specify a directory with them" +
-            "\n Optional Genetic Options: [CELLULAR AUTOMATE] [PREMUTATION] [CORRECTION]";
+            "\n Optional Genetic Options: [CORRECTION]";
 
 
     private final String README = "\nExamples:" +
@@ -107,10 +104,6 @@ public class Interpreter {
                         "\nOffspring:" +
         "\n\t" + DefaultCrossoverStrategy.IMPLEMENTATION;
 
-//                        "\nCellular Automate Method:" +
-//       "\n\t" + "rule20";
-
-
     //A whole generation of maps
     private ArrayList<Chromosome> generationOfGameMaps;
 
@@ -120,18 +113,15 @@ public class Interpreter {
     private SelectionStrategy selectionStrategy;
     private MutatorStrategy mutatorStrategy;
     private NoiseStrategy noiseStrategy;
-    private CorrectionStrategy correctionStrategy;
     private CrossoverStrategy crossoverStrategy;
+    private ArrayList<CorrectionStrategy> correctionStrategyList;
 
     //if specified, saves maps to the output directory
     private String outputDirectory = null;
 
-
     //Chromosome collects all strategy elements
     // and evaluates our whole project
     private AbstractChromosomeEvaluation chromosomeEvaluation;
-
-
 
     //Results after running program
     //It holds all data made during the process
@@ -148,7 +138,6 @@ public class Interpreter {
     /**
      * Flags
      * */
-
     //Verbose should print logs to the terminal (normal should be files only)
     private boolean verbose = false;
 
@@ -163,12 +152,12 @@ public class Interpreter {
      */
     public Interpreter(String... args) {
         fitnessStrategyList = new ArrayList<>();
+        correctionStrategyList = new ArrayList<>();
         generationOfGameMaps = new ArrayList<>();
         interpretArguments(args);
     }
 
 
-    //TODO look into the order and make sure it looks nice
     private void interpretArguments(String... args) {
         if (args.length <= 0) {
             displayHelp();
@@ -191,8 +180,6 @@ public class Interpreter {
             System.exit(0);
         }
 
-
-        //TODO need better checking
         try {
             populationSize = Integer.parseInt(args[args.length - 4]);
             numberOfGenerations = Integer.parseInt(args[args.length - 3]);
@@ -222,7 +209,7 @@ public class Interpreter {
         //TODO first Idont add chromosome to list, second i need error checking if bbasic parts are missing
         //TODO so this is the only place I p
         chromosomeEvaluation = new BasicChromosomeEvaluation( populationSize, numberOfGenerations, 0.2,
-                fitnessStrategyList, mutatorStrategy, selectionStrategy, correctionStrategy, crossoverStrategy);
+                fitnessStrategyList, mutatorStrategy, selectionStrategy, correctionStrategyList, crossoverStrategy);
 
         chromosomeEvaluation = new AttachLogChromosomeEvaluation(chromosomeEvaluation);
         chromosomeEvaluation = new MeasureTimeChromosomeEvaluation(chromosomeEvaluation);
@@ -256,12 +243,6 @@ public class Interpreter {
         else if(MUTATOR_ARGUMENT.contains(args[i])){
             addMutatorStrategy(args[i + 1], args[i + 2]);
         }
-//        else if(CA_ARGUMENT.contains(args[i])){
-//            addCellularAutomataStrategy(args[i + 1]);
-//        }
-//        else if(PERMUTATION_ARGUMENT.contains(args[i])){
-//            addPermutationStrategy(args[i + 1]);
-//        }
         else if(CHROMOSOME_EVALUATION_ARGUMENT.contains(args[i])){
             addChromosomeEvaluationStrategy(args[i + 1]);
         }
@@ -290,7 +271,7 @@ public class Interpreter {
             case "basic":
                 chromosomeEvaluation = new BasicChromosomeEvaluation(populationSize,
                         numberOfGenerations, 0.3, fitnessStrategyList, mutatorStrategy,
-                        selectionStrategy, correctionStrategy, crossoverStrategy);
+                        selectionStrategy, correctionStrategyList, crossoverStrategy);
                 return true;
             default:
                 return false;
@@ -355,17 +336,17 @@ public class Interpreter {
 
         switch (choice) {
             case FindRoomStrategy.IMPLEMENTATION:
-                correctionStrategy = new FindRoomStrategy();
+                correctionStrategyList.add(new FindRoomStrategy());
                 return true;
             case FindHolesStrategy.IMPLEMENTATION:
-                correctionStrategy = new FindHolesStrategy();
+                correctionStrategyList.add(new FindHolesStrategy());
                 return true;
             case AddPermanentWallsStrategy.IMPLEMENTATION:
-                correctionStrategy = new AddPermanentWallsStrategy();
+                correctionStrategyList.add(new AddPermanentWallsStrategy());
                 return true;
             case AddPermanentRoomsStrategy.IMPLEMENTATION:
                 //TODO this count number
-                correctionStrategy = new AddPermanentRoomsStrategy(10);
+                correctionStrategyList.add(new AddPermanentRoomsStrategy(10));
                 return true;
             default:
                 return false;

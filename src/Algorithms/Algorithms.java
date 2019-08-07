@@ -18,9 +18,6 @@ import java.util.Random;
  */
 public class Algorithms{
 
-    //TODO this is a debug value to count how long i waste on deep cloning
-    public static long TIME_ELAPSED = 0;
-
     public static Matrix floodFill(Chromosome chromosome, int x, int y){
         int dungeonWidth = chromosome.getMapWidth();
         int dungeonHeight = chromosome.getMapHeight();
@@ -62,7 +59,8 @@ public class Algorithms{
     }
 
 
-    //TODO not working ATM
+    //TODO most likely delete
+    @Deprecated
     public static void aStarTraverse(Chromosome chromosome){
         Matrix dungeonMatrix = chromosome.getMapMatrix();
 
@@ -163,28 +161,19 @@ public class Algorithms{
             list.add(currentPosition);
 
             if(!canExpand[0] && !canExpand[1] && !canExpand[2] && !canExpand[3]) {
-                currentPosition.setTotalCost(99999);
+//                currentPosition.setTotalCost(99999);
             }
 
 
 
             Collections.sort(traverseList, Comparator.comparing(Point::getDistanceToFinish));
 
-//            TODO not working ATM
-            // because of this, it is working, but not like real A* would
             for (int i = 1; i < traverseList.size(); i++) {
                 if(currentPosition.getTotalCost() == traverseList.get(i).getTotalCost()){
                     currentPosition = traverseList.get(new Random().nextInt(traverseList.size()));
                     break;
                 }
             }
-
-//            if(currentPosition.getXPos() == endPositionX &&
-//                    currentPosition.getYPos() == endPositionY){
-//                break
-//                System.out.println();
-//            }
-
 
             if(point > 1500000){
                 System.err.println("Could not find ending");
