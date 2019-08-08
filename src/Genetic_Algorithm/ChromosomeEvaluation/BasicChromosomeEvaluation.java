@@ -15,56 +15,35 @@ import java.util.logging.Level;
 
 public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
 
-    //TODO need to work on top pop and pop size, they are slighlty silly
     private double populationSize;
     private int numberOfGenerations;
     private double selectionFraction;
 
-
-    //TODO these are all strategies, as I said, I want them in decorators mostly
     private ArrayList<FitnessStrategy> fitnessStrategyList;
     private MutatorStrategy mutatorStrategy;
     private SelectionStrategy selectionStrategy;
     private CrossoverStrategy crossoverStrategy;
     private ArrayList<CorrectionStrategy> correctionStrategyList;
 
-    //TODO make basic chromosome do excatly that, just basic, maybe only use fitness, add decorators to
-    // add more features if possible (it should be, it all in steps)
-
-
-    //TODO since I can order decorators in whatever order I want, it should make it even more exciting!
     public BasicChromosomeEvaluation(double populationSize, int numberOfGenerations, double selectionFraction,
-                                     ArrayList<FitnessStrategy> fitnessStrategyList,
-                                     MutatorStrategy mutatorStrategy, SelectionStrategy selectionStrategy,
-                                     ArrayList<CorrectionStrategy> correctionStrategyList, CrossoverStrategy crossoverStrategy){
+                                     ArrayList<FitnessStrategy> fitnessStrategyList, MutatorStrategy mutatorStrategy,
+                                     SelectionStrategy selectionStrategy, ArrayList<CorrectionStrategy> correctionStrategyList,
+                                     CrossoverStrategy crossoverStrategy){
 
         if(selectionFraction <= 0 || selectionFraction >= 1)throw new VariableBoundsException(0, 1);
         this.selectionFraction = selectionFraction;
 
         if(populationSize > 1000) System.err.println("NoiseStrategy size is beyond 1000, program might take a long time and" +
                 "results probably won't be better");
-//        if(topPopulation != 0.1) System.err.println("Default crossover behaviour recommends 0.1 (10%) of the best " +
-//                "population to mate");
 
         this.populationSize = populationSize;
-//        TOP_POP = topPopulation * populationSize;
-
-        //If there are less maps than to make even 1, then we have to force it
-//        if(TOP_POP < 1)TOP_POP = 1;//todo consider 2
-
-        //TODO consctreuctor now can determinate whenever yoou can use the method or not (it can have methods to complete what's missing)
         this.fitnessStrategyList = fitnessStrategyList;
         this.numberOfGenerations = numberOfGenerations;
         this.mutatorStrategy = mutatorStrategy;
         this.selectionStrategy = selectionStrategy;
         this.correctionStrategyList = correctionStrategyList;
         this.crossoverStrategy = crossoverStrategy;
-
-
-        //todo this sets logger to be turned off, used in decorator, maybe overkill? but then i can attach however i fancy
         logger.setLevel(Level.SEVERE);
-
-
     }
 
     @Override
@@ -79,12 +58,7 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
         int percentageDone = 0;
 
         //Correct Maps
-        //TODO make better error checking in interpeter
-        if(correctionStrategyList == null) {
-
-//                System.out.println("todo, not found correctionStrategyList strategy, this is fine for debug");
-        }
-        else{
+        if(correctionStrategyList != null) {
             for (Chromosome chromosome : chromosomeList) {
                 for (CorrectionStrategy correctionStrategy : correctionStrategyList) {
                     correctionStrategy.correctMap(chromosome);
@@ -92,10 +66,8 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
             }
         }
 
-
         //Run Project
         for (int generation = 0; generation < numberOfGenerations; generation++) {
-
 
             //Evaluate all dungeon based on all fitness implementations on the list
             for (FitnessStrategy fitnessStrategy : fitnessStrategyList) {
@@ -104,42 +76,15 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 }
             }
 
-            //TODo now corrections should be ran once before it starts
-//            //Correct Maps
-//            //TODO make better error checking in interpeter
-//            if(correctionStrategyList == null) {
-//
-////                System.out.println("todo, not found correctionStrategyList strategy, this is fine for debug");
-//            }
-//            else{
-//                for (Chromosome chromosome : chromosomeList) {
-//                    correctionStrategyList.correctMap(chromosome);
-//                }
-//            }
-
-
             selectionStrategy.selectFitIndividuals(chromosomeList, selectionFraction);
-
-
-
             //Save previous Generation
             evolutionResults.addGeneration(Algorithms.deepClone(chromosomeList));
-
-
-
-
-
-
             //TODO WORK HERE, its crossoverStrategy generator
             newPopulation = crossoverStrategy.createNewGeneration(chromosomeList, populationSize, selectionFraction);
 
-
             mutatorStrategy.mutateDungeons(newPopulation);//TODO it might not mutate sort makes no sense as i didnt evaluate it again
-
             chromosomeList = newPopulation;//TODO it might make it work or not
 //            newPopulation.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
-
-
 
             if(generation % iteration == 0) {
                 //TODO while this isnt really necessary, it is nice for debugging
@@ -150,12 +95,6 @@ public class BasicChromosomeEvaluation extends AbstractChromosomeEvaluation {
                 percentageDone++;
             }
         }
-
         return evolutionResults;
-    }
-
-    private void createOffspring(){
-
-
     }
 }

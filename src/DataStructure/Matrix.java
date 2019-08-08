@@ -176,38 +176,37 @@ public class Matrix implements Serializable {
     }
 
     public long getUpLeft(int x, int y){
-        if(((y - 1) < 0) &&
+        if(((y - 1) < 0) ||
                 ((x - 1) < 0)) return -1;
 
-        return getElement(x, y);
+        return getElement(x - 1, y - 1);
     }
 
     public long getUpRight(int x, int y){
-        if(((y - 1) < 0) &&
+        if(((y - 1) < 0) ||
                 ((x + 1) >= width)) return -1;
 
-        return getElement(x, y);
+        return getElement(x + 1, y - 1);
     }
 
     public long getDownLeft(int x, int y){
-        if(((y + 1) >= height) &&
+        if(((y + 1) >= height) ||
                 ((x - 1) < 0)) return -1;
 
-        return getElement(x, y);
+        return getElement(x - 1, y + 1);
     }
 
     public long getDownRight(int x, int y){
-        if(((y + 1) >= height) &&
+        if(((y + 1) >= height) ||
                 ((x + 1) >= width)) return -1;
 
-        return getElement(x, y);
+        return getElement(x + 1, y + 1);
     }
 
     public long getVolume(){
         return width * height;
     }
 
-    //Its a toString() method...
     public String toString() {
         StringBuilder string = new StringBuilder();
 

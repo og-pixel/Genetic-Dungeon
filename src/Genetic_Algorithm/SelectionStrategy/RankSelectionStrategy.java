@@ -17,23 +17,12 @@ public class RankSelectionStrategy implements SelectionStrategy {
     public ArrayList<Chromosome> selectFitIndividuals(ArrayList<Chromosome> chromosomeList, double selectionFraction) {
         if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
-//TODO i dont like limit variable
         double limit = chromosomeList.size() * selectionFraction;
         Random random = new Random();
-
-//        int rouletteSum = 0;
-        //TODO there are chromosomeList and gameMaps due to my refractoring, CHANGE FFS
-//        for (Chromosome chromosome : chromosomeList) rouletteSum += chromosome.getFitnessScore();
-
 
         chromosomeList.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
         ArrayList<Chromosome> selectedList = new ArrayList<>();
 
-
-
-
-
-        //TODO this part is from the interet to test how it should actually work
         double[] cumulativeRank = new double[chromosomeList.size()];
         cumulativeRank[0] = 1.0;
 
@@ -44,30 +33,15 @@ public class RankSelectionStrategy implements SelectionStrategy {
             cumulativeRank[(int) i] = sum + p;
         }
 
-
         while(selectedList.size() < limit){
             double randomFitness = random.nextDouble() * cumulativeRank[cumulativeRank.length - 1];
 
             int index = Arrays.binarySearch(cumulativeRank, randomFitness);
 
-
             //If number is negative, it means its not on the list, instead it gives us a place where it WOULD be, which
             //in this case is the same (we look for close enough)
             if (index < 0)
                 index = Math.abs(index + 1);
-
-            //TODO this number indicates acutally how many points I can have
-            //TODO this is very crude but works
-//            int halfOfArray = chromosomeList.size()/2;
-//            int indexTwo;
-//
-//            if(index + halfOfArray > chromosomeList.size()){
-//                indexTwo = Math.abs(index - halfOfArray);
-//            }else {
-//                indexTwo = Math.abs(index + halfOfArray);
-//            }
-
-
 
             //TODO I cannot prevent duplicates, but I can still make it so
             // they are deep cloned
@@ -82,10 +56,7 @@ public class RankSelectionStrategy implements SelectionStrategy {
             }
             selectedList.add(clonedChromosome);
 //            selectedList.add(clonedChromosome2);
-
-
         }
-
         return selectedList;
     }
 }

@@ -1,8 +1,6 @@
 package Chromosome.Rooms;
 
 
-import java.util.Random;
-
 import static Chromosome.TileList.CORRIDOR;
 import static Chromosome.TileList.WALL;
 
@@ -21,10 +19,46 @@ public class DefaultRoom extends AbstractRoom {
             room.put(0, y, WALL);
             room.put(room.getWidth() - 1, y, WALL);
         }
-        Random random = new Random();
-        room.put(random.nextInt(room.getWidth() - 1), roomHeight - 1, CORRIDOR);
 
-        System.out.println();
+
+        //TODO putting doors is too confusing
+        int low;
+        int noDoors = 0;
+        int doorPosition;
+        int high = 1;
+        // 0 = top
+        // 1 = right
+        // 2 = bottom
+        // 3 = left
+        while(noDoors < 2) {
+            doorPosition = random.nextInt(4);
+
+
+            if(doorPosition == 0){
+                low = 1;
+                high = roomWidth - 1;
+                room.put(random.nextInt(high - low) + low, 0, CORRIDOR);
+                noDoors++;
+            }
+            else if(doorPosition == 1){
+                low = 1;
+                high = roomHeight - 1;
+                room.put(roomWidth - 1, random.nextInt(high - low) + low, CORRIDOR);
+                noDoors++;
+            }
+            else if(doorPosition == 2){
+                low = 1;
+                high = roomWidth - 1;
+                room.put(random.nextInt(high - low) + low, roomHeight - 1, CORRIDOR);
+                noDoors++;
+            }
+            else if(doorPosition == 3){
+                low = 1;
+                high = roomHeight - 1;
+                room.put(0, random.nextInt(high - low) + low, CORRIDOR);
+                noDoors++;
+            }
+        }
     }
 
 }

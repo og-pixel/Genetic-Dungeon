@@ -16,7 +16,6 @@ public class StochasticTwoSelectionStrategy implements SelectionStrategy {
     public ArrayList<Chromosome> selectFitIndividuals(ArrayList<Chromosome> chromosomeList, double selectionFraction) {
         if(selectionFraction < 0 || selectionFraction > 1) throw new VariableBoundsException(0, 1);
 
-        //TODO i dont like limit variable
         double limit = chromosomeList.size() * selectionFraction;
         Random random = new Random();
 
@@ -27,8 +26,6 @@ public class StochasticTwoSelectionStrategy implements SelectionStrategy {
 
         chromosomeList.sort(Comparator.comparing(Chromosome::getFitnessScore).reversed());
         ArrayList<Chromosome> selectedList = new ArrayList<>();
-
-
 
 
 
@@ -67,10 +64,6 @@ public class StochasticTwoSelectionStrategy implements SelectionStrategy {
                 indexTwo = Math.abs(index + halfOfArray);
             }
 
-
-
-            //TODO I cannot prevent duplicates, but I can still make it so
-            // they are deep cloned
             Chromosome clonedChromosome;
             Chromosome clonedChromosome2;
             if(index == 0){

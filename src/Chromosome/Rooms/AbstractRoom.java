@@ -2,18 +2,22 @@ package Chromosome.Rooms;
 
 import DataStructure.Matrix;
 
+import java.util.Random;
+
 import static Chromosome.TileList.CORRIDOR;
 
 public abstract class AbstractRoom implements Room {
     String roomName;
-    int roomWidth;
-    int roomHeight;
+    private int roomWidth;
+    private int roomHeight;
     Matrix room;
+    Random random;
 
     public AbstractRoom(int roomWidth, int roomHeight){
         this.roomWidth = roomWidth;
         this.roomHeight = roomHeight;
         room = new Matrix(roomWidth, roomHeight);
+        random = new Random();
     }
 
     public Matrix getRoomInfo() {

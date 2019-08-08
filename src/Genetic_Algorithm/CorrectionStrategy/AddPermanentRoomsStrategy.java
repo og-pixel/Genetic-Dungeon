@@ -30,6 +30,10 @@ public class AddPermanentRoomsStrategy implements CorrectionStrategy {
         int result;
         int result2;
 
+        result = random.nextInt(high - low) + low;
+        result2 = random.nextInt(high - low) + low;
+        roomList.add(new AltarRoom(result, result2));
+
         for (int i = 0; i < count; i++) {
             result = random.nextInt(high - low) + low;
             result2 = random.nextInt(high - low) + low;

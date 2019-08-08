@@ -48,6 +48,12 @@ public class EvolutionResults {
     }
 
     public void saveAllResults(String outputDirectory){
+        try {
+            Algorithms.writeToFile(outputDirectory + "Best: ", findBest());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for (int i = 0; i < generationsList.size(); i++) {
             for (int j = 0; j < generationsList.get(i).size(); j++) {
                 try {

@@ -7,6 +7,7 @@ public class TileList {
     public static final int WALL = 2;
     public static final int START = 3;
     public static final int END = 4;
+    public static final int SPECIAL = 5;
 
     private TileList(){}
 }

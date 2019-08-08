@@ -11,11 +11,6 @@ public class AddPermanentWallsStrategy implements CorrectionStrategy {
 
     @Override
     public void correctMap(Chromosome chromosome) {
-//        if(!(chromosome.getMapMatrix() instanceof MutabilityMatrix))
-//            throw new WrongClassInstanceException(MutabilityMatrix.class.toString());
-
-        //TODO while this does throw an error, if cast is wrong, I think its fine as
-        // I don't want to continue execution if objects are wrong
         MutabilityMatrix matrix = (MutabilityMatrix) chromosome.getMapMatrix();
 
         for (int x = 0; x < matrix.getWidth(); x++) {
@@ -34,11 +29,5 @@ public class AddPermanentWallsStrategy implements CorrectionStrategy {
             matrix.makeImmutable(matrix.getWidth() - 1, y);
         }
 
-        System.out.println();
-//        for (int y = 0; y < matrix.getHeight(); y++) {
-//            for (int x = 0; x < matrix.getWidth(); x++) {
-//                matrix.replaceRow(0,  new long[]{});
-//            }
-//        }
     }
 }

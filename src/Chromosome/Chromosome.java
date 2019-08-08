@@ -12,7 +12,7 @@ import static Chromosome.TileList.*;
  * Chromosome is an extension to the Matrix class in map generation
  * It does contain information about its modifications
  */
-public class Chromosome implements Serializable{
+public class Chromosome implements Serializable {
 
     /* Variables */
     private int mapWidth, mapHeight;
@@ -38,10 +38,10 @@ public class Chromosome implements Serializable{
      * Constructor
      */
     //TODO if I want to keep multiple matrix versions, I should specify in the constructor which one I want
+    // I will keep it and mention in it in the report
     public Chromosome(int mapWidth, int mapHeight) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
-        //TODO for now matrix becomes the better verion of itself, I need either a wrapper or just stick to it
         this.mapMatrix = new MutabilityMatrix(mapWidth, mapHeight);
         fitnessScore = 1;
     }
@@ -160,24 +160,26 @@ public class Chromosome implements Serializable{
                     stringBuilder.append("s");
                 else if (mapMatrix.getElement(x, y) == END)
                     stringBuilder.append("e");
+                else if (mapMatrix.getElement(x, y) == SPECIAL)
+                    stringBuilder.append("ɸ");
             }
         }
         stringBuilder.append("\n");
-
 
         if(mapMatrix instanceof MutabilityMatrix) {
             for (int y = 0; y < mapHeight; y++) {
                 stringBuilder.append("\n");
                 for (int x = 0; x < mapWidth; x++) {
-                    if (((MutabilityMatrix) mapMatrix).getMutateElement(x, y))
+                    if (((MutabilityMatrix) mapMatrix).getMutateElement(x, y)) {
                         stringBuilder.append("1");
-                    else
+                    }
+                    else {
                         stringBuilder.append("0");
+                    }
                 }
             }
             stringBuilder.append("\n");
         }
-
         return stringBuilder.toString();
     }
 }
