@@ -100,11 +100,12 @@ public class Interpreter {
         if(FITNESS_ARGUMENT.contains(args[i])){
             addFitnessStrategy(args[i + 1]);
         }
-        else if(VERBOSE_ARGUMENT.contains(args[i])){
-            System.out.println("Finish this path");
-            verbose = true;
-            System.exit(1);
-        }
+        //Delete?
+//        else if(VERBOSE_ARGUMENT.contains(args[i])){
+//            System.out.println("Finish this path");
+//            verbose = true;
+//            System.exit(1);
+//        }
         else if(MUTATOR_ARGUMENT.contains(args[i])){
             addMutatorStrategy(args[i + 1], args[i + 2]);
         }
@@ -193,8 +194,7 @@ public class Interpreter {
                 correctionStrategyList.add(new AddPermanentWallsStrategy());
                 return true;
             case AddPermanentRoomsStrategy.IMPLEMENTATION:
-                //TODO this count number
-                correctionStrategyList.add(new AddPermanentRoomsStrategy(10));
+                correctionStrategyList.add(new AddPermanentRoomsStrategy(20));
                 return true;
             default:
                 return false;
@@ -380,14 +380,4 @@ public class Interpreter {
     private int numberOfGenerations;
     private int dungeonWidth;
     private int dungeonHeight;
-
-    /**
-     * Flags
-     * */
-    //Verbose should print logs to the terminal (normal should be files only)
-    private boolean verbose = false;
-
-    //If maps aren't too different from each other
-    // it means maps aren't really evolving, and we can end sooner
-    private boolean endExecutionSooner = false;
 }

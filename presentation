@@ -1,0 +1,17 @@
+java GMaps --create --noise fill --fitness find_all_rooms --selection tournament --crossover default --mutator default_mutator 0.1 --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise random_noise --fitness find_all_rooms --selection tournament --crossover default --mutator default_mutator 0.1 --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise random_noise --fitness find_all_rooms --selection stochastic_two --crossover default --mutator default_mutator 0.15 --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise random_noise --fitness find_all_rooms --selection rank --crossover default --mutator default_mutator 0.15 --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise cellular --fitness find_all_rooms --selection roulette --crossover uniform --mutator swap --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise cellular --fitness find_all_rooms --selection elite --crossover uniform --mutator default_mutator 0.2 --correction add_permanent_rooms --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise cellular_island --fitness find_all_rooms --selection elite --crossover default --mutator default_mutator 0.18 --correction add_permanent_rooms --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise cellular --fitness find_all_rooms --selection elite --crossover uniform --correction add_permanent_rooms --correction add_permanent_walls --output /home/u1659885/output/ 30 1000 35 30
+
+java GMaps --create --noise cellular --fitness find_all_rooms --selection tournament --crossover uniform --correction add_permanent_rooms --correction add_permanent_walls --output /home/u1659885/output/ 30 1000 35 30

@@ -18,7 +18,7 @@ public class UniformCrossoverStrategy implements CrossoverStrategy {
     private double parentBias;
 
     public UniformCrossoverStrategy(){
-        this.parentBias = 0.5;
+        this.parentBias = 0.4;
     }
 
     public UniformCrossoverStrategy(double parentBias){

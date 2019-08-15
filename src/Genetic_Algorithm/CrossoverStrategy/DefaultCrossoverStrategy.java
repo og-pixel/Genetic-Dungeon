@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class DefaultCrossoverStrategy implements CrossoverStrategy {
 
-    public static final String IMPLEMENTATION = "default_crossover";
+    public static final String IMPLEMENTATION = "default";
 
     @Override
     public ArrayList<Chromosome> createNewGeneration(ArrayList<Chromosome> list, double populationSize, double selectionFraction) {

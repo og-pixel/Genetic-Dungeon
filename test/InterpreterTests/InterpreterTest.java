@@ -7,41 +7,41 @@ import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
-import org.junit.jupiter.api.*;
+//import org.junit.jupiter.api.*;
 
 
 import static Chromosome.TileList.CORRIDOR;
 
 
-public class InterpreterTest  {
+public class InterpreterTest  {}
 
-
-    @Test
-    public void test(){
-        Matrix matrix = new MutabilityMatrix(10, 10);
-        matrix.fillMatrix(CORRIDOR);
-
-        System.out.println(matrix);
-        Chromosome chromosome = new Chromosome(matrix);
-
-
-        CorrectionStrategy correctionStrategy = new AddPermanentWallsStrategy();
-        correctionStrategy.correctMap(chromosome);
-
-        MutatorStrategy mutatorStrategy = new DefaultMutatorStrategy(0.5);
-        mutatorStrategy.mutateDungeon(chromosome);
-
-        System.out.println(matrix);
-
-        mutatorStrategy.mutateDungeon(chromosome);
-
-        System.out.println(matrix);
-
-        mutatorStrategy.mutateDungeon(chromosome);
-        System.out.println(matrix);
-
-        mutatorStrategy.mutateDungeon(chromosome);
-        System.out.println(matrix);
+//
+//    @Test
+//    public void test(){
+//        Matrix matrix = new MutabilityMatrix(10, 10);
+//        matrix.fillMatrix(CORRIDOR);
+//
+//        System.out.println(matrix);
+//        Chromosome chromosome = new Chromosome(matrix);
+//
+//
+//        CorrectionStrategy correctionStrategy = new AddPermanentWallsStrategy();
+//        correctionStrategy.correctMap(chromosome);
+//
+//        MutatorStrategy mutatorStrategy = new DefaultMutatorStrategy(0.5);
+//        mutatorStrategy.mutateDungeon(chromosome);
+//
+//        System.out.println(matrix);
+//
+//        mutatorStrategy.mutateDungeon(chromosome);
+//
+//        System.out.println(matrix);
+//
+//        mutatorStrategy.mutateDungeon(chromosome);
+//        System.out.println(matrix);
+//
+//        mutatorStrategy.mutateDungeon(chromosome);
+//        System.out.println(matrix);
 
 
 //        Matrix matrix = new MutabilityMatrix(10, 15);
@@ -60,17 +60,17 @@ public class InterpreterTest  {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 
 
-    @Test
-    public void multiplicationOfZeroIntegersShouldReturnZero() {
-        Assertions.assertTrue(true);
-
-
-//        String[] args = new String[]{"--noise"};
-//        Interpreter interpreter = new Interpreter(args);
-
-
-    }
-}
+//    @Test
+//    public void multiplicationOfZeroIntegersShouldReturnZero() {
+//        Assertions.assertTrue(true);
+//
+//
+////        String[] args = new String[]{"--noise"};
+////        Interpreter interpreter = new Interpreter(args);
+//
+//
+//    }
+//}
