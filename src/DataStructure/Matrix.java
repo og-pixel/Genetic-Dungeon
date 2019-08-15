@@ -37,7 +37,6 @@ public class Matrix implements Serializable {
         }
     }
 
-
     /**
      * Put an element e to the matrix at position x,y
      * @param x coordinate x

@@ -7,15 +7,10 @@ import Genetic_Algorithm.CorrectionStrategy.AddPermanentWallsStrategy;
 import Genetic_Algorithm.CorrectionStrategy.CorrectionStrategy;
 import Genetic_Algorithm.MutatorStrategy.DefaultMutatorStrategy;
 import Genetic_Algorithm.MutatorStrategy.MutatorStrategy;
-import Main.Interpreter;
 import org.junit.jupiter.api.*;
-import Algorithms.Algorithms;
 
-
-import java.io.IOException;
 
 import static Chromosome.TileList.CORRIDOR;
-import static Chromosome.TileList.WALL;
 
 
 public class InterpreterTest  {

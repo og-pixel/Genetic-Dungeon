@@ -45,20 +45,21 @@ public class MutabilityMatrix extends Matrix{
         super.replaceRow(row, newContent);
     }
 
-    //TODO I think its good but let me make sure
     public boolean fillMatrixArea(int pickX, int pickY, Matrix smallerMatrix){
         int smallWidth = smallerMatrix.getWidth();
         int smallHeight = smallerMatrix.getHeight();
 
-        for (int y = pickY; y < smallHeight + pickY; y++) {
-            for (int x = pickX; x < smallWidth + pickX; x++) {
-                if(!canMutateMatrix[y][x]) {
-                    System.err.println("Cant put room here");
-                    return false;
+        for (int y = pickY; y < (smallHeight + pickY); y++) {
+            for (int x = pickX; x < (smallWidth + pickX); x++) {
+                try{
+                    if(!canMutateMatrix[y][x]) {
+                        return false;
+                    }
+                }catch (Exception e){
+                    System.out.println();
                 }
             }
         }
-        System.out.println("Room has been put");
         super.fillMatrixArea(pickX, pickY, smallerMatrix);
         return true;
     }
